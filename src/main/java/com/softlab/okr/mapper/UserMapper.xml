@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.softlab.okr.mapper.UserMapper">
+    <resultMap id="userList" type="user">
+        <id property="id" column="id"/>
+        <result property="role" column="role"/>
+        <result property="account" column="account"/>
+        <result property="password" column="password"/>
+        <result property="userName" column="userName"/>
+        <result property="avatar" column="avatar"/>
+        <result property="major" column="major"/>
+        <result property="qq" column="qq"/>
+        <result property="phone" column="phone"/>
+        <result property="weixin" column="weixin"/>
+        <result property="desc" column="desc"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateTime" column="updateTime"/>
+    </resultMap>
+    <select id="loginCheck" resultType="user">
+        select role,account,password,userName,avatar,major,qq,phone,weixin,`desc`,createTime,updateTime from `user` where account=#{account} and password=#{password}
+    </select>
+
+    <select id="selectByCond" parameterType="user" resultMap="userList">
+        select role,account,password,userName,avatar,major,qq,phone,weixin,`desc`,createTime,updateTime from `user`
+        where 1=1
+        <if test="role!=null"> and role=#{role} </if>
+        <if test="account!=null"> and account=#{account} </if>
+        <if test="userName!=null"> and userName like '%${userName}%' </if>
+        <if test="major!=null"> and major like '%${major}%'</if>
+    </select>
+
+    <select id="selectUser" resultType="user">
+        select role,account,password,userName,avatar,major,qq,phone,weixin,`desc`,createTime,updateTime from `user` where account=#{account}
+    </select>
+
+    <!-- 更新头像 -->
+    <update id="uploadAvatar">
+        update `user` set `avatar`=#{avatar} where `account`=#{account}
+    </update>
+
+    <update id="updateUser">
+        update `user` set
+        `userName`=#{userName},
+        `major`=#{major},
+        `qq`=#{qq},
+        `phone`=#{phone},
+        `weixin`=#{weixin},
+        `desc`=#{desc},
+         `updateTime`=#{updateTime} where `account`=#{account}
+    </update>
+
+    <!-- 注册 -->
+    <insert id="register" parameterType="user">
+        INSERT INTO `user`
+            (role, account, password, createTime, updateTime)
+        VALUES
+            (#{role}, #{account}, #{password}, #{createTime}, #{updateTime})
+    </insert>
+</mapper>
