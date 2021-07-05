@@ -23,4 +23,8 @@ public interface UserMapper {
     int updateUser(String account, String userName, String major, String qq, String phone, String weixin, String desc, long updateTime);
 
     int register(Integer role, String account, String password, long createTime, long updateTime);
+
+    int uploadAvatar(String account, String avatar);
+
+    int verifyPassword(String account,String password,long updateTime);
 }

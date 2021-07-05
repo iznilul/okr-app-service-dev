@@ -23,10 +23,10 @@
     <select id="selectByCond" parameterType="user" resultMap="userList">
         select role,account,password,userName,avatar,major,qq,phone,weixin,`desc`,createTime,updateTime from `user`
         where 1=1
-        <if test="role!=null"> and role=#{role} </if>
-        <if test="account!=null"> and account=#{account} </if>
-        <if test="userName!=null"> and userName like '%${userName}%' </if>
-        <if test="major!=null"> and major like '%${major}%'</if>
+        <if test="role!=null">and role=#{role}</if>
+        <if test="account!=null">and account=#{account}</if>
+        <if test="userName!=null">and userName like '%${userName}%'</if>
+        <if test="major!=null">and major like '%${major}%'</if>
     </select>
 
     <select id="selectUser" resultType="user">
@@ -38,6 +38,7 @@
         update `user` set `avatar`=#{avatar} where `account`=#{account}
     </update>
 
+    <!--      更新用户信息·-->
     <update id="updateUser">
         update `user` set
         `userName`=#{userName},
@@ -49,6 +50,11 @@
          `updateTime`=#{updateTime} where `account`=#{account}
     </update>
 
+    <!--修改密码·-->
+    <update id="verifyPassword">
+        update `user` set`password`=#{password},`updateTime`=#{updateTime} where `account`=#{account}
+    </update>
+
     <!-- 注册 -->
     <insert id="register" parameterType="user">
         INSERT INTO `user`
@@ -56,4 +62,5 @@
         VALUES
             (#{role}, #{account}, #{password}, #{createTime}, #{updateTime})
     </insert>
+
 </mapper>

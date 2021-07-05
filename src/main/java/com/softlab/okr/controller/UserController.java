@@ -17,9 +17,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import sun.misc.BASE64Encoder;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
@@ -94,7 +94,7 @@ public class UserController {
      * @Author: radCircle
      * @Date: 2021/7/3
      */
-    @PostMapping("update")
+    @PostMapping("updateUser")
     @ResponseBody
     public Result updateUser(@RequestBody String param, HttpServletRequest req) {
         System.out.println(param);
@@ -125,7 +125,7 @@ public class UserController {
      * @Author: radCircle
      * @Date: 2021/7/3
      */
-    @PostMapping("select")
+    @PostMapping("selectUser")
     @ResponseBody
     public Result selectUser(@RequestBody String param, HttpServletRequest req) {
         System.out.println(param);
@@ -174,21 +174,15 @@ public class UserController {
     }
 
     /**
-     * @Description: 用户上传操作
-     * @Param: [file]
+     * @Description: 用户上传头像
+     * @Param: [file,account,req]
      * @return: com.softlab.okr.utils.Result
      * @Author: radCircle
      * @Date: 2021/7/4
      */
     @PostMapping("/upload")
     @ResponseBody
-    public Result upload(@RequestParam("file") MultipartFile file) throws Exception {
-        //上传文件
-        // String suffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
-        // byte[] data = file.getBytes();
-
-        // cString suffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
-        // byte[] data = file.getBytes();
+    public Result upload(@RequestParam("account")String account,@RequestParam("file") MultipartFile file, HttpServletRequest req) throws Exception {
 
         // 通过base64来转化图片
         byte[] data = file.getBytes();
@@ -196,14 +190,43 @@ public class UserController {
             return Result.failure(ResultCode.USER_UPLOAD_EXCEED);
         }
 
-        BASE64Encoder encoder = new BASE64Encoder();
-        String avatar = encoder.encode(file.getBytes());
+        //将字节流转成字符串
+        Base64.Encoder encoder = Base64.getEncoder();
+        String avatar = encoder.encodeToString(file.getBytes());
 
         try {
-            return Result.success();
+            return userService.uploadAvatar(account, avatar) == 1 ? Result.success(avatar) : Result.failure(ResultCode.USER_UPLOAD_ERROR);
         } catch (Exception e) {
             log.error(String.valueOf(e));
-            return Result.failure(ResultCode.USER_UPLOAD_ERROR);
+            return Result.failure(ResultCode.USER_ERROR);
+        }
+    }
+
+    /**
+    * @Description:  修改密码
+    * @Param: [param, req]
+    * @return: com.softlab.okr.utils.Result
+    * @Author: radCircle
+    * @Date: 2021/7/5
+    */
+    @PostMapping("/verifyPassword")
+    @ResponseBody
+    public Result verifyPassword(@RequestBody String param, HttpServletRequest req) throws Exception {
+        System.out.println(param);
+        JSONObject json = JSON.parseObject(param);
+        String account = (String) json.get("account");
+        String oldPassword = MD5Util.string2MD5((String) json.get("oldPassword"));
+        String newPassword =MD5Util.string2MD5((String) json.get("newPassword"));
+
+        try {
+            if(userService.loginCheck(account, oldPassword)!=null){
+                return userService.verifyPassword(account, newPassword, new Date().getTime()) == 1 ? Result.success("修改密码成功") : Result.failure(ResultCode.USER_UPDATE_ERROR);
+            }else{
+                return Result.failure(ResultCode.USER_LOGIN_ERROR);
+            }
+        } catch (Exception e) {
+            log.error(String.valueOf(e));
+            return Result.failure(ResultCode.USER_ERROR);
         }
     }
 }

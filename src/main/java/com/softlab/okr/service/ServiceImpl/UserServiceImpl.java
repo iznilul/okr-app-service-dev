@@ -47,4 +47,14 @@ public class UserServiceImpl implements UserService {
     public int register(Integer role, String account, String password, long createTime, long updateTime) {
         return userMapper.register(role, account, password, createTime, updateTime);
     }
+
+    @Override
+    public int uploadAvatar(String account, String avatar) {
+        return userMapper.uploadAvatar(account, avatar);
+    }
+
+    @Override
+    public int verifyPassword(String account, String password, long updateTime) {
+        return userMapper.verifyPassword(account, password, updateTime);
+    }
 }
