@@ -20,13 +20,14 @@
         select role,account,password,userName,avatar,major,qq,phone,weixin,`desc`,createTime,updateTime from `user` where account=#{account} and password=#{password}
     </select>
 
-    <select id="selectByCond" parameterType="user" resultMap="userList">
+    <!--    根据条件选取用户-->
+    <select id="selectByCond" resultMap="userList">
         select role,account,password,userName,avatar,major,qq,phone,weixin,`desc`,createTime,updateTime from `user`
         where 1=1
-        <if test="role!=null">and role=#{role}</if>
-        <if test="account!=null">and account=#{account}</if>
-        <if test="userName!=null">and userName like '%${userName}%'</if>
-        <if test="major!=null">and major like '%${major}%'</if>
+        <if test="role!='' and role!=null">and role=#{role}</if>
+        <if test="account!='' and account!=null">and account=#{account}</if>
+        <if test="userName!='' and userName!=null">and userName like '%${userName}%'</if>
+        <if test="major!='' and major!=null">and major like '%${major}%'</if>
     </select>
 
     <select id="selectUser" resultType="user">

@@ -34,8 +34,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> selectByCond(User user) {
-        return userMapper.selectByCond(user);
+    public List<User> selectByCond(String role, String account, String userName, String major) {
+        return userMapper.selectByCond(role, account, userName, major);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int register(Integer role, String account, String password, long createTime, long updateTime) {
+    public int register(String role, String account, String password, long createTime, long updateTime) {
         return userMapper.register(role, account, password, createTime, updateTime);
     }
 

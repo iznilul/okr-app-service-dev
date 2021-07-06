@@ -18,11 +18,11 @@ public interface UserMapper {
 
     User selectUser(String account);
 
-    List<User> selectByCond(User user);
+    List<User> selectByCond(String role, String account, String userName, String major);
 
     int updateUser(String account, String userName, String major, String qq, String phone, String weixin, String desc, long updateTime);
 
-    int register(Integer role, String account, String password, long createTime, long updateTime);
+    int register(String role, String account, String password, long createTime, long updateTime);
 
     int uploadAvatar(String account, String avatar);
 

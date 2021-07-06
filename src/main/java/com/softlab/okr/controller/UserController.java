@@ -69,7 +69,7 @@ public class UserController {
 
         String account = (String) json.get("account");
         String password = MD5Util.string2MD5(account);
-        Integer role = (Integer) json.get("role");
+        String role = (String) json.get("role");
 
         long createTime = new Date().getTime();
         long updateTime = new Date().getTime();
@@ -153,19 +153,13 @@ public class UserController {
     public Result selectByCond(@RequestBody String param, HttpServletRequest req) {
         System.out.println(param);
         JSONObject json = JSON.parseObject(param);
-        Integer role = (Integer) json.get("role");
+        String role = (String) json.get("role");
         String account = (String) json.get("account");
         String userName = (String) json.get("userName");
         String major = (String) json.get("major");
 
-        User queryUser = new User();
-        queryUser.setAccount(account);
-        queryUser.setRole(role);
-        queryUser.setUserName(userName);
-        queryUser.setMajor(major);
-
         try {
-            List<User> userList = userService.selectByCond(queryUser);
+            List<User> userList = userService.selectByCond(role, account, userName, major);
             return Result.success(userList);
         } catch (Exception e) {
             log.error(String.valueOf(e));
@@ -192,7 +186,7 @@ public class UserController {
 
         //将字节流转成字符串
         Base64.Encoder encoder = Base64.getEncoder();
-        String avatar = encoder.encodeToString(file.getBytes());
+        String avatar = "data:image/png;base64," + encoder.encodeToString(file.getBytes());
 
         try {
             return userService.uploadAvatar(account, avatar) == 1 ? Result.success(avatar) : Result.failure(ResultCode.USER_UPLOAD_ERROR);
@@ -216,12 +210,12 @@ public class UserController {
         JSONObject json = JSON.parseObject(param);
         String account = (String) json.get("account");
         String oldPassword = MD5Util.string2MD5((String) json.get("oldPassword"));
-        String newPassword =MD5Util.string2MD5((String) json.get("newPassword"));
+        String newPassword = MD5Util.string2MD5((String) json.get("newPassword"));
 
         try {
-            if(userService.loginCheck(account, oldPassword)!=null){
+            if (userService.loginCheck(account, oldPassword) != null) {
                 return userService.verifyPassword(account, newPassword, new Date().getTime()) == 1 ? Result.success("修改密码成功") : Result.failure(ResultCode.USER_UPDATE_ERROR);
-            }else{
+            } else {
                 return Result.failure(ResultCode.USER_LOGIN_ERROR);
             }
         } catch (Exception e) {
