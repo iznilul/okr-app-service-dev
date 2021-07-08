@@ -4,5 +4,6 @@
 <configuration>
     <typeAliases>
         <package name="com.softlab.okr.model"/>
+        <package name="com.softlab.okr.dto"/>
     </typeAliases>
 </configuration>

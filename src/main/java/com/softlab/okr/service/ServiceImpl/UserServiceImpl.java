@@ -1,5 +1,11 @@
 package com.softlab.okr.service.ServiceImpl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.softlab.okr.bo.RegisterBo;
+import com.softlab.okr.dto.user.LoginDto;
+import com.softlab.okr.dto.user.SelectUserDto;
+import com.softlab.okr.dto.user.UpdateUserDto;
 import com.softlab.okr.mapper.UserMapper;
 import com.softlab.okr.model.User;
 import com.softlab.okr.service.UserService;
@@ -24,8 +30,8 @@ public class UserServiceImpl implements UserService {
     UserMapper userMapper;
 
     @Override
-    public User loginCheck(String account, String password) {
-        return userMapper.loginCheck(account, password);
+    public User loginCheck(LoginDto loginDto) {
+        return userMapper.loginCheck(loginDto);
     }
 
     @Override
@@ -34,18 +40,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> selectByCond(String role, String account, String userName, String major) {
-        return userMapper.selectByCond(role, account, userName, major);
+    public PageInfo<User> selectByCond(SelectUserDto selectUserDto,
+                                       int pageSize) {
+        PageHelper.startPage(selectUserDto.getIndex(), pageSize);
+        List<User> userList = userMapper.selectByCond(selectUserDto);
+        return new PageInfo<>(userList);
     }
 
     @Override
-    public int updateUser(String account, String userName, String major, String qq, String phone, String weixin, String desc, long updateTime) {
-        return userMapper.updateUser(account, userName, major, qq, phone, weixin, desc, updateTime);
+    public int updateUser(UpdateUserDto updateUserDto, long updateTime) {
+        return userMapper.updateUser(updateUserDto, updateTime);
     }
 
     @Override
-    public int register(String role, String account, String password, long createTime, long updateTime) {
-        return userMapper.register(role, account, password, createTime, updateTime);
+    public int register(RegisterBo registerBo) {
+        return userMapper.register(registerBo);
     }
 
     @Override

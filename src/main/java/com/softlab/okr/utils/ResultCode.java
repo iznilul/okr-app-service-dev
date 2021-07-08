@@ -24,20 +24,19 @@ public enum ResultCode {
     USER_ACCOUNT_FORBIDDEN(2003, "账号已被禁用"),
     USER_NOT_EXIST(2004, "用户不存在"),
     USER_HAS_EXISTED(2005, "用户已存在"),
-    USER_ERROR(2006, "用户未知错误"),
-    USER_REGISTER_ERROR(2007, "用户注册失败"),
-    USER_UPDATE_ERROR(2008, "用户信息更新失败"),
-    USER_UPLOAD_ERROR(2009, "用户上传文件失败"),
-    USER_UPLOAD_EXCEED(2010, "用户上传文件太大"),
+    USER_REGISTER_ERROR(2006, "用户注册失败"),
+    USER_UPDATE_ERROR(2007, "用户信息更新失败"),
+    USER_UPLOAD_ERROR(2008, "用户上传文件失败"),
+    USER_UPLOAD_EXCEED(2009, "用户上传文件太大"),
 
-    /* 业务错误：3001-3999 */
-    SPECIFIED_QUESTIONED_USER_NOT_EXIST(3001, "某业务出现问题"),
+    /* 未知错误：3001-3999 */
+    UNKNOWN_ERROR(3001, "服务出错，请联系开发者"),
 
     /* 系统错误：4001-4999 */
     SYSTEM_INNER_ERROR(4001, "系统繁忙，请稍后重试"),
 
     /* 数据错误：5001-5999 */
-    RESULE_DATA_NONE(5001, "数据未找到"),
+    RESULT_DATA_NONE(5001, "数据未找到"),
     DATA_IS_WRONG(5002, "数据有误"),
     DATA_ALREADY_EXISTED(5003, "数据已存在"),
     DATA_STATUS_STOP(5004, "数据状态已停用"),
@@ -91,6 +90,6 @@ public enum ResultCode {
 
     @Override
     public String toString() {
-        return this.name();
+        return this.code().toString() + " " + this.message();
     }
 }

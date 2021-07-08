@@ -12,7 +12,7 @@
     <appender name="infoAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 文件路径 ，注意LOG_PATH是默认值，
             它的配置对应application.properties里的logging.path值-->
-        <file>${LOG_PATH}/info/info.log</file>
+        <!--        <file>${LOG_PATH}/info/info.log</file>-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 文件名称 -->
             <fileNamePattern>${LOG_PATH}/info/info-%d{yyyy-MM-dd}.log
@@ -34,7 +34,7 @@
     <appender name="debugAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 文件路径 ，注意LOG_PATH是默认值，
             它的配置对应application.properties里的logging.path值-->
-        <file>${LOG_PATH}/debug/debug.log</file>
+        <!--        <file>${LOG_PATH}/debug/debug.log</file>-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 文件名称 -->
             <fileNamePattern>${LOG_PATH}/debug/debug-%d{yyyy-MM-dd}.log</fileNamePattern>
@@ -54,7 +54,7 @@
     <appender name="warnAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 文件路径 ，注意LOG_PATH是默认值，
             它的配置对应application.properties里的logging.path值-->
-        <file>${LOG_PATH}/warn/warn.log</file>
+        <!--        <file>${LOG_PATH}/warn/warn.log</file>-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 文件名称 -->
             <fileNamePattern>${LOG_PATH}/warn/warn-%d{yyyy-MM-dd}.log
@@ -76,7 +76,7 @@
     <appender name="errorAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 文件路径 ，注意LOG_PATH是默认值，
             它的配置对应application.properties里的logging.path值-->
-        <file>${LOG_PATH}/error/error.log</file>
+        <!--        <file>${LOG_PATH}/error/error.log</file>-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 文件名称 -->
             <fileNamePattern>${LOG_PATH}/error/error-%d{yyyy-MM-dd}.log
@@ -97,7 +97,7 @@
     <appender name="fatalAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 文件路径 ，注意LOG_PATH是默认值，
             它的配置对应application.properties里的logging.path值-->
-        <file>${LOG_PATH}/fatal/fatal.log</file>
+        <!--        <file>${LOG_PATH}/fatal/fatal.log</file>-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 文件名称 -->
             <fileNamePattern>${LOG_PATH}/fatal/fatal-%d{yyyy-MM-dd}.log
@@ -116,7 +116,7 @@
     </appender>
     <!-- mysql -->
     <appender name="mysqlAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_PATH}/mysql/mysql.log</file>
+        <!--        <file>${LOG_PATH}/mysql/mysql.log</file>-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 日志文件输出文件名 -->
             <FileNamePattern>${LOG_PATH}/mysql/mysql-%d{yyyy-MM-dd}.log</FileNamePattern>

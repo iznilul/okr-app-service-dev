@@ -1,5 +1,7 @@
 package com.softlab.okr.utils;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -10,12 +12,13 @@ import lombok.Data;
  **/
 
 @Data
+@ApiModel("Result 统一API响应结果封装")
 public class Result {
-
+    @ApiModelProperty(value = "成功失败的标志", required = true, example = "200")
     private Integer code;
-
+    @ApiModelProperty(value = "成功失败的响应信息", required = true)
     private String msg;
-
+    @ApiModelProperty(value = "成功失败的响应数据", required = false)
     private Object data;
 
     public Result() {
@@ -56,4 +59,6 @@ public class Result {
         this.code = code.code();
         this.msg = code.message();
     }
+
+
 }

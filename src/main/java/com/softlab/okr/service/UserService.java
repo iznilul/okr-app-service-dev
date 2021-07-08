@@ -1,8 +1,11 @@
 package com.softlab.okr.service;
 
+import com.github.pagehelper.PageInfo;
+import com.softlab.okr.bo.RegisterBo;
+import com.softlab.okr.dto.user.LoginDto;
+import com.softlab.okr.dto.user.SelectUserDto;
+import com.softlab.okr.dto.user.UpdateUserDto;
 import com.softlab.okr.model.User;
-
-import java.util.List;
 
 /**
  * @Author: Devhui
@@ -13,15 +16,17 @@ import java.util.List;
 
 public interface UserService {
     // 登陆检查
-    User loginCheck(String account, String password);
+    User loginCheck(LoginDto loginDto);
 
     User selectUser(String account);
 
-    List<User> selectByCond(String role, String account, String userName, String major);
+    //    List<User> selectByCond(SelectUserParam selectUserParam);
+    PageInfo<User> selectByCond(SelectUserDto selectUserDto,
+                                int pageSize);
 
-    int updateUser(String account, String userName, String major, String qq, String phone,String weixin,String desc,long updateTime);
+    int updateUser(UpdateUserDto updateUserDto, long UpdateTime);
 
-    int register(String role, String account, String password, long createTime, long updateTime);
+    int register(RegisterBo registerBo);
 
     int uploadAvatar(String account, String avatar);
 

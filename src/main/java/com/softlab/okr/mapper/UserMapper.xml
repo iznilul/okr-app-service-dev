@@ -42,13 +42,13 @@
     <!--      更新用户信息·-->
     <update id="updateUser">
         update `user` set
-        `userName`=#{userName},
-        `major`=#{major},
-        `qq`=#{qq},
-        `phone`=#{phone},
-        `weixin`=#{weixin},
-        `desc`=#{desc},
-         `updateTime`=#{updateTime} where `account`=#{account}
+        `userName`=#{updateUserDto.userName},
+        `major`=#{updateUserDto.major},
+        `qq`=#{updateUserDto.qq},
+        `phone`=#{updateUserDto.phone},
+        `weixin`=#{updateUserDto.weixin},
+        `desc`=#{updateUserDto.desc},
+         `updateTime`=#{updateTime} where `account`=#{updateUserDto.account}
     </update>
 
     <!--修改密码·-->
