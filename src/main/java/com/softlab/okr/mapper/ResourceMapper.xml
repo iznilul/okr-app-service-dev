@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.softlab.okr.mapper.ResourceMapper">
+    <resultMap id="resourceMap" type="com.softlab.okr.model.entity.Resource">
+        <id property="resourceId" column="resource_id"/>
+        <result property="path" column="path"/>
+        <result property="name" column="name"/>
+        <result property="type" column="type"/>
+    </resultMap>
+
+
+    <select id="selectByUserId" resultType="Integer">
+        select re.resource_id from resource re
+        join role_resource rr on rr.resource_id=re.resource_id
+        join user_role ur on rr.role_id =ur.role_id
+        where ur.user_id=#{userId}
+    </select>
+
+    <insert id="insertResources">
+        insert into resource(resource_id,path,`name`,`type`)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.resourceId},#{item.path},#{item.name},#{item.type})
+        </foreach>
+    </insert>
+
+    <delete id="deleteByType">
+        delete  from resource
+        where `type`=#{type}
+    </delete>
+
+    <delete id="deleteRoleResource">
+        delete  from role_resource
+        where `role_id`=#{roleId}
+    </delete>
+
+    <insert id="insertRoleResource" parameterType="roleresourcebo">
+        insert into role_resource(role_id,resource_id)
+        values
+        <foreach collection="resourceIds" item="item" separator=",">
+            (#{roleId},#{item})
+        </foreach>
+    </insert>
+
+
+</mapper>

@@ -29,6 +29,12 @@ public class Result {
         this.msg = msg;
     }
 
+    public Result(Integer code, String msg, Object data) {
+        this.code = code;
+        this.msg = msg;
+        this.data = data;
+    }
+
     public static Result success() {
         Result result = new Result();
         result.setResultCode(ResultCode.SUCCESS);

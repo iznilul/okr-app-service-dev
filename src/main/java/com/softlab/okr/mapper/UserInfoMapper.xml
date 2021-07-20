@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.softlab.okr.mapper.UserInfoMapper">
+    <resultMap id="userInfo" type="userinfo">
+        <id property="userId" column="user_id"/>
+        <result property="username" column="username"/>
+        <result property="name" column="name"/>
+        <result property="avatar" column="avatar"/>
+        <result property="major" column="major"/>
+        <result property="qq" column="qq"/>
+        <result property="phone" column="phone"/>
+        <result property="weixin" column="weixin"/>
+        <result property="desc" column="desc"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <resultMap id="userMap" type="com.softlab.okr.model.entity.UserEntity">
+        <id property="userId" column="user_id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+    </resultMap>
+
+    <!-- 登录检验 -->
+    <select id="selectByLogin" resultMap="userMap">
+        select  user_id,username,password from `user` where username=#{username} and
+        password=#{password}
+    </select>
+
+    <insert id="insertUserInfo">
+        INSERT INTO `user_info`
+            (user_id,username,create_time,update_time)
+        VALUES
+            (#{userId}, #{username}, #{createTime}, #{updateTime})
+    </insert>
+
+    <!--    根据条件选取用户-->
+    <select id="selectUserInfoByCond" resultMap="userInfo">
+        select
+        user_id,username,`name`,avatar,major,qq,phone,weixin,`desc`,create_time,update_time
+        from `user_info`
+        where 1=1
+        <if test="username!='' and username!=null">and username=#{username}</if>
+        <if test="name!='' and name!=null">and `name` like '%${name}%'</if>
+        <if test="major!='' and major!=null">and major like '%${major}%'</if>
+    </select>
+
+    <select id="selectUserInfoByUsername" resultMap="userInfo">
+        select user_id,username,`name`,avatar,major,qq,phone,weixin,`desc`,create_time,
+        update_time from `user_info` where username=#{username}
+    </select>
+
+    <!-- 更新头像 -->
+    <update id="uploadAvatar">
+        update `user_info` set `avatar`=#{avatar} where `username`=#{username}
+    </update>
+
+    <!--      更新用户信息·-->
+    <update id="updateUserInfo">
+        update `user_info` set
+        `name`=#{updateUserDto.name},
+        `major`=#{updateUserDto.major},
+        `qq`=#{updateUserDto.qq},
+        `phone`=#{updateUserDto.phone},
+        `weixin`=#{updateUserDto.weixin},
+        `desc`=#{updateUserDto.desc},
+         `update_time`=#{updateTime} where `username`=#{updateUserDto.username}
+    </update>
+
+    <!--修改密码·-->
+    <update id="updatePassword">
+        update `user` set`password`=#{password} where
+        `username`=#{username}
+    </update>
+
+</mapper>
