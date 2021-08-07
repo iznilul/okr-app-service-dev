@@ -5,6 +5,7 @@ import com.softlab.okr.exception.MapperException;
 import com.softlab.okr.exception.ServiceException;
 import com.softlab.okr.utils.Result;
 import com.softlab.okr.utils.ResultCode;
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.security.core.AuthenticationException;
@@ -96,7 +97,40 @@ public class GlobalExceptionHandler {
                                                    Exception e) {
         log.error("用户错误: " + e.toString());
         log.error("定位: " + e.getStackTrace()[0].toString());
-        return Result.failure(ResultCode.USER_NOT_EXIST);
+        return Result.failure(ResultCode.USER_LOGIN_ERROR);
+    }
+
+    /**
+     * @Description: 参数异常
+     * @Param: [httpServletRequest, e]
+     * @return: com.softlab.okr.utils.Result
+     * @Author: radCircle
+     * @Date: 2021/8/5
+     */
+    @ResponseBody
+    @ExceptionHandler(value = IllegalArgumentException.class)
+    public Result IllegalArgumentExceptionHandler(
+            Exception e) {
+        log.error("参数错误: " + e.toString());
+        log.error("定位: " + e.getStackTrace()[0].toString());
+        return Result.failure(ResultCode.PARAM_NOT_COMPLETE, e.getMessage());
+    }
+
+    /**
+     * @Description: Token过期错误
+     * @Param: [ e]
+     * @return: com.softlab.okr.utils.Result
+     * @Author: radCircle
+     * @Date: 2021/7/10
+     */
+    @ResponseBody
+    @ExceptionHandler(value = ExpiredJwtException.class)
+    public Result ExpiredJwtExceptionHandler(
+            Exception e) {
+        log.error("用户Token已过期:" + e.toString());
+        //定位打印抛出错误的地方
+        log.error("定位:" + e.getStackTrace()[0].toString());
+        return Result.failure(ResultCode.USER_TOKEN_EXPIRE);
     }
 
     /**

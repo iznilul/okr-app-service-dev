@@ -28,8 +28,9 @@ public interface UserInfoService {
 
     int modifyUserInfo(UpdateUserDTO updateUserDto, long UpdateTime) throws ServiceException;
 
-
     int uploadAvatar(String username, String avatar) throws ServiceException;
 
     int modifyPassword(String username, String password) throws ServiceException;
+
+
 }

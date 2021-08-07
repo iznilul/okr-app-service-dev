@@ -3,7 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <typeAliases>
-        <package name="com.softlab.okr.model"/>
-        <package name="com.softlab.okr.dto"/>
+        <package name="com.softlab.okr.model.entity"/>
+        <package name="com.softlab.okr.model.dto"/>
+        <package name="com.softlab.okr.model.bo"/>
     </typeAliases>
 </configuration>

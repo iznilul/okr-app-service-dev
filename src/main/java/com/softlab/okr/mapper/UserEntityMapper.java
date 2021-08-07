@@ -13,4 +13,6 @@ public interface UserEntityMapper {
     void updatePassword(String newPassword) throws MapperException;
 
     int register(RegisterBo registerBo) throws MapperException;
+
+    void deleteByUsername(String username) throws MapperException;
 }

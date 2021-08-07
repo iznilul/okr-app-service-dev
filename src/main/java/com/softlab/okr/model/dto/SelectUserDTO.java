@@ -26,8 +26,14 @@ public class SelectUserDTO {
     private String major;
     @ApiModelProperty(value = "当前页", required = true, example = "1")
     private Integer index;
+    @ApiModelProperty(value = "页大小", required = true, example = "8")
+    private Integer pageSize;
 
     public Integer getIndex() {
         return index = index == null ? 1 : index;
+    }
+
+    public Integer getPageSize() {
+        return pageSize = pageSize == null ? 5 : pageSize;
     }
 }

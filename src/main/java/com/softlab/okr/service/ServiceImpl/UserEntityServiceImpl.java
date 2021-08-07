@@ -87,4 +87,9 @@ public class UserEntityServiceImpl implements UserEntityService,
     public int register(RegisterBo registerBo) {
         return userEntityMapper.register(registerBo);
     }
+
+    @Override
+    public void removeByUsername(String username) {
+        userEntityMapper.deleteByUsername(username);
+    }
 }

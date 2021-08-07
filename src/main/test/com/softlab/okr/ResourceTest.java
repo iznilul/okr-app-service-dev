@@ -83,7 +83,14 @@ public class ResourceTest {
     }
 
     @Test
-    public void reloadRoleResource() {
+    public void reloadAdminRoleResource() {
+        RoleResourceBo roleResourceBo = new RoleResourceBo(1, resourceService.getResourceIds(
+                "admin"));
+        resourceService.reloadRoleResource(roleResourceBo);
+    }
+
+    @Test
+    public void reloadUserRoleResource() {
         RoleResourceBo roleResourceBo = new RoleResourceBo(2, resourceService.getResourceIds(
                 "user"));
         resourceService.reloadRoleResource(roleResourceBo);
