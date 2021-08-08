@@ -26,4 +26,8 @@
         (#{username},#{password})
     </insert>
 
+    <delete id="deleteByUsername">
+        delete u,ui,ur from `user` u,`user_info` ui,`user_role` ur
+        where u.username=#{username} and u.user_id=ui.user_id and u.user_id=ur.user_id
+    </delete>
 </mapper>

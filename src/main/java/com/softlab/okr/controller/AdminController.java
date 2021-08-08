@@ -12,11 +12,10 @@ import com.softlab.okr.service.UserInfoService;
 import com.softlab.okr.utils.MD5Util;
 import com.softlab.okr.utils.Result;
 import com.softlab.okr.utils.ResultCode;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -29,6 +28,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/api/admin")
+@Api(tags = "管理员操作")
 @Auth(id = 1000, name = "管理员操作")
 public class AdminController {
 
@@ -52,6 +52,7 @@ public class AdminController {
         map.put("普通用户", "user");
     }
 
+    @ApiOperation("注册用户")
     @PostMapping("register")
     @Auth(id = 1, name = "注册用户")
     public Result register(@RequestBody RegisterDTO registerDTO) {
@@ -79,5 +80,45 @@ public class AdminController {
         }
     }
 
+    @ApiOperation("删除用户")
+    @GetMapping("removeByUsername")
+    @Auth(id = 2, name = "删除用户")
+    public Result removeByUsername(@RequestParam("username") String username)
+            throws Exception {
+        System.out.println(username);
+
+        if (username.equals("")) {
+            throw new ControllerException(ResultCode.PARAM_NOT_COMPLETE);
+        }
+
+        if (userEntityService.getByUsername(username) != null) {
+            userEntityService.removeByUsername(username);
+            return Result.success("删除成功");
+        } else {
+            throw new ControllerException(ResultCode.USER_LOGIN_ERROR);
+        }
+    }
+
+    @ApiOperation("重载管理员资源")
+    @GetMapping("reloadAdminRoleResource")
+    @Auth(id = 3, name = "重载管理员资源")
+    public Result reloadAdminRoleResource()
+            throws Exception {
+        RoleResourceBo roleResourceBo = new RoleResourceBo(1, resourceService.getResourceIds(
+                "admin"));
+        resourceService.reloadRoleResource(roleResourceBo);
+        return Result.success("重载成功");
+    }
+
+    @ApiOperation("重载用户资源")
+    @GetMapping("reloadUserRoleResource")
+    @Auth(id = 4, name = "重载用户资源")
+    public Result reloadUserRoleResource()
+            throws Exception {
+        RoleResourceBo roleResourceBo = new RoleResourceBo(2, resourceService.getResourceIds(
+                "user"));
+        resourceService.reloadRoleResource(roleResourceBo);
+        return Result.success("重载成功");
+    }
 
 }

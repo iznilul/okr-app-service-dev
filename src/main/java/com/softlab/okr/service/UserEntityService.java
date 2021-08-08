@@ -22,4 +22,6 @@ public interface UserEntityService {
 
     int register(RegisterBo registerBo) throws ServiceException;
 
+    void removeByUsername(String username) throws ServiceException;
+
 }

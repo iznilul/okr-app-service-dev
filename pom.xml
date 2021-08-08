@@ -137,6 +137,19 @@
             <version>2.9.2</version>
         </dependency>
 
+        <!-- oshi获取系统信息 -->
+        <dependency>
+            <groupId>com.github.oshi</groupId>
+            <artifactId>oshi-core</artifactId>
+            <version>3.9.1</version>
+        </dependency>
+
+<!--        actuator监控-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-actuator</artifactId>
+            </dependency>
+
         <!-- POI读取xls -->
         <dependency>
             <groupId>org.apache.poi</groupId>

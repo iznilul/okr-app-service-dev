@@ -1,7 +1,7 @@
 package com.softlab.okr.security;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +9,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.time.Duration;
 import java.util.Date;
 
@@ -51,7 +55,7 @@ public class JwtManager {
      * @param token JWT字符串
      * @return 解析成功返回Claims对象，解析失败返回null
      */
-    public Claims parse(String token) {
+    public Claims parse(HttpServletRequest request, HttpServletResponse response, String token) throws IOException, ServletException {
         // 如果是空字符串直接返回null
         if (!StringUtils.hasLength(token)) {
             return null;
@@ -64,8 +68,11 @@ public class JwtManager {
                     .setSigningKey(secretKey)
                     .parseClaimsJws(token)
                     .getBody();
-        } catch (JwtException e) {
-            log.error("token解析失败:{}", e.toString());
+        } catch (ExpiredJwtException e) {
+            log.error("token过期或者不合法:{}", e
+                    .toString());
+            request.setAttribute("filter.error", e);
+            request.getRequestDispatcher("/error/throw").forward(request, response);
         }
         return claims;
     }

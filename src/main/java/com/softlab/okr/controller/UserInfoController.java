@@ -85,7 +85,7 @@ public class UserInfoController {
         if (userInfo != null) {
             return Result.success(userInfo);
         } else {
-            throw new ControllerException(ResultCode.USER_NOT_EXIST);
+            throw new ControllerException(ResultCode.USER_LOGIN_ERROR);
         }
     }
 
@@ -104,9 +104,9 @@ public class UserInfoController {
     @PostMapping("getUserInfoByCond")
     @Auth(id = 3, name = "根据情况选择用户")
     public Result getUserInfoByCond(
-            @RequestBody SelectUserDTO selectUserDto,
-            @RequestParam(value = "pageSize", defaultValue = "5", required = false) int pageSize) throws Exception {
+            @RequestBody SelectUserDTO selectUserDto) throws Exception {
 
+        int pageSize = selectUserDto.getPageSize();
         System.out.println(selectUserDto);
         PageInfo<UserInfo> userList = userInfoService.getUserInfoByCond(selectUserDto, pageSize);
 
@@ -168,7 +168,6 @@ public class UserInfoController {
     @ApiOperation("修改密码")
     @PostMapping("modifyPassword")
     @Auth(id = 5, name = "修改密码")
-    @ResponseBody
     public Result modifyPassword(@RequestBody ModifyPwdDTO modifyPwdDto)
             throws Exception {
         System.out.println(modifyPwdDto);
@@ -188,7 +187,8 @@ public class UserInfoController {
                 throw new ControllerException(ResultCode.USER_UPDATE_ERROR);
             }
         } else {
-            throw new ControllerException(ResultCode.USER_NOT_EXIST);
+            throw new ControllerException(ResultCode.USER_LOGIN_ERROR);
         }
     }
+
 }

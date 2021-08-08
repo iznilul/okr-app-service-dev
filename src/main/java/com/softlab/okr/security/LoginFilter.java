@@ -2,6 +2,7 @@ package com.softlab.okr.security;
 
 import com.softlab.okr.service.ServiceImpl.UserEntityServiceImpl;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,10 +33,11 @@ public class LoginFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-                                    FilterChain chain) throws ServletException, IOException {
+                                    FilterChain chain) throws ServletException, IOException,
+            ExpiredJwtException {
         log.info("---LoginFilter---");
         // 从请求头中获取token字符串并解析，判断token是不是合法的
-        Claims claims = jwtManager.parse(request.getHeader("Authorization"));
+        Claims claims = jwtManager.parse(request, response, request.getHeader("Authorization"));
         if (claims != null) {
             String username = claims.getSubject();
             UserDetails user = userService.loadUserByUsername(username);
