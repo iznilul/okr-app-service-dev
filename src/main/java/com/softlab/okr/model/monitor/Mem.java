@@ -50,7 +50,7 @@ public class Mem {
     }
 
     public double getUsage() {
-        return Arith.mul(Arith.div(used, total, 4), 100);
+        return Arith.mul(Arith.div(used, total, 2), 100);
     }
 
 }
