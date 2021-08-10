@@ -2,6 +2,9 @@ package com.softlab.okr.model.monitor;
 
 import com.softlab.okr.utils.Arith;
 import com.softlab.okr.utils.IPUtils;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
 import oshi.hardware.GlobalMemory;
@@ -22,6 +25,9 @@ import java.util.Properties;
  * @author: radCircle
  * @create: 2021-08-05 12:27
  **/
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Server {
 
     private static final int OSHI_WAIT_SECOND = 1000;
@@ -50,46 +56,11 @@ public class Server {
      * 磁盘相关信息
      */
     private List<SysFile> sysFiles = new LinkedList<SysFile>();
+    /**
+     * 服务器环境信息
+     */
+    private ServerInfo serverInfo = new ServerInfo();
 
-    public Cpu getCpu() {
-        return cpu;
-    }
-
-    public void setCpu(Cpu cpu) {
-        this.cpu = cpu;
-    }
-
-    public Mem getMem() {
-        return mem;
-    }
-
-    public void setMem(Mem mem) {
-        this.mem = mem;
-    }
-
-    public Jvm getJvm() {
-        return jvm;
-    }
-
-    public void setJvm(Jvm jvm) {
-        this.jvm = jvm;
-    }
-
-    public Sys getSys() {
-        return sys;
-    }
-
-    public void setSys(Sys sys) {
-        this.sys = sys;
-    }
-
-    public List<SysFile> getSysFiles() {
-        return sysFiles;
-    }
-
-    public void setSysFiles(List<SysFile> sysFiles) {
-        this.sysFiles = sysFiles;
-    }
 
     public void copyTo() throws Exception {
         SystemInfo si = new SystemInfo();
@@ -99,6 +70,7 @@ public class Server {
         setSysInfo();
         setJvmInfo();
         setSysFiles(si.getOperatingSystem());
+        setServerInfo();
     }
 
     /**
@@ -189,6 +161,19 @@ public class Server {
         }
     }
 
+    /**
+     *
+     */
+    private void setServerInfo() {
+        serverInfo.setJvmName(jvm.getName());
+        serverInfo.setJdkVersion(jvm.getVersion());
+        serverInfo.setServerIP(sys.getComputerIp());
+        serverInfo.setServerName(sys.getComputerName());
+        serverInfo.setServerOS(sys.getOsName());
+        serverInfo.setServerArch(sys.getOsArch());
+        serverInfo.setSysTypeName(sysFiles.get(0).getSysTypeName());
+        serverInfo.setSysName(sysFiles.get(0).getTypeName());
+    }
     /**
      * 字节转换
      *

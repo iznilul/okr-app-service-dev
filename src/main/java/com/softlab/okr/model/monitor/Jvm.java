@@ -66,7 +66,7 @@ public class Jvm {
     }
 
     public double getUsage() {
-        return Arith.mul(Arith.div(total - free, total, 4), 100);
+        return Arith.mul(Arith.div(total - free, total, 2), 100);
     }
 
     /**
