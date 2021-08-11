@@ -71,9 +71,9 @@ public class UserInfoController {
                     dataType = "String",
                     required = true,
                     defaultValue = "123"))
-    @GetMapping("getUserInfoByUsername")
+    @GetMapping("userInfoByUsername")
     @Auth(id = 2, name = "根据账号选择用户")
-    public Result getUserInfoByUsername(
+    public Result userInfoByUsername(
             @RequestParam(value = "username", required = true) String username) {
         System.out.println(username);
 
@@ -101,9 +101,9 @@ public class UserInfoController {
             required = true,
             defaultValue = "1"
     )
-    @PostMapping("getUserInfoByCond")
+    @PostMapping("userInfoByCond")
     @Auth(id = 3, name = "根据情况选择用户")
-    public Result getUserInfoByCond(
+    public Result userInfoByCond(
             @RequestBody SelectUserDTO selectUserDto) throws Exception {
 
         int pageSize = selectUserDto.getPageSize();
