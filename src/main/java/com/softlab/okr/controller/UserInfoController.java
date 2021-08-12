@@ -15,13 +15,17 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.util.Base64;
 import java.util.Date;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @Author: Devhui @Date: 2019-11-28 17:05 @Version 1.0
@@ -33,162 +37,163 @@ import java.util.Date;
 @Api(tags = "用户操作")
 @Auth(id = 2000, name = "用户操作")
 public class UserInfoController {
-    @Autowired
-    UserInfoService userInfoService;
+
+  @Autowired
+  UserInfoService userInfoService;
 
 
-    /**
-     * @Description: 用户信息更新 @Param: [param, req]
-     * @return: com.softlab.okr.utils.Result @Author: radCircle @Date: 2021/7/3
-     */
-    @ApiOperation("更新用户信息")
-    @PostMapping("modifyUserInfo")
-    @Auth(id = 1, name = "更新用户信息")
-    public Result modifyUserInfo(@RequestBody UpdateUserDTO updateUserDto)
-            throws Exception {
-        System.out.println(updateUserDto);
+  /**
+   * @Description: 用户信息更新 @Param: [param, req]
+   * @return: com.softlab.okr.utils.Result @Author: radCircle @Date: 2021/7/3
+   */
+  @ApiOperation("更新用户信息")
+  @PostMapping("modifyUserInfo")
+  @Auth(id = 1, name = "更新用户信息")
+  public Result modifyUserInfo(@RequestBody UpdateUserDTO updateUserDto)
+      throws Exception {
+    System.out.println(updateUserDto);
 
-        if (updateUserDto.getUsername().equals("")) {
-            throw new ControllerException(ResultCode.PARAM_NOT_COMPLETE);
-        }
-
-        if (userInfoService.modifyUserInfo(updateUserDto, new Date().getTime()) == 1) {
-            return Result.success("用户信息更新成功");
-        } else {
-            throw new ControllerException(ResultCode.USER_UPDATE_ERROR);
-        }
+    if (updateUserDto.getUsername().equals("")) {
+      throw new ControllerException(ResultCode.PARAM_NOT_COMPLETE);
     }
 
-    /**
-     * @Description: 返回用户信息 @Param: [param, req]
-     * @return: com.softlab.okr.utils.Result @Author: radCircle @Date: 2021/7/3
-     */
-    @ApiOperation("根据账号选择用户")
-    @ApiImplicitParams(
-            @ApiImplicitParam(
-                    name = "username",
-                    value = "用户账号",
-                    dataType = "String",
-                    required = true,
-                    defaultValue = "123"))
-    @GetMapping("userInfoByUsername")
-    @Auth(id = 2, name = "根据账号选择用户")
-    public Result userInfoByUsername(
-            @RequestParam(value = "username", required = true) String username) {
-        System.out.println(username);
+    if (userInfoService.modifyUserInfo(updateUserDto, new Date().getTime()) == 1) {
+      return Result.success("用户信息更新成功");
+    } else {
+      throw new ControllerException(ResultCode.USER_UPDATE_ERROR);
+    }
+  }
 
-        if (username.equals("")) {
-            throw new ControllerException(ResultCode.PARAM_NOT_COMPLETE);
-        }
+  /**
+   * @Description: 返回用户信息 @Param: [param, req]
+   * @return: com.softlab.okr.utils.Result @Author: radCircle @Date: 2021/7/3
+   */
+  @ApiOperation("根据账号选择用户")
+  @ApiImplicitParams(
+      @ApiImplicitParam(
+          name = "username",
+          value = "用户账号",
+          dataType = "String",
+          required = true,
+          defaultValue = "123"))
+  @GetMapping("userInfoByUsername")
+  @Auth(id = 2, name = "根据账号选择用户")
+  public Result userInfoByUsername(
+      @RequestParam(value = "username", required = true) String username) {
+    System.out.println(username);
 
-        UserInfo userInfo = userInfoService.getUserInfoByUsername(username);
-        if (userInfo != null) {
-            return Result.success(userInfo);
-        } else {
-            throw new ControllerException(ResultCode.USER_LOGIN_ERROR);
-        }
+    if (username.equals("")) {
+      throw new ControllerException(ResultCode.PARAM_NOT_COMPLETE);
     }
 
-    /**
-     * @Description: 根据条件获取用户 @Param: [param, req]
-     * @return: com.softlab.okr.utils.Result @Author: radCircle @Date: 2021/7/3
-     */
-    @ApiOperation("根据条件选择用户")
-    @ApiImplicitParam(
-            name = "pageNumber",
-            value = "当前页数",
-            dataType = "Integer",
-            required = true,
-            defaultValue = "1"
-    )
-    @PostMapping("userInfoByCond")
-    @Auth(id = 3, name = "根据情况选择用户")
-    public Result userInfoByCond(
-            @RequestBody SelectUserDTO selectUserDto) throws Exception {
+    UserInfo userInfo = userInfoService.getUserInfoByUsername(username);
+    if (userInfo != null) {
+      return Result.success(userInfo);
+    } else {
+      throw new ControllerException(ResultCode.USER_LOGIN_ERROR);
+    }
+  }
 
-        int pageSize = selectUserDto.getPageSize();
-        System.out.println(selectUserDto);
-        PageInfo<UserInfo> userList = userInfoService.getUserInfoByCond(selectUserDto, pageSize);
+  /**
+   * @Description: 根据条件获取用户 @Param: [param, req]
+   * @return: com.softlab.okr.utils.Result @Author: radCircle @Date: 2021/7/3
+   */
+  @ApiOperation("根据条件选择用户")
+  @ApiImplicitParam(
+      name = "pageNumber",
+      value = "当前页数",
+      dataType = "Integer",
+      required = true,
+      defaultValue = "1"
+  )
+  @PostMapping("userInfoByCond")
+  @Auth(id = 3, name = "根据情况选择用户")
+  public Result userInfoByCond(
+      @RequestBody SelectUserDTO selectUserDto) throws Exception {
 
-        if (userList.getSize() > 0) {
-            return Result.success(userList);
-        } else {   //必须得这么写，不然分页查询有bug
-            selectUserDto.setIndex(1);
-            userList = userInfoService.getUserInfoByCond(selectUserDto, pageSize);
-            if (userList.getSize() > 0) {
-                return Result.success(userList);
-            } else {
-                throw new ControllerException(ResultCode.UNKNOWN_ERROR);
-            }
-        }
+    int pageSize = selectUserDto.getPageSize();
+    System.out.println(selectUserDto);
+    PageInfo<UserInfo> userList = userInfoService.getUserInfoByCond(selectUserDto, pageSize);
+
+    if (userList.getSize() > 0) {
+      return Result.success(userList);
+    } else {   //必须得这么写，不然分页查询有bug
+      selectUserDto.setIndex(1);
+      userList = userInfoService.getUserInfoByCond(selectUserDto, pageSize);
+      if (userList.getSize() > 0) {
+        return Result.success(userList);
+      } else {
+        throw new ControllerException(ResultCode.UNKNOWN_ERROR);
+      }
+    }
+  }
+
+  /**
+   * @Description: 用户上传头像 @Param: [file,username,req]
+   * @return: com.softlab.okr.utils.Result @Author: radCircle @Date: 2021/7/4
+   */
+  @ApiOperation("上传头像文件")
+  @ApiImplicitParams({
+      @ApiImplicitParam(
+          name = "username",
+          value = "用户账号",
+          dataType = "String",
+          required = true,
+          defaultValue = "123"),
+      @ApiImplicitParam(name = "file", value = "文件", dataType = "file", required = true)
+  })
+  @PostMapping("upload")
+  @Auth(id = 4, name = "上传头像文件")
+  public Result upload(
+      @RequestParam("username") String username,
+      @RequestParam("file") MultipartFile file)
+      throws Exception {
+
+    // 通过base64来转化图片
+    byte[] data = file.getBytes();
+    if (data.length > 1024000) {
+      throw new ControllerException(ResultCode.USER_UPLOAD_EXCEED);
     }
 
-    /**
-     * @Description: 用户上传头像 @Param: [file,username,req]
-     * @return: com.softlab.okr.utils.Result @Author: radCircle @Date: 2021/7/4
-     */
-    @ApiOperation("上传头像文件")
-    @ApiImplicitParams({
-            @ApiImplicitParam(
-                    name = "username",
-                    value = "用户账号",
-                    dataType = "String",
-                    required = true,
-                    defaultValue = "123"),
-            @ApiImplicitParam(name = "file", value = "文件", dataType = "file", required = true)
-    })
-    @PostMapping("upload")
-    @Auth(id = 4, name = "上传头像文件")
-    public Result upload(
-            @RequestParam("username") String username,
-            @RequestParam("file") MultipartFile file)
-            throws Exception {
+    // 将字节流转成字符串
+    Base64.Encoder encoder = Base64.getEncoder();
+    String avatar = "data:image/png;base64," + encoder.encodeToString(file.getBytes());
 
-        // 通过base64来转化图片
-        byte[] data = file.getBytes();
-        if (data.length > 1024000) {
-            throw new ControllerException(ResultCode.USER_UPLOAD_EXCEED);
-        }
+    if (userInfoService.uploadAvatar(username, avatar) == 1) {
+      return Result.success(avatar);
+    } else {
+      throw new ControllerException(ResultCode.USER_UPLOAD_ERROR);
+    }
+  }
 
-        // 将字节流转成字符串
-        Base64.Encoder encoder = Base64.getEncoder();
-        String avatar = "data:image/png;base64," + encoder.encodeToString(file.getBytes());
+  /**
+   * @Description: 修改密码 @Param: [param, req]
+   * @return: com.softlab.okr.utils.Result @Author: radCircle @Date: 2021/7/5
+   */
+  @ApiOperation("修改密码")
+  @PostMapping("modifyPassword")
+  @Auth(id = 5, name = "修改密码")
+  public Result modifyPassword(@RequestBody ModifyPwdDTO modifyPwdDto)
+      throws Exception {
+    System.out.println(modifyPwdDto);
 
-        if (userInfoService.uploadAvatar(username, avatar) == 1) {
-            return Result.success(avatar);
-        } else {
-            throw new ControllerException(ResultCode.USER_UPLOAD_ERROR);
-        }
+    if (modifyPwdDto.getUsername().equals("")) {
+      throw new ControllerException(ResultCode.PARAM_NOT_COMPLETE);
     }
 
-    /**
-     * @Description: 修改密码 @Param: [param, req]
-     * @return: com.softlab.okr.utils.Result @Author: radCircle @Date: 2021/7/5
-     */
-    @ApiOperation("修改密码")
-    @PostMapping("modifyPassword")
-    @Auth(id = 5, name = "修改密码")
-    public Result modifyPassword(@RequestBody ModifyPwdDTO modifyPwdDto)
-            throws Exception {
-        System.out.println(modifyPwdDto);
-
-        if (modifyPwdDto.getUsername().equals("")) {
-            throw new ControllerException(ResultCode.PARAM_NOT_COMPLETE);
-        }
-
-        LoginDTO loginDto = new LoginDTO(modifyPwdDto.getUsername(), modifyPwdDto.getOldPassword
-                ());
-        if (userInfoService.loginCheck(loginDto) != null) {
-            if (userInfoService.modifyPassword(
-                    modifyPwdDto.getUsername(), modifyPwdDto.getNewPassword())
-                    == 1) {
-                return Result.success("修改密码成功");
-            } else {
-                throw new ControllerException(ResultCode.USER_UPDATE_ERROR);
-            }
-        } else {
-            throw new ControllerException(ResultCode.USER_LOGIN_ERROR);
-        }
+    LoginDTO loginDto = new LoginDTO(modifyPwdDto.getUsername(), modifyPwdDto.getOldPassword
+        ());
+    if (userInfoService.loginCheck(loginDto) != null) {
+      if (userInfoService.modifyPassword(
+          modifyPwdDto.getUsername(), modifyPwdDto.getNewPassword())
+          == 1) {
+        return Result.success("修改密码成功");
+      } else {
+        throw new ControllerException(ResultCode.USER_UPDATE_ERROR);
+      }
+    } else {
+      throw new ControllerException(ResultCode.USER_LOGIN_ERROR);
     }
+  }
 
 }

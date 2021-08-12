@@ -1,6 +1,10 @@
 package com.softlab.okr.config;
 
-import com.softlab.okr.security.*;
+import com.softlab.okr.security.AuthFilter;
+import com.softlab.okr.security.LoginFilter;
+import com.softlab.okr.security.MyDeniedHandler;
+import com.softlab.okr.security.MyEntryPoint;
+import com.softlab.okr.security.MyPasswordEncoder;
 import com.softlab.okr.service.ServiceImpl.UserEntityServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,15 +19,20 @@ import org.springframework.security.web.access.intercept.FilterSecurityIntercept
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsUtils;
 
-/** @author RudeCrab */
+/**
+ * @author RudeCrab
+ */
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-  @Autowired private UserEntityServiceImpl userDetailsService;
+  @Autowired
+  private UserEntityServiceImpl userDetailsService;
 
-  @Autowired private LoginFilter loginFilter;
+  @Autowired
+  private LoginFilter loginFilter;
 
-  @Autowired private AuthFilter authFilter;
+  @Autowired
+  private AuthFilter authFilter;
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
