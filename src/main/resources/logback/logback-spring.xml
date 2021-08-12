@@ -2,6 +2,12 @@
 <configuration scan="true" scanPeriod="60 seconds">
     <!-- 都说spring boot使用日志需要引入这个，但是我引入了之后总是打印两份日志，所以我去除了，并不影响使用 -->
     <!-- <include resource="org/springframework/boot/logging/logback/base.xml"/> -->
+    <!--日志颜色·-->
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+    <conversionRule conversionWord="wex"
+                    converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
+    <conversionRule conversionWord="wEx"
+                    converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
     <!-- 控制台设置 -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -50,6 +56,7 @@
             <onMismatch>DENY</onMismatch>
         </filter>
     </appender>
+
     <!-- WARN -->
     <appender name="warnAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 文件路径 ，注意LOG_PATH是默认值，
@@ -93,6 +100,7 @@
             <onMismatch>DENY</onMismatch>
         </filter>
     </appender>
+
     <!-- FATAL -->
     <appender name="fatalAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 文件路径 ，注意LOG_PATH是默认值，
@@ -135,9 +143,9 @@
 
 
     <logger name="org.springframework" additivity="false">
-        <level value="ERROR" />
-        <appender-ref ref="STDOUT" />
-        <appender-ref ref="errorAppender" />
+        <level value="ERROR"/>
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="errorAppender"/>
     </logger>
 
     <!-- 由于启动的时候，以下两个包下打印debug级别日志很多 ，所以调到ERROR-->
@@ -156,7 +164,7 @@
     <!-- mybatis日志打印-->
     <logger name="com.softlab.okr.mapper" level="DEBUG" additivity="false">
         <appender-ref ref="STDOUT"/>
-        <appender-ref ref="mysqlAppender" />
+        <appender-ref ref="mysqlAppender"/>
     </logger>
     <!--它是根logger,是所有<logger>的上级。只有一个level属性，因为name已经被命名为"root",且已经是最上级了 -->
     <root level="INFO">
