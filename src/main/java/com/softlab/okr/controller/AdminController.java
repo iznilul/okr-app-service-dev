@@ -17,7 +17,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -69,11 +68,7 @@ public class AdminController {
                         password);
 
         if (userEntityService.getByUsername(registerDTO.getUsername()) == null) {
-            userEntityService.register(registerBo);
-            roleService.addUserRole(registerBo.getUserId(), roleId);
-            resourceService.addRoleResource(roleResourceBo);
-            userInfoService.addUserInfo(registerBo.getUserId(), registerBo.getUsername(),
-                    new Date().getTime(), new Date().getTime());
+            userEntityService.register(registerBo, roleResourceBo, roleId);
             return Result.success("注册成功");
         } else {
             throw new ControllerException(ResultCode.USER_HAS_EXISTED);

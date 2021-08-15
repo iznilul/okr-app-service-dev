@@ -2,8 +2,11 @@ package com.softlab.okr.service.ServiceImpl;
 
 import com.softlab.okr.exception.ControllerException;
 import com.softlab.okr.mapper.ResourceMapper;
+import com.softlab.okr.mapper.RoleMapper;
 import com.softlab.okr.mapper.UserEntityMapper;
+import com.softlab.okr.mapper.UserInfoMapper;
 import com.softlab.okr.model.bo.RegisterBo;
+import com.softlab.okr.model.bo.RoleResourceBo;
 import com.softlab.okr.model.dto.LoginDTO;
 import com.softlab.okr.model.entity.UserEntity;
 import com.softlab.okr.model.vo.UserVO;
@@ -18,8 +21,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -27,9 +33,9 @@ import java.util.stream.Collectors;
  * @author RudeCrab
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class UserEntityServiceImpl implements UserEntityService,
         UserDetailsService {
+
     @Autowired
     private JwtManager jwtManager;
 
@@ -41,6 +47,12 @@ public class UserEntityServiceImpl implements UserEntityService,
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private RoleMapper roleMapper;
+
+    @Autowired
+    private UserInfoMapper userInfoMapper;
 
     //登录操作
     @Override
@@ -84,8 +96,15 @@ public class UserEntityServiceImpl implements UserEntityService,
     }
 
     @Override
-    public int register(RegisterBo registerBo) {
-        return userEntityMapper.register(registerBo);
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED,
+            rollbackFor = Exception.class, readOnly = false)
+    public void register(RegisterBo registerBo, RoleResourceBo roleResourceBo, int roleId) {
+        userEntityMapper.register(registerBo);
+        roleMapper.insertUserRole(registerBo.getUserId(), roleId);
+//        registerBo = new RegisterBo();
+//        resourceMapper.insertRoleResource(roleResourceBo);
+        userInfoMapper.insertUserInfo(registerBo.getUserId(), registerBo.getUsername(),
+                new Date().getTime(), new Date().getTime());
     }
 
     @Override
