@@ -81,7 +81,7 @@ public class UserEntityServiceImpl implements UserEntityService,
         if (user == null) {
             throw new UsernameNotFoundException("没有找到该用户");
         }
-//        // 查询权限id
+        // 查询权限id
         Set<SimpleGrantedAuthority> authorities = resourceMapper.selectByUserId(user.getUserId())
                 .stream()
                 .map(String::valueOf)
@@ -101,8 +101,8 @@ public class UserEntityServiceImpl implements UserEntityService,
     public void register(RegisterBo registerBo, RoleResourceBo roleResourceBo, int roleId) {
         userEntityMapper.register(registerBo);
         roleMapper.insertUserRole(registerBo.getUserId(), roleId);
-//        registerBo = new RegisterBo();
-//        resourceMapper.insertRoleResource(roleResourceBo);
+        //registerBo = new RegisterBo();
+        //resourceMapper.insertRoleResource(roleResourceBo);
         userInfoMapper.insertUserInfo(registerBo.getUserId(), registerBo.getUsername(),
                 new Date().getTime(), new Date().getTime());
     }
