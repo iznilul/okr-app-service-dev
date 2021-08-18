@@ -10,10 +10,6 @@ import lombok.Data;
 
 @Data
 public abstract class BaseEntity {
-    /**
-     * 主键
-     */
-    private Integer id;
     private long createTime;
     private long updateTime;
 }

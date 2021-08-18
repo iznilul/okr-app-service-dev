@@ -13,7 +13,7 @@ public class RoleServiceImpl implements RoleService {
     RoleMapper roleMapper;
 
     @Override
-    public void addUserRole(int userId, int roleId) {
+    public void saveUserRole(int userId, int roleId) {
         roleMapper.insertUserRole(userId, roleId);
     }
 

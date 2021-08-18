@@ -12,7 +12,7 @@ import java.util.Set;
 public interface ResourceMapper {
 
 
-    void insertResources(List<Resource> resourceList) throws MapperException;
+    void insertResource(List<Resource> resourceList) throws MapperException;
 
     void deleteByType(int type) throws MapperException;
 

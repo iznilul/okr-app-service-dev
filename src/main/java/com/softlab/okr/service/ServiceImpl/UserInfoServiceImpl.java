@@ -35,7 +35,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public void addUserInfo(int userId, String username, long createTime, long updateTime) {
+    public void saveUserInfo(int userId, String username, long createTime, long updateTime) {
         userInfoMapper.insertUserInfo(userId, username, createTime, updateTime);
     }
 

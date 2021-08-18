@@ -101,8 +101,6 @@ public class UserEntityServiceImpl implements UserEntityService,
     public void register(RegisterBo registerBo, RoleResourceBo roleResourceBo, int roleId) {
         userEntityMapper.register(registerBo);
         roleMapper.insertUserRole(registerBo.getUserId(), roleId);
-        //registerBo = new RegisterBo();
-        //resourceMapper.insertRoleResource(roleResourceBo);
         userInfoMapper.insertUserInfo(registerBo.getUserId(), registerBo.getUsername(),
                 new Date().getTime(), new Date().getTime());
     }
