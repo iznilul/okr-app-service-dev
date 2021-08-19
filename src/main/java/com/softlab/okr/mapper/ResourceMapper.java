@@ -1,8 +1,9 @@
 package com.softlab.okr.mapper;
 
-import com.softlab.okr.exception.MapperException;
+
 import com.softlab.okr.model.bo.RoleResourceBo;
 import com.softlab.okr.model.entity.Resource;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,13 +13,13 @@ import java.util.Set;
 public interface ResourceMapper {
 
 
-    void insertResource(List<Resource> resourceList) throws MapperException;
+    int insertResource(List<Resource> resourceList) throws DataAccessException;
 
-    void deleteByType(int type) throws MapperException;
+    int deleteByType(int type) throws DataAccessException;
 
-    Set<Integer> selectByUserId(Integer userId) throws MapperException;
+    Set<Integer> selectByUserId(Integer userId) throws DataAccessException;
 
-    void insertRoleResource(RoleResourceBo roleResourceBo) throws MapperException;
+    int insertRoleResource(RoleResourceBo roleResourceBo) throws DataAccessException;
 
-    void deleteRoleResource(int roleId) throws MapperException;
+    int deleteRoleResource(int roleId) throws DataAccessException;
 }

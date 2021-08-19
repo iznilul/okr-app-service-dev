@@ -1,18 +1,18 @@
 package com.softlab.okr.mapper;
 
-import com.softlab.okr.exception.MapperException;
 import com.softlab.okr.model.bo.RegisterBo;
 import com.softlab.okr.model.entity.UserEntity;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserEntityMapper {
 
-    UserEntity selectByUsername(String username) throws MapperException;
+    UserEntity selectByUsername(String username) throws DataAccessException;
 
-    void updatePassword(String newPassword) throws MapperException;
+    int updatePassword(String newPassword) throws DataAccessException;
 
-    int register(RegisterBo registerBo) throws MapperException;
+    int register(RegisterBo registerBo) throws DataAccessException;
 
-    void deleteByUsername(String username) throws MapperException;
+    int deleteByUsername(String username) throws DataAccessException;
 }

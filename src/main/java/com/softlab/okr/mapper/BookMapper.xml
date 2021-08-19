@@ -18,21 +18,33 @@
         `book_id`,`name`,`img`,`publisher`,`price`,`status`,`user_id`,`create_time`,`update_time`
     </sql>
 
+    <!--选择全部-->
     <select id="selectList" resultMap="bookMap">
         select
         <include refid="baseColumn"></include>
-        from book
+        from `book`
+    </select>
+
+    <!--    根据条件选取book-->
+    <select id="selectByCond" resultMap="bookMap">
+        select
+        <include refid="baseColumn"></include>
+        from `book`
+        where 1=1
+        <if test="name!='' and name!=null">and `name` like `%${name}%`</if>
+        <if test="status!='' and status!=null">and `status` = 0</if>
+        <if test="userId!='' and userId!=null">and user_id = #{userId}</if>
     </select>
 
     <insert id="insertBook">
         insert into
-        book(<include refid="baseColumn"></include>)
+        `book`(<include refid="baseColumn"></include>)
         values
-        (#{bookId},#{name},#{img},#{publisher},#{price},#{status},#{userId},#{createTime},#{updateTime})
+        (#{bookId},#{name},#{img},#{publisher},#{price},#{status},#{userId},now(),now())
     </insert>
 
     <delete id="deleteById">
-        delete from book
+        delete from `book`
         where book_id in
         <foreach collection="bookIds" item="item" open="(" separator="," close=")">
             #{item}
@@ -40,16 +52,15 @@
     </delete>
 
     <update id="updateById">
-        update book set
-        `book_id`=#{bookId},
+        update `book` set
         `name`=#{name},
         `img`=#{img},
         `publisher`=#{publisher},
         `price`=#{price},
         `status`=#{status},
         `user_id`=#{userId},
-        `create_time`=#{createTime},
-        `update_time`=#{updateTime}
+        `update_time`=now()
+        where book_id=#{bookId}
     </update>
 
 

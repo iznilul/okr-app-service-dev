@@ -1,16 +1,16 @@
 package com.softlab.okr.mapper;
 
-import com.softlab.okr.exception.MapperException;
 import com.softlab.okr.model.entity.Role;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RoleMapper {
 
-    Role selectByRoleId(int roleId) throws MapperException;
+    Role selectByRoleId(int roleId) throws DataAccessException;
 
-    Role selectByName(String name) throws MapperException;
+    Role selectByName(String name) throws DataAccessException;
 
-    void insertUserRole(int userId, int roleId) throws MapperException;
+    int insertUserRole(int userId, int roleId) throws DataAccessException;
 
 }

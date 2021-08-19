@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
 /**
  * @program: okr
  * @description:
@@ -20,7 +18,7 @@ public class Book extends BaseEntity {
     private String name;
     private String img;
     private String publisher;
-    private BigDecimal price;
+    private Integer price;
     private Integer status;
     private Integer userId;
 }

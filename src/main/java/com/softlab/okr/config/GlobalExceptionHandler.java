@@ -1,12 +1,12 @@
 package com.softlab.okr.config;
 
 import com.softlab.okr.exception.ControllerException;
-import com.softlab.okr.exception.MapperException;
 import com.softlab.okr.exception.ServiceException;
 import com.softlab.okr.utils.Result;
 import com.softlab.okr.utils.ResultCode;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -175,8 +175,8 @@ public class GlobalExceptionHandler {
      * @Date: 2021/7/16
      */
     @ResponseBody
-    @ExceptionHandler(value = MapperException.class)
-    public Result mapperExceptionHandler(
+    @ExceptionHandler(value = DataAccessException.class)
+    public Result dataAccessExceptionHandler(
             ControllerException e) {
         log.error("Dao层异常" + e.toString());
         //定位打印抛出错误的地方
