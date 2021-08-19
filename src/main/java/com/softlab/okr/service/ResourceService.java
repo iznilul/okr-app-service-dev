@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface ResourceService {
 
-    void addResources(List<Resource> resourceList) throws ServiceException;
+    void saveResources(List<Resource> resourceList) throws ServiceException;
 
-    void addRoleResource(RoleResourceBo roleResourceBo) throws ServiceException;
+    void saveRoleResource(RoleResourceBo roleResourceBo) throws ServiceException;
 
     void removeByType(int type) throws ServiceException;
 

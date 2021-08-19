@@ -19,7 +19,7 @@ public interface UserInfoService {
     // 登陆检查
     UserEntity loginCheck(LoginDTO loginDto) throws ServiceException;
 
-    void addUserInfo(int userId, String username, long createTime, long updateTime) throws ServiceException;
+    void saveUserInfo(int userId, String username, long createTime, long updateTime) throws ServiceException;
 
     UserInfo getUserInfoByUsername(String username) throws ServiceException;
 

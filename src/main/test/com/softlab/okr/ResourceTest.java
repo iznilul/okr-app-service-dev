@@ -71,7 +71,7 @@ public class ResourceTest {
     public void insertRoleResource() {
         RoleResourceBo roleResourceBo = new RoleResourceBo(1, resourceService.getResourceIds(
                 "admin"));
-        resourceService.addRoleResource(roleResourceBo);
+        resourceService.saveRoleResource(roleResourceBo);
     }
 
     @Test

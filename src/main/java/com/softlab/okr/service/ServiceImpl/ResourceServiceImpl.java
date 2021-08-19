@@ -18,12 +18,12 @@ public class ResourceServiceImpl implements ResourceService {
     ResourceMapper resourceMapper;
 
     @Override
-    public void addResources(List<Resource> resourceList) {
-        resourceMapper.insertResources(resourceList);
+    public void saveResources(List<Resource> resourceList) {
+        resourceMapper.insertResource(resourceList);
     }
 
     @Override
-    public void addRoleResource(RoleResourceBo roleResourceBo) {
+    public void saveRoleResource(RoleResourceBo roleResourceBo) {
         resourceMapper.insertRoleResource(roleResourceBo);
     }
 
@@ -57,6 +57,6 @@ public class ResourceServiceImpl implements ResourceService {
     @Override
     public void reloadRoleResource(RoleResourceBo roleResourceBo) {
         resourceMapper.deleteRoleResource(roleResourceBo.getRoleId());
-        this.addRoleResource(roleResourceBo);
+        this.saveRoleResource(roleResourceBo);
     }
 }
