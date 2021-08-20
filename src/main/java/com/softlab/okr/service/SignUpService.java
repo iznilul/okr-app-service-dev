@@ -1,7 +1,10 @@
 package com.softlab.okr.service;
 
-import io.github.sdutsoftlab.model.User;
-
+import com.github.pagehelper.PageInfo;
+import com.softlab.okr.exception.ServiceException;
+import com.softlab.okr.model.dto.SignUpDTO;
+import com.softlab.okr.model.entity.SignUp;
+import com.softlab.okr.model.vo.SignUpVO;
 import java.util.List;
 
 /**
@@ -10,21 +13,25 @@ import java.util.List;
  * @Version 1.0
  */
 public interface SignUpService {
-    // 登录检查
-    int addNews(User user);
 
-    // 查询
-    int query(String uid);
+  // 报名
+  int saveSignUpList(SignUp signUp) throws ServiceException;
 
-    boolean isOk(String mname);
+  // 检查是否已报名
+  String getIsExist(String id) throws ServiceException;
 
-    // 检查是否存在
-    String isExist(String uid);
+  //查询录取结果
+  SignUpVO getSignUpListStatus(String id) throws ServiceException;
 
-    String switchMenu(String menu);
+  //录取结果更新
+  int modifySignUpList(SignUp signUp) throws ServiceException;
 
-    int getMenuStatus(String menu);
+  //根据用户
+  PageInfo<SignUp> getSignUpListByCond(SignUpDTO signUpDTO) throws ServiceException;
 
-    // 查询
-    List<User> fetchAllStudents();
+  //根据id返回用户
+  SignUp getSignUpListById(String id) throws ServiceException;
+
+  // 拉取所有
+  List<SignUp> getSignUpList() throws ServiceException;
 }

@@ -14,11 +14,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Book extends BaseEntity {
-    private Integer BookId;
-    private String name;
-    private String img;
-    private String publisher;
-    private Integer price;
-    private Integer status;
-    private Integer userId;
+
+  private Integer BookId;
+  private String name;
+  private String img;
+  private String publisher;
+  private Integer price;
+  private Byte status;
+  private Integer userId;
+
 }

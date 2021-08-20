@@ -1,14 +1,16 @@
 package com.softlab.okr.service.ServiceImpl;
 
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.softlab.okr.mapper.SignUpMapper;
+import com.softlab.okr.model.dto.SignUpDTO;
 import com.softlab.okr.model.entity.SignUp;
+import com.softlab.okr.model.vo.SignUpVO;
 import com.softlab.okr.service.SignUpService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * @Author: Devhui
@@ -16,57 +18,52 @@ import java.util.List;
  * @Version 1.0
  */
 @Service
-@Transactional
 public class SignUpServiceImpl implements SignUpService {
-    @Autowired
-    private SignUpMapper userMapper;
 
-    @Autowired
-    private MenuMapper menuMapper;
+  @Autowired
+  private SignUpMapper signUpMapper;
 
-    @Override
-    public int addNews(SignUp user) {
-        return userMapper.addNews(user);
-    }
+  // 报名
+  @Override
+  public int saveSignUpList(SignUp signUp) {
+    return signUpMapper.insertSignUpList(signUp);
+  }
 
-    @Override
-    public int query(String uid) {
-        return userMapper.query(uid);
-    }
+  // 检查是否已报名
+  @Override
+  public String getIsExist(String id) {
+    return signUpMapper.selectIsExist(id);
+  }
 
-    @Override
-    public boolean isOk(String mname) {
-        int i = menuMapper.queryOK(mname);
-        if (i == 1) {
-            return true;
-        }
-        return false;
-    }
+  //查询录取结果
+  @Override
+  public SignUpVO getSignUpListStatus(String id) {
+    return signUpMapper.selectSignUpListStatus(id);
+  }
 
-    @Override
-    public String isExist(String uid) {
-        return userMapper.isExist(uid);
-    }
+  //录取结果更新
+  @Override
+  public int modifySignUpList(SignUp signUp) {
+    return signUpMapper.updateSignUpList(signUp);
+  }
 
-    @Override
-    public String switchMenu(String menu) {
-        int menuStatus = this.getMenuStatus(menu);
-        if (menuStatus == 1) {
-            int i = menuMapper.switchMenu(menu, 0);
-            return i == 1 ? menu + ", 已关闭" : "err";
-        } else {
-            int i = menuMapper.switchMenu(menu, 1);
-            return i == 1 ? menu + ", 已打开" : "err";
-        }
-    }
+  //根据参数返回报名列表
+  @Override
+  public PageInfo<SignUp> getSignUpListByCond(SignUpDTO signUpDTO) {
+    PageHelper.startPage(signUpDTO.getIndex(), signUpDTO.getPageSize());
+    List<SignUp> list = signUpMapper.selectSignUpListByCond(signUpDTO);
+    return new PageInfo<>(list);
+  }
 
-    @Override
-    public int getMenuStatus(String menu) {
-        return menuMapper.queryOK(menu);
-    }
+  //根据id返回用户
+  @Override
+  public SignUp getSignUpListById(String id) {
+    return signUpMapper.selectSignUpListById(id);
+  }
 
-    @Override
-    public List<SignUp> fetchAllStudents() {
-        return userMapper.fetchAllStudents();
-    }
+  // 拉取所有
+  @Override
+  public List<SignUp> getSignUpList() {
+    return signUpMapper.selectSignUpList();
+  }
 }

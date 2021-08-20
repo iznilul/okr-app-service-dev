@@ -1,57 +1,57 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.softlab.okr.mapper.BookMapper">
-    <resultMap id="bookMap" type="com.softlab.okr.model.entity.Book">
-        <id property="bookId" column="book_id"/>
-        <result property="name" column="name"/>
-        <result property="img" column="img"/>
-        <result property="publisher" column="publisher"/>
-        <result property="price" column="price"/>
-        <result property="status" column="status"/>
-        <result property="userId" column="user_id"/>
-        <result property="createTime" column="create_time"/>
-        <result property="updateTime" column="update_time"/>
-    </resultMap>
+  <resultMap id="bookMap" type="com.softlab.okr.model.entity.Book">
+    <id property="bookId" column="book_id"/>
+    <result property="name" column="name"/>
+    <result property="img" column="img"/>
+    <result property="publisher" column="publisher"/>
+    <result property="price" column="price"/>
+    <result property="status" column="status"/>
+    <result property="userId" column="user_id"/>
+    <result property="createTime" column="create_time"/>
+    <result property="updateTime" column="update_time"/>
+  </resultMap>
 
-    <sql id="baseColumn">
+  <sql id="baseColumn">
         `book_id`,`name`,`img`,`publisher`,`price`,`status`,`user_id`,`create_time`,`update_time`
     </sql>
 
-    <!--选择全部-->
-    <select id="selectList" resultMap="bookMap">
-        select
-        <include refid="baseColumn"></include>
-        from `book`
-    </select>
+  <!--选择全部-->
+  <select id="selectList" resultMap="bookMap">
+    select
+    <include refid="baseColumn"></include>
+    from `book`
+  </select>
 
-    <!--    根据条件选取book-->
-    <select id="selectByCond" resultMap="bookMap">
-        select
-        <include refid="baseColumn"></include>
-        from `book`
-        where 1=1
-        <if test="name!='' and name!=null">and `name` like `%${name}%`</if>
-        <if test="status!='' and status!=null">and `status` = 0</if>
-        <if test="userId!='' and userId!=null">and user_id = #{userId}</if>
-    </select>
+  <!--    根据条件选取book-->
+  <select id="selectByCond" resultMap="bookMap">
+    select
+    <include refid="baseColumn"></include>
+    from `book`
+    where 1=1
+    <if test="name!='' and name!=null">and `name` like `%${name}%`</if>
+    <if test="status!='' and status!=null">and `status` = 0</if>
+    <if test="userId!='' and userId!=null">and user_id = #{userId}</if>
+  </select>
 
-    <insert id="insertBook">
-        insert into
-        `book`(<include refid="baseColumn"></include>)
-        values
-        (#{bookId},#{name},#{img},#{publisher},#{price},#{status},#{userId},now(),now())
-    </insert>
+  <insert id="insertBook">
+    insert into
+    `book`(<include refid="baseColumn"></include>)
+    values
+    (#{bookId},#{name},#{img},#{publisher},#{price},#{status},#{userId},NOW(),NOW())
+  </insert>
 
-    <delete id="deleteById">
-        delete from `book`
-        where book_id in
-        <foreach collection="bookIds" item="item" open="(" separator="," close=")">
-            #{item}
-        </foreach>
-    </delete>
+  <delete id="deleteById">
+    delete from `book`
+    where book_id in
+    <foreach collection="bookIds" item="item" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </delete>
 
-    <update id="updateById">
+  <update id="updateById">
         update `book` set
         `name`=#{name},
         `img`=#{img},

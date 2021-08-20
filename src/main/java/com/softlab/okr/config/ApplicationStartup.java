@@ -1,10 +1,15 @@
 package com.softlab.okr.config;
 
 import com.softlab.okr.annotation.Auth;
+import com.softlab.okr.model.bo.RoleResourceBo;
 import com.softlab.okr.model.entity.Resource;
 import com.softlab.okr.security.MySecurityMetadataSource;
 import com.softlab.okr.service.ResourceService;
 import io.jsonwebtoken.lang.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -13,11 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping;
-
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * @author RudeCrab
@@ -44,7 +44,12 @@ public class ApplicationStartup implements ApplicationRunner {
     // 将权限资源给放到权限缓存里
     MySecurityMetadataSource.getRESOURCES().addAll(list);
     // 将资源数据批量添加到数据库
-      resourceService.saveResources(list);
+    resourceService.saveResources(list);
+    //重载管理员和用户的资源
+    resourceService.reloadRoleResource(new RoleResourceBo(1, resourceService.getResourceIds(
+        "admin")));
+    resourceService.reloadRoleResource(new RoleResourceBo(2, resourceService.getResourceIds(
+        "user")));
   }
 
   /**

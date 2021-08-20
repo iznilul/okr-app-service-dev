@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .requestMatchers(CorsUtils::isPreFlightRequest)
         .permitAll()
         // 指定某些接口不需要通过验证即可访问。像登陆、测试接口肯定是不需要认证的
-        .antMatchers("/api/login", "/api/test", "/api/logout")
+        .antMatchers("/api/login", "/api/test", "/api/logout", "/api/signUp", "/api/querySignUp")
         .permitAll()
         // 这里意思是其它所有接口需要认证才能访问
         .antMatchers("/api/**")
