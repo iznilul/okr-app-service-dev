@@ -1,10 +1,6 @@
 package com.softlab.okr.config;
 
-import com.softlab.okr.security.AuthFilter;
-import com.softlab.okr.security.LoginFilter;
-import com.softlab.okr.security.MyDeniedHandler;
-import com.softlab.okr.security.MyEntryPoint;
-import com.softlab.okr.security.MyPasswordEncoder;
+import com.softlab.okr.security.*;
 import com.softlab.okr.service.ServiceImpl.UserEntityServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -63,6 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // 禁用session，因为要用JWT
     http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     // 将我们自定义的认证过滤器替换掉默认的认证过滤器,两个过滤器分别是登录过滤和权限过滤
+    http.addFilterBefore(new ApiFilter(), UsernamePasswordAuthenticationFilter.class);
     http.addFilterBefore(loginFilter, UsernamePasswordAuthenticationFilter.class);
     http.addFilterBefore(authFilter, FilterSecurityInterceptor.class);
   }

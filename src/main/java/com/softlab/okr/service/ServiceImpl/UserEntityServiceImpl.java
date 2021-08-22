@@ -1,6 +1,6 @@
 package com.softlab.okr.service.ServiceImpl;
 
-import com.softlab.okr.exception.ControllerException;
+import com.softlab.okr.exception.ApiException;
 import com.softlab.okr.mapper.ResourceMapper;
 import com.softlab.okr.mapper.RoleMapper;
 import com.softlab.okr.mapper.UserEntityMapper;
@@ -61,7 +61,7 @@ public class UserEntityServiceImpl implements UserEntityService,
         UserEntity user = userEntityMapper.selectByUsername(loginDTO.getUsername());
         // 若没有查到用户或者密码校验失败则抛出异常，将未加密的密码和已加密的密码进行比对
         if (user == null || !passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
-            throw new ControllerException(ResultCode.USER_LOGIN_ERROR);
+            throw new ApiException(ResultCode.USER_LOGIN_ERROR);
         }
         //VO是返回给前端用户展示的实体类，不过可以统一包装返回类
         UserVO userVO = new UserVO();

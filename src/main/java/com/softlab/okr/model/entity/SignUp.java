@@ -15,6 +15,6 @@ public class SignUp extends BaseEntity {
   private String qq;
   private String major;
   private String profile;
-  private Byte status;
+  private Integer status;
   private String comment;
 }

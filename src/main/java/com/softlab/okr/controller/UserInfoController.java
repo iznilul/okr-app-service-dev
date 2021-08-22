@@ -2,7 +2,7 @@ package com.softlab.okr.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.softlab.okr.annotation.Auth;
-import com.softlab.okr.exception.ControllerException;
+import com.softlab.okr.exception.ApiException;
 import com.softlab.okr.model.dto.LoginDTO;
 import com.softlab.okr.model.dto.ModifyPwdDTO;
 import com.softlab.okr.model.dto.SelectUserDTO;
@@ -15,17 +15,13 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import java.util.Base64;
-import java.util.Date;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Base64;
+import java.util.Date;
 
 /**
  * @Author: Devhui @Date: 2019-11-28 17:05 @Version 1.0
@@ -54,13 +50,13 @@ public class UserInfoController {
     System.out.println(updateUserDto);
 
     if (updateUserDto.getUsername().equals("")) {
-      throw new ControllerException(ResultCode.PARAM_NOT_COMPLETE);
+        throw new ApiException(ResultCode.PARAM_NOT_COMPLETE);
     }
 
     if (userInfoService.modifyUserInfo(updateUserDto, new Date().getTime()) == 1) {
       return Result.success("用户信息更新成功");
     } else {
-      throw new ControllerException(ResultCode.USER_UPDATE_ERROR);
+        throw new ApiException(ResultCode.USER_UPDATE_ERROR);
     }
   }
 
@@ -83,14 +79,14 @@ public class UserInfoController {
     System.out.println(username);
 
     if (username.equals("")) {
-      throw new ControllerException(ResultCode.PARAM_NOT_COMPLETE);
+        throw new ApiException(ResultCode.PARAM_NOT_COMPLETE);
     }
 
     UserInfo userInfo = userInfoService.getUserInfoByUsername(username);
     if (userInfo != null) {
       return Result.success(userInfo);
     } else {
-      throw new ControllerException(ResultCode.USER_LOGIN_ERROR);
+        throw new ApiException(ResultCode.USER_LOGIN_ERROR);
     }
   }
 
@@ -123,7 +119,7 @@ public class UserInfoController {
       if (userList.getSize() > 0) {
         return Result.success(userList);
       } else {
-        throw new ControllerException(ResultCode.UNKNOWN_ERROR);
+          throw new ApiException(ResultCode.UNKNOWN_ERROR);
       }
     }
   }
@@ -152,7 +148,7 @@ public class UserInfoController {
     // 通过base64来转化图片
     byte[] data = file.getBytes();
     if (data.length > 1024000) {
-      throw new ControllerException(ResultCode.USER_UPLOAD_EXCEED);
+        throw new ApiException(ResultCode.USER_UPLOAD_EXCEED);
     }
 
     // 将字节流转成字符串
@@ -162,7 +158,7 @@ public class UserInfoController {
     if (userInfoService.uploadAvatar(username, avatar) == 1) {
       return Result.success(avatar);
     } else {
-      throw new ControllerException(ResultCode.USER_UPLOAD_ERROR);
+        throw new ApiException(ResultCode.USER_UPLOAD_ERROR);
     }
   }
 
@@ -178,7 +174,7 @@ public class UserInfoController {
     System.out.println(modifyPwdDto);
 
     if (modifyPwdDto.getUsername().equals("")) {
-      throw new ControllerException(ResultCode.PARAM_NOT_COMPLETE);
+        throw new ApiException(ResultCode.PARAM_NOT_COMPLETE);
     }
 
     LoginDTO loginDto = new LoginDTO(modifyPwdDto.getUsername(), modifyPwdDto.getOldPassword
@@ -189,10 +185,10 @@ public class UserInfoController {
           == 1) {
         return Result.success("修改密码成功");
       } else {
-        throw new ControllerException(ResultCode.USER_UPDATE_ERROR);
+          throw new ApiException(ResultCode.USER_UPDATE_ERROR);
       }
     } else {
-      throw new ControllerException(ResultCode.USER_LOGIN_ERROR);
+        throw new ApiException(ResultCode.USER_LOGIN_ERROR);
     }
   }
 

@@ -15,6 +15,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SignUpVO {
 
-  private Byte status;
+  private Integer status;
   private String comment;
 }

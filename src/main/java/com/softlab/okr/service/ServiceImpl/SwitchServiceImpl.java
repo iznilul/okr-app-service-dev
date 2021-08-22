@@ -3,9 +3,10 @@ package com.softlab.okr.service.ServiceImpl;
 import com.softlab.okr.mapper.SwitchMapper;
 import com.softlab.okr.model.entity.Switch;
 import com.softlab.okr.service.SwitchService;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @program: okr
@@ -30,7 +31,7 @@ public class SwitchServiceImpl implements SwitchService {
   }
 
   @Override
-  public Byte getStatus(String name) {
+  public Integer getStatus(String name) {
     return switchMapper.selectStatus(name);
   }
 

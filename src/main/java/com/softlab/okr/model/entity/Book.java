@@ -20,7 +20,7 @@ public class Book extends BaseEntity {
   private String img;
   private String publisher;
   private Integer price;
-  private Byte status;
+  private Integer status;
   private Integer userId;
 
 }

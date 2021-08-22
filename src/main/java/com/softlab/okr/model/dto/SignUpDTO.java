@@ -29,7 +29,7 @@ public class SignUpDTO {
   @ApiModelProperty(value = "专业班级", required = true, example = "挖掘机1802")
   private String major;
   @ApiModelProperty(value = "录取状态", required = true, example = "0")
-  private Byte status;
+  private Integer status;
   @ApiModelProperty(value = "当前页", required = true, example = "1")
   private Integer index;
   @ApiModelProperty(value = "页大小", required = true, example = "8")

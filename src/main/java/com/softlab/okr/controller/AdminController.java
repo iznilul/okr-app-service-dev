@@ -2,37 +2,34 @@ package com.softlab.okr.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.softlab.okr.annotation.Auth;
-import com.softlab.okr.exception.ControllerException;
+import com.softlab.okr.exception.ApiException;
 import com.softlab.okr.model.bo.RegisterBo;
 import com.softlab.okr.model.bo.RoleResourceBo;
 import com.softlab.okr.model.dto.RegisterDTO;
 import com.softlab.okr.model.dto.SignUpDTO;
 import com.softlab.okr.model.entity.SignUp;
-import com.softlab.okr.service.ResourceService;
-import com.softlab.okr.service.RoleService;
-import com.softlab.okr.service.SignUpService;
-import com.softlab.okr.service.SwitchService;
-import com.softlab.okr.service.UserEntityService;
+import com.softlab.okr.security.MySecurityMetadataSource;
+import com.softlab.okr.service.*;
 import com.softlab.okr.utils.MD5Util;
 import com.softlab.okr.utils.Result;
 import com.softlab.okr.utils.ResultCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.Map;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 角色
  *
  * @author RudeCrab
  */
+@Validated
 @RestController
 @RequestMapping("/api/admin")
 @Api(tags = "管理员操作")
@@ -65,7 +62,7 @@ public class AdminController {
   @ApiOperation("注册用户")
   @PostMapping("register")
   @Auth(id = 1, name = "注册用户")
-  public Result register(@RequestBody RegisterDTO registerDTO) {
+  public Result register(@Validated @RequestBody RegisterDTO registerDTO) {
     String password = MD5Util.string2MD5(registerDTO.getUsername());
     int roleId = roleService.getRoleId(registerDTO.getName());
 
@@ -82,26 +79,23 @@ public class AdminController {
       userEntityService.register(registerBo, roleResourceBo, roleId);
       return Result.success("注册成功");
     } else {
-      throw new ControllerException(ResultCode.USER_HAS_EXISTED);
+      throw new ApiException(ResultCode.USER_HAS_EXISTED);
     }
   }
 
   @ApiOperation("删除用户")
   @GetMapping("removeByUsername")
   @Auth(id = 2, name = "删除用户")
-  public Result removeByUsername(@RequestParam("username") String username)
+  public Result removeByUsername(@NotBlank(message = "username不能为空") @RequestParam("username") String username)
       throws Exception {
     System.out.println(username);
 
-    if (username.equals("")) {
-      throw new ControllerException(ResultCode.PARAM_NOT_COMPLETE);
-    }
 
     if (userEntityService.getByUsername(username) != null) {
       userEntityService.removeByUsername(username);
       return Result.success("删除成功");
     } else {
-      throw new ControllerException(ResultCode.USER_LOGIN_ERROR);
+      throw new ApiException(ResultCode.USER_LOGIN_ERROR);
     }
   }
 
@@ -128,11 +122,13 @@ public class AdminController {
   }
 
   @ApiOperation("更改接口开放状态")
-  @GetMapping("modifySwitch")
+  @GetMapping("modifyResourceStatus")
   @Auth(id = 5, name = "更改接口开放状态")
-  public Result modifySignUpSwitch(@RequestParam(value = "name", required = true) String name)
+  public Result modifyResourceStatus(@NotNull(message = "resourceId不能为空") @RequestParam(
+          "resourceId") int resourceId)
       throws Exception {
-    if (switchService.modifyStatus(name) == 1) {
+    if (resourceService.modifyResourceStatus(resourceId) == 1) {
+      MySecurityMetadataSource.updateResources(resourceId);
       return Result.success("更改成功");
     } else {
       return Result.failure(ResultCode.SWITCH_ERROR);
@@ -154,7 +150,7 @@ public class AdminController {
       if (signUpList.getSize() > 0) {
         return Result.success(signUpList);
       } else {
-        throw new ControllerException(ResultCode.UNKNOWN_ERROR);
+        throw new ApiException(ResultCode.UNKNOWN_ERROR);
       }
     }
   }

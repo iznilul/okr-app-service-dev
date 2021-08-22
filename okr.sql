@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost
+ Source Server         : mysql5.7
  Source Server Type    : MySQL
  Source Server Version : 50722
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 50722
  File Encoding         : 65001
 
- Date: 20/08/2021 19:06:25
+ Date: 23/08/2021 00:40:56
 */
 
 SET NAMES utf8mb4;
@@ -51,10 +51,6 @@ CREATE TABLE `book_tag`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of book_tag
--- ----------------------------
-
--- ----------------------------
 -- Table structure for resource
 -- ----------------------------
 DROP TABLE IF EXISTS `resource`;
@@ -62,27 +58,27 @@ CREATE TABLE `resource`  (
   `resource_id` int(11) NOT NULL COMMENT '资源id，主键',
   `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '路径',
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '名称',
-  `type` tinyint(255) UNSIGNED NOT NULL COMMENT '类型。0为菜单，1为接口',
+  `method` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '请求类型',
+  `status` tinyint(1) NOT NULL COMMENT '接口状态 0关闭 1开启',
   PRIMARY KEY (`resource_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '资源' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of resource
 -- ----------------------------
-INSERT INTO `resource` VALUES (1, '/admin/syslog', '系统管理', 0);
-INSERT INTO `resource` VALUES (1001, 'POST:/api/admin/register', '注册用户', 1);
-INSERT INTO `resource` VALUES (1002, 'GET:/api/admin/removeByUsername', '删除用户', 1);
-INSERT INTO `resource` VALUES (1003, 'GET:/api/admin/reloadAdminRoleResource', '重载管理员资源', 1);
-INSERT INTO `resource` VALUES (1004, 'GET:/api/admin/reloadUserRoleResource', '重载用户资源', 1);
-INSERT INTO `resource` VALUES (1005, 'GET:/api/admin/modifySwitch', '更改接口开放状态', 1);
-INSERT INTO `resource` VALUES (1010, 'POST:/api/admin/getSignUpList', '获取报名记录', 1);
-INSERT INTO `resource` VALUES (1011, 'POST:/api/admin/modifySignUpList', '更新报名记录', 1);
-INSERT INTO `resource` VALUES (2001, 'POST:/api/user/modifyUserInfo', '更新用户信息', 1);
-INSERT INTO `resource` VALUES (2002, 'GET:/api/user/userInfoByUsername', '根据账号选择用户', 1);
-INSERT INTO `resource` VALUES (2003, 'POST:/api/user/userInfoByCond', '根据情况选择用户', 1);
-INSERT INTO `resource` VALUES (2004, 'POST:/api/user/upload', '上传头像文件', 1);
-INSERT INTO `resource` VALUES (2005, 'POST:/api/user/modifyPassword', '修改密码', 1);
-INSERT INTO `resource` VALUES (3001, 'GET:/api/user/monitor/server', '服务器监控', 1);
+INSERT INTO `resource` VALUES (1001, '/api/admin/register', '注册用户', 'POST', 1);
+INSERT INTO `resource` VALUES (1002, '/api/admin/removeByUsername', '删除用户', 'GET', 1);
+INSERT INTO `resource` VALUES (1003, '/api/admin/reloadAdminRoleResource', '重载管理员资源', 'GET', 1);
+INSERT INTO `resource` VALUES (1004, '/api/admin/reloadUserRoleResource', '重载用户资源', 'GET', 0);
+INSERT INTO `resource` VALUES (1005, '/api/admin/modifyResourceStatus', '更改接口开放状态', 'GET', 1);
+INSERT INTO `resource` VALUES (1010, '/api/admin/getSignUpList', '获取报名记录', 'POST', 1);
+INSERT INTO `resource` VALUES (1011, '/api/admin/modifySignUpList', '更新报名记录', 'POST', 1);
+INSERT INTO `resource` VALUES (2001, '/api/user/modifyUserInfo', '更新用户信息', 'POST', 1);
+INSERT INTO `resource` VALUES (2002, '/api/user/userInfoByUsername', '根据账号选择用户', 'GET', 1);
+INSERT INTO `resource` VALUES (2003, '/api/user/userInfoByCond', '根据情况选择用户', 'POST', 1);
+INSERT INTO `resource` VALUES (2004, '/api/user/upload', '上传头像文件', 'POST', 1);
+INSERT INTO `resource` VALUES (2005, '/api/user/modifyPassword', '修改密码', 'POST', 1);
+INSERT INTO `resource` VALUES (3001, '/api/user/monitor/server', '服务器监控', 'GET', 1);
 
 -- ----------------------------
 -- Table structure for role
@@ -111,30 +107,42 @@ CREATE TABLE `role_resource`  (
   `resource_id` int(11) NOT NULL COMMENT '资源id',
   PRIMARY KEY (`id`, `role_id`, `resource_id`) USING BTREE,
   INDEX `resource_id`(`resource_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 604 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色-权限关系' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1472 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色-权限关系' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of role_resource
 -- ----------------------------
-INSERT INTO `role_resource` VALUES (595, 1, 1001);
-INSERT INTO `role_resource` VALUES (596, 1, 1002);
-INSERT INTO `role_resource` VALUES (585, 1, 1003);
-INSERT INTO `role_resource` VALUES (586, 1, 1004);
-INSERT INTO `role_resource` VALUES (591, 1, 1005);
-INSERT INTO `role_resource` VALUES (593, 1, 1010);
-INSERT INTO `role_resource` VALUES (594, 1, 1011);
-INSERT INTO `role_resource` VALUES (589, 1, 2001);
-INSERT INTO `role_resource` VALUES (600, 2, 2001);
-INSERT INTO `role_resource` VALUES (592, 1, 2002);
-INSERT INTO `role_resource` VALUES (602, 2, 2002);
-INSERT INTO `role_resource` VALUES (588, 1, 2003);
-INSERT INTO `role_resource` VALUES (599, 2, 2003);
-INSERT INTO `role_resource` VALUES (597, 1, 2004);
-INSERT INTO `role_resource` VALUES (603, 2, 2004);
-INSERT INTO `role_resource` VALUES (590, 1, 2005);
-INSERT INTO `role_resource` VALUES (601, 2, 2005);
-INSERT INTO `role_resource` VALUES (587, 1, 3001);
-INSERT INTO `role_resource` VALUES (598, 2, 3001);
+INSERT INTO `role_resource` VALUES (1464, 1, 1001);
+INSERT INTO `role_resource` VALUES (1462, 1, 1002);
+INSERT INTO `role_resource` VALUES (1456, 1, 1003);
+INSERT INTO `role_resource` VALUES (1459, 1, 1004);
+INSERT INTO `role_resource` VALUES (1465, 1, 1005);
+INSERT INTO `role_resource` VALUES (1455, 1, 1010);
+INSERT INTO `role_resource` VALUES (1454, 1, 1011);
+INSERT INTO `role_resource` VALUES (1461, 1, 2001);
+INSERT INTO `role_resource` VALUES (1470, 2, 2001);
+INSERT INTO `role_resource` VALUES (1453, 1, 2002);
+INSERT INTO `role_resource` VALUES (1466, 2, 2002);
+INSERT INTO `role_resource` VALUES (1463, 1, 2003);
+INSERT INTO `role_resource` VALUES (1471, 2, 2003);
+INSERT INTO `role_resource` VALUES (1458, 1, 2004);
+INSERT INTO `role_resource` VALUES (1468, 2, 2004);
+INSERT INTO `role_resource` VALUES (1460, 1, 2005);
+INSERT INTO `role_resource` VALUES (1469, 2, 2005);
+INSERT INTO `role_resource` VALUES (1457, 1, 3001);
+INSERT INTO `role_resource` VALUES (1467, 2, 3001);
+
+-- ----------------------------
+-- Table structure for route
+-- ----------------------------
+DROP TABLE IF EXISTS `route`;
+CREATE TABLE `route`  (
+  `route_id` bigint(11) NOT NULL COMMENT '主键',
+  `path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '路径',
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '名称',
+  `status` tinyint(1) NOT NULL COMMENT '路径状态 0关闭 1开启',
+  PRIMARY KEY (`route_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for signuplist
@@ -229,7 +237,7 @@ CREATE TABLE `user`  (
   `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户名(账户)',
   `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密码',
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user
@@ -276,7 +284,7 @@ CREATE TABLE `user_role`  (
   `role_id` int(11) NOT NULL COMMENT '角色id',
   PRIMARY KEY (`id`, `user_id`, `role_id`) USING BTREE,
   INDEX `role_id`(`role_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户-角色关系表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户-角色关系表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_role

@@ -17,5 +17,5 @@ public class Switch {
 
   private Integer switchId;
   private String name;
-  private Byte status;
+  private Integer status;
 }

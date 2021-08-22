@@ -4,11 +4,19 @@
 <mapper namespace="com.softlab.okr.mapper.ResourceMapper">
     <resultMap id="resourceMap" type="com.softlab.okr.model.entity.Resource">
         <id property="resourceId" column="resource_id"/>
+        <result property="method" column="method"/>
         <result property="path" column="path"/>
         <result property="name" column="name"/>
-        <result property="type" column="type"/>
+        <result property="status" column="status"/>
     </resultMap>
 
+    <sql id="baseColumn">
+        `resource_id`,`method`,`path`,`name`,`status`
+    </sql>
+
+    <sql id="table">
+        `resource`
+    </sql>
 
     <select id="selectByUserId" resultType="Integer">
         select re.resource_id from resource re
@@ -17,17 +25,24 @@
         where ur.user_id=#{userId}
     </select>
 
+    <select id="selectResourceByPath" resultMap="resourceMap">
+        select
+        <include refid="baseColumn"></include>
+        from `resource`
+        where `path`=#{path}
+    </select>
+
     <insert id="insertResource">
-        insert into resource(resource_id,path,`name`,`type`)
+        insert into resource
+        (<include refid="baseColumn"></include>)
         values
         <foreach collection="list" item="item" separator=",">
-            (#{item.resourceId},#{item.path},#{item.name},#{item.type})
+            (#{item.resourceId},#{item.method},#{item.path},#{item.name},#{item.status})
         </foreach>
     </insert>
 
-    <delete id="deleteByType">
+    <delete id="deleteList">
         delete  from resource
-        where `type`=#{type}
     </delete>
 
     <delete id="deleteRoleResource">
@@ -42,6 +57,13 @@
             (#{roleId},#{item})
         </foreach>
     </insert>
+
+    <update id="updateResourceStatus">
+        update
+        <include refid="table"></include>
+        set status=ABS(status-1)
+        where `resource_id`=#{resourceId}
+    </update>
 
 
 </mapper>

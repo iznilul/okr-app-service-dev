@@ -14,12 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 /**
@@ -83,7 +78,7 @@ public class CommonController {
   @GetMapping("querySignUp")
   public Result querySignUp(@RequestParam String id) {
     if (switchService.getStatus("查询报名") != 1) {
-      return Result.failure(ResultCode.SIGNUP_QUERY_NOT_OPEN);
+      return Result.failure(ResultCode.API_NOT_OPEN);
     }
     SignUp signUp = signUpService.getSignUpListById(id);
     if (signUp != null) {

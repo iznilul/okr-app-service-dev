@@ -19,13 +19,11 @@ public class Resource {
     /**
      * 路径
      */
+    private String method;
     private String path;
     /**
      * 名称
      */
     private String name;
-    /**
-     * 类型。0为菜单，1为接口
-     */
-    private Integer type;
+    private Integer status;
 }

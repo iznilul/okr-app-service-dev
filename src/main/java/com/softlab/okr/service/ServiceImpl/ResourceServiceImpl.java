@@ -28,8 +28,13 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
-    public void removeByType(int type) {
-        resourceMapper.deleteByType(type);
+    public void removeList() {
+        resourceMapper.deleteList();
+    }
+
+    @Override
+    public Resource getResourceByPath(String path) {
+        return resourceMapper.selectResourceByPath(path);
     }
 
     @Override
@@ -58,5 +63,10 @@ public class ResourceServiceImpl implements ResourceService {
     public void reloadRoleResource(RoleResourceBo roleResourceBo) {
         resourceMapper.deleteRoleResource(roleResourceBo.getRoleId());
         this.saveRoleResource(roleResourceBo);
+    }
+
+    @Override
+    public int modifyResourceStatus(int resourceId) {
+        return resourceMapper.updateResourceStatus(resourceId);
     }
 }

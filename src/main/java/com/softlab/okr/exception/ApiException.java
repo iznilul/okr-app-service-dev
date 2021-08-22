@@ -14,6 +14,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ControllerException extends RuntimeException {
+public class ApiException extends RuntimeException {
     private ResultCode resultCode;
 }

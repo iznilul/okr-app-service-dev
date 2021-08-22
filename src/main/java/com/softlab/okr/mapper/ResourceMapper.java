@@ -15,11 +15,15 @@ public interface ResourceMapper {
 
     int insertResource(List<Resource> resourceList) throws DataAccessException;
 
-    int deleteByType(int type) throws DataAccessException;
+    int deleteList() throws DataAccessException;
+
+    Resource selectResourceByPath(String path) throws DataAccessException;
 
     Set<Integer> selectByUserId(Integer userId) throws DataAccessException;
 
     int insertRoleResource(RoleResourceBo roleResourceBo) throws DataAccessException;
 
     int deleteRoleResource(int roleId) throws DataAccessException;
+
+    int updateResourceStatus(int resourceId) throws DataAccessException;
 }
