@@ -23,7 +23,9 @@ public class MyEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
                          AuthenticationException e) throws IOException {
-        log.error(e.getMessage());
+        log.error("用户没有登录:" + e.toString());
+        //定位打印抛出错误的地方
+        log.error("定位:" + e.getStackTrace()[0].toString());
         response.setContentType("application/json;charset=utf-8");
         PrintWriter out = response.getWriter();
         //封装一个结果返回类

@@ -44,7 +44,6 @@ public class ResourceServiceImpl implements ResourceService {
 
         if (role.equals("admin")) {
             for (Resource resource : resources) {
-                String[] split = resource.getPath().split("/");
                 list.add(resource.getResourceId());
             }
             return list;
