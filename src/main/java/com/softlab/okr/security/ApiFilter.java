@@ -4,12 +4,15 @@ import com.alibaba.fastjson.JSON;
 import com.softlab.okr.model.entity.Resource;
 import com.softlab.okr.utils.Result;
 import com.softlab.okr.utils.ResultCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -20,6 +23,10 @@ import java.util.Set;
  */
 @Slf4j
 public class ApiFilter implements Filter {
+
+    @Getter
+    @Setter
+    private static Set<Resource> resources = new HashSet<>();
 
     @Override
     public void init(FilterConfig arg0) throws ServletException {
@@ -32,7 +39,6 @@ public class ApiFilter implements Filter {
         log.info("----ApiFilter 接口开放过滤----");
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         String uri = ((HttpServletRequest) request).getRequestURI();
-        Set<Resource> resources = MySecurityMetadataSource.getRESOURCES();
         for (Resource resource : resources) {
             if (resource.getPath().equals(uri)) {
                 if (resource.getStatus() == 1) {
@@ -45,6 +51,7 @@ public class ApiFilter implements Filter {
                     out.flush();
                     out.close();
                 }
+                break;
             }
 
         }
@@ -53,5 +60,16 @@ public class ApiFilter implements Filter {
     @Override
     public void destroy() {
         // System.out.println("----Filter销毁----");
+    }
+
+    public static void updateResources(int resourceId) {
+        for (Resource resource : resources) {
+            if (resource.getResourceId() == resourceId) {
+                resources.remove(resource);
+                resource.setStatus(Math.abs(resource.getStatus() - 1));
+                resources.add(resource);
+                break;
+            }
+        }
     }
 }

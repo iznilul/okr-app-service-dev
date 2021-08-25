@@ -26,7 +26,7 @@ public enum ResultCode {
   USER_UPLOAD_EXCEED(2009, "用户上传文件太大"),
   SIGNUP_NOT_OPEN(2010, "报名未开启"),
   SIGNUP_ERROR(2011, "报名失败，请重新报名或联系网站管理员"),
-  API_NOT_OPEN(2012, "查询接口未开启"),
+  API_NOT_OPEN(2012, "请求接口未开启"),
   QUERY_ERROR(2013, "查无此人，请先报名或联系网站管理员"),
   SWITCH_ERROR(2014, "接口更改失败"),
   SIGNUP_MODIFY_ERROR(2015, "报名信息更新失败"),

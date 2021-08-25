@@ -2,6 +2,7 @@ package com.softlab.okr.security;
 
 import com.softlab.okr.model.entity.Resource;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
@@ -26,7 +27,8 @@ public class MySecurityMetadataSource implements SecurityMetadataSource {
      * 当前系统所有url资源 当前系统所有接口资源对象，放在这里相当于一个缓存的功能。
      */
     @Getter
-    private static final Set<Resource> RESOURCES = new HashSet<>();
+    @Setter
+    private static Set<Resource> RESOURCES = new HashSet<>();
 
     // 根据请求的路径匹配资源
     @Override
@@ -57,16 +59,5 @@ public class MySecurityMetadataSource implements SecurityMetadataSource {
     @Override
     public boolean supports(Class<?> clazz) {
         return true;
-    }
-
-    public static void updateResources(int resourceId) {
-        for (Resource resource : RESOURCES) {
-            if (resource.getResourceId() == resourceId) {
-                RESOURCES.remove(resource);
-                resource.setStatus(Math.abs(resource.getStatus() - 1));
-                RESOURCES.add(resource);
-                break;
-            }
-        }
     }
 }

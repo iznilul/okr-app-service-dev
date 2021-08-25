@@ -8,29 +8,21 @@ import com.softlab.okr.model.bo.RoleResourceBo;
 import com.softlab.okr.model.dto.RegisterDTO;
 import com.softlab.okr.model.dto.SignUpDTO;
 import com.softlab.okr.model.entity.SignUp;
-import com.softlab.okr.security.MySecurityMetadataSource;
-import com.softlab.okr.service.ResourceService;
-import com.softlab.okr.service.RoleService;
-import com.softlab.okr.service.SignUpService;
-import com.softlab.okr.service.SwitchService;
-import com.softlab.okr.service.UserEntityService;
+import com.softlab.okr.security.ApiFilter;
+import com.softlab.okr.service.*;
 import com.softlab.okr.utils.MD5Util;
 import com.softlab.okr.utils.Result;
 import com.softlab.okr.utils.ResultCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import java.util.HashMap;
-import java.util.Map;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 角色
@@ -136,7 +128,7 @@ public class AdminController {
       "resourceId") int resourceId)
       throws Exception {
     if (resourceService.modifyResourceStatus(resourceId) == 1) {
-      MySecurityMetadataSource.updateResources(resourceId);
+      ApiFilter.updateResources(resourceId);
       return Result.success("更改成功");
     } else {
       return Result.failure(ResultCode.SWITCH_ERROR);

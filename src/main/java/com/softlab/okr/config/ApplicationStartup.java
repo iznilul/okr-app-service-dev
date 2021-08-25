@@ -1,15 +1,11 @@
 package com.softlab.okr.config;
 
 import com.softlab.okr.annotation.Auth;
-import com.softlab.okr.model.bo.RoleResourceBo;
 import com.softlab.okr.model.entity.Resource;
+import com.softlab.okr.security.ApiFilter;
 import com.softlab.okr.security.MySecurityMetadataSource;
 import com.softlab.okr.service.ResourceService;
 import io.jsonwebtoken.lang.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -20,21 +16,25 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * @author RudeCrab
  */
 @Component
 public class ApplicationStartup implements ApplicationRunner {
 
-  @Autowired
-  private RequestMappingInfoHandlerMapping requestMappingInfoHandlerMapping;
+    @Autowired
+    private RequestMappingInfoHandlerMapping requestMappingInfoHandlerMapping;
 
-  @Autowired
-  private ResourceService resourceService;
+    @Autowired
+    private ResourceService resourceService;
 
-  @Autowired
-  private RedisTemplate<String, Object> redisTemplate;
-
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
 
   @Override
   public void run(ApplicationArguments args) throws Exception {
@@ -44,23 +44,24 @@ public class ApplicationStartup implements ApplicationRunner {
     if (Collections.isEmpty(list)) {
       return;
     }
-    // 先删除所有操作权限类型的权限资源，待会再新增资源，以实现全量更新（注意哦，数据库中不要设置外键，否则会删除失败）
-    resourceService.removeList();
-    // 将资源数据批量添加到数据库
-    resourceService.saveResources(list);
-    //重载管理员和用户的资源
-    resourceService.reloadRoleResource(new RoleResourceBo(1, resourceService.getResourceIds(
-        "admin")));
-    resourceService.reloadRoleResource(new RoleResourceBo(2, resourceService.getResourceIds(
-        "user")));
-
+      redisTemplate.delete("resource");
+      list.forEach(
+              resource -> {
+                  redisTemplate.opsForSet().add("resource", resource);
+              });
+      ApiFilter.getResources().addAll(list);
+      // 这个方法先删除所有操作权限类型的权限资源，待会再新增资源，以实现全量更新（注意，数据库中不要设置外键，否则会删除失败）
+      // 将资源数据批量添加到数据库, 重载管理员和用户的资源
+      resourceService.appStartLoad(list);
+      // 筛选权限资源
+      Set<Resource> set = resourceService.filterResource(list);
     // 将权限资源给放到本地权限缓存里，用于请求时校验使用
-    MySecurityMetadataSource.getRESOURCES().addAll(list);
+      MySecurityMetadataSource.setRESOURCES(set);
   }
 
-  /**
-   * 扫描并返回所有需要权限处理的接口资源
-   */
+    /**
+     * 扫描并返回所有需要权限处理的接口资源
+     */
   private List<Resource> getAuthResources() {
     // 接下来要添加到数据库的资源
     List<Resource> list = new LinkedList<>();
@@ -69,8 +70,6 @@ public class ApplicationStartup implements ApplicationRunner {
         requestMappingInfoHandlerMapping.getHandlerMethods();
     handlerMethods.forEach(
         (info, handlerMethod) -> {
-          //System.out.println("info " + info);
-          //System.out.println("handlerMethod " + handlerMethod);
           // 拿到类(模块)上的权限注解
           Auth moduleAuth = handlerMethod.getBeanType().getAnnotation(Auth.class);
           // 拿到接口方法上的权限注解
@@ -79,7 +78,6 @@ public class ApplicationStartup implements ApplicationRunner {
           if (moduleAuth == null || methodAuth == null) {
             return;
           }
-
           // 拿到该接口方法的请求方式(GET、POST等)
           Set<RequestMethod> methods = info.getMethodsCondition().getMethods();
           // 如果一个接口方法标记了多个请求方式，权限id是无法识别的，不进行处理
@@ -88,8 +86,7 @@ public class ApplicationStartup implements ApplicationRunner {
           }
           String method = methods.toArray()[0] + "";
           // 将请求方式和路径用`:`拼接起来，以区分接口。比如：GET:/user/{id}、POST:/user/{id}
-          String path =
-              info.getPatternsCondition().getPatterns().toArray()[0] + "";
+            String path = info.getPatternsCondition().getPatterns().toArray()[0] + "";
           // 将权限名、资源路径、资源类型组装成资源对象，并添加集合中
           Resource resource = new Resource();
           resource

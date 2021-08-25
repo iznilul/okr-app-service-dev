@@ -169,12 +169,12 @@
     <!--它是根logger,是所有<logger>的上级。只有一个level属性，因为name已经被命名为"root",且已经是最上级了 -->
     <root level="INFO">
         <appender-ref ref="STDOUT"/>
-        <appender-ref ref="infoAppender"/>
+        <!--<appender-ref ref="infoAppender"/>-->
         <!-- debug因为日志量太大先关闭 -->
         <!-- <appender-ref ref="debugAppender"/> -->
-        <appender-ref ref="warnAppender"/>
-        <appender-ref ref="errorAppender"/>
-        <appender-ref ref="fatalAppender"/>
+        <!--<appender-ref ref="warnAppender"/>-->
+        <!--<appender-ref ref="errorAppender"/>-->
+        <!--<appender-ref ref="fatalAppender"/>-->
     </root>
 
 </configuration>

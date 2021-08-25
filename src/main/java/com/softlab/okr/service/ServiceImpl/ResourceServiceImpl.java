@@ -3,33 +3,37 @@ package com.softlab.okr.service.ServiceImpl;
 import com.softlab.okr.mapper.ResourceMapper;
 import com.softlab.okr.model.bo.RoleResourceBo;
 import com.softlab.okr.model.entity.Resource;
-import com.softlab.okr.security.MySecurityMetadataSource;
 import com.softlab.okr.service.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class ResourceServiceImpl implements ResourceService {
     @Autowired
     ResourceMapper resourceMapper;
 
+    @Autowired
+    RedisTemplate redisTemplate;
+
     @Override
-    public void saveResources(List<Resource> resourceList) {
-        resourceMapper.insertResource(resourceList);
+    public int saveResources(List<Resource> resourceList) {
+        return resourceMapper.insertResource(resourceList);
     }
 
     @Override
-    public void saveRoleResource(RoleResourceBo roleResourceBo) {
-        resourceMapper.insertRoleResource(roleResourceBo);
+    public int saveRoleResource(RoleResourceBo roleResourceBo) {
+        return resourceMapper.insertRoleResource(roleResourceBo);
     }
 
     @Override
-    public void removeList() {
-        resourceMapper.deleteList();
+    public int removeList() {
+        return resourceMapper.deleteList();
     }
 
     @Override
@@ -39,33 +43,60 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Override
     public List<Integer> getResourceIds(String role) {
-        Set<Resource> resources = MySecurityMetadataSource.getRESOURCES();
-        List<Integer> list = new ArrayList<>();
-
+        Set<Resource> resources = redisTemplate.opsForSet().members("resource");
+        List<Integer> list = new LinkedList<>();
         if (role.equals("admin")) {
-            for (Resource resource : resources) {
-                list.add(resource.getResourceId());
-            }
+            resources = this.filterResource(resources);
+            resources.forEach(
+                    resource -> {
+                        list.add(resource.getResourceId());
+                    });
             return list;
         }
-
-        for (Resource resource : resources) {
-            String[] split = resource.getPath().split("/");
-            if (split[2].equals(role)) {
-                list.add(resource.getResourceId());
-            }
-        }
+        resources.forEach(
+                resource -> {
+                    String[] split = resource.getPath().split("/");
+                    if (split[2].equals(role)) {
+                        list.add(resource.getResourceId());
+                    }
+                });
         return list;
     }
 
     @Override
-    public void reloadRoleResource(RoleResourceBo roleResourceBo) {
+    public int reloadRoleResource(RoleResourceBo roleResourceBo) {
         resourceMapper.deleteRoleResource(roleResourceBo.getRoleId());
-        this.saveRoleResource(roleResourceBo);
+        return this.saveRoleResource(roleResourceBo);
     }
 
     @Override
     public int modifyResourceStatus(int resourceId) {
         return resourceMapper.updateResourceStatus(resourceId);
+    }
+
+    @Override
+    @Transactional(
+            propagation = Propagation.REQUIRED,
+            isolation = Isolation.READ_COMMITTED,
+            rollbackFor = Exception.class,
+            readOnly = false)
+    public void appStartLoad(List<Resource> list) {
+        this.removeList();
+        this.saveResources(list);
+        this.reloadRoleResource(new RoleResourceBo(1, this.getResourceIds("admin")));
+        this.reloadRoleResource(new RoleResourceBo(2, this.getResourceIds("user")));
+    }
+
+    @Override
+    public Set<Resource> filterResource(Collection<Resource> list) {
+        Set<Resource> set = new HashSet<>();
+        list.forEach(
+                resource -> {
+                    String role = resource.getPath().split("/")[2];
+                    if (role.equals("user") || role.equals("admin")) {
+                        set.add(resource);
+                    }
+                });
+        return set;
     }
 }
