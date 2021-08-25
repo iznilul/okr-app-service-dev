@@ -9,20 +9,28 @@ import com.softlab.okr.model.dto.RegisterDTO;
 import com.softlab.okr.model.dto.SignUpDTO;
 import com.softlab.okr.model.entity.SignUp;
 import com.softlab.okr.security.MySecurityMetadataSource;
-import com.softlab.okr.service.*;
+import com.softlab.okr.service.ResourceService;
+import com.softlab.okr.service.RoleService;
+import com.softlab.okr.service.SignUpService;
+import com.softlab.okr.service.SwitchService;
+import com.softlab.okr.service.UserEntityService;
 import com.softlab.okr.utils.MD5Util;
 import com.softlab.okr.utils.Result;
 import com.softlab.okr.utils.ResultCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.Map;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 角色
@@ -33,7 +41,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/admin")
 @Api(tags = "管理员操作")
-@Auth(id = 1000, name = "管理员操作")
+@Auth(id = 2000, name = "管理员操作")
 public class AdminController {
 
   @Autowired
@@ -86,10 +94,10 @@ public class AdminController {
   @ApiOperation("删除用户")
   @GetMapping("removeByUsername")
   @Auth(id = 2, name = "删除用户")
-  public Result removeByUsername(@NotBlank(message = "username不能为空") @RequestParam("username") String username)
+  public Result removeByUsername(
+      @NotBlank(message = "username不能为空") @RequestParam("username") String username)
       throws Exception {
     System.out.println(username);
-
 
     if (userEntityService.getByUsername(username) != null) {
       userEntityService.removeByUsername(username);
@@ -125,7 +133,7 @@ public class AdminController {
   @GetMapping("modifyResourceStatus")
   @Auth(id = 5, name = "更改接口开放状态")
   public Result modifyResourceStatus(@NotNull(message = "resourceId不能为空") @RequestParam(
-          "resourceId") int resourceId)
+      "resourceId") int resourceId)
       throws Exception {
     if (resourceService.modifyResourceStatus(resourceId) == 1) {
       MySecurityMetadataSource.updateResources(resourceId);

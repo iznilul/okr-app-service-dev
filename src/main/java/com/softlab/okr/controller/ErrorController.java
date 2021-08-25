@@ -1,11 +1,11 @@
 package com.softlab.okr.controller;
 
+import com.softlab.okr.annotation.Auth;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @program: okr
@@ -15,11 +15,13 @@ import javax.servlet.http.HttpServletRequest;
  **/
 @Api(tags = "处理过滤器层异常")
 @RestController
+@Auth(id = 9000, name = "错误抛出操作")
 public class ErrorController {
 
-    @RequestMapping("/error/throw")
-    @ApiOperation("抛出异常")
-    public void rethrow(HttpServletRequest request) throws Exception {
-        throw ((Exception) request.getAttribute("filter.error"));
-    }
+  @RequestMapping("/error/throw")
+  @ApiOperation("抛出异常")
+  @Auth(id = 1, name = "过滤层异常获取")
+  public void rethrow(HttpServletRequest request) throws Exception {
+    throw ((Exception) request.getAttribute("filter.error"));
+  }
 }

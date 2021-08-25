@@ -18,16 +18,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/user/monitor")
 @Api(tags = "监控操作")
-@Auth(id = 3000, name = "监控操作")
+@Auth(id = 8000, name = "监控操作")
 public class MonitorController {
 
-    @GetMapping("/server")
-    @ApiOperation("服务器监控")
-    @Auth(id = 1, name = "服务器监控")
-    public Result server() throws Exception {
-        Server server = new Server();
-        server.copyTo();
-        return Result.success(server);
-    }
+  @GetMapping("/server")
+  @ApiOperation("服务器监控")
+  @Auth(id = 1, name = "服务器监控")
+  public Result server() throws Exception {
+    Server server = new Server();
+    server.copyTo();
+    return Result.success(server);
+  }
 
 }
