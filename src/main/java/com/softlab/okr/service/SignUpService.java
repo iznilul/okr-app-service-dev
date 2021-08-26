@@ -20,17 +20,14 @@ public interface SignUpService {
   // 检查是否已报名
   String getIsExist(String id) throws ServiceException;
 
-  //查询录取结果
-  SignUpVO getSignUpListStatus(String id) throws ServiceException;
-
   //录取结果更新
   int modifySignUpList(SignUp signUp) throws ServiceException;
 
   //根据用户
-  PageInfo<SignUp> getSignUpListByCond(SignUpDTO signUpDTO) throws ServiceException;
+  PageInfo<SignUpVO> getSignUpListByCond(SignUpDTO signUpDTO) throws ServiceException;
 
   //根据id返回用户
-  SignUp getSignUpListById(String id) throws ServiceException;
+  SignUpVO getSignUpListById(String id) throws ServiceException;
 
   // 拉取所有
   List<SignUp> getSignUpList() throws ServiceException;

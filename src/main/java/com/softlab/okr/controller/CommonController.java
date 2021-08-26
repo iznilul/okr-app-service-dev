@@ -4,8 +4,8 @@ import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.config.CommonConfig;
 import com.softlab.okr.model.dto.LoginDTO;
 import com.softlab.okr.model.entity.SignUp;
+import com.softlab.okr.model.vo.SignUpVO;
 import com.softlab.okr.service.SignUpService;
-import com.softlab.okr.service.SwitchService;
 import com.softlab.okr.service.UserEntityService;
 import com.softlab.okr.utils.Result;
 import com.softlab.okr.utils.ResultCode;
@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @Api(tags = "通用操作")
-@RequestMapping("/api")
+@RequestMapping("/api/common")
 @Auth(id = 1000, name = "通用操作")
 public class CommonController {
 
@@ -38,9 +38,6 @@ public class CommonController {
 
   @Autowired
   private SignUpService signUpService;
-
-  @Autowired
-  private SwitchService switchService;
 
   @Autowired
   CommonConfig commonConfig;
@@ -75,9 +72,6 @@ public class CommonController {
   @PostMapping("signUp")
   @Auth(id = 4, name = "纳新报名")
   public Result signUp(@RequestBody SignUp signUp) {
-    if (switchService.getStatus("报名") != 1) {
-      return Result.failure(ResultCode.SIGNUP_NOT_OPEN);
-    }
     if (signUpService.saveSignUpList(signUp) != 0) {
       return Result.success("报名成功，请加入纳新群: " + commonConfig.getQqGroupNumber());
     } else {
@@ -89,12 +83,9 @@ public class CommonController {
   @GetMapping("querySignUp")
   @Auth(id = 5, name = "报名结果查询")
   public Result querySignUp(@RequestParam String id) {
-    if (switchService.getStatus("查询报名") != 1) {
-      return Result.failure(ResultCode.API_NOT_OPEN);
-    }
-    SignUp signUp = signUpService.getSignUpListById(id);
-    if (signUp != null) {
-      return Result.success(signUp);
+    SignUpVO signUpVO = signUpService.getSignUpListById(id);
+    if (signUpVO != null) {
+      return Result.success(signUpVO);
     } else {
       return Result.failure(ResultCode.QUERY_ERROR);
     }

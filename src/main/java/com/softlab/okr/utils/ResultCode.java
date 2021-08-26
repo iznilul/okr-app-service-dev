@@ -9,7 +9,7 @@ package com.softlab.okr.utils;
 public enum ResultCode {
 
   /* 成功状态码 */
-  SUCCESS(200, "成功"),
+  SUCCESS(200, "操作成功"),
 
   /* 参数错误：1001-1999 */
   PARAM_NOT_COMPLETE(1001, "请求参数异常"),
@@ -19,9 +19,9 @@ public enum ResultCode {
   USER_LOGIN_ERROR(2002, "账号不存在或密码错误"),
   USER_username_FORBIDDEN(2003, "账号已被禁用"),
   USER_TOKEN_EXPIRE(2004, "用户令牌已过期或不合法"),
-  USER_HAS_EXISTED(2005, "用户已存在"),
+  DATA_HAS_EXISTED(2005, "数据已存在"),
   USER_REGISTER_ERROR(2006, "用户注册失败"),
-  USER_UPDATE_ERROR(2007, "用户信息更新失败"),
+  DATA_UPDATE_ERROR(2007, "数据更新失败"),
   USER_UPLOAD_ERROR(2008, "用户上传文件失败"),
   USER_UPLOAD_EXCEED(2009, "用户上传文件太大"),
   SIGNUP_NOT_OPEN(2010, "报名未开启"),
@@ -30,6 +30,10 @@ public enum ResultCode {
   QUERY_ERROR(2013, "查无此人，请先报名或联系网站管理员"),
   SWITCH_ERROR(2014, "接口更改失败"),
   SIGNUP_MODIFY_ERROR(2015, "报名信息更新失败"),
+  TAG_EXISTS(2016, "标签已经存在"),
+  DATA_SAVE_ERROR(2017, "数据增加失败"),
+  DATA_DEL_ERROR(2018, "数据删除失败"),
+  DATA_GET_ERROR(2019, "数据获取失败"),
 
   /* 未知错误：3001-3999 */
   UNKNOWN_ERROR(3001, "不知名错误，请联系开发者"),

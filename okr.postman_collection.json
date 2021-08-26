@@ -1,0 +1,465 @@
+{
+	"info": {
+		"_postman_id": "70243dfa-4f1a-4bcc-9918-bffaaceed828",
+		"name": "okr",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "reloadUserRoleResource",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYyOTQ0NzE5NCwiZXhwIjoxNjI5NTMzNTk0fQ.H1YpG7yl1ijUZw-uInhGBxEI9EsFNbEequNnUIHNkmHELxUanPOz11IepBDzTSavBletfz2JRjOvT_ZGsrAJYQ"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:9101/api/admin/reloadUserRoleResource",
+					"host": [
+						"localhost"
+					],
+					"port": "9101",
+					"path": [
+						"api",
+						"admin",
+						"reloadUserRoleResource"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"admin\",\n\t\"password\":\"admin\"\n}"
+				},
+				"url": {
+					"raw": "localhost:9101/api/common/login",
+					"host": [
+						"localhost"
+					],
+					"port": "9101",
+					"path": [
+						"api",
+						"common",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getSignUpList",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYyOTk0ODA1MSwiZXhwIjoxNjMwMjA3MjUxfQ.s6HzFWmAHFYmcY-pTEoIIIkPJVIjSGaHOYzoMknxztJxw72mG7OCt3F20j6I6kuSTLvphoe-vkQ7JFCYsQWj_Q",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\":\"\",\n\t\"name\":\"\",\n\t\"gender\":\"\",\n\t\"qq\":\"\",\n\t\"major\":\"\",\n\t\"status\":\"\",\n\t\"index\":\"1\",\n\t\"pageSize\":\"10\"\n}"
+				},
+				"url": {
+					"raw": "localhost:9101/api/admin/getSignUpList",
+					"host": [
+						"localhost"
+					],
+					"port": "9101",
+					"path": [
+						"api",
+						"admin",
+						"getSignUpList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reloadAdminRoleResource",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYyOTQ0NzE5NCwiZXhwIjoxNjI5NTMzNTk0fQ.H1YpG7yl1ijUZw-uInhGBxEI9EsFNbEequNnUIHNkmHELxUanPOz11IepBDzTSavBletfz2JRjOvT_ZGsrAJYQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:9101/api/admin/reloadAdminRoleResource",
+					"host": [
+						"localhost"
+					],
+					"port": "9101",
+					"path": [
+						"api",
+						"admin",
+						"reloadAdminRoleResource"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "signUp",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\":\"3\",\n\t\"name\":\"ass\",\n\t\"gender\":\"男\",\n\t\"qq\":\"12233334\",\n\t\"major\":\"挖掘22机\",\n\t\"profile\":\"jfioaejfasjioheuifhgisahfoksjdkfhweuihfseifjdewjfopawijrf309wru[ojskdhuuerg\"\n}"
+				},
+				"url": {
+					"raw": "localhost:9101/api/signUp",
+					"host": [
+						"localhost"
+					],
+					"port": "9101",
+					"path": [
+						"api",
+						"signUp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "querySignUp",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:9101/api/common/querySignUp?id=1",
+					"host": [
+						"localhost"
+					],
+					"port": "9101",
+					"path": [
+						"api",
+						"common",
+						"querySignUp"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "modifySignUpList",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYyOTk0NDM3MiwiZXhwIjoxNjMwMTE3MTcyfQ.cTiRiEMU1k05IND_uwqgEK3PLhuXKehsXh8HBJgInjKXr7CSytpWlSWfruVT8HJ9u9hh-OPJW0SAjqKBosf-LA",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\":\"2\",\n\t\"name\":\"shit\",\n\t\"gender\":\"男\",\n\t\"qq\":\"12333434\",\n\t\"major\":\"挖掘机\",\n\t\"profile\":\"jfioaejfasjioheuifhgisahfoksjdkfhweuihfseifjdewjfopawijrf309wru[ojskdhuuerg\",\n\t\"status\":\"2\",\n\t\"commit\":\"jfduiehsfiusehfiohjesiojfioesjfioejifo\"\n}"
+				},
+				"url": {
+					"raw": "localhost:9101/api/admin/modifySignUpList",
+					"host": [
+						"localhost"
+					],
+					"port": "9101",
+					"path": [
+						"api",
+						"admin",
+						"modifySignUpList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "modifyResourceStatus",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYyOTk0NDM3MiwiZXhwIjoxNjMwMTE3MTcyfQ.cTiRiEMU1k05IND_uwqgEK3PLhuXKehsXh8HBJgInjKXr7CSytpWlSWfruVT8HJ9u9hh-OPJW0SAjqKBosf-LA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:9101/api/admin/modifyResourceStatus?resourceId=2006",
+					"host": [
+						"localhost"
+					],
+					"port": "9101",
+					"path": [
+						"api",
+						"admin",
+						"modifyResourceStatus"
+					],
+					"query": [
+						{
+							"key": "resourceId",
+							"value": "2006"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getResourceByCond",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYyOTk1ODk0MCwiZXhwIjoxNjMwMjE4MTQwfQ.UHyK9bEmA8ulMLg3RPjgyiLwCVlbnzabcrl5jcd_u0k66SPmLm7dlvrnCGXviHxff2HJLoymXwaxcNJDC2nbdg",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"index\":1,\n\t\"pageSize\":20\n}"
+				},
+				"url": {
+					"raw": "localhost:9101/api/admin/getResourceByCond",
+					"host": [
+						"localhost"
+					],
+					"port": "9101",
+					"path": [
+						"api",
+						"admin",
+						"getResourceByCond"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addTag",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYyOTk1ODk0MCwiZXhwIjoxNjMwMjE4MTQwfQ.UHyK9bEmA8ulMLg3RPjgyiLwCVlbnzabcrl5jcd_u0k66SPmLm7dlvrnCGXviHxff2HJLoymXwaxcNJDC2nbdg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:9101/api/admin/addTag?name=go&order=3",
+					"host": [
+						"localhost"
+					],
+					"port": "9101",
+					"path": [
+						"api",
+						"admin",
+						"addTag"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "go"
+						},
+						{
+							"key": "order",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "modifyTag",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYyOTk1ODk0MCwiZXhwIjoxNjMwMjE4MTQwfQ.UHyK9bEmA8ulMLg3RPjgyiLwCVlbnzabcrl5jcd_u0k66SPmLm7dlvrnCGXviHxff2HJLoymXwaxcNJDC2nbdg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:9101/api/admin/modifyTag?tagId=4&name=Java Web&order=2",
+					"host": [
+						"localhost"
+					],
+					"port": "9101",
+					"path": [
+						"api",
+						"admin",
+						"modifyTag"
+					],
+					"query": [
+						{
+							"key": "tagId",
+							"value": "4"
+						},
+						{
+							"key": "name",
+							"value": "Java Web"
+						},
+						{
+							"key": "order",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "removeTag",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYyOTk1ODk0MCwiZXhwIjoxNjMwMjE4MTQwfQ.UHyK9bEmA8ulMLg3RPjgyiLwCVlbnzabcrl5jcd_u0k66SPmLm7dlvrnCGXviHxff2HJLoymXwaxcNJDC2nbdg",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[1]"
+				},
+				"url": {
+					"raw": "localhost:9101/api/admin/removeTag",
+					"host": [
+						"localhost"
+					],
+					"port": "9101",
+					"path": [
+						"api",
+						"admin",
+						"removeTag"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getTagByCond",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYyOTk1ODk0MCwiZXhwIjoxNjMwMjE4MTQwfQ.UHyK9bEmA8ulMLg3RPjgyiLwCVlbnzabcrl5jcd_u0k66SPmLm7dlvrnCGXviHxff2HJLoymXwaxcNJDC2nbdg",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"Java\",\n\t\"Pattern\":\"DESC\"\n}"
+				},
+				"url": {
+					"raw": "localhost:9101/api/admin/getTagByCond",
+					"host": [
+						"localhost"
+					],
+					"port": "9101",
+					"path": [
+						"api",
+						"admin",
+						"getTagByCond"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -6,23 +6,38 @@ import com.softlab.okr.exception.ApiException;
 import com.softlab.okr.model.bo.RegisterBo;
 import com.softlab.okr.model.bo.RoleResourceBo;
 import com.softlab.okr.model.dto.RegisterDTO;
+import com.softlab.okr.model.dto.ResourceDTO;
 import com.softlab.okr.model.dto.SignUpDTO;
+import com.softlab.okr.model.dto.TagDTO;
+import com.softlab.okr.model.entity.Resource;
 import com.softlab.okr.model.entity.SignUp;
+import com.softlab.okr.model.entity.Tag;
+import com.softlab.okr.model.vo.SignUpVO;
 import com.softlab.okr.security.ApiFilter;
-import com.softlab.okr.service.*;
+import com.softlab.okr.service.ResourceService;
+import com.softlab.okr.service.RoleService;
+import com.softlab.okr.service.SignUpService;
+import com.softlab.okr.service.TagService;
+import com.softlab.okr.service.UserEntityService;
 import com.softlab.okr.utils.MD5Util;
 import com.softlab.okr.utils.Result;
 import com.softlab.okr.utils.ResultCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 角色
@@ -49,7 +64,11 @@ public class AdminController {
   private SignUpService signUpService;
 
   @Autowired
-  private SwitchService switchService;
+  private TagService tagService;
+
+  @Autowired
+  private RedisTemplate<String, Object> redisTemplate;
+
 
   private static final Map<String, String> map;
 
@@ -79,7 +98,7 @@ public class AdminController {
       userEntityService.register(registerBo, roleResourceBo, roleId);
       return Result.success("注册成功");
     } else {
-      throw new ApiException(ResultCode.USER_HAS_EXISTED);
+      throw new ApiException(ResultCode.DATA_HAS_EXISTED);
     }
   }
 
@@ -135,12 +154,31 @@ public class AdminController {
     }
   }
 
+  @ApiOperation("获取资源接口")
+  @PostMapping("getResourceByCond")
+  @Auth(id = 6, name = "获取资源接口")
+  public Result getResourceByCond(@RequestBody ResourceDTO resourceDTO)
+      throws Exception {
+    PageInfo<Resource> resourceList = resourceService.getResourceList(resourceDTO);
+    if (resourceList.getSize() > 0) {
+      return Result.success(resourceList);
+    } else {   //必须得这么写，不然分页查询有bug
+      resourceDTO.setIndex(1);
+      resourceList = resourceService.getResourceList(resourceDTO);
+      if (resourceList.getSize() > 0) {
+        return Result.success(resourceList);
+      } else {
+        return Result.failure(ResultCode.DATA_GET_ERROR);
+      }
+    }
+  }
+
   @ApiOperation("获取报名记录")
   @PostMapping("getSignUpList")
   @Auth(id = 10, name = "获取报名记录")
   public Result getSelectList(@RequestBody SignUpDTO signUpDTO) throws Exception {
     System.out.println(signUpDTO);
-    PageInfo<SignUp> signUpList = signUpService.getSignUpListByCond(signUpDTO);
+    PageInfo<SignUpVO> signUpList = signUpService.getSignUpListByCond(signUpDTO);
 
     if (signUpList.getSize() > 0) {
       return Result.success(signUpList);
@@ -165,6 +203,65 @@ public class AdminController {
       return Result.success("更新成功");
     } else {
       return Result.failure(ResultCode.SIGNUP_MODIFY_ERROR);
+    }
+  }
+
+  @ApiOperation("增加标签")
+  @GetMapping("addTag")
+  @Auth(id = 12, name = "增加标签")
+  public Result addTag(@NotBlank(message = "名称不能为空") @RequestParam("name") String name,
+      @NotNull(message = "排序权重不能为空") @RequestParam("order") int order) throws Exception {
+
+    if (tagService.getTagByName(name) == null) {
+      if (tagService.saveTag(name, order) == 1) {
+        return Result.success();
+      } else {
+        return Result.failure(ResultCode.DATA_SAVE_ERROR);
+      }
+    } else {
+      return Result.failure(ResultCode.TAG_EXISTS);
+    }
+  }
+
+  @ApiOperation("更新标签")
+  @GetMapping("modifyTag")
+  @Auth(id = 13, name = "更新标签")
+  public Result modifyTag(
+      @NotNull(message = "标签id不能为空") @RequestParam("tagId") int tagId,
+      @NotBlank(message = "名称不能为空") @RequestParam("name") String name,
+      @NotNull(message = "排序权重不能为空") @RequestParam("order") int order) throws Exception {
+    Tag tag = new Tag(tagId, name, order);
+    if (tagService.modifyTag(tag) == 1) {
+      return Result.success();
+    } else {
+      return Result.failure(ResultCode.DATA_UPDATE_ERROR);
+    }
+  }
+
+  @ApiOperation("删除标签")
+  @PostMapping("removeTag")
+  @Auth(id = 14, name = "删除标签")
+  public Result removeTag(
+      @RequestBody List<Integer> list
+  ) throws Exception {
+    if (tagService.removeByIdList(list) >= 1) {
+      return Result.success();
+    } else {
+      return Result.failure(ResultCode.DATA_DEL_ERROR);
+    }
+  }
+
+  @ApiOperation("获取标签列表")
+  @PostMapping("getTagByCond")
+  @Auth(id = 15, name = "获取标签列表")
+  public Result getTagByCond(
+      @RequestBody @Validated TagDTO tagDTO
+  ) throws Exception {
+    PageInfo<Tag> tagList = tagService.getTagListByCond(tagDTO);
+    if (tagList != null) {
+      return Result.success(tagList);
+    } else {
+      return Result.failure(ResultCode.DATA_GET_ERROR);
     }
   }
 }

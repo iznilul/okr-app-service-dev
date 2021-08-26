@@ -15,8 +15,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Book extends BaseEntity {
 
-  private Integer BookId;
-  private String name;
+  private Integer bookId;
+  private String bookName;
   private String img;
   private String publisher;
   private Integer price;
