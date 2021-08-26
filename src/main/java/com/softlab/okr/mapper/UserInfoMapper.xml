@@ -22,6 +22,15 @@
         <result property="password" column="password"/>
     </resultMap>
 
+    <sql id="baseColumn">
+        user_id,username,`name`,avatar,major,qq,phone,weixin,`desc`,create_time,update_time
+    </sql>
+
+    <sql id="table">
+        `user_info`
+    </sql>
+
+
     <!-- 登录检验 -->
     <select id="selectByLogin" resultMap="userMap">
         select  user_id,username,password from `user` where username=#{username} and
@@ -47,8 +56,11 @@
     </select>
 
     <select id="selectUserInfoByUsername" resultMap="userInfo">
-        select user_id,username,`name`,avatar,major,qq,phone,weixin,`desc`,create_time,
-        update_time from `user_info` where username=#{username}
+        select
+        <include refid="baseColumn"></include>
+        from
+        <include refid="table"></include>
+        where username=#{username}
     </select>
 
     <!-- 更新头像 -->

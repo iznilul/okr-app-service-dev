@@ -2,6 +2,7 @@ package com.softlab.okr;
 
 import com.softlab.okr.mapper.BookMapper;
 import com.softlab.okr.model.entity.Book;
+import com.softlab.okr.model.vo.BookVO;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -46,9 +48,18 @@ public class BookTest {
 
   @Test
   public void resourceTest() {
-    Book book = new Book(3, "a", "a", "a", 1, 1, 1);
+    List<Integer> tagIdList =
+            new LinkedList<Integer>() {
+              {
+                add(5);
+                add(6);
+                add(7);
+                add(8);
+              }
+            };
+    BookVO bookVO = new BookVO("a", "a", "a", 123, "空闲", tagIdList);
     try {
-      bookMapper.insertBook(book);
+      bookMapper.insertBook(bookVO);
     } catch (DataAccessException e) {
       System.out.println(e.toString());
     }

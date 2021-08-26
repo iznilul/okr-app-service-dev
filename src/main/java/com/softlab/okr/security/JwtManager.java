@@ -29,7 +29,7 @@ public class JwtManager {
   /**
    * 过期时间目前设置成2天，这个配置随业务需求而定
    */
-  private Duration expiration = Duration.ofDays(2);
+  private Duration expiration = Duration.ofDays(3);
 
   /**
    * 生成JWT

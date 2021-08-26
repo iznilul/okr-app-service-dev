@@ -1,4 +1,4 @@
-package com.softlab.okr.model.entity;
+package com.softlab.okr.model.bo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,15 +7,21 @@ import lombok.NoArgsConstructor;
 /**
  * @program: okr
  * @description:
- * @author: lulinzi
- * @create: 2021-08-20 14:34
+ * @author: radCircle
+ * @create: 2021-07-07 21:59
  **/
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Switch {
+public class BookBo {
 
-  private Integer switchId;
-  private String name;
+  private String bookName;
+
+  private String publisher;
+
   private Integer status;
+
+  private Integer userId;
+
+
 }

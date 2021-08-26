@@ -60,7 +60,7 @@ public class UserInfoController {
     if (userInfoService.modifyUserInfo(updateUserDto, new Date().getTime()) == 1) {
       return Result.success("用户信息更新成功");
     } else {
-      throw new ApiException(ResultCode.USER_UPDATE_ERROR);
+      throw new ApiException(ResultCode.DATA_UPDATE_ERROR);
     }
   }
 
@@ -189,7 +189,7 @@ public class UserInfoController {
           == 1) {
         return Result.success("修改密码成功");
       } else {
-        throw new ApiException(ResultCode.USER_UPDATE_ERROR);
+        throw new ApiException(ResultCode.DATA_UPDATE_ERROR);
       }
     } else {
       throw new ApiException(ResultCode.USER_LOGIN_ERROR);

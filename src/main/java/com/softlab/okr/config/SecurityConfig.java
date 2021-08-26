@@ -1,6 +1,11 @@
 package com.softlab.okr.config;
 
-import com.softlab.okr.security.*;
+import com.softlab.okr.security.ApiFilter;
+import com.softlab.okr.security.AuthFilter;
+import com.softlab.okr.security.LoginFilter;
+import com.softlab.okr.security.MyDeniedHandler;
+import com.softlab.okr.security.MyEntryPoint;
+import com.softlab.okr.security.MyPasswordEncoder;
 import com.softlab.okr.service.ServiceImpl.UserEntityServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -44,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .requestMatchers(CorsUtils::isPreFlightRequest)
         .permitAll()
         // 指定某些接口不需要通过验证即可访问。像登陆、测试接口肯定是不需要认证的
-        .antMatchers("/api/login", "/api/test", "/api/logout", "/api/signUp", "/api/querySignUp")
+        .antMatchers("/api/common/**")
         .permitAll()
         // 这里意思是其它所有接口需要认证才能访问
         .antMatchers("/api/**")

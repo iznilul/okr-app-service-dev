@@ -34,11 +34,6 @@
     `update_time`=NOW()
   </insert>
 
-  <select id="selectSignUpListStatus" parameterType="string"
-    resultType="com.softlab.okr.model.vo.SignUpVO">
-        select status,comment from signuplist where id=#{id}
-    </select>
-
   <select id="isExist" parameterType="string" resultType="string">
         select id from signuplist where id=#{id} limit 1
     </select>

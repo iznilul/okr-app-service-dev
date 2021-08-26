@@ -4,7 +4,7 @@
 <mapper namespace="com.softlab.okr.mapper.BookMapper">
   <resultMap id="bookMap" type="com.softlab.okr.model.entity.Book">
     <id property="bookId" column="book_id"/>
-    <result property="name" column="name"/>
+    <result property="bookName" column="book_name"/>
     <result property="img" column="img"/>
     <result property="publisher" column="publisher"/>
     <result property="price" column="price"/>
@@ -15,8 +15,13 @@
   </resultMap>
 
   <sql id="baseColumn">
-        `book_id`,`name`,`img`,`publisher`,`price`,`status`,`user_id`,`create_time`,`update_time`
+        `book_id`,`book_name`,`img`,`publisher`,`price`,`status`,`user_id`,`create_time`,`update_time`
     </sql>
+
+  <sql id="bookTagColumn">
+    `book_id`,`tag_id`
+  </sql>
+
 
   <!--选择全部-->
   <select id="selectList" resultMap="bookMap">
@@ -31,16 +36,26 @@
     <include refid="baseColumn"></include>
     from `book`
     where 1=1
-    <if test="name!='' and name!=null">and `name` like `%${name}%`</if>
-    <if test="status!='' and status!=null">and `status` = 0</if>
-    <if test="userId!='' and userId!=null">and user_id = #{userId}</if>
+    <if test="bookName!='' and bookName!=null">and `book_name` like `%${bookName}%`</if>
+    <if test="publisher!='' and publisher!=null">and `publisher` like `%${publisher}%`</if>
+    <if test="status!=null">and `status` = #{status}</if>
+    <if test="userId!=null">and user_id = #{userId}</if>
   </select>
 
-  <insert id="insertBook">
+  <insert id="insertBook" useGeneratedKeys="true" keyProperty="bookId">
     insert into
     `book`(<include refid="baseColumn"></include>)
     values
-    (#{bookId},#{name},#{img},#{publisher},#{price},#{status},#{userId},NOW(),NOW())
+    (null,#{bookName},#{img},#{publisher},#{price},#{status},null,NOW(),NOW())
+  </insert>
+
+  <insert id="insertBookTag" parameterType="booktagbo">
+    insert into
+    `book_tag`(<include refid="bookTagColumn"></include>)
+    values
+    <foreach collection="tagIdList" item="item" separator=",">
+      (#{bookId},#{item})
+    </foreach>
   </insert>
 
   <delete id="deleteById">

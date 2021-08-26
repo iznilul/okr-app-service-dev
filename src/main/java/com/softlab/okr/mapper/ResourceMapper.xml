@@ -1,69 +1,83 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.softlab.okr.mapper.ResourceMapper">
-    <resultMap id="resourceMap" type="com.softlab.okr.model.entity.Resource">
-        <id property="resourceId" column="resource_id"/>
-        <result property="method" column="method"/>
-        <result property="path" column="path"/>
-        <result property="name" column="name"/>
-        <result property="status" column="status"/>
-    </resultMap>
+  <resultMap id="resourceMap" type="com.softlab.okr.model.entity.Resource">
+    <id property="resourceId" column="resource_id"/>
+    <result property="method" column="method"/>
+    <result property="path" column="path"/>
+    <result property="name" column="name"/>
+    <result property="status" column="status"/>
+  </resultMap>
 
-    <sql id="baseColumn">
+  <sql id="baseColumn">
         `resource_id`,`method`,`path`,`name`,`status`
     </sql>
 
-    <sql id="table">
+  <sql id="table">
         `resource`
     </sql>
 
-    <select id="selectByUserId" resultType="Integer">
+  <select id="selectResourceList" resultMap="resourceMap">
+    select
+    <include refid="baseColumn"></include>
+    from
+    <include refid="table"></include>
+  </select>
+
+  <select id="selectByUserId" resultType="Integer">
         select re.resource_id from resource re
         join role_resource rr on rr.resource_id=re.resource_id
         join user_role ur on rr.role_id =ur.role_id
         where ur.user_id=#{userId}
     </select>
 
-    <select id="selectResourceByPath" resultMap="resourceMap">
-        select
-        <include refid="baseColumn"></include>
-        from `resource`
-        where `path`=#{path}
-    </select>
+  <select id="selectResourceByPath" resultMap="resourceMap">
+    select
+    <include refid="baseColumn"></include>
+    from `resource`
+    where `path`=#{path}
+  </select>
 
-    <insert id="insertResource">
-        insert into resource
-        (<include refid="baseColumn"></include>)
-        values
-        <foreach collection="list" item="item" separator=",">
-            (#{item.resourceId},#{item.method},#{item.path},#{item.name},#{item.status})
-        </foreach>
-    </insert>
+  <select id="selectResourceById" resultMap="resourceMap">
+    select
+    <include refid="baseColumn"></include>
+    from `resource`
+    where `resource_id`=#{resourceId}
+  </select>
 
-    <delete id="deleteList">
+  <insert id="insertResource">
+    insert into resource
+    (<include refid="baseColumn"></include>)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.resourceId},#{item.method},#{item.path},#{item.name},#{item.status})
+    </foreach>
+  </insert>
+
+  <delete id="deleteList">
         delete  from resource
     </delete>
 
-    <delete id="deleteRoleResource">
+  <delete id="deleteRoleResource">
         delete  from role_resource
         where `role_id`=#{roleId}
     </delete>
 
-    <insert id="insertRoleResource" parameterType="roleresourcebo">
-        insert into role_resource(role_id,resource_id)
-        values
-        <foreach collection="resourceIds" item="item" separator=",">
-            (#{roleId},#{item})
-        </foreach>
-    </insert>
+  <insert id="insertRoleResource" parameterType="roleresourcebo">
+    insert into role_resource(role_id,resource_id)
+    values
+    <foreach collection="resourceIds" item="item" separator=",">
+      (#{roleId},#{item})
+    </foreach>
+  </insert>
 
-    <update id="updateResourceStatus">
-        update
-        <include refid="table"></include>
-        set status=ABS(status-1)
-        where `resource_id`=#{resourceId}
-    </update>
+  <update id="updateResourceStatus">
+    update
+    <include refid="table"></include>
+    set status=ABS(status-1)
+    where `resource_id`=#{resourceId}
+  </update>
 
 
 </mapper>
