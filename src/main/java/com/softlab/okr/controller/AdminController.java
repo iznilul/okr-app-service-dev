@@ -15,22 +15,31 @@ import com.softlab.okr.model.entity.Tag;
 import com.softlab.okr.model.vo.BookVO;
 import com.softlab.okr.model.vo.SignUpVO;
 import com.softlab.okr.security.ApiFilter;
-import com.softlab.okr.service.*;
+import com.softlab.okr.service.BookService;
+import com.softlab.okr.service.ResourceService;
+import com.softlab.okr.service.RoleService;
+import com.softlab.okr.service.SignUpService;
+import com.softlab.okr.service.TagService;
+import com.softlab.okr.service.UserEntityService;
 import com.softlab.okr.utils.MD5Util;
 import com.softlab.okr.utils.Result;
 import com.softlab.okr.utils.ResultCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 角色
@@ -267,7 +276,7 @@ public class AdminController {
   public Result saveBook(@RequestBody BookVO bookVO) {
     System.out.println(bookVO);
 
-    if (bookService.saveBook(bookVO) == 1) {
+    if (bookService.saveBook(bookVO) > 0) {
       return Result.success();
     } else {
       return Result.failure(ResultCode.DATA_GET_ERROR);

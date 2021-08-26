@@ -3,7 +3,7 @@ package com.softlab.okr.controller;
 import com.github.pagehelper.PageInfo;
 import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.model.dto.BookDTO;
-import com.softlab.okr.model.entity.Book;
+import com.softlab.okr.model.vo.BookVO;
 import com.softlab.okr.service.BookService;
 import com.softlab.okr.service.TagService;
 import com.softlab.okr.utils.Result;
@@ -39,7 +39,7 @@ public class PublicController {
   @ApiOperation("书籍列表")
   @Auth(id = 1, name = "书籍列表")
   public Result getBookByCond(@RequestBody @Validated BookDTO bookDTO) {
-    PageInfo<Book> list = bookService.getByCond(bookDTO);
+    PageInfo<BookVO> list = bookService.getByCond(bookDTO);
     if (list.getSize() > 0) {
       return Result.success(list);
     } else {

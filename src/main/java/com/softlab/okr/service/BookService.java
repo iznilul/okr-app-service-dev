@@ -5,7 +5,6 @@ import com.softlab.okr.exception.ServiceException;
 import com.softlab.okr.model.dto.BookDTO;
 import com.softlab.okr.model.entity.Book;
 import com.softlab.okr.model.vo.BookVO;
-
 import java.util.List;
 
 public interface BookService {
@@ -18,5 +17,5 @@ public interface BookService {
 
   List<Book> list() throws ServiceException;
 
-  PageInfo<Book> getByCond(BookDTO bookDTO) throws ServiceException;
+  PageInfo<BookVO> getByCond(BookDTO bookDTO) throws ServiceException;
 }

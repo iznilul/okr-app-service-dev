@@ -46,7 +46,7 @@
     insert into
     `book`(<include refid="baseColumn"></include>)
     values
-    (null,#{bookName},#{img},#{publisher},#{price},#{status},null,NOW(),NOW())
+    (null,#{bookName},#{img},#{publisher},#{price},0,null,NOW(),NOW())
   </insert>
 
   <insert id="insertBookTag" parameterType="booktagbo">

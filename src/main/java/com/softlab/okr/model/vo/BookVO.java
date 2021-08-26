@@ -1,11 +1,10 @@
 package com.softlab.okr.model.vo;
 
+import java.util.List;
+import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.validation.constraints.Pattern;
-import java.util.List;
 
 /**
  * @program: okr
@@ -17,6 +16,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookVO {
+
+  private Integer bookId;
 
   private String bookName;
 
@@ -31,5 +32,8 @@ public class BookVO {
 
   private List<Integer> tagIdList;
 
+  public String getStatus() {
+    return status == null || status.equals("") ? "空闲" : status;
+  }
 
 }

@@ -3,7 +3,7 @@ package com.softlab.okr.service.ServiceImpl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.softlab.okr.convert.ConvertService;
+import com.softlab.okr.convert.impl.SignUpConvert;
 import com.softlab.okr.mapper.SignUpMapper;
 import com.softlab.okr.model.dto.SignUpDTO;
 import com.softlab.okr.model.entity.SignUp;
@@ -28,7 +28,7 @@ public class SignUpServiceImpl implements SignUpService {
   private SignUpMapper signUpMapper;
 
   @Autowired
-  ConvertService convertService;
+  SignUpConvert signUpConvert;
 
   private static final Map<Integer, String> map = new HashMap<>();
 
@@ -65,7 +65,7 @@ public class SignUpServiceImpl implements SignUpService {
     List<SignUp> signUps = signUpMapper.selectSignUpListByCond(signUpDTO);
 
     signUps.forEach(signUp -> {
-      SignUpVO signUpVO = ((SignUpVO) convertService.convertVO(signUp))
+      SignUpVO signUpVO = signUpConvert.convertVO(signUp)
           .setStatus(map.get(signUp.getStatus()));
       list.add(signUpVO);
     });
@@ -77,7 +77,7 @@ public class SignUpServiceImpl implements SignUpService {
   public SignUpVO getSignUpListById(String id) {
     SignUp signUp = signUpMapper.selectSignUpListById(id);
     return signUp == null ? null
-        : ((SignUpVO) convertService.convertVO(signUp)).setStatus(map.get(signUp.getStatus()));
+        : signUpConvert.convertVO(signUp).setStatus(map.get(signUp.getStatus()));
   }
 
   // 拉取所有

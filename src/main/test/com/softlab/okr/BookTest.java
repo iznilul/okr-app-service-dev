@@ -3,15 +3,18 @@ package com.softlab.okr;
 import com.softlab.okr.mapper.BookMapper;
 import com.softlab.okr.model.entity.Book;
 import com.softlab.okr.model.vo.BookVO;
-import org.junit.*;
+import java.util.LinkedList;
+import java.util.List;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * @program: okr
@@ -49,15 +52,15 @@ public class BookTest {
   @Test
   public void resourceTest() {
     List<Integer> tagIdList =
-            new LinkedList<Integer>() {
-              {
-                add(5);
-                add(6);
-                add(7);
-                add(8);
-              }
-            };
-    BookVO bookVO = new BookVO("a", "a", "a", 123, "空闲", tagIdList);
+        new LinkedList<Integer>() {
+          {
+            add(5);
+            add(6);
+            add(7);
+            add(8);
+          }
+        };
+    BookVO bookVO = new BookVO(null, "a", "a", "a", 123, "空闲", tagIdList);
     try {
       bookMapper.insertBook(bookVO);
     } catch (DataAccessException e) {
