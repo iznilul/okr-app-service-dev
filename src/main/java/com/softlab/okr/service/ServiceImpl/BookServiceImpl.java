@@ -48,19 +48,38 @@ public class BookServiceImpl implements BookService {
       rollbackFor = Exception.class,
       readOnly = false)
   public int saveBook(BookVO bookVO) {
-    int bookId = bookMapper.insertBook(bookVO);
-    BookTagBo bookTagBo = new BookTagBo(bookId, bookVO.getTagIdList());
-    return bookMapper.insertBookTag(bookTagBo);
+    BookTagBo bookTagBo = new BookTagBo(bookVO.getBookId(), bookVO.getTagIdList());
+    bookMapper.insertBookTag(bookTagBo);
+    return bookMapper.insertBook(bookVO);
   }
 
   @Override
   public int removeById(int bookId) {
+    bookMapper.deleteBookTagByBookId(bookId);
     return bookMapper.deleteById(bookId);
   }
 
   @Override
-  public int modifyById(Book book) {
-    return bookMapper.updateById(book);
+  public int borrowBook(int bookId, int userId) {
+    return bookMapper.borrow(bookId, userId);
+  }
+
+  @Override
+  @Transactional(
+      propagation = Propagation.REQUIRED,
+      isolation = Isolation.READ_COMMITTED,
+      rollbackFor = Exception.class,
+      readOnly = false)
+  public int modifyById(BookVO bookVO) {
+    BookTagBo bookTagBo = new BookTagBo(bookVO.getBookId(), bookVO.getTagIdList());
+    bookMapper.deleteBookTagByBookId(bookVO.getBookId());
+    bookMapper.insertBookTag(bookTagBo);
+    return bookMapper.updateById(bookVO);
+  }
+
+  @Override
+  public int modifyBookImg(int bookId, String img) {
+    return bookMapper.updateImg(bookId, img);
   }
 
   @Override
@@ -72,18 +91,18 @@ public class BookServiceImpl implements BookService {
   public PageInfo<BookVO> getByCond(BookDTO bookDTO) {
     PageHelper.startPage(bookDTO.getIndex(), bookDTO.getPageSize());
     List<BookVO> list = new LinkedList<>();
-    String userName = bookDTO.getUserName();
-    Integer userId =
-        userName.equals("") ? null :
-            userInfoMapper.selectUserInfoByUsername(userName).getUserId();
     BookBo bookBo =
-        new BookBo(
-            bookDTO.getBookName(), bookDTO.getPublisher(), map.get(bookDTO.getStatus()),
-            userId);
+        new BookBo(bookDTO.getBookName(), bookDTO.getPublisher(), map.get(bookDTO.getStatus()));
     List<Book> bookList = bookMapper.selectByCond(bookBo);
-    bookList.forEach(book -> {
-      list.add(bookConvert.convertVO(book));
-    });
+    bookList.forEach(
+        book -> {
+          BookVO bookVO = bookConvert.convertVO(book);
+          bookVO.setTagIdList(bookMapper.selectTagIdByBookId(book.getBookId()));
+          bookVO.setUserName(
+              book.getUserId() == null ? null :
+                  userInfoMapper.selectNameById(book.getUserId()));
+          list.add(bookVO);
+        });
     return new PageInfo<>(list);
   }
 }

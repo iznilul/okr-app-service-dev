@@ -3,13 +3,15 @@ package com.softlab.okr.service.ServiceImpl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.softlab.okr.mapper.BookMapper;
 import com.softlab.okr.mapper.TagMapper;
 import com.softlab.okr.model.dto.TagDTO;
 import com.softlab.okr.model.entity.Tag;
 import com.softlab.okr.service.TagService;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @Author: Devhui
@@ -21,6 +23,9 @@ public class TagServiceImpl implements TagService {
 
   @Autowired
   private TagMapper tagMapper;
+
+  @Autowired
+  private BookMapper bookMapper;
 
   @Override
   public int saveTag(String name, int order) {
@@ -45,8 +50,9 @@ public class TagServiceImpl implements TagService {
   }
   
   @Override
-  public int removeByIdList(List<Integer> list) {
-    return tagMapper.deleteByIdList(list);
+  public int removeById(int tagId) {
+    bookMapper.deleteBookTagByTagId(tagId);
+    return tagMapper.deleteById(tagId);
   }
 
   @Override

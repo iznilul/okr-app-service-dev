@@ -33,7 +33,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/user/info")
 @Api(tags = "用户操作")
 @Auth(id = 3000, name = "用户操作")
 public class UserInfoController {
@@ -152,7 +152,7 @@ public class UserInfoController {
     // 通过base64来转化图片
     byte[] data = file.getBytes();
     if (data.length > 1024000) {
-      throw new ApiException(ResultCode.USER_UPLOAD_EXCEED);
+        throw new ApiException(ResultCode.FILE_UPLOAD_EXCEED);
     }
 
     // 将字节流转成字符串
@@ -162,7 +162,7 @@ public class UserInfoController {
     if (userInfoService.uploadAvatar(username, avatar) == 1) {
       return Result.success(avatar);
     } else {
-      throw new ApiException(ResultCode.USER_UPLOAD_ERROR);
+        throw new ApiException(ResultCode.FILE_UPLOAD_ERROR);
     }
   }
 

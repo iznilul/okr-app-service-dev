@@ -11,7 +11,7 @@
  Target Server Version : 50722
  File Encoding         : 65001
 
- Date: 26/08/2021 19:24:29
+ Date: 01/09/2021 20:04:20
 */
 
 SET NAMES utf8mb4;
@@ -32,11 +32,12 @@ CREATE TABLE `book`  (
   `create_time` bigint(11) NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` bigint(11) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`book_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of book
 -- ----------------------------
+INSERT INTO `book` VALUES (1, '谢特', 'data:image/png;base64,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', 'jisdf', 1223, 1, 20, 20210827233259, 20210829212656);
 
 -- ----------------------------
 -- Table structure for book_tag
@@ -51,6 +52,56 @@ CREATE TABLE `book_tag`  (
 -- ----------------------------
 -- Records of book_tag
 -- ----------------------------
+INSERT INTO `book_tag` VALUES (1, 5);
+INSERT INTO `book_tag` VALUES (1, 6);
+
+-- ----------------------------
+-- Table structure for key
+-- ----------------------------
+DROP TABLE IF EXISTS `key`;
+CREATE TABLE `key`  (
+  `key_id` int(11) NOT NULL AUTO_INCREMENT COMMENT ' 钥匙id',
+  `key_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '钥匙名称',
+  PRIMARY KEY (`key_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of key
+-- ----------------------------
+INSERT INTO `key` VALUES (2, '四教111');
+
+-- ----------------------------
+-- Table structure for key_user
+-- ----------------------------
+DROP TABLE IF EXISTS `key_user`;
+CREATE TABLE `key_user`  (
+  `key_id` int(11) NOT NULL COMMENT '钥匙id',
+  `user_id` int(11) NOT NULL COMMENT '用户id',
+  PRIMARY KEY (`key_id`, `user_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of key_user
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for login_log
+-- ----------------------------
+DROP TABLE IF EXISTS `login_log`;
+CREATE TABLE `login_log`  (
+  `login_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '记录id',
+  `ip` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ip地址',
+  `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户名',
+  `time` datetime(0) NULL DEFAULT NULL COMMENT '请求时间点',
+  `duration` int(11) NULL DEFAULT NULL COMMENT '用时 单位ms',
+  PRIMARY KEY (`login_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of login_log
+-- ----------------------------
+INSERT INTO `login_log` VALUES (2, '0:0:0:0:0:0:0:1', 'anonymousUser', '2021-09-01 09:43:49', 560);
+INSERT INTO `login_log` VALUES (3, '0:0:0:0:0:0:0:1', 'admin', '2021-09-01 09:43:57', 103);
 
 -- ----------------------------
 -- Table structure for resource
@@ -83,13 +134,27 @@ INSERT INTO `resource` VALUES (2010, '/api/admin/getSignUpList', '获取报名�
 INSERT INTO `resource` VALUES (2011, '/api/admin/modifySignUpList', '更新报名记录', 'POST', 1);
 INSERT INTO `resource` VALUES (2012, '/api/admin/addTag', '增加标签', 'GET', 1);
 INSERT INTO `resource` VALUES (2013, '/api/admin/modifyTag', '更新标签', 'GET', 1);
-INSERT INTO `resource` VALUES (2014, '/api/admin/removeTag', '删除标签', 'POST', 1);
+INSERT INTO `resource` VALUES (2014, '/api/admin/removeTag', '删除标签', 'GET', 1);
 INSERT INTO `resource` VALUES (2015, '/api/admin/getTagByCond', '获取标签列表', 'POST', 1);
-INSERT INTO `resource` VALUES (3001, '/api/user/modifyUserInfo', '更新用户信息', 'POST', 1);
-INSERT INTO `resource` VALUES (3002, '/api/user/userInfoByUsername', '根据账号选择用户', 'GET', 1);
-INSERT INTO `resource` VALUES (3003, '/api/user/userInfoByCond', '根据情况选择用户', 'POST', 1);
-INSERT INTO `resource` VALUES (3004, '/api/user/upload', '上传头像文件', 'POST', 1);
-INSERT INTO `resource` VALUES (3005, '/api/user/modifyPassword', '修改密码', 'POST', 1);
+INSERT INTO `resource` VALUES (2016, '/api/admin/saveBook', '添加书籍', 'POST', 1);
+INSERT INTO `resource` VALUES (2017, '/api/admin/modifyBookImg', '上传书籍照片', 'GET', 1);
+INSERT INTO `resource` VALUES (2018, '/api/admin/modifyBook', '修改书籍', 'GET', 1);
+INSERT INTO `resource` VALUES (2019, '/api/admin/removeBook', '删除书籍', 'GET', 1);
+INSERT INTO `resource` VALUES (2020, '/api/admin/saveKey', '增加钥匙', 'GET', 1);
+INSERT INTO `resource` VALUES (2021, '/api/admin/modifyKey', '修改钥匙', 'GET', 1);
+INSERT INTO `resource` VALUES (2022, '/api/admin/removeKey', '删除钥匙', 'GET', 1);
+INSERT INTO `resource` VALUES (2023, '/api/admin/saveKeyUser', '增加钥匙持有人', 'GET', 1);
+INSERT INTO `resource` VALUES (2024, '/api/admin/removeKeyUser', '删除钥匙持有人', 'GET', 1);
+INSERT INTO `resource` VALUES (2025, '/api/admin/getLoginLogByCond', '登录日志列表', 'GET', 1);
+INSERT INTO `resource` VALUES (3001, '/api/user/info/modifyUserInfo', '更新用户信息', 'POST', 1);
+INSERT INTO `resource` VALUES (3002, '/api/user/info/userInfoByUsername', '根据账号选择用户', 'GET', 1);
+INSERT INTO `resource` VALUES (3003, '/api/user/info/userInfoByCond', '根据情况选择用户', 'POST', 1);
+INSERT INTO `resource` VALUES (3004, '/api/user/info/upload', '上传头像文件', 'POST', 1);
+INSERT INTO `resource` VALUES (3005, '/api/user/info/modifyPassword', '修改密码', 'POST', 1);
+INSERT INTO `resource` VALUES (4001, '/api/user/public/getBookByCond', '书籍列表', 'POST', 1);
+INSERT INTO `resource` VALUES (4002, '/api/user/public/getTagList', '标签列表', 'GET', 1);
+INSERT INTO `resource` VALUES (4003, '/api/user/public/getKeyList', '钥匙列表', 'GET', 1);
+INSERT INTO `resource` VALUES (4004, '/api/user/public/borrowBook', '借书', 'GET', 1);
 INSERT INTO `resource` VALUES (8001, '/api/user/monitor/server', '服务器监控', 'GET', 1);
 
 -- ----------------------------
@@ -119,35 +184,53 @@ CREATE TABLE `role_resource`  (
   `resource_id` int(11) NOT NULL COMMENT '资源id',
   PRIMARY KEY (`id`, `role_id`, `resource_id`) USING BTREE,
   INDEX `resource_id`(`resource_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2032 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色-权限关系' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6146 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色-权限关系' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of role_resource
 -- ----------------------------
-INSERT INTO `role_resource` VALUES (2017, 1, 2001);
-INSERT INTO `role_resource` VALUES (2016, 1, 2002);
-INSERT INTO `role_resource` VALUES (2012, 1, 2003);
-INSERT INTO `role_resource` VALUES (2014, 1, 2004);
-INSERT INTO `role_resource` VALUES (2010, 1, 2005);
-INSERT INTO `role_resource` VALUES (2011, 1, 2006);
-INSERT INTO `role_resource` VALUES (2020, 1, 2010);
-INSERT INTO `role_resource` VALUES (2008, 1, 2011);
-INSERT INTO `role_resource` VALUES (2018, 1, 2012);
-INSERT INTO `role_resource` VALUES (2023, 1, 2013);
-INSERT INTO `role_resource` VALUES (2019, 1, 2014);
-INSERT INTO `role_resource` VALUES (2013, 1, 2015);
-INSERT INTO `role_resource` VALUES (2015, 1, 3001);
-INSERT INTO `role_resource` VALUES (2029, 2, 3001);
-INSERT INTO `role_resource` VALUES (2024, 1, 3002);
-INSERT INTO `role_resource` VALUES (2027, 2, 3002);
-INSERT INTO `role_resource` VALUES (2009, 1, 3003);
-INSERT INTO `role_resource` VALUES (2031, 2, 3003);
-INSERT INTO `role_resource` VALUES (2022, 1, 3004);
-INSERT INTO `role_resource` VALUES (2030, 2, 3004);
-INSERT INTO `role_resource` VALUES (2025, 1, 3005);
-INSERT INTO `role_resource` VALUES (2028, 2, 3005);
-INSERT INTO `role_resource` VALUES (2021, 1, 8001);
-INSERT INTO `role_resource` VALUES (2026, 2, 8001);
+INSERT INTO `role_resource` VALUES (6110, 1, 2001);
+INSERT INTO `role_resource` VALUES (6133, 1, 2002);
+INSERT INTO `role_resource` VALUES (6124, 1, 2003);
+INSERT INTO `role_resource` VALUES (6128, 1, 2004);
+INSERT INTO `role_resource` VALUES (6122, 1, 2005);
+INSERT INTO `role_resource` VALUES (6108, 1, 2006);
+INSERT INTO `role_resource` VALUES (6113, 1, 2010);
+INSERT INTO `role_resource` VALUES (6120, 1, 2011);
+INSERT INTO `role_resource` VALUES (6111, 1, 2012);
+INSERT INTO `role_resource` VALUES (6115, 1, 2013);
+INSERT INTO `role_resource` VALUES (6105, 1, 2014);
+INSERT INTO `role_resource` VALUES (6127, 1, 2015);
+INSERT INTO `role_resource` VALUES (6134, 1, 2016);
+INSERT INTO `role_resource` VALUES (6131, 1, 2017);
+INSERT INTO `role_resource` VALUES (6123, 1, 2018);
+INSERT INTO `role_resource` VALUES (6112, 1, 2019);
+INSERT INTO `role_resource` VALUES (6129, 1, 2020);
+INSERT INTO `role_resource` VALUES (6107, 1, 2021);
+INSERT INTO `role_resource` VALUES (6126, 1, 2022);
+INSERT INTO `role_resource` VALUES (6106, 1, 2023);
+INSERT INTO `role_resource` VALUES (6118, 1, 2024);
+INSERT INTO `role_resource` VALUES (6119, 1, 2025);
+INSERT INTO `role_resource` VALUES (6116, 1, 3001);
+INSERT INTO `role_resource` VALUES (6142, 2, 3001);
+INSERT INTO `role_resource` VALUES (6121, 1, 3002);
+INSERT INTO `role_resource` VALUES (6141, 2, 3002);
+INSERT INTO `role_resource` VALUES (6104, 1, 3003);
+INSERT INTO `role_resource` VALUES (6136, 2, 3003);
+INSERT INTO `role_resource` VALUES (6125, 1, 3004);
+INSERT INTO `role_resource` VALUES (6140, 2, 3004);
+INSERT INTO `role_resource` VALUES (6130, 1, 3005);
+INSERT INTO `role_resource` VALUES (6145, 2, 3005);
+INSERT INTO `role_resource` VALUES (6117, 1, 4001);
+INSERT INTO `role_resource` VALUES (6143, 2, 4001);
+INSERT INTO `role_resource` VALUES (6132, 1, 4002);
+INSERT INTO `role_resource` VALUES (6138, 2, 4002);
+INSERT INTO `role_resource` VALUES (6114, 1, 4003);
+INSERT INTO `role_resource` VALUES (6144, 2, 4003);
+INSERT INTO `role_resource` VALUES (6109, 1, 4004);
+INSERT INTO `role_resource` VALUES (6137, 2, 4004);
+INSERT INTO `role_resource` VALUES (6135, 1, 8001);
+INSERT INTO `role_resource` VALUES (6139, 2, 8001);
 
 -- ----------------------------
 -- Table structure for route
@@ -225,15 +308,51 @@ CREATE TABLE `tag`  (
   `name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '标签名',
   `order` int(11) NOT NULL COMMENT '排序权重',
   PRIMARY KEY (`tag_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tag
 -- ----------------------------
 INSERT INTO `tag` VALUES (5, 'web', 1);
 INSERT INTO `tag` VALUES (6, 'java', 2);
-INSERT INTO `tag` VALUES (7, 'python', 3);
-INSERT INTO `tag` VALUES (8, 'go', 3);
+
+-- ----------------------------
+-- Table structure for task
+-- ----------------------------
+DROP TABLE IF EXISTS `task`;
+CREATE TABLE `task`  (
+  `task_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '任务id',
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '任务名',
+  `class_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '任务类',
+  `function` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '任务功能',
+  PRIMARY KEY (`task_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of task
+-- ----------------------------
+INSERT INTO `task` VALUES ('T1', '测试任务1', 'com.qianxin.rdc2.mgtplatform.task.job.testTask1', '测试用的,输出当前时间');
+INSERT INTO `task` VALUES ('T2', '测试任务2', 'com.qianxin.rdc2.mgtplatform.task.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES ('T3', '测试任务3', 'com.qianxin.rdc2.mgtplatform.task.job.testTask3', '测试用的,输出数字');
+
+-- ----------------------------
+-- Table structure for task_config
+-- ----------------------------
+DROP TABLE IF EXISTS `task_config`;
+CREATE TABLE `task_config`  (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `task_id` varchar(8) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '任务id',
+  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '任务描述',
+  `cron` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'cron表达式',
+  `status` tinyint(4) NOT NULL COMMENT '定时任务状态 0 停用,1启用',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of task_config
+-- ----------------------------
+INSERT INTO `task_config` VALUES (1, 'T1', '每秒执行一次', '* * * * * ?', 1);
+INSERT INTO `task_config` VALUES (2, 'T2', '修改测试', '*/3 * * * * ?', 1);
 
 -- ----------------------------
 -- Table structure for user

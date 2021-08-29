@@ -40,12 +40,9 @@
     (null,#{name},#{order})
   </insert>
 
-  <delete id="deleteByIdList">
+  <delete id="deleteById">
     delete from `tag`
-    where tag_id in
-    <foreach collection="list" item="item" open="(" separator="," close=")">
-      #{item}
-    </foreach>
+    where tag_id =#{tagId}
   </delete>
 
   <update id="updateTag">

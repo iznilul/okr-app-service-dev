@@ -4,16 +4,17 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import java.io.IOException;
-import java.time.Duration;
-import java.util.Date;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.time.Duration;
+import java.util.Date;
 
 /**
  * JWT工具类
@@ -29,7 +30,7 @@ public class JwtManager {
   /**
    * 过期时间目前设置成2天，这个配置随业务需求而定
    */
-  private Duration expiration = Duration.ofDays(3);
+  private Duration expiration = Duration.ofDays(15);
 
   /**
    * 生成JWT

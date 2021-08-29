@@ -14,6 +14,7 @@
     <result property="updateTime" column="update_time"/>
   </resultMap>
 
+
   <sql id="baseColumn">
         `book_id`,`book_name`,`img`,`publisher`,`price`,`status`,`user_id`,`create_time`,`update_time`
     </sql>
@@ -22,6 +23,9 @@
     `book_id`,`tag_id`
   </sql>
 
+  <sql id="table">
+    `book_tag`
+  </sql>
 
   <!--选择全部-->
   <select id="selectList" resultMap="bookMap">
@@ -36,10 +40,9 @@
     <include refid="baseColumn"></include>
     from `book`
     where 1=1
-    <if test="bookName!='' and bookName!=null">and `book_name` like `%${bookName}%`</if>
-    <if test="publisher!='' and publisher!=null">and `publisher` like `%${publisher}%`</if>
+    <if test="bookName!='' and bookName!=null">and `book_name` like '%${bookName}%'</if>
+    <if test="publisher!='' and publisher!=null">and `publisher` like '%${publisher}%'</if>
     <if test="status!=null">and `status` = #{status}</if>
-    <if test="userId!=null">and user_id = #{userId}</if>
   </select>
 
   <insert id="insertBook" useGeneratedKeys="true" keyProperty="bookId">
@@ -48,6 +51,14 @@
     values
     (null,#{bookName},#{img},#{publisher},#{price},0,null,NOW(),NOW())
   </insert>
+
+  <select id="selectTagIdByBookId" resultType="Integer">
+    select
+    `tag_id`
+    from
+    <include refid="table"></include>
+    where `book_id`=#{bookId}
+  </select>
 
   <insert id="insertBookTag" parameterType="booktagbo">
     insert into
@@ -58,25 +69,45 @@
     </foreach>
   </insert>
 
-  <delete id="deleteById">
-    delete from `book`
-    where book_id in
-    <foreach collection="bookIds" item="item" open="(" separator="," close=")">
-      #{item}
-    </foreach>
+  <delete id="deleteBookTagByBookId">
+    delete from
+    <include refid="table"></include>
+    where book_id=#{bookId}
   </delete>
 
-  <update id="updateById">
-        update `book` set
-        `name`=#{name},
-        `img`=#{img},
-        `publisher`=#{publisher},
-        `price`=#{price},
-        `status`=#{status},
-        `user_id`=#{userId},
-        `update_time`=now()
-        where book_id=#{bookId}
+  <delete id="deleteBookTagByTagId">
+    delete from
+    <include refid="table"></include>
+    where tag_id=#{tagId}
+  </delete>
+
+  <delete id="deleteById">
+    delete from `book`
+    where book_id =#{bookId}
+  </delete>
+
+  <update id="updateImg">
+        update `book` set `img`=#{img} where `book_id`=#{bookId}
     </update>
+
+  <update id="updateById">
+    update `book` set
+    `book_name`=#{bookName},
+    `publisher`=#{publisher},
+    `price`=#{price},
+    <if test="status=='空闲'">`status`=0,</if>
+    <if test="status=='借阅'">`status`=1,</if>
+    <if test="status=='丢失'">`status`=2,</if>
+    `update_time`=NOW()
+    where book_id=#{bookId}
+  </update>
+
+  <update id="borrow">
+    update `book` set
+    `status`=1,
+    `user_id`=#{userId}
+    where `book_id`=#{bookId}
+  </update>
 
 
 </mapper>
