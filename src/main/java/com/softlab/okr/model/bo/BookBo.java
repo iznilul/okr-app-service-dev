@@ -21,7 +21,4 @@ public class BookBo {
 
   private Integer status;
 
-  private Integer userId;
-
-
 }

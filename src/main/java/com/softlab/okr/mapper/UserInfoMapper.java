@@ -28,6 +28,8 @@ public interface UserInfoMapper {
 
     List<UserInfo> selectUserInfoByCond(SelectUserDTO selectUserDto) throws DataAccessException;
 
+    String selectNameById(int userId) throws DataAccessException;
+
     int updateUserInfo(
             @Param("updateUserDto") UpdateUserDTO updateUserDto,
             @Param("updateTime") long updateTime)

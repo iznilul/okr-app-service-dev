@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.softlab.okr.mapper.TaskMapper">
+  <resultMap id="TaskMap" type="com.softlab.okr.model.entity.Task">
+    <id property="taskId" column="task_id"/>
+    <result property="name" column="name"/>
+    <result property="className" column="class_name"/>
+    <result property="function" column="function"/>
+  </resultMap>
+
+  <sql id="baseColumn">
+        `task_id`,`name`,`class_name`,`function`
+    </sql>
+  <select id="selectByTaskId" resultMap="TaskMap">
+    select
+    <include refid="baseColumn"></include>
+    from `task`
+    where task_id=#{taskId}
+  </select>
+
+  <select id="selectList" resultMap="TaskMap">
+    select
+    <include refid="baseColumn"></include>
+    from `task`
+  </select>
+
+  <insert id="insertAll">
+    insert into `task` (<include refid="baseColumn"></include>)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.taskId},#{item.name},#{item.className},#{item.function})
+    </foreach>
+  </insert>
+
+  <delete id="deleteAll">
+    delete from `task`
+  </delete>
+
+</mapper>
+

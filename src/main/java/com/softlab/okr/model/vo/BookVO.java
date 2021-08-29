@@ -1,10 +1,11 @@
 package com.softlab.okr.model.vo;
 
-import java.util.List;
-import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.Pattern;
+import java.util.List;
 
 /**
  * @program: okr
@@ -26,6 +27,8 @@ public class BookVO {
   private String publisher;
 
   private Integer price;
+
+  private String userName;
 
   @Pattern(regexp = "^$|^(空闲|借阅|丢失)$", message = "书籍状态需要满足规则")
   private String status;

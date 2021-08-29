@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a36c3c61-aad3-4af6-9f3c-8e41e32d92d5",
+		"_postman_id": "bccab958-62ef-4cc1-b721-e922293dbc7d",
 		"name": "okr",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -62,6 +62,58 @@
 						"api",
 						"common",
 						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "test",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDMwMDAxNiwiZXhwIjoxNjMxNTk2MDE2fQ.Gnb89HDs4IH6LlC2G4WcaluEHQWAub5bD5z_nptY3Q2d8zfnjMyjSUUOl6xinA58xwOuvs8-mgsLh6l3QIKvAA",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:9101/api/common/test",
+					"host": [
+						"localhost"
+					],
+					"port": "9101",
+					"path": [
+						"api",
+						"common",
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logout",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDMwMDAxNiwiZXhwIjoxNjMxNTk2MDE2fQ.Gnb89HDs4IH6LlC2G4WcaluEHQWAub5bD5z_nptY3Q2d8zfnjMyjSUUOl6xinA58xwOuvs8-mgsLh6l3QIKvAA",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:9101/api/common/logout",
+					"host": [
+						"localhost"
+					],
+					"port": "9101",
+					"path": [
+						"api",
+						"common",
+						"logout"
 					]
 				}
 			},
@@ -366,13 +418,43 @@
 			"response": []
 		},
 		{
-			"name": "removeTag",
+			"name": "getTagList",
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYyOTk1ODk0MCwiZXhwIjoxNjMwMjE4MTQwfQ.UHyK9bEmA8ulMLg3RPjgyiLwCVlbnzabcrl5jcd_u0k66SPmLm7dlvrnCGXviHxff2HJLoymXwaxcNJDC2nbdg",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDE2NDgxNCwiZXhwIjoxNjMwNDI0MDE0fQ.uCOFHQl7cJ3LMTQQZBREMfKuok2Dnd_3H0ZRW_Q8grp_dYLgBcvbac5wFo9TeZYRAKVxvs6s48Iq-9u5T-s-9g",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:9101/api/user/public/getTagList",
+					"host": [
+						"localhost"
+					],
+					"port": "9101",
+					"path": [
+						"api",
+						"user",
+						"public",
+						"getTagList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "removeTag",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDIzOTQ2NSwiZXhwIjoxNjMxNTM1NDY1fQ.GZD01I9h4ck4UV9g7WxDO1S6X2hAM8LaMia72M5W3zTqWnX3rE0NQ2Y6Qqvv-Dacl0ZrPemRju7CYMJpu3iFRQ",
 						"type": "text"
 					},
 					{
@@ -384,10 +466,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "[1]"
+					"raw": ""
 				},
 				"url": {
-					"raw": "localhost:9101/api/admin/removeTag",
+					"raw": "localhost:9101/api/admin/removeTag?tagId=8",
 					"host": [
 						"localhost"
 					],
@@ -396,6 +478,12 @@
 						"api",
 						"admin",
 						"removeTag"
+					],
+					"query": [
+						{
+							"key": "tagId",
+							"value": "8"
+						}
 					]
 				}
 			},
@@ -408,7 +496,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYyOTk1ODk0MCwiZXhwIjoxNjMwMjE4MTQwfQ.UHyK9bEmA8ulMLg3RPjgyiLwCVlbnzabcrl5jcd_u0k66SPmLm7dlvrnCGXviHxff2HJLoymXwaxcNJDC2nbdg",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDI5NjM1MiwiZXhwIjoxNjMxNTkyMzUyfQ.Yqn6nISCJDGjoqpdFFf0qL-e532m1gxwR0GAs44zeq8WoxyeKr029tZbZDVyLR6jOOinV3L19-NzY-Hs5botCg",
 						"type": "text"
 					},
 					{
@@ -444,13 +532,13 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYyOTk4OTkzNiwiZXhwIjoxNjMwMjQ5MTM2fQ.L4i8K64UbmtD00mK0kOIwv6WOMvCXroO7LeuIF4czPMtPiYm1leuXTHJgw8PUmgSPwD2G0438MuWKlWnJJBbZQ",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDMwMDAxNiwiZXhwIjoxNjMxNTk2MDE2fQ.Gnb89HDs4IH6LlC2G4WcaluEHQWAub5bD5z_nptY3Q2d8zfnjMyjSUUOl6xinA58xwOuvs8-mgsLh6l3QIKvAA",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"bookName\":\"\",\r\n    \"publisher\":\"\",\r\n    \"status\":\"空闲\",\r\n    \"userName\":\"\",\r\n    \"index\":\"\",\r\n    \"pageSize\":\"\"\r\n}",
+					"raw": "{\r\n    \"bookName\":\"\",\r\n    \"publisher\":\"\",\r\n    \"status\":\"\",\r\n    \"index\":\"\",\r\n    \"pageSize\":\"\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -486,7 +574,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \r\n}",
+					"raw": "{\r\n    \"bookName\":\"Java入门到跑路\",\r\n    \"img\":\"as\",\r\n    \"publisher\":\"asdfd\",\r\n    \"price\":1200,\r\n    \"tagIdList\":[5,6,7,8]\r\n    \r\n    \r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -503,6 +591,401 @@
 						"api",
 						"admin",
 						"saveBook"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "modifyBookImg",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDE2NDgxNCwiZXhwIjoxNjMwNDI0MDE0fQ.uCOFHQl7cJ3LMTQQZBREMfKuok2Dnd_3H0ZRW_Q8grp_dYLgBcvbac5wFo9TeZYRAKVxvs6s48Iq-9u5T-s-9g",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/D:/llz/MobileFile/images (1).jpg"
+						},
+						{
+							"key": "",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:9101/api/admin/modifyBookImg?bookId=1",
+					"host": [
+						"localhost"
+					],
+					"port": "9101",
+					"path": [
+						"api",
+						"admin",
+						"modifyBookImg"
+					],
+					"query": [
+						{
+							"key": "bookId",
+							"value": "1"
+						},
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "modifyBook",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDIzOTQ2NSwiZXhwIjoxNjMxNTM1NDY1fQ.GZD01I9h4ck4UV9g7WxDO1S6X2hAM8LaMia72M5W3zTqWnX3rE0NQ2Y6Qqvv-Dacl0ZrPemRju7CYMJpu3iFRQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"bookId\":1,\r\n    \"bookName\":\"谢特\",\r\n    \"publisher\":\"jisdf\",\r\n    \"price\":1223,\r\n    \"status\":\"空闲\",\r\n    \"tagIdList\":[5,6,8]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9101/api/admin/modifyBook",
+					"host": [
+						"localhost"
+					],
+					"port": "9101",
+					"path": [
+						"api",
+						"admin",
+						"modifyBook"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "removeBook",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDIzOTQ2NSwiZXhwIjoxNjMxNTM1NDY1fQ.GZD01I9h4ck4UV9g7WxDO1S6X2hAM8LaMia72M5W3zTqWnX3rE0NQ2Y6Qqvv-Dacl0ZrPemRju7CYMJpu3iFRQ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:9101/api/admin/removeBook?bookId=9",
+					"host": [
+						"localhost"
+					],
+					"port": "9101",
+					"path": [
+						"api",
+						"admin",
+						"removeBook"
+					],
+					"query": [
+						{
+							"key": "bookId",
+							"value": "9"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getKeyList",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDIzOTQ2NSwiZXhwIjoxNjMxNTM1NDY1fQ.GZD01I9h4ck4UV9g7WxDO1S6X2hAM8LaMia72M5W3zTqWnX3rE0NQ2Y6Qqvv-Dacl0ZrPemRju7CYMJpu3iFRQ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:9101/api/user/public/getKeyList",
+					"host": [
+						"localhost"
+					],
+					"port": "9101",
+					"path": [
+						"api",
+						"user",
+						"public",
+						"getKeyList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveKey",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDIzOTQ2NSwiZXhwIjoxNjMxNTM1NDY1fQ.GZD01I9h4ck4UV9g7WxDO1S6X2hAM8LaMia72M5W3zTqWnX3rE0NQ2Y6Qqvv-Dacl0ZrPemRju7CYMJpu3iFRQ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:9101/api/admin/saveKey?keyName=四教111",
+					"host": [
+						"localhost"
+					],
+					"port": "9101",
+					"path": [
+						"api",
+						"admin",
+						"saveKey"
+					],
+					"query": [
+						{
+							"key": "keyName",
+							"value": "四教111"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "modifyKey",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDIzOTQ2NSwiZXhwIjoxNjMxNTM1NDY1fQ.GZD01I9h4ck4UV9g7WxDO1S6X2hAM8LaMia72M5W3zTqWnX3rE0NQ2Y6Qqvv-Dacl0ZrPemRju7CYMJpu3iFRQ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:9101/api/admin/modifyKey?keyId=1&keyName=shit",
+					"host": [
+						"localhost"
+					],
+					"port": "9101",
+					"path": [
+						"api",
+						"admin",
+						"modifyKey"
+					],
+					"query": [
+						{
+							"key": "keyId",
+							"value": "1"
+						},
+						{
+							"key": "keyName",
+							"value": "shit"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "removeKey",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDIzOTQ2NSwiZXhwIjoxNjMxNTM1NDY1fQ.GZD01I9h4ck4UV9g7WxDO1S6X2hAM8LaMia72M5W3zTqWnX3rE0NQ2Y6Qqvv-Dacl0ZrPemRju7CYMJpu3iFRQ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:9101/api/admin/removeKey?keyId=1",
+					"host": [
+						"localhost"
+					],
+					"port": "9101",
+					"path": [
+						"api",
+						"admin",
+						"removeKey"
+					],
+					"query": [
+						{
+							"key": "keyId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveKeyUser",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDIzOTQ2NSwiZXhwIjoxNjMxNTM1NDY1fQ.GZD01I9h4ck4UV9g7WxDO1S6X2hAM8LaMia72M5W3zTqWnX3rE0NQ2Y6Qqvv-Dacl0ZrPemRju7CYMJpu3iFRQ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:9101/api/admin/saveKeyUser?keyId=2&userId=1",
+					"host": [
+						"localhost"
+					],
+					"port": "9101",
+					"path": [
+						"api",
+						"admin",
+						"saveKeyUser"
+					],
+					"query": [
+						{
+							"key": "keyId",
+							"value": "2"
+						},
+						{
+							"key": "userId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "removeKeyUser",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDIzOTQ2NSwiZXhwIjoxNjMxNTM1NDY1fQ.GZD01I9h4ck4UV9g7WxDO1S6X2hAM8LaMia72M5W3zTqWnX3rE0NQ2Y6Qqvv-Dacl0ZrPemRju7CYMJpu3iFRQ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:9101/api/admin/removeKeyUser?keyId=2&userid=1",
+					"host": [
+						"localhost"
+					],
+					"port": "9101",
+					"path": [
+						"api",
+						"admin",
+						"removeKeyUser"
+					],
+					"query": [
+						{
+							"key": "keyId",
+							"value": "2"
+						},
+						{
+							"key": "userid",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "borrowBook",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDMwMDAxNiwiZXhwIjoxNjMxNTk2MDE2fQ.Gnb89HDs4IH6LlC2G4WcaluEHQWAub5bD5z_nptY3Q2d8zfnjMyjSUUOl6xinA58xwOuvs8-mgsLh6l3QIKvAA",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:9101/api/user/public/borrowBook?bookId=1",
+					"host": [
+						"localhost"
+					],
+					"port": "9101",
+					"path": [
+						"api",
+						"user",
+						"public",
+						"borrowBook"
+					],
+					"query": [
+						{
+							"key": "bookId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getLoginLogByCond",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDMyMjg1MywiZXhwIjoxNjMxNjE4ODUzfQ.VLUCl_Kz6k26jyvLo6qMNDyqF1Mbdrf9uV1VuhTRurk51Cpb8cHQans4WIvI7u2nac3kJLE1fAyyzhkrEslzFQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"\",\r\n    \"beginTime\":\"2015-08-31\",\r\n    \"endTime\":\"2015-08-31\",\r\n    \"index\":\"\",\r\n    \"pageSize\":\"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9101/api/admin/getLoginLogByCond",
+					"host": [
+						"localhost"
+					],
+					"port": "9101",
+					"path": [
+						"api",
+						"admin",
+						"getLoginLogByCond"
 					]
 				}
 			},

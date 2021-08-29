@@ -42,9 +42,9 @@ public class ApiFilter implements Filter {
       throws IOException, ServletException {
     log.info("----ApiFilter 接口开放过滤----");
     HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-    String uri = ((HttpServletRequest) request).getRequestURI();
+    String path = ((HttpServletRequest) request).getRequestURI();
     for (Resource resource : resources) {
-      if (resource.getPath().equals(uri)) {
+      if (resource.getPath().equals(path)) {
         if (resource.getStatus() == 1) {
           filterChain.doFilter(request, response); // 执行目标资源，放行
         } else {

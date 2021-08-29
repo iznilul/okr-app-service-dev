@@ -2,10 +2,11 @@ package com.softlab.okr.model.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.Pattern;
 
 /**
  * @program: okr
@@ -28,9 +29,6 @@ public class BookDTO {
   @Pattern(regexp = "^$|^(空闲|借阅|丢失)$", message = "书籍状态需要满足规则")
   @ApiModelProperty(value = "状态", required = true, example = "DESC")
   private String status;
-
-  @ApiModelProperty(value = "用户Id", required = true, example = "王二狗")
-  private String userName;
 
   @ApiModelProperty(value = "当前页", required = true, example = "1")
   private Integer index;

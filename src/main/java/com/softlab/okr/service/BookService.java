@@ -13,7 +13,11 @@ public interface BookService {
 
   int removeById(int bookId) throws ServiceException;
 
-  int modifyById(Book book) throws ServiceException;
+  int modifyById(BookVO bookVO) throws ServiceException;
+
+  int modifyBookImg(int bookId, String img) throws ServiceException;
+
+  int borrowBook(int bookId, int userId) throws ServiceException;
 
   List<Book> list() throws ServiceException;
 

@@ -5,6 +5,7 @@ import com.softlab.okr.security.AuthFilter;
 import com.softlab.okr.security.LoginFilter;
 import com.softlab.okr.security.MyDeniedHandler;
 import com.softlab.okr.security.MyEntryPoint;
+import com.softlab.okr.security.MyLogoutSuccessHandler;
 import com.softlab.okr.security.MyPasswordEncoder;
 import com.softlab.okr.service.ServiceImpl.UserEntityServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Autowired
   private AuthFilter authFilter;
 
+  @Autowired
+  private MyLogoutSuccessHandler myLogoutSuccessHandler;
+
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     // 关闭csrf和frameOptions，如果不关闭会影响前端请求接口（这里不展开细讲了，感兴趣的自行搜索，不难）
@@ -56,6 +60,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .authenticated()
         // 关于登录认证的错误处理器
         .and()
+        //.logout()
+        //.logoutUrl("/api/common/logout")
+        //.logoutSuccessHandler(myLogoutSuccessHandler)
+        //.and()
         .exceptionHandling()
         .authenticationEntryPoint(new MyEntryPoint())
         // 指定认证错误，权限不足处理器
