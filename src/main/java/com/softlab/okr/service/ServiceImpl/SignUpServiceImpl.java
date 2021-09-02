@@ -1,6 +1,9 @@
 package com.softlab.okr.service.ServiceImpl;
 
 
+import cn.hutool.core.io.IoUtil;
+import cn.hutool.poi.excel.ExcelUtil;
+import cn.hutool.poi.excel.ExcelWriter;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.softlab.okr.convert.impl.SignUpConvert;
@@ -9,10 +12,13 @@ import com.softlab.okr.model.dto.SignUpDTO;
 import com.softlab.okr.model.entity.SignUp;
 import com.softlab.okr.model.vo.SignUpVO;
 import com.softlab.okr.service.SignUpService;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -84,5 +90,35 @@ public class SignUpServiceImpl implements SignUpService {
   @Override
   public List<SignUp> getSignUpList() {
     return signUpMapper.selectSignUpList();
+  }
+
+  @Override
+  public void exportSignUpList(HttpServletResponse response) throws IOException {
+    List<SignUp> list = this.getSignUpList();
+    // 通过工具类创建writer，默认创建xls格式
+    ExcelWriter writer = ExcelUtil.getWriter();
+    writer.addHeaderAlias("id", "学号");
+    writer.addHeaderAlias("name", "姓名");
+    writer.addHeaderAlias("gender", "性别");
+    writer.addHeaderAlias("qq", "qq号");
+    writer.addHeaderAlias("major", "专业班级");
+    writer.addHeaderAlias("profile", "个人简介");
+    writer.addHeaderAlias("status", "状态");
+    writer.addHeaderAlias("comment", "评语");
+    // 一次性写出内容，使用默认样式，强制输出标题
+    writer.write(list, true);
+    //out为OutputStream，需要写出到的目标流
+
+    //response为HttpServletResponse对象
+    response.setContentType("application/vnd.ms-excel;charset=utf-8");
+    //test.xls是弹出下载对话框的文件名，不能为中文，中文请自行编码
+    response.setHeader("Content-Disposition", "attachment;filename=signUp.xls");
+    ServletOutputStream out = response.getOutputStream();
+
+    writer.flush(out, true);
+    // 关闭writer，释放内存
+    writer.close();
+    //此处记得关闭输出Servlet流
+    IoUtil.close(out);
   }
 }

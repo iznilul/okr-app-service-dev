@@ -35,6 +35,7 @@ import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -186,8 +187,8 @@ public class AdminController {
 
   @ApiOperation("获取报名记录")
   @PostMapping("getSignUpList")
-  @Auth(id = 10, name = "获取报名记录")
-  public Result getSelectList(@RequestBody SignUpDTO signUpDTO) throws Exception {
+  @Auth(id = 9, name = "获取报名记录")
+  public Result getSignUpList(@RequestBody SignUpDTO signUpDTO) throws Exception {
     System.out.println(signUpDTO);
     PageInfo<SignUpVO> signUpList = signUpService.getSignUpListByCond(signUpDTO);
 
@@ -206,8 +207,8 @@ public class AdminController {
 
   @ApiOperation("更新报名记录")
   @PostMapping("modifySignUpList")
-  @Auth(id = 11, name = "更新报名记录")
-  public Result modifySelectList(@RequestBody SignUp signUP) throws Exception {
+  @Auth(id = 10, name = "更新报名记录")
+  public Result modifyModifyList(@RequestBody SignUp signUP) throws Exception {
     System.out.println(signUP);
 
     if (signUpService.modifySignUpList(signUP) == 1) {
@@ -215,6 +216,13 @@ public class AdminController {
     } else {
       return Result.failure(ResultCode.SIGNUP_MODIFY_ERROR);
     }
+  }
+
+  @ApiOperation("导出报名单")
+  @GetMapping("exportSignUpList")
+  @Auth(id = 11, name = "导出报名单")
+  public void exportSignUpList(HttpServletResponse response) throws Exception {
+    signUpService.exportSignUpList(response);
   }
 
   @ApiOperation("增加标签")

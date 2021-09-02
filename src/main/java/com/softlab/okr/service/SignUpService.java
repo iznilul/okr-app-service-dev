@@ -5,7 +5,9 @@ import com.softlab.okr.exception.ServiceException;
 import com.softlab.okr.model.dto.SignUpDTO;
 import com.softlab.okr.model.entity.SignUp;
 import com.softlab.okr.model.vo.SignUpVO;
+import java.io.IOException;
 import java.util.List;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @Author: Devhui
@@ -31,4 +33,6 @@ public interface SignUpService {
 
   // 拉取所有
   List<SignUp> getSignUpList() throws ServiceException;
+
+  void exportSignUpList(HttpServletResponse response) throws ServiceException, IOException;
 }
