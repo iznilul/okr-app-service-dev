@@ -1,6 +1,6 @@
 package com.softlab.okr.job;
 
-import com.qianxin.rdc2.mgtplatform.task.config.TaskInfo;
+import com.softlab.okr.annotation.TaskInfo;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;

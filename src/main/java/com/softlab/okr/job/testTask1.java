@@ -1,6 +1,6 @@
 package com.softlab.okr.job;
 
-import com.qianxin.rdc2.mgtplatform.task.config.TaskInfo;
+import com.softlab.okr.annotation.TaskInfo;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import org.quartz.Job;

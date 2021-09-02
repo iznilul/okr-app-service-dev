@@ -1,10 +1,13 @@
 package com.softlab.okr.config;
 
 import com.softlab.okr.annotation.Auth;
+import com.softlab.okr.annotation.TaskInfo;
 import com.softlab.okr.model.entity.Resource;
+import com.softlab.okr.model.entity.Task;
 import com.softlab.okr.security.ApiFilter;
 import com.softlab.okr.security.MySecurityMetadataSource;
 import com.softlab.okr.service.ResourceService;
+import com.softlab.okr.service.TaskService;
 import io.jsonwebtoken.lang.Collections;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -39,11 +42,24 @@ public class ApplicationStartup implements ApplicationRunner {
   @Autowired
   private ResourceService resourceService;
 
+
+  @Autowired
+  private TaskService taskService;
+
   @Autowired
   private RedisTemplate<String, Object> redisTemplate;
 
+  private static final String jobPackage = "com.softlab.okr.job";
+
+  private static final String resourceType = "/*.class";
+
   @Override
   public void run(ApplicationArguments args) throws Exception {
+
+    //重新加载所有的task任务
+    List<Task> taskList = getTasks();
+    taskService.removeAll();
+    taskService.saveAll(taskList);
     // 扫描并获取所有需要权限处理的接口资源(该方法逻辑写在下面)
     List<Resource> list = getAuthResources();
     // 如果权限资源为空，就不用走后续数据插入步骤

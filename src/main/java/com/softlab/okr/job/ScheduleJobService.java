@@ -1,10 +1,9 @@
 package com.softlab.okr.job;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.qianxin.rdc2.mgtplatform.dao.entity.TaskConfig;
-import com.qianxin.rdc2.mgtplatform.dao.mapper.TaskConfigMapper;
-import com.qianxin.rdc2.mgtplatform.dao.mapper.TaskMapper;
+
+import com.softlab.okr.mapper.TaskConfigMapper;
+import com.softlab.okr.mapper.TaskMapper;
+import com.softlab.okr.model.entity.TaskConfig;
 import java.util.List;
 import java.util.Set;
 import lombok.extern.log4j.Log4j2;
@@ -51,9 +50,7 @@ public class ScheduleJobService {
    * @Date: 2021/8/25
    */
   public void startJob() {
-    List<TaskConfig> taskConfigEntities = taskConfigMapper.selectList(
-        Wrappers.<TaskConfig>lambdaQuery()
-            .eq(TaskConfig::getStatus, 1));
+    List<TaskConfig> taskConfigEntities = taskConfigMapper.selectByStatus(1);
     if (taskConfigEntities == null || taskConfigEntities.size() == 0) {
       log.error("定时任务加载数据为空");
       return;
@@ -97,7 +94,7 @@ public class ScheduleJobService {
    * @Date: 2021/8/25
    */
   public void addTaskConfig(TaskConfig taskConfig) throws SchedulerConfigException {
-    taskConfigMapper.insert(taskConfig);
+    taskConfigMapper.insertTaskConfig(taskConfig);
     if (taskConfig.getStatus() == 1) {
       loadJob(taskConfig.getTaskId());
     }
@@ -112,7 +109,7 @@ public class ScheduleJobService {
    */
   public void removeTaskConfig(String taskId) throws SchedulerException {
     unloadJob(taskId);
-    taskConfigMapper.delete(new QueryWrapper<TaskConfig>().eq("task_id", taskId));
+    taskConfigMapper.deleteById(taskId);
   }
 
   /**
@@ -125,7 +122,7 @@ public class ScheduleJobService {
   public void modifyTaskConfig(TaskConfig taskConfig) throws SchedulerException {
     unloadJob(taskConfig.getTaskId());
     taskConfigMapper
-        .update(taskConfig, new QueryWrapper<TaskConfig>().eq("task_id", taskConfig.getTaskId()));
+        .updateTaskConfig(taskConfig);
     if (taskConfig.getStatus() == 1) {
       loadJob(taskConfig.getTaskId());
     }
@@ -161,10 +158,7 @@ public class ScheduleJobService {
    * @Date: 2021/8/25
    */
   public void loadJob(String taskId) throws SchedulerConfigException {
-    TaskConfig taskConfig = taskConfigMapper.selectOne(
-        Wrappers.<TaskConfig>lambdaQuery()
-            .eq(TaskConfig::getTaskId, taskId)
-            .eq(TaskConfig::getStatus, 1));
+    TaskConfig taskConfig = taskConfigMapper.selectByTaskIdAndStatus(taskId, 1);
     if (taskConfig == null) {
       throw new SchedulerConfigException("未找到相关Job配置");
     }
@@ -202,10 +196,7 @@ public class ScheduleJobService {
    * @Date: 2021/8/25
    */
   public void reloadJob(String taskId) throws Exception {
-    TaskConfig taskConfig = taskConfigMapper.selectOne(
-        Wrappers.<TaskConfig>lambdaQuery()
-            .eq(TaskConfig::getTaskId, taskId)
-            .eq(TaskConfig::getStatus, 1));
+    TaskConfig taskConfig = taskConfigMapper.selectByTaskIdAndStatus(taskId, 1);
 
     String jobCode = taskConfig.getTaskId();
     // 获取以前的触发器
@@ -233,7 +224,7 @@ public class ScheduleJobService {
   private JobDetail getJobDetail(TaskConfig taskConfig) throws ClassNotFoundException {
     JobDetail jobDetail = null;
     //反射实例化job类
-    String className = taskMapper.selectById(taskConfig.getTaskId()).getClassName();
+    String className = taskMapper.selectByTaskId(taskConfig.getTaskId()).getClassName();
     Class<? extends Job> aClass = Class.forName(className).asSubclass(Job.class);
 
     jobDetail = JobBuilder.newJob()

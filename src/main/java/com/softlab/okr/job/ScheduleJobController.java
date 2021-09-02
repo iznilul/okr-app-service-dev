@@ -1,8 +1,8 @@
 package com.softlab.okr.job;
 
 
-import com.qianxin.rdc2.mgtplatform.dao.entity.TaskConfig;
-import com.qianxin.rdc2.mgtplatform.dao.model.dto.TaskConfigDto;
+import com.softlab.okr.model.dto.TaskConfigDTO;
+import com.softlab.okr.model.entity.TaskConfig;
 import java.util.Set;
 import javax.validation.constraints.NotBlank;
 import org.quartz.JobKey;
@@ -46,10 +46,10 @@ public class ScheduleJobController {
   }
 
   @PostMapping("add")
-  public String addTaskConfig(@RequestBody @Validated TaskConfigDto taskConfigDto) {
-    TaskConfig taskConfig = new TaskConfig(null, taskConfigDto.getTaskId(), taskConfigDto.getCron(),
-        taskConfigDto.getDescription(),
-        taskConfigDto.getStatus());
+  public String addTaskConfig(@RequestBody @Validated TaskConfigDTO taskConfigDTO) {
+    TaskConfig taskConfig = new TaskConfig(null, taskConfigDTO.getTaskId(), taskConfigDTO.getCron(),
+        taskConfigDTO.getDescription(),
+        taskConfigDTO.getStatus());
     try {
       jobService.addTaskConfig(taskConfig);
     } catch (SchedulerConfigException e) {
@@ -59,10 +59,10 @@ public class ScheduleJobController {
   }
 
   @PostMapping("modify")
-  public String modifyTaskConfig(@RequestBody @Validated TaskConfigDto taskConfigDto) {
-    TaskConfig taskConfig = new TaskConfig(null, taskConfigDto.getTaskId(), taskConfigDto.getCron(),
-        taskConfigDto.getDescription(),
-        taskConfigDto.getStatus());
+  public String modifyTaskConfig(@RequestBody @Validated TaskConfigDTO taskConfigDTO) {
+    TaskConfig taskConfig = new TaskConfig(null, taskConfigDTO.getTaskId(), taskConfigDTO.getCron(),
+        taskConfigDTO.getDescription(),
+        taskConfigDTO.getStatus());
     try {
       jobService.modifyTaskConfig(taskConfig);
     } catch (SchedulerException e) {
