@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.softlab.okr.mapper.TaskConfigMapper">
-  <resultMap id="taskConfigMap" type="com.softlab.okr.model.entity.TaskConfig">
-    <id property="id" column="id"/>
+<mapper namespace="com.softlab.okr.mapper.TaskTriggerMapper">
+  <resultMap id="taskTriggerMap" type="com.softlab.okr.model.entity.TaskTrigger">
+    <id property="triggerId" column="trigger_id"/>
     <result property="taskId" column="task_id"/>
     <result property="description" column="description"/>
     <result property="cron" column="cron"/>
@@ -11,49 +11,49 @@
   </resultMap>
 
   <sql id="baseColumn">
-        `id`,`task_id`,`description`,`cron`,`status`
+        `trigger_id`,`task_id`,`description`,`cron`,`status`
     </sql>
 
-  <select id="selectByTaskId" resultMap="taskConfigMap">
+  <select id="selectByTaskId" resultMap="taskTriggerMap">
     select
     <include refid="baseColumn"></include>
-    from `task_config` where `task_id`=#{taskId}
+    from `task_trigger` where `task_id`=#{taskId}
   </select>
 
-  <select id="selectList" resultMap="taskConfigMap">
+  <select id="selectList" resultMap="taskTriggerMap">
     select
     <include refid="baseColumn"></include>
-    from `task_config`
+    from `task_trigger`
   </select>
 
-  <select id="selectByStatus" resultMap="taskConfigMap">
+  <select id="selectByStatus" resultMap="taskTriggerMap">
     select
     <include refid="baseColumn"></include>
-    from `task_config`
+    from `task_trigger`
     where status=#{status}
   </select>
 
-  <select id="selectTaskIdAndByStatus" resultMap="taskConfigMap">
+  <select id="selectTaskIdAndByStatus" resultMap="taskTriggerMap">
     select
     <include refid="baseColumn"></include>
-    from `task_config`
+    from `task_trigger`
     where status=#{status} and task_id=#{taskId}
   </select>
 
-  <insert id="insertTaskConfig">
+  <insert id="insertTaskTrigger">
     insert into
-    `task_config`(<include refid="baseColumn"></include>)
+    `task_trigger`(<include refid="baseColumn"></include>)
     values
     (null,#{taskId},#{description},#{cron},#{status})
   </insert>
 
   <delete id="deleteById">
-    delete from `task_config`
+    delete from `task_trigger`
     where task_id =#{taskId}
   </delete>
 
-  <update id="updateTaskConfig">
-        update `task_config` set
+  <update id="updateTaskTrigger">
+        update `task_trigger` set
         `description`=#{description},
         `cron`=#{cron},
         `status`=#{status}

@@ -4,18 +4,21 @@ import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.config.CommonConfig;
 import com.softlab.okr.exception.ApiException;
 import com.softlab.okr.model.dto.LoginDTO;
+import com.softlab.okr.model.entity.CsdnSpider;
 import com.softlab.okr.model.entity.SignUp;
 import com.softlab.okr.model.entity.UserEntity;
 import com.softlab.okr.model.vo.SignUpVO;
 import com.softlab.okr.model.vo.UserVO;
 import com.softlab.okr.security.AuthenticationService;
 import com.softlab.okr.security.UserDetail;
+import com.softlab.okr.service.CsdnService;
 import com.softlab.okr.service.SignUpService;
 import com.softlab.okr.service.UserEntityService;
 import com.softlab.okr.utils.Result;
 import com.softlab.okr.utils.ResultCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -54,6 +57,9 @@ public class CommonController {
 
   @Autowired
   private PasswordEncoder passwordEncoder;
+
+  @Autowired
+  private CsdnService csdnService;
 
   //将登录后的用户信息包括token返回给前端页面
   @ApiOperation("登录")
@@ -118,6 +124,19 @@ public class CommonController {
       return Result.success(signUpVO);
     } else {
       return Result.failure(ResultCode.QUERY_ERROR);
+    }
+  }
+
+  @ApiOperation("csdn实时展示")
+  @GetMapping("csdnRecord")
+  @Auth(id = 6, name = "csdn实时展示")
+  public Result csdnRecord() {
+
+    List<CsdnSpider> list = csdnService.list();
+    if (list.size() > 0) {
+      return Result.success(list);
+    } else {
+      return Result.failure(ResultCode.DATA_GET_ERROR);
     }
   }
 }

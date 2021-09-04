@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.softlab.okr.mapper.CsdnSpiderMapper">
+  <resultMap id="CsdnSpiderMap" type="com.softlab.okr.model.entity.CsdnSpider">
+    <result property="articleTitle" column="article_title"/>
+    <result property="viewCount" column="view_count"/>
+    <result property="articleDetailUrl" column="article_detail_url"/>
+  </resultMap>
+
+  <sql id="baseColumn">
+        `article_title`,`view_count`,`article_detail_url`
+    </sql>
+  <sql id="table">
+    `csdn_spider`
+  </sql>
+
+  <select id="selectList" resultMap="CsdnSpiderMap">
+    select
+    <include refid="baseColumn"></include>
+    from
+    <include refid="table"></include>
+  </select>
+
+  <insert id="insertAll">
+    insert into
+    <include refid="table"></include>
+    (<include refid="baseColumn"></include>)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.articleTitle},#{item.viewCount},#{item.articleDetailUrl})
+    </foreach>
+  </insert>
+
+  <delete id="deleteAll">
+    delete from
+    <include refid="table"></include>
+  </delete>
+
+</mapper>
+

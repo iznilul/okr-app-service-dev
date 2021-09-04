@@ -17,11 +17,11 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class TaskConfig {
+public class TaskTrigger {
 
   private static final long serialVersionUID = 1L;
-  
-  private Integer id;
+
+  private Integer triggerId;
   /**
    * 任务id
    */

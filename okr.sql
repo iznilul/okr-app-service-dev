@@ -11,7 +11,7 @@
  Target Server Version : 50722
  File Encoding         : 65001
 
- Date: 01/09/2021 20:04:20
+ Date: 04/09/2021 15:40:20
 */
 
 SET NAMES utf8mb4;
@@ -56,6 +56,47 @@ INSERT INTO `book_tag` VALUES (1, 5);
 INSERT INTO `book_tag` VALUES (1, 6);
 
 -- ----------------------------
+-- Table structure for csdn_spider
+-- ----------------------------
+DROP TABLE IF EXISTS `csdn_spider`;
+CREATE TABLE `csdn_spider`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `article_title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '标题',
+  `view_count` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '点击量',
+  `article_detail_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'url',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 101 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of csdn_spider
+-- ----------------------------
+INSERT INTO `csdn_spider` VALUES (76, '❤️爆肝十二万字《python从零到精通教程》，从零教你变大佬❤️（建议收藏）', '3697', 'https://blog.csdn.net/weixin_46211269/article/details/120076709');
+INSERT INTO `csdn_spider` VALUES (77, '❤️13万字《C语言动漫对话教程(入门篇)》❤️(建议收藏)', '8751', 'https://blog.csdn.net/WhereIsHeroFrom/article/details/120050238');
+INSERT INTO `csdn_spider` VALUES (78, 'Python爬虫实战之爬淘宝商品并做数据分析，现在赚钱没点技术还真不行！', '3660', 'https://blog.csdn.net/zhiguigu/article/details/120061978');
+INSERT INTO `csdn_spider` VALUES (79, '⭐超详细图解Linux安装⭐', '1155', 'https://blog.csdn.net/weixin_45766180/article/details/120082128');
+INSERT INTO `csdn_spider` VALUES (80, '详解linux中rsync的妙用', '125', 'https://blog.csdn.net/weixin_53488443/article/details/120085223');
+INSERT INTO `csdn_spider` VALUES (81, '❤ CSDN精心打造一款插件，让你的浏览器：解锁黑科技、个性十足、沉浸式体验 ❤', '1082', 'https://blog.csdn.net/weixin_39032019/article/details/120066606');
+INSERT INTO `csdn_spider` VALUES (82, '如何管理你下载的一大堆Python包【❤️win环境及linux环境下创建虚拟环境详解❤️】', '692', 'https://blog.csdn.net/qq_44907926/article/details/120082981');
+INSERT INTO `csdn_spider` VALUES (83, '【❗划重点！C语言函数参数传递只有两种方式（值传递，地址传递），不支持“引用传递”！❗】', '1488', 'https://blog.csdn.net/zcc1229936385/article/details/120028154');
+INSERT INTO `csdn_spider` VALUES (84, 'TCP协议为什么需要三次握手？', '957', 'https://blog.csdn.net/u014427391/article/details/120064699');
+INSERT INTO `csdn_spider` VALUES (85, '项目配置不当引发了数据泄露，人已裂开！！（建议收藏）', '2841', 'https://blog.csdn.net/l1028386804/article/details/120052914');
+INSERT INTO `csdn_spider` VALUES (86, 'JavaScript数组常用的方法总结', '2830', 'https://blog.csdn.net/weixin_41937552/article/details/120050650');
+INSERT INTO `csdn_spider` VALUES (87, '哔哩哔哩面试官：你可以手写Vue2的响应式原理吗？', '986', 'https://blog.csdn.net/MrWeb/article/details/120064225');
+INSERT INTO `csdn_spider` VALUES (88, 'JavaScript教程带你快速入门', '316', 'https://blog.csdn.net/weixin_53790347/article/details/120058457');
+INSERT INTO `csdn_spider` VALUES (89, '【 JavaSe 】 程序逻辑控制', '255', 'https://blog.csdn.net/CS_z_jun/article/details/120088597');
+INSERT INTO `csdn_spider` VALUES (90, '❤️只用一个脚本做一个 刮刮乐 案例，一不小心刮出来一个女朋友！❤️【学习娱乐一下】', '3298', 'https://blog.csdn.net/zhangay1998/article/details/120047305');
+INSERT INTO `csdn_spider` VALUES (91, '【Python】一文弄懂python装饰器（附源码例子）', '466', 'https://blog.csdn.net/zhh763984017/article/details/120072425');
+INSERT INTO `csdn_spider` VALUES (92, '⚡每日肥学⚡——算法&面试题2️⃣', '109', 'https://blog.csdn.net/jiahuiandxuehui/article/details/119763830');
+INSERT INTO `csdn_spider` VALUES (93, '熬夜爆肝！C++核心STL容器知识点汇总整理【3W字干货预警 建议收藏】', '723', 'https://blog.csdn.net/hhladminhhl/article/details/120073394');
+INSERT INTO `csdn_spider` VALUES (94, 'Python介绍', '137', 'https://blog.csdn.net/weixin_52632755/article/details/119957164');
+INSERT INTO `csdn_spider` VALUES (95, '爬取淘宝上4000条月饼数据，制作了一个酷炫的可视化大屏！', '1236', 'https://blog.csdn.net/weixin_41261833/article/details/120061974');
+INSERT INTO `csdn_spider` VALUES (96, '❤️吐血总结《Mysql从入门到入魔》，图文并茂（建议收藏）❤️', '110', 'https://blog.csdn.net/qq_43965708/article/details/120037528');
+INSERT INTO `csdn_spider` VALUES (97, '深度学习基础之numpy，小白轻松入门numpy，送书了！！！', '660', 'https://blog.csdn.net/perfect2011/article/details/120073767');
+INSERT INTO `csdn_spider` VALUES (98, '程序员需要达到什么水平才能顺利拿到 20k 无压力？', '2612', 'https://blog.csdn.net/weixin_52710450/article/details/120066139');
+INSERT INTO `csdn_spider` VALUES (99, 'Java文件上传实例并解决跨域问题', '158', 'https://blog.csdn.net/promsing/article/details/120089365');
+INSERT INTO `csdn_spider` VALUES (100, 'VirtualBox打开虚拟机失败，Not in a hypervisor partition(HPV=0)(VERR_NEM_NOT_AVAILABLE) ，但是没有virtualization选项', '284', 'https://blog.csdn.net/qq_41798899/article/details/120072017');
+
+-- ----------------------------
 -- Table structure for key
 -- ----------------------------
 DROP TABLE IF EXISTS `key`;
@@ -95,13 +136,14 @@ CREATE TABLE `login_log`  (
   `time` datetime(0) NULL DEFAULT NULL COMMENT '请求时间点',
   `duration` int(11) NULL DEFAULT NULL COMMENT '用时 单位ms',
   PRIMARY KEY (`login_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of login_log
 -- ----------------------------
 INSERT INTO `login_log` VALUES (2, '0:0:0:0:0:0:0:1', 'anonymousUser', '2021-09-01 09:43:49', 560);
 INSERT INTO `login_log` VALUES (3, '0:0:0:0:0:0:0:1', 'admin', '2021-09-01 09:43:57', 103);
+INSERT INTO `login_log` VALUES (4, '0:0:0:0:0:0:0:1', 'anonymousUser', '2021-09-04 15:38:30', 24);
 
 -- ----------------------------
 -- Table structure for resource
@@ -124,14 +166,16 @@ INSERT INTO `resource` VALUES (1002, '/api/common/test', '认证测试', 'GET', 
 INSERT INTO `resource` VALUES (1003, '/api/common/logout', '用户退出', 'GET', 1);
 INSERT INTO `resource` VALUES (1004, '/api/common/signUp', '纳新报名', 'POST', 1);
 INSERT INTO `resource` VALUES (1005, '/api/common/querySignUp', '报名结果查询', 'GET', 1);
+INSERT INTO `resource` VALUES (1006, '/api/common/csdnRecord', 'csdn实时展示', 'GET', 1);
 INSERT INTO `resource` VALUES (2001, '/api/admin/register', '注册用户', 'POST', 1);
 INSERT INTO `resource` VALUES (2002, '/api/admin/removeByUsername', '删除用户', 'GET', 1);
 INSERT INTO `resource` VALUES (2003, '/api/admin/reloadAdminRoleResource', '重载管理员资源', 'GET', 1);
 INSERT INTO `resource` VALUES (2004, '/api/admin/reloadUserRoleResource', '重载用户资源', 'GET', 1);
 INSERT INTO `resource` VALUES (2005, '/api/admin/modifyResourceStatus', '更改接口开放状态', 'GET', 1);
 INSERT INTO `resource` VALUES (2006, '/api/admin/getResourceByCond', '获取资源接口', 'POST', 1);
-INSERT INTO `resource` VALUES (2010, '/api/admin/getSignUpList', '获取报名记录', 'POST', 1);
-INSERT INTO `resource` VALUES (2011, '/api/admin/modifySignUpList', '更新报名记录', 'POST', 1);
+INSERT INTO `resource` VALUES (2009, '/api/admin/getSignUpList', '获取报名记录', 'POST', 1);
+INSERT INTO `resource` VALUES (2010, '/api/admin/modifySignUpList', '更新报名记录', 'POST', 1);
+INSERT INTO `resource` VALUES (2011, '/api/admin/exportSignUpList', '导出报名单', 'GET', 1);
 INSERT INTO `resource` VALUES (2012, '/api/admin/addTag', '增加标签', 'GET', 1);
 INSERT INTO `resource` VALUES (2013, '/api/admin/modifyTag', '更新标签', 'GET', 1);
 INSERT INTO `resource` VALUES (2014, '/api/admin/removeTag', '删除标签', 'GET', 1);
@@ -184,53 +228,54 @@ CREATE TABLE `role_resource`  (
   `resource_id` int(11) NOT NULL COMMENT '资源id',
   PRIMARY KEY (`id`, `role_id`, `resource_id`) USING BTREE,
   INDEX `resource_id`(`resource_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6146 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色-权限关系' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7304 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色-权限关系' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of role_resource
 -- ----------------------------
-INSERT INTO `role_resource` VALUES (6110, 1, 2001);
-INSERT INTO `role_resource` VALUES (6133, 1, 2002);
-INSERT INTO `role_resource` VALUES (6124, 1, 2003);
-INSERT INTO `role_resource` VALUES (6128, 1, 2004);
-INSERT INTO `role_resource` VALUES (6122, 1, 2005);
-INSERT INTO `role_resource` VALUES (6108, 1, 2006);
-INSERT INTO `role_resource` VALUES (6113, 1, 2010);
-INSERT INTO `role_resource` VALUES (6120, 1, 2011);
-INSERT INTO `role_resource` VALUES (6111, 1, 2012);
-INSERT INTO `role_resource` VALUES (6115, 1, 2013);
-INSERT INTO `role_resource` VALUES (6105, 1, 2014);
-INSERT INTO `role_resource` VALUES (6127, 1, 2015);
-INSERT INTO `role_resource` VALUES (6134, 1, 2016);
-INSERT INTO `role_resource` VALUES (6131, 1, 2017);
-INSERT INTO `role_resource` VALUES (6123, 1, 2018);
-INSERT INTO `role_resource` VALUES (6112, 1, 2019);
-INSERT INTO `role_resource` VALUES (6129, 1, 2020);
-INSERT INTO `role_resource` VALUES (6107, 1, 2021);
-INSERT INTO `role_resource` VALUES (6126, 1, 2022);
-INSERT INTO `role_resource` VALUES (6106, 1, 2023);
-INSERT INTO `role_resource` VALUES (6118, 1, 2024);
-INSERT INTO `role_resource` VALUES (6119, 1, 2025);
-INSERT INTO `role_resource` VALUES (6116, 1, 3001);
-INSERT INTO `role_resource` VALUES (6142, 2, 3001);
-INSERT INTO `role_resource` VALUES (6121, 1, 3002);
-INSERT INTO `role_resource` VALUES (6141, 2, 3002);
-INSERT INTO `role_resource` VALUES (6104, 1, 3003);
-INSERT INTO `role_resource` VALUES (6136, 2, 3003);
-INSERT INTO `role_resource` VALUES (6125, 1, 3004);
-INSERT INTO `role_resource` VALUES (6140, 2, 3004);
-INSERT INTO `role_resource` VALUES (6130, 1, 3005);
-INSERT INTO `role_resource` VALUES (6145, 2, 3005);
-INSERT INTO `role_resource` VALUES (6117, 1, 4001);
-INSERT INTO `role_resource` VALUES (6143, 2, 4001);
-INSERT INTO `role_resource` VALUES (6132, 1, 4002);
-INSERT INTO `role_resource` VALUES (6138, 2, 4002);
-INSERT INTO `role_resource` VALUES (6114, 1, 4003);
-INSERT INTO `role_resource` VALUES (6144, 2, 4003);
-INSERT INTO `role_resource` VALUES (6109, 1, 4004);
-INSERT INTO `role_resource` VALUES (6137, 2, 4004);
-INSERT INTO `role_resource` VALUES (6135, 1, 8001);
-INSERT INTO `role_resource` VALUES (6139, 2, 8001);
+INSERT INTO `role_resource` VALUES (7268, 1, 2001);
+INSERT INTO `role_resource` VALUES (7291, 1, 2002);
+INSERT INTO `role_resource` VALUES (7279, 1, 2003);
+INSERT INTO `role_resource` VALUES (7284, 1, 2004);
+INSERT INTO `role_resource` VALUES (7277, 1, 2005);
+INSERT INTO `role_resource` VALUES (7265, 1, 2006);
+INSERT INTO `role_resource` VALUES (7288, 1, 2009);
+INSERT INTO `role_resource` VALUES (7283, 1, 2010);
+INSERT INTO `role_resource` VALUES (7290, 1, 2011);
+INSERT INTO `role_resource` VALUES (7267, 1, 2012);
+INSERT INTO `role_resource` VALUES (7271, 1, 2013);
+INSERT INTO `role_resource` VALUES (7263, 1, 2014);
+INSERT INTO `role_resource` VALUES (7282, 1, 2015);
+INSERT INTO `role_resource` VALUES (7292, 1, 2016);
+INSERT INTO `role_resource` VALUES (7287, 1, 2017);
+INSERT INTO `role_resource` VALUES (7278, 1, 2018);
+INSERT INTO `role_resource` VALUES (7269, 1, 2019);
+INSERT INTO `role_resource` VALUES (7285, 1, 2020);
+INSERT INTO `role_resource` VALUES (7264, 1, 2021);
+INSERT INTO `role_resource` VALUES (7280, 1, 2022);
+INSERT INTO `role_resource` VALUES (7262, 1, 2023);
+INSERT INTO `role_resource` VALUES (7274, 1, 2024);
+INSERT INTO `role_resource` VALUES (7275, 1, 2025);
+INSERT INTO `role_resource` VALUES (7272, 1, 3001);
+INSERT INTO `role_resource` VALUES (7301, 2, 3001);
+INSERT INTO `role_resource` VALUES (7276, 1, 3002);
+INSERT INTO `role_resource` VALUES (7296, 2, 3002);
+INSERT INTO `role_resource` VALUES (7261, 1, 3003);
+INSERT INTO `role_resource` VALUES (7302, 2, 3003);
+INSERT INTO `role_resource` VALUES (7281, 1, 3004);
+INSERT INTO `role_resource` VALUES (7300, 2, 3004);
+INSERT INTO `role_resource` VALUES (7286, 1, 3005);
+INSERT INTO `role_resource` VALUES (7299, 2, 3005);
+INSERT INTO `role_resource` VALUES (7273, 1, 4001);
+INSERT INTO `role_resource` VALUES (7303, 2, 4001);
+INSERT INTO `role_resource` VALUES (7289, 1, 4002);
+INSERT INTO `role_resource` VALUES (7298, 2, 4002);
+INSERT INTO `role_resource` VALUES (7270, 1, 4003);
+INSERT INTO `role_resource` VALUES (7297, 2, 4003);
+INSERT INTO `role_resource` VALUES (7266, 1, 4004);
+INSERT INTO `role_resource` VALUES (7295, 2, 4004);
+INSERT INTO `role_resource` VALUES (7293, 1, 8001);
+INSERT INTO `role_resource` VALUES (7294, 2, 8001);
 
 -- ----------------------------
 -- Table structure for route
@@ -331,28 +376,27 @@ CREATE TABLE `task`  (
 -- ----------------------------
 -- Records of task
 -- ----------------------------
-INSERT INTO `task` VALUES ('T1', '测试任务1', 'com.qianxin.rdc2.mgtplatform.task.job.testTask1', '测试用的,输出当前时间');
-INSERT INTO `task` VALUES ('T2', '测试任务2', 'com.qianxin.rdc2.mgtplatform.task.job.testTask2', '测试用的,输出名字');
-INSERT INTO `task` VALUES ('T3', '测试任务3', 'com.qianxin.rdc2.mgtplatform.task.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES ('T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES ('T2', '测试任务2', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES ('T3', '测试任务3', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
 
 -- ----------------------------
--- Table structure for task_config
+-- Table structure for task_trigger
 -- ----------------------------
-DROP TABLE IF EXISTS `task_config`;
-CREATE TABLE `task_config`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `task_trigger`;
+CREATE TABLE `task_trigger`  (
+  `trigger_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `task_id` varchar(8) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '任务id',
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '任务描述',
   `cron` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'cron表达式',
   `status` tinyint(4) NOT NULL COMMENT '定时任务状态 0 停用,1启用',
-  PRIMARY KEY (`id`) USING BTREE
+  PRIMARY KEY (`trigger_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of task_config
+-- Records of task_trigger
 -- ----------------------------
-INSERT INTO `task_config` VALUES (1, 'T1', '每秒执行一次', '* * * * * ?', 1);
-INSERT INTO `task_config` VALUES (2, 'T2', '修改测试', '*/3 * * * * ?', 1);
+INSERT INTO `task_trigger` VALUES (1, 'T1', '爬虫', '*/10 * * * * ?', 1);
 
 -- ----------------------------
 -- Table structure for user

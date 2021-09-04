@@ -1,8 +1,8 @@
 package com.softlab.okr.job;
 
 
-import com.softlab.okr.model.dto.TaskConfigDTO;
-import com.softlab.okr.model.entity.TaskConfig;
+import com.softlab.okr.model.dto.TaskTriggerDTO;
+import com.softlab.okr.model.entity.TaskTrigger;
 import java.util.Set;
 import javax.validation.constraints.NotBlank;
 import org.quartz.JobKey;
@@ -46,12 +46,13 @@ public class ScheduleJobController {
   }
 
   @PostMapping("add")
-  public String addTaskConfig(@RequestBody @Validated TaskConfigDTO taskConfigDTO) {
-    TaskConfig taskConfig = new TaskConfig(null, taskConfigDTO.getTaskId(), taskConfigDTO.getCron(),
-        taskConfigDTO.getDescription(),
-        taskConfigDTO.getStatus());
+  public String addTaskTrigger(@RequestBody @Validated TaskTriggerDTO taskTriggerDTO) {
+    TaskTrigger taskTrigger = new TaskTrigger(null, taskTriggerDTO.getTaskId(),
+        taskTriggerDTO.getCron(),
+        taskTriggerDTO.getDescription(),
+        taskTriggerDTO.getStatus());
     try {
-      jobService.addTaskConfig(taskConfig);
+      jobService.addTaskTrigger(taskTrigger);
     } catch (SchedulerConfigException e) {
       return "添加定时任务失败";
     }
@@ -59,12 +60,13 @@ public class ScheduleJobController {
   }
 
   @PostMapping("modify")
-  public String modifyTaskConfig(@RequestBody @Validated TaskConfigDTO taskConfigDTO) {
-    TaskConfig taskConfig = new TaskConfig(null, taskConfigDTO.getTaskId(), taskConfigDTO.getCron(),
-        taskConfigDTO.getDescription(),
-        taskConfigDTO.getStatus());
+  public String modifyTaskTrigger(@RequestBody @Validated TaskTriggerDTO taskTriggerDTO) {
+    TaskTrigger taskTrigger = new TaskTrigger(null, taskTriggerDTO.getTaskId(),
+        taskTriggerDTO.getCron(),
+        taskTriggerDTO.getDescription(),
+        taskTriggerDTO.getStatus());
     try {
-      jobService.modifyTaskConfig(taskConfig);
+      jobService.modifyTaskTrigger(taskTrigger);
     } catch (SchedulerException e) {
       return "更新定时任务失败";
     }
@@ -72,9 +74,9 @@ public class ScheduleJobController {
   }
 
   @GetMapping("remove")
-  public String removeTaskConfig(@RequestParam("taskId") @NotBlank String taskId) {
+  public String removeTaskTrigger(@RequestParam("taskId") @NotBlank String taskId) {
     try {
-      jobService.removeTaskConfig(taskId);
+      jobService.removeTaskTrigger(taskId);
     } catch (SchedulerException e) {
       return "删除定时任务失败";
     }

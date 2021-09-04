@@ -1,9 +1,9 @@
 package com.softlab.okr.job;
 
 
-import com.softlab.okr.mapper.TaskConfigMapper;
 import com.softlab.okr.mapper.TaskMapper;
-import com.softlab.okr.model.entity.TaskConfig;
+import com.softlab.okr.mapper.TaskTriggerMapper;
+import com.softlab.okr.model.entity.TaskTrigger;
 import java.util.List;
 import java.util.Set;
 import lombok.extern.log4j.Log4j2;
@@ -34,7 +34,7 @@ import org.springframework.stereotype.Component;
 public class ScheduleJobService {
 
   @Autowired
-  private TaskConfigMapper taskConfigMapper;
+  private TaskTriggerMapper taskTriggerMapper;
 
   @Autowired
   private TaskMapper taskMapper;
@@ -50,21 +50,21 @@ public class ScheduleJobService {
    * @Date: 2021/8/25
    */
   public void startJob() {
-    List<TaskConfig> taskConfigEntities = taskConfigMapper.selectByStatus(1);
-    if (taskConfigEntities == null || taskConfigEntities.size() == 0) {
+    List<TaskTrigger> taskTriggerEntities = taskTriggerMapper.selectByStatus(1);
+    if (taskTriggerEntities == null || taskTriggerEntities.size() == 0) {
       log.error("定时任务加载数据为空");
       return;
     }
-    for (TaskConfig taskConfig : taskConfigEntities) {
+    for (TaskTrigger taskTrigger : taskTriggerEntities) {
       CronTrigger cronTrigger = null;
       JobDetail jobDetail = null;
       try {
-        cronTrigger = getCronTrigger(taskConfig);
-        jobDetail = getJobDetail(taskConfig);
+        cronTrigger = getCronTrigger(taskTrigger);
+        jobDetail = getJobDetail(taskTrigger);
         scheduler.scheduleJob(jobDetail, cronTrigger);
-        log.info("编号：{}定时任务加载成功", taskConfig.getTaskId());
+        log.info("编号：{}定时任务加载成功", taskTrigger.getTaskId());
       } catch (Exception e) {
-        log.error("编号：{}定时任务加载失败", taskConfig.getTaskId());
+        log.error("编号：{}定时任务加载失败", taskTrigger.getTaskId());
       }
 
     }
@@ -88,15 +88,15 @@ public class ScheduleJobService {
 
   /**
    * @Description: 添加定时任务
-   * @Param: [taskConfig]
+   * @Param: [taskTrigger]
    * @return: void
    * @Author: lulinzi
    * @Date: 2021/8/25
    */
-  public void addTaskConfig(TaskConfig taskConfig) throws SchedulerConfigException {
-    taskConfigMapper.insertTaskConfig(taskConfig);
-    if (taskConfig.getStatus() == 1) {
-      loadJob(taskConfig.getTaskId());
+  public void addTaskTrigger(TaskTrigger taskTrigger) throws SchedulerConfigException {
+    taskTriggerMapper.insertTaskTrigger(taskTrigger);
+    if (taskTrigger.getStatus() == 1) {
+      loadJob(taskTrigger.getTaskId());
     }
   }
 
@@ -107,9 +107,9 @@ public class ScheduleJobService {
    * @Author: lulinzi
    * @Date: 2021/8/25
    */
-  public void removeTaskConfig(String taskId) throws SchedulerException {
+  public void removeTaskTrigger(String taskId) throws SchedulerException {
     unloadJob(taskId);
-    taskConfigMapper.deleteById(taskId);
+    taskTriggerMapper.deleteById(taskId);
   }
 
   /**
@@ -119,12 +119,12 @@ public class ScheduleJobService {
    * @Author: lulinzi
    * @Date: 2021/8/25
    */
-  public void modifyTaskConfig(TaskConfig taskConfig) throws SchedulerException {
-    unloadJob(taskConfig.getTaskId());
-    taskConfigMapper
-        .updateTaskConfig(taskConfig);
-    if (taskConfig.getStatus() == 1) {
-      loadJob(taskConfig.getTaskId());
+  public void modifyTaskTrigger(TaskTrigger taskTrigger) throws SchedulerException {
+    unloadJob(taskTrigger.getTaskId());
+    taskTriggerMapper
+        .updateTaskTrigger(taskTrigger);
+    if (taskTrigger.getStatus() == 1) {
+      loadJob(taskTrigger.getTaskId());
     }
   }
 
@@ -158,13 +158,13 @@ public class ScheduleJobService {
    * @Date: 2021/8/25
    */
   public void loadJob(String taskId) throws SchedulerConfigException {
-    TaskConfig taskConfig = taskConfigMapper.selectByTaskIdAndStatus(taskId, 1);
-    if (taskConfig == null) {
+    TaskTrigger taskTrigger = taskTriggerMapper.selectByTaskIdAndStatus(taskId, 1);
+    if (taskTrigger == null) {
       throw new SchedulerConfigException("未找到相关Job配置");
     }
     try {
-      JobDetail jobDetail = getJobDetail(taskConfig);
-      CronTrigger cronTrigger = getCronTrigger(taskConfig);
+      JobDetail jobDetail = getJobDetail(taskTrigger);
+      CronTrigger cronTrigger = getCronTrigger(taskTrigger);
       scheduler.scheduleJob(jobDetail, cronTrigger);
     } catch (Exception e) {
       log.error("加载定时任务异常", e);
@@ -196,9 +196,9 @@ public class ScheduleJobService {
    * @Date: 2021/8/25
    */
   public void reloadJob(String taskId) throws Exception {
-    TaskConfig taskConfig = taskConfigMapper.selectByTaskIdAndStatus(taskId, 1);
+    TaskTrigger taskTrigger = taskTriggerMapper.selectByTaskIdAndStatus(taskId, 1);
 
-    String jobCode = taskConfig.getTaskId();
+    String jobCode = taskTrigger.getTaskId();
     // 获取以前的触发器
     TriggerKey triggerKey = TriggerKey.triggerKey(jobCode);
     // 停止触发器
@@ -208,45 +208,45 @@ public class ScheduleJobService {
     // 删除原来的job
     scheduler.deleteJob(JobKey.jobKey(jobCode));
 
-    JobDetail jobDetail = getJobDetail(taskConfig);
-    CronTrigger cronTrigger = getCronTrigger(taskConfig);
+    JobDetail jobDetail = getJobDetail(taskTrigger);
+    CronTrigger cronTrigger = getCronTrigger(taskTrigger);
     // 重新加载job
     scheduler.scheduleJob(jobDetail, cronTrigger);
   }
 
   /**
    * @Description: 组装jobDetail
-   * @Param: [taskConfig]
+   * @Param: [taskTrigger]
    * @return: org.quartz.JobDetail
    * @Author: lulinzi
    * @Date: 2021/8/25
    */
-  private JobDetail getJobDetail(TaskConfig taskConfig) throws ClassNotFoundException {
+  private JobDetail getJobDetail(TaskTrigger taskTrigger) throws ClassNotFoundException {
     JobDetail jobDetail = null;
     //反射实例化job类
-    String className = taskMapper.selectByTaskId(taskConfig.getTaskId()).getClassName();
+    String className = taskMapper.selectByTaskId(taskTrigger.getTaskId()).getClassName();
     Class<? extends Job> aClass = Class.forName(className).asSubclass(Job.class);
 
     jobDetail = JobBuilder.newJob()
-        .withIdentity(JobKey.jobKey(taskConfig.getTaskId()))
-        .withDescription(taskConfig.getDescription())
+        .withIdentity(JobKey.jobKey(taskTrigger.getTaskId()))
+        .withDescription(taskTrigger.getDescription())
         .ofType(aClass).build();
     return jobDetail;
   }
 
   /**
    * @Description: 组装trigger
-   * @Param: [taskConfig]
+   * @Param: [taskTrigger]
    * @return: org.quartz.CronTrigger
    * @Author: lulinzi
    * @Date: 2021/8/25
    */
-  private CronTrigger getCronTrigger(TaskConfig taskConfig) {
+  private CronTrigger getCronTrigger(TaskTrigger taskTrigger) {
     CronTrigger cronTrigger = null;
     CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder
-        .cronSchedule(taskConfig.getCron());
+        .cronSchedule(taskTrigger.getCron());
     cronTrigger = TriggerBuilder.newTrigger()
-        .withIdentity(TriggerKey.triggerKey(taskConfig.getTaskId()))
+        .withIdentity(TriggerKey.triggerKey(taskTrigger.getTaskId()))
         .withSchedule(cronScheduleBuilder)
         .build();
     return cronTrigger;

@@ -12,7 +12,7 @@ import org.hibernate.validator.constraints.Range;
  **/
 
 @Data
-public class TaskConfigDTO {
+public class TaskTriggerDTO {
 
   @NotBlank(message = "任务id不能为空")
   private String taskId;

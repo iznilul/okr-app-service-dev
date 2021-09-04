@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "bccab958-62ef-4cc1-b721-e922293dbc7d",
+		"_postman_id": "b65b93ec-bbf6-4bb0-9835-8dd8c72797cd",
 		"name": "okr",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -969,7 +969,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\":\"\",\r\n    \"beginTime\":\"2015-08-31\",\r\n    \"endTime\":\"2015-08-31\",\r\n    \"index\":\"\",\r\n    \"pageSize\":\"\"\r\n}",
+					"raw": "{\r\n    \"username\":\"\",\r\n    \"beginTime\":\"\",\r\n    \"endTime\":\"\",\r\n    \"index\":\"\",\r\n    \"pageSize\":\"\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -986,6 +986,26 @@
 						"api",
 						"admin",
 						"getLoginLogByCond"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "csdnRecord",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9101/api/common/csdnRecord",
+					"host": [
+						"localhost"
+					],
+					"port": "9101",
+					"path": [
+						"api",
+						"common",
+						"csdnRecord"
 					]
 				}
 			},
