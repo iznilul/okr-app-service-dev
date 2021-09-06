@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface LoginLogService {
 
-  int saveLog(String ip, String username, long duration) throws ServiceException;
+  int saveLog(String ip, String path, String username, long duration) throws ServiceException;
 
   List<LoginLogVO> list() throws ServiceException;
 

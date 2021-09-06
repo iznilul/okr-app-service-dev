@@ -5,7 +5,6 @@ import com.softlab.okr.security.AuthFilter;
 import com.softlab.okr.security.LoginFilter;
 import com.softlab.okr.security.MyDeniedHandler;
 import com.softlab.okr.security.MyEntryPoint;
-import com.softlab.okr.security.MyLogoutSuccessHandler;
 import com.softlab.okr.security.MyPasswordEncoder;
 import com.softlab.okr.service.ServiceImpl.UserEntityServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Autowired
   private AuthFilter authFilter;
 
-  @Autowired
-  private MyLogoutSuccessHandler myLogoutSuccessHandler;
+  //@Autowired
+  //private MyLogoutSuccessHandler myLogoutSuccessHandler;
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
@@ -73,8 +72,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     // 将我们自定义的认证过滤器替换掉默认的认证过滤器,两个过滤器分别是登录过滤和权限过滤
     http.addFilterBefore(new ApiFilter(), UsernamePasswordAuthenticationFilter.class);
-    http.addFilterBefore(loginFilter, UsernamePasswordAuthenticationFilter.class);
-    http.addFilterBefore(authFilter, FilterSecurityInterceptor.class);
+    //http.addFilterBefore(loginFilter, UsernamePasswordAuthenticationFilter.class);
+    //http.addFilterBefore(authFilter, FilterSecurityInterceptor.class);
+    http.addFilterAt(loginFilter, UsernamePasswordAuthenticationFilter.class);
+    http.addFilterAt(authFilter, FilterSecurityInterceptor.class);
   }
 
   // 登录认证三大组件，业务对象UserDetailsService，用户对象UserDetail，加密工具passwordEncoder需要自定义重写

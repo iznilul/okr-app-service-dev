@@ -19,7 +19,7 @@ public class LoginLogTest {
 
   @Test
   public void saveLoginLog() {
-    System.out.println(loginLogService.saveLog("192.168.1.1", "admin", 12));
+    System.out.println(loginLogService.saveLog("192.168.1.1", "/api/common/log", "admin", 12));
   }
 
 }

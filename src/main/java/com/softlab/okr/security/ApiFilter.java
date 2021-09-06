@@ -40,7 +40,7 @@ public class ApiFilter implements Filter {
   @Override
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
       throws IOException, ServletException {
-    log.info("----ApiFilter 接口开放过滤----");
+    log.info("----ApiFilter 接口过滤器----");
     HttpServletRequest httpServletRequest = (HttpServletRequest) request;
     String path = ((HttpServletRequest) request).getRequestURI();
     for (Resource resource : resources) {

@@ -7,8 +7,9 @@ package com.softlab.okr.config;
  * @Date: 2021-08-31 11:53
  **/
 
-import com.softlab.okr.security.AuthenticationService;
 import com.softlab.okr.service.LoginLogService;
+import com.softlab.okr.utils.FilterUtil;
+import com.softlab.okr.utils.RedisUtils;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -17,8 +18,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -32,10 +31,13 @@ public class WebLogAspect {
   ThreadLocal<Long> startTime = new ThreadLocal<>();
 
   @Autowired
-  private AuthenticationService authenticationService;
+  private RedisUtils redisUtils;
 
   @Autowired
   private LoginLogService loginLogService;
+
+  @Autowired
+  private FilterUtil filterUtil;
 
   /**
    * 定义切入点，以controller下所有包的请求为切入点
@@ -68,12 +70,11 @@ public class WebLogAspect {
     ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder
         .getRequestAttributes();
     HttpServletRequest request = servletRequestAttributes.getRequest();
-    String path = request.getRequestURI();
-    Authentication authentication = authenticationService.getAuthentication();
-    String username = authentication.getName();
-    String ip = ((WebAuthenticationDetails) authentication.getDetails()).getRemoteAddress();
+    String path = filterUtil.getRequestPath(request);
+    String username = filterUtil.getRequestUsername();
+    String ip = filterUtil.getRequestIp();
     long duration = System.currentTimeMillis() - startTime.get();
-    loginLogService.saveLog(ip, username, duration);
+    loginLogService.saveLog(ip, path, username, duration);
     log.info("username:{}", username);
     log.info("ip:{}", ip);
     log.info("path:{}", path);

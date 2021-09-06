@@ -28,8 +28,8 @@ public class LoginLogServiceImpl implements LoginLogService {
   private static final DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
   @Override
-  public int saveLog(String ip, String username, long duration) {
-    return loginLogMapper.insertLog(ip, username, duration);
+  public int saveLog(String ip, String path, String username, long duration) {
+    return loginLogMapper.insertLog(ip, path, username, duration);
   }
 
   @Override

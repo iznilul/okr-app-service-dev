@@ -18,6 +18,7 @@ public class LoginLog {
 
   private Integer loginId;
   private String ip;
+  private String path;
   private String username;
   private Timestamp time;
   private long duration;

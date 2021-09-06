@@ -37,7 +37,7 @@ public class LoginFilter extends OncePerRequestFilter {
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
       FilterChain chain) throws ServletException, IOException,
       ExpiredJwtException {
-    log.info("---LoginFilter---");
+    log.info("---LoginFilter 登陆过滤器---");
     // 从请求头中获取token字符串并解析，判断token是不是合法的
     Claims claims = jwtManager.parse(request, response, request.getHeader("Authorization"));
     if (claims != null) {

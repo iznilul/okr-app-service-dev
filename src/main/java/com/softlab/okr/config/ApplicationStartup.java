@@ -8,8 +8,10 @@ import com.softlab.okr.security.ApiFilter;
 import com.softlab.okr.security.MySecurityMetadataSource;
 import com.softlab.okr.service.ResourceService;
 import com.softlab.okr.service.TaskService;
+import com.softlab.okr.utils.RedisUtils;
 import io.jsonwebtoken.lang.Collections;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +24,6 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.core.type.classreading.CachingMetadataReaderFactory;
 import org.springframework.core.type.classreading.MetadataReader;
 import org.springframework.core.type.classreading.MetadataReaderFactory;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -47,7 +48,7 @@ public class ApplicationStartup implements ApplicationRunner {
   private TaskService taskService;
 
   @Autowired
-  private RedisTemplate<String, Object> redisTemplate;
+  private RedisUtils redisUtils;
 
   private static final String jobPackage = "com.softlab.okr.job";
 
@@ -60,25 +61,27 @@ public class ApplicationStartup implements ApplicationRunner {
     List<Task> taskList = getTasks();
     taskService.removeAll();
     taskService.saveAll(taskList);
+
     // 扫描并获取所有需要权限处理的接口资源(该方法逻辑写在下面)
     List<Resource> list = getAuthResources();
     // 如果权限资源为空，就不用走后续数据插入步骤
     if (Collections.isEmpty(list)) {
       return;
     }
-    redisTemplate.delete("resource");
-    list.forEach(
-        resource -> {
-          redisTemplate.opsForSet().add("resource", resource);
-        });
-    ApiFilter.getResources().addAll(list);
-    // 这个方法先删除所有操作权限类型的权限资源，待会再新增资源，以实现全量更新（注意，数据库中不要设置外键，否则会删除失败）
-    // 将资源数据批量添加到数据库, 重载管理员和用户的资源
-    resourceService.appStartLoad(list);
     // 筛选权限资源
     Set<Resource> set = resourceService.filterResource(list);
     // 将权限资源给放到本地权限缓存里，用于请求时校验使用
     MySecurityMetadataSource.setRESOURCES(set);
+
+    //添加资源进缓存
+    redisUtils.remove("resource");
+    redisUtils.add("resource", new HashSet<Resource>(list));
+    //添加所有资源进过滤器
+    ApiFilter.getResources().addAll(list);
+    // 这个方法先删除所有操作权限类型的权限资源，待会再新增资源，以实现全量更新（注意，数据库中不要设置外键，否则会删除失败）
+    // 将资源数据批量添加到数据库, 重载管理员和用户的资源
+    resourceService.appStartLoad(list);
+
   }
 
   /**

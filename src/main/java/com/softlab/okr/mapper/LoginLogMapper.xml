@@ -6,12 +6,13 @@
     <id property="loginId" column="login_id"/>
     <result property="ip" column="ip"/>
     <result property="username" column="username"/>
+    <result property="path" column="path"/>
     <result property="time" column="time"/>
     <result property="duration" column="duration"/>
   </resultMap>
 
   <sql id="base_column">
-    `login_id`,`ip`,`username`,`time`,`duration`
+    `login_id`,`ip`,`path`,`username`,`time`,`duration`
   </sql>
 
   <select id="selectList" resultMap="loginLogMap">
@@ -30,7 +31,7 @@
 
   <insert id="insertLog">
     insert into `login_log`(<include refid="base_column"></include>)
-    values (null,#{ip},#{username},now(),#{duration})
+    values (null,#{ip},#{path},#{username},now(),#{duration})
   </insert>
 
 </mapper>

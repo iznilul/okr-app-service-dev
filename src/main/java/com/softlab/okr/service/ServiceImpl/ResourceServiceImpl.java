@@ -6,6 +6,7 @@ import com.softlab.okr.mapper.ResourceMapper;
 import com.softlab.okr.model.bo.RoleResourceBo;
 import com.softlab.okr.model.dto.ResourceDTO;
 import com.softlab.okr.model.entity.Resource;
+import com.softlab.okr.security.MySecurityMetadataSource;
 import com.softlab.okr.service.ResourceService;
 import java.util.Collection;
 import java.util.HashSet;
@@ -13,7 +14,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -24,9 +24,6 @@ public class ResourceServiceImpl implements ResourceService {
 
   @Autowired
   ResourceMapper resourceMapper;
-
-  @Autowired
-  RedisTemplate redisTemplate;
 
   @Override
   public int saveResources(List<Resource> resourceList) {
@@ -62,7 +59,7 @@ public class ResourceServiceImpl implements ResourceService {
 
   @Override
   public List<Integer> getResourceIds(String role) {
-    Set<Resource> resources = redisTemplate.opsForSet().members("resource");
+    Set<Resource> resources = MySecurityMetadataSource.getRESOURCES();
     List<Integer> list = new LinkedList<>();
     if (role.equals("admin")) {
       resources = this.filterResource(resources);

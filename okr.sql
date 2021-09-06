@@ -11,7 +11,7 @@
  Target Server Version : 50722
  File Encoding         : 65001
 
- Date: 04/09/2021 15:40:20
+ Date: 06/09/2021 14:07:29
 */
 
 SET NAMES utf8mb4;
@@ -132,18 +132,36 @@ DROP TABLE IF EXISTS `login_log`;
 CREATE TABLE `login_log`  (
   `login_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '记录id',
   `ip` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ip地址',
+  `path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '访问地址',
   `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户名',
   `time` datetime(0) NULL DEFAULT NULL COMMENT '请求时间点',
   `duration` int(11) NULL DEFAULT NULL COMMENT '用时 单位ms',
   PRIMARY KEY (`login_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of login_log
 -- ----------------------------
-INSERT INTO `login_log` VALUES (2, '0:0:0:0:0:0:0:1', 'anonymousUser', '2021-09-01 09:43:49', 560);
-INSERT INTO `login_log` VALUES (3, '0:0:0:0:0:0:0:1', 'admin', '2021-09-01 09:43:57', 103);
-INSERT INTO `login_log` VALUES (4, '0:0:0:0:0:0:0:1', 'anonymousUser', '2021-09-04 15:38:30', 24);
+INSERT INTO `login_log` VALUES (2, '0:0:0:0:0:0:0:1', NULL, 'anonymousUser', '2021-09-01 09:43:49', 560);
+INSERT INTO `login_log` VALUES (3, '0:0:0:0:0:0:0:1', NULL, 'admin', '2021-09-01 09:43:57', 103);
+INSERT INTO `login_log` VALUES (4, '0:0:0:0:0:0:0:1', NULL, 'anonymousUser', '2021-09-04 15:38:30', 24);
+INSERT INTO `login_log` VALUES (5, '0:0:0:0:0:0:0:1', '/api/common/login', 'anonymousUser', '2021-09-06 11:32:35', 1008);
+INSERT INTO `login_log` VALUES (6, '0:0:0:0:0:0:0:1', '/api/common/login', 'anonymousUser', '2021-09-06 11:34:39', 758);
+INSERT INTO `login_log` VALUES (7, '0:0:0:0:0:0:0:1', '/api/common/login', 'anonymousUser', '2021-09-06 11:47:56', 757);
+INSERT INTO `login_log` VALUES (8, '0:0:0:0:0:0:0:1', '/api/common/login', 'anonymousUser', '2021-09-06 11:53:17', 1214);
+INSERT INTO `login_log` VALUES (9, '0:0:0:0:0:0:0:1', '/api/common/login', 'anonymousUser', '2021-09-06 12:10:04', 654);
+INSERT INTO `login_log` VALUES (10, '0:0:0:0:0:0:0:1', '/api/common/login', 'anonymousUser', '2021-09-06 12:54:30', 698);
+INSERT INTO `login_log` VALUES (11, '0:0:0:0:0:0:0:1', '/api/common/login', 'anonymousUser', '2021-09-06 12:54:52', 11);
+INSERT INTO `login_log` VALUES (12, '0:0:0:0:0:0:0:1', '/api/common/login', 'anonymousUser', '2021-09-06 12:55:09', 13);
+INSERT INTO `login_log` VALUES (13, '0:0:0:0:0:0:0:1', '/api/common/login', 'anonymousUser', '2021-09-06 12:57:36', 1060);
+INSERT INTO `login_log` VALUES (14, '0:0:0:0:0:0:0:1', '/api/common/login', 'anonymousUser', '2021-09-06 13:02:25', 758);
+INSERT INTO `login_log` VALUES (15, '0:0:0:0:0:0:0:1', '/api/common/login', 'anonymousUser', '2021-09-06 13:04:19', 817);
+INSERT INTO `login_log` VALUES (16, '0:0:0:0:0:0:0:1', '/api/common/login', 'anonymousUser', '2021-09-06 13:57:43', 637);
+INSERT INTO `login_log` VALUES (17, '0:0:0:0:0:0:0:1', '/api/common/login', 'anonymousUser', '2021-09-06 14:01:30', 657);
+INSERT INTO `login_log` VALUES (18, '0:0:0:0:0:0:0:1', '/api/user/public/getBookByCond', 'admin', '2021-09-06 14:02:04', 180);
+INSERT INTO `login_log` VALUES (19, '0:0:0:0:0:0:0:1', '/api/common/login', 'anonymousUser', '2021-09-06 14:03:18', 19585);
+INSERT INTO `login_log` VALUES (20, '0:0:0:0:0:0:0:1', '/api/common/login', 'anonymousUser', '2021-09-06 14:05:36', 625);
+INSERT INTO `login_log` VALUES (21, '0:0:0:0:0:0:0:1', '/api/user/public/getBookByCond', 'admin', '2021-09-06 14:05:46', 82);
 
 -- ----------------------------
 -- Table structure for resource
@@ -228,54 +246,54 @@ CREATE TABLE `role_resource`  (
   `resource_id` int(11) NOT NULL COMMENT '资源id',
   PRIMARY KEY (`id`, `role_id`, `resource_id`) USING BTREE,
   INDEX `resource_id`(`resource_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7304 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色-权限关系' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7949 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色-权限关系' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of role_resource
 -- ----------------------------
-INSERT INTO `role_resource` VALUES (7268, 1, 2001);
-INSERT INTO `role_resource` VALUES (7291, 1, 2002);
-INSERT INTO `role_resource` VALUES (7279, 1, 2003);
-INSERT INTO `role_resource` VALUES (7284, 1, 2004);
-INSERT INTO `role_resource` VALUES (7277, 1, 2005);
-INSERT INTO `role_resource` VALUES (7265, 1, 2006);
-INSERT INTO `role_resource` VALUES (7288, 1, 2009);
-INSERT INTO `role_resource` VALUES (7283, 1, 2010);
-INSERT INTO `role_resource` VALUES (7290, 1, 2011);
-INSERT INTO `role_resource` VALUES (7267, 1, 2012);
-INSERT INTO `role_resource` VALUES (7271, 1, 2013);
-INSERT INTO `role_resource` VALUES (7263, 1, 2014);
-INSERT INTO `role_resource` VALUES (7282, 1, 2015);
-INSERT INTO `role_resource` VALUES (7292, 1, 2016);
-INSERT INTO `role_resource` VALUES (7287, 1, 2017);
-INSERT INTO `role_resource` VALUES (7278, 1, 2018);
-INSERT INTO `role_resource` VALUES (7269, 1, 2019);
-INSERT INTO `role_resource` VALUES (7285, 1, 2020);
-INSERT INTO `role_resource` VALUES (7264, 1, 2021);
-INSERT INTO `role_resource` VALUES (7280, 1, 2022);
-INSERT INTO `role_resource` VALUES (7262, 1, 2023);
-INSERT INTO `role_resource` VALUES (7274, 1, 2024);
-INSERT INTO `role_resource` VALUES (7275, 1, 2025);
-INSERT INTO `role_resource` VALUES (7272, 1, 3001);
-INSERT INTO `role_resource` VALUES (7301, 2, 3001);
-INSERT INTO `role_resource` VALUES (7276, 1, 3002);
-INSERT INTO `role_resource` VALUES (7296, 2, 3002);
-INSERT INTO `role_resource` VALUES (7261, 1, 3003);
-INSERT INTO `role_resource` VALUES (7302, 2, 3003);
-INSERT INTO `role_resource` VALUES (7281, 1, 3004);
-INSERT INTO `role_resource` VALUES (7300, 2, 3004);
-INSERT INTO `role_resource` VALUES (7286, 1, 3005);
-INSERT INTO `role_resource` VALUES (7299, 2, 3005);
-INSERT INTO `role_resource` VALUES (7273, 1, 4001);
-INSERT INTO `role_resource` VALUES (7303, 2, 4001);
-INSERT INTO `role_resource` VALUES (7289, 1, 4002);
-INSERT INTO `role_resource` VALUES (7298, 2, 4002);
-INSERT INTO `role_resource` VALUES (7270, 1, 4003);
-INSERT INTO `role_resource` VALUES (7297, 2, 4003);
-INSERT INTO `role_resource` VALUES (7266, 1, 4004);
-INSERT INTO `role_resource` VALUES (7295, 2, 4004);
-INSERT INTO `role_resource` VALUES (7293, 1, 8001);
-INSERT INTO `role_resource` VALUES (7294, 2, 8001);
+INSERT INTO `role_resource` VALUES (7912, 1, 2001);
+INSERT INTO `role_resource` VALUES (7936, 1, 2002);
+INSERT INTO `role_resource` VALUES (7924, 1, 2003);
+INSERT INTO `role_resource` VALUES (7929, 1, 2004);
+INSERT INTO `role_resource` VALUES (7923, 1, 2005);
+INSERT INTO `role_resource` VALUES (7909, 1, 2006);
+INSERT INTO `role_resource` VALUES (7934, 1, 2009);
+INSERT INTO `role_resource` VALUES (7927, 1, 2010);
+INSERT INTO `role_resource` VALUES (7935, 1, 2011);
+INSERT INTO `role_resource` VALUES (7913, 1, 2012);
+INSERT INTO `role_resource` VALUES (7916, 1, 2013);
+INSERT INTO `role_resource` VALUES (7907, 1, 2014);
+INSERT INTO `role_resource` VALUES (7928, 1, 2015);
+INSERT INTO `role_resource` VALUES (7937, 1, 2016);
+INSERT INTO `role_resource` VALUES (7932, 1, 2017);
+INSERT INTO `role_resource` VALUES (7922, 1, 2018);
+INSERT INTO `role_resource` VALUES (7914, 1, 2019);
+INSERT INTO `role_resource` VALUES (7930, 1, 2020);
+INSERT INTO `role_resource` VALUES (7910, 1, 2021);
+INSERT INTO `role_resource` VALUES (7925, 1, 2022);
+INSERT INTO `role_resource` VALUES (7908, 1, 2023);
+INSERT INTO `role_resource` VALUES (7919, 1, 2024);
+INSERT INTO `role_resource` VALUES (7920, 1, 2025);
+INSERT INTO `role_resource` VALUES (7917, 1, 3001);
+INSERT INTO `role_resource` VALUES (7947, 2, 3001);
+INSERT INTO `role_resource` VALUES (7921, 1, 3002);
+INSERT INTO `role_resource` VALUES (7944, 2, 3002);
+INSERT INTO `role_resource` VALUES (7906, 1, 3003);
+INSERT INTO `role_resource` VALUES (7948, 2, 3003);
+INSERT INTO `role_resource` VALUES (7926, 1, 3004);
+INSERT INTO `role_resource` VALUES (7942, 2, 3004);
+INSERT INTO `role_resource` VALUES (7931, 1, 3005);
+INSERT INTO `role_resource` VALUES (7945, 2, 3005);
+INSERT INTO `role_resource` VALUES (7918, 1, 4001);
+INSERT INTO `role_resource` VALUES (7946, 2, 4001);
+INSERT INTO `role_resource` VALUES (7933, 1, 4002);
+INSERT INTO `role_resource` VALUES (7939, 2, 4002);
+INSERT INTO `role_resource` VALUES (7915, 1, 4003);
+INSERT INTO `role_resource` VALUES (7941, 2, 4003);
+INSERT INTO `role_resource` VALUES (7911, 1, 4004);
+INSERT INTO `role_resource` VALUES (7943, 2, 4004);
+INSERT INTO `role_resource` VALUES (7938, 1, 8001);
+INSERT INTO `role_resource` VALUES (7940, 2, 8001);
 
 -- ----------------------------
 -- Table structure for route
@@ -391,7 +409,7 @@ CREATE TABLE `task_trigger`  (
   `cron` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'cron表达式',
   `status` tinyint(4) NOT NULL COMMENT '定时任务状态 0 停用,1启用',
   PRIMARY KEY (`trigger_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of task_trigger

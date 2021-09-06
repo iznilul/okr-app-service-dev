@@ -11,23 +11,24 @@ import java.net.UnknownHostException;
  */
 public class IPUtils {
 
-    /**
-     * 获取主机名称
-     *
-     * @return
-     * @throws UnknownHostException
-     */
-    public static String getHostName() throws UnknownHostException {
-        return InetAddress.getLocalHost().getHostName();
-    }
+  /**
+   * 获取主机名称
+   *
+   * @return
+   * @throws UnknownHostException
+   */
+  public static String getHostName() throws UnknownHostException {
+    return InetAddress.getLocalHost().getHostName();
+  }
 
-    /**
-     * 获取系统首选IP
-     *
-     * @return
-     * @throws UnknownHostException
-     */
-    public static String getHostIP() throws UnknownHostException {
-        return InetAddress.getLocalHost().getHostAddress();
-    }
+  /**
+   * 获取当前系统首选IP
+   *
+   * @return
+   * @throws UnknownHostException
+   */
+  public static String getHostIP() throws UnknownHostException {
+    return InetAddress.getLocalHost().getHostAddress();
+  }
+
 }

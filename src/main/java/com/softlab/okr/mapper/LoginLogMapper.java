@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LoginLogMapper {
 
-  int insertLog(String ip, String username, long duration) throws DataAccessException;
+  int insertLog(String ip, String path, String username, long duration) throws DataAccessException;
 
   List<LoginLog> selectList() throws DataAccessException;
 
