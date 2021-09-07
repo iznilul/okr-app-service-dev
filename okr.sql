@@ -306,10 +306,6 @@ CREATE TABLE `role_resource`  (
   PRIMARY KEY (`id`, `role_id`, `resource_id`) USING BTREE,
   INDEX `resource_id`(`resource_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 9817 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色-权限关系' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of role_resource
--- ----------------------------
 INSERT INTO `role_resource` VALUES (9780, 1, 2001);
 INSERT INTO `role_resource` VALUES (9802, 1, 2002);
 INSERT INTO `role_resource` VALUES (9792, 1, 2003);

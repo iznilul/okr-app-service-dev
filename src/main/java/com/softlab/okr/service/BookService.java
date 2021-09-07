@@ -17,7 +17,7 @@ public interface BookService {
   int modifyBookImg(int bookId, String img) throws ServiceException;
 
   int borrowBook(int bookId, int userId) throws ServiceException;
-
+  
   int returnBook(int bookId, int userId) throws ServiceException;
 
   List<BookVO> list() throws ServiceException;

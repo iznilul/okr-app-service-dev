@@ -29,7 +29,7 @@ public class SignUpServiceImpl implements SignUpService {
 
   @Autowired
   private SignUpMapper signUpMapper;
-
+  
   // 报名
   @Override
   public int saveSignUp(SignUp signUp) {

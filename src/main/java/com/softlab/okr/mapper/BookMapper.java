@@ -24,7 +24,7 @@ public interface BookMapper {
   int updateBookTag(BookTagBo bookTagBo) throws DataAccessException;
 
   int borrowBook(int bookId, int userId) throws DataAccessException;
-
+  
   int returnBook(int bookId, int userId) throws DataAccessException;
 
   List<BookVO> selectList() throws DataAccessException;

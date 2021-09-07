@@ -330,7 +330,6 @@ public class AdminController {
       return Result.success();
     } else {
       return Result.failure();
-
     }
   }
 
@@ -343,7 +342,6 @@ public class AdminController {
       return Result.success();
     } else {
       return Result.failure();
-
     }
   }
 
@@ -357,7 +355,6 @@ public class AdminController {
       return Result.success();
     } else {
       return Result.failure();
-
     }
   }
 
@@ -371,7 +368,6 @@ public class AdminController {
       return Result.success();
     } else {
       return Result.failure();
-
     }
   }
 
