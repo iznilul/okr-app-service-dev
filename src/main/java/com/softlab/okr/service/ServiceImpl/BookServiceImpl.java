@@ -2,17 +2,14 @@ package com.softlab.okr.service.ServiceImpl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.softlab.okr.convert.impl.BookConvert;
 import com.softlab.okr.mapper.BookMapper;
 import com.softlab.okr.mapper.UserInfoMapper;
-import com.softlab.okr.model.bo.BookBo;
 import com.softlab.okr.model.bo.BookTagBo;
 import com.softlab.okr.model.dto.BookDTO;
-import com.softlab.okr.model.entity.Book;
+import com.softlab.okr.model.enums.statusCode.BookStatus;
 import com.softlab.okr.model.vo.BookVO;
 import com.softlab.okr.service.BookService;
-import java.util.HashMap;
-import java.util.LinkedList;
+import com.softlab.okr.service.TagService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,21 +21,24 @@ import org.springframework.transaction.annotation.Transactional;
 public class BookServiceImpl implements BookService {
 
   @Autowired
-  BookMapper bookMapper;
+  private BookMapper bookMapper;
 
   @Autowired
-  UserInfoMapper userInfoMapper;
+  private UserInfoMapper userInfoMapper;
 
   @Autowired
-  BookConvert bookConvert;
+  private TagService tagService;
 
-  private static final HashMap<String, Integer> map = new HashMap<>();
-
-  static {
-    map.put("空闲", 0);
-    map.put("已借阅", 1);
-    map.put("丢失", 2);
-    map.put("", null);
+  @Override
+  @Transactional(
+      propagation = Propagation.REQUIRED,
+      isolation = Isolation.READ_COMMITTED,
+      rollbackFor = Exception.class,
+      readOnly = false)
+  public int saveBook(BookVO vo) {
+    BookTagBo bookTagBo = new BookTagBo(vo.getBookId(), vo.getTagIdList());
+    bookMapper.insertBookTag(bookTagBo);
+    return bookMapper.insertBook(vo);
   }
 
   @Override
@@ -47,13 +47,6 @@ public class BookServiceImpl implements BookService {
       isolation = Isolation.READ_COMMITTED,
       rollbackFor = Exception.class,
       readOnly = false)
-  public int saveBook(BookVO bookVO) {
-    BookTagBo bookTagBo = new BookTagBo(bookVO.getBookId(), bookVO.getTagIdList());
-    bookMapper.insertBookTag(bookTagBo);
-    return bookMapper.insertBook(bookVO);
-  }
-
-  @Override
   public int removeById(int bookId) {
     bookMapper.deleteBookTagByBookId(bookId);
     return bookMapper.deleteById(bookId);
@@ -61,7 +54,12 @@ public class BookServiceImpl implements BookService {
 
   @Override
   public int borrowBook(int bookId, int userId) {
-    return bookMapper.borrow(bookId, userId);
+    return bookMapper.borrowBook(bookId, userId);
+  }
+
+  @Override
+  public int returnBook(int bookId, int userId) {
+    return bookMapper.returnBook(bookId, userId);
   }
 
   @Override
@@ -70,11 +68,13 @@ public class BookServiceImpl implements BookService {
       isolation = Isolation.READ_COMMITTED,
       rollbackFor = Exception.class,
       readOnly = false)
-  public int modifyById(BookVO bookVO) {
-    BookTagBo bookTagBo = new BookTagBo(bookVO.getBookId(), bookVO.getTagIdList());
-    bookMapper.deleteBookTagByBookId(bookVO.getBookId());
+  public int modifyById(BookVO vo) {
+    List<Integer> tagIdList = vo.getTagIdList();
+    BookTagBo bookTagBo = new BookTagBo(vo.getBookId(), tagIdList);
+    bookMapper.deleteBookTagByBookId(vo.getBookId());
     bookMapper.insertBookTag(bookTagBo);
-    return bookMapper.updateById(bookVO);
+    vo.setStatus(BookStatus.getCode(vo.getStatusName()));
+    return bookMapper.updateById(vo);
   }
 
   @Override
@@ -83,26 +83,19 @@ public class BookServiceImpl implements BookService {
   }
 
   @Override
-  public List<Book> list() {
+  public List<BookVO> list() {
     return bookMapper.selectList();
   }
 
   @Override
-  public PageInfo<BookVO> getByCond(BookDTO bookDTO) {
-    PageHelper.startPage(bookDTO.getIndex(), bookDTO.getPageSize());
-    List<BookVO> list = new LinkedList<>();
-    BookBo bookBo =
-        new BookBo(bookDTO.getBookName(), bookDTO.getPublisher(), map.get(bookDTO.getStatus()));
-    List<Book> bookList = bookMapper.selectByCond(bookBo);
-    bookList.forEach(
-        book -> {
-          BookVO bookVO = bookConvert.convertVO(book);
-          bookVO.setTagIdList(bookMapper.selectTagIdByBookId(book.getBookId()));
-          bookVO.setUserName(
-              book.getUserId() == null ? null :
-                  userInfoMapper.selectNameById(book.getUserId()));
-          list.add(bookVO);
-        });
+  public PageInfo<BookVO> getByCond(BookDTO dto) {
+    PageHelper.startPage(dto.getIndex(), dto.getPageSize());
+    List<BookVO> list = bookMapper.selectByCond(dto.getBookName(), dto.getPublisher(),
+        BookStatus.getCode(dto.getStatusName()));
+    list.forEach(vo -> {
+      vo.setStatusName(BookStatus.getMessage(vo.getStatus()));
+      vo.setTagIdList(bookMapper.selectTagIdByBookId(vo.getBookId()));
+    });
     return new PageInfo<>(list);
   }
 }

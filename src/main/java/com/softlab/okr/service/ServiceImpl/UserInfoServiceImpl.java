@@ -9,11 +9,10 @@ import com.softlab.okr.model.dto.UpdateUserDTO;
 import com.softlab.okr.model.entity.UserEntity;
 import com.softlab.okr.model.entity.UserInfo;
 import com.softlab.okr.service.UserInfoService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * @Author: Devhui
@@ -35,8 +34,8 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public void saveUserInfo(int userId, String username, long createTime, long updateTime) {
-        userInfoMapper.insertUserInfo(userId, username, createTime, updateTime);
+    public void saveUserInfo(int userId, String username) {
+        userInfoMapper.insertUserInfo(userId, username);
     }
 
     @Override
@@ -45,16 +44,15 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public PageInfo<UserInfo> getUserInfoByCond(SelectUserDTO selectUserDto,
-                                                int pageSize) {
-        PageHelper.startPage(selectUserDto.getIndex(), pageSize);
-        List<UserInfo> userInfoList = userInfoMapper.selectUserInfoByCond(selectUserDto);
+    public PageInfo<UserInfo> getUserInfoByCond(SelectUserDTO dto) {
+        PageHelper.startPage(dto.getIndex(), dto.getPageSize());
+        List<UserInfo> userInfoList = userInfoMapper.selectUserInfoByCond(dto);
         return new PageInfo<>(userInfoList);
     }
 
     @Override
-    public int modifyUserInfo(UpdateUserDTO updateUserDto, long updateTime) {
-        return userInfoMapper.updateUserInfo(updateUserDto, updateTime);
+    public int modifyUserInfo(UpdateUserDTO dto) {
+        return userInfoMapper.updateUserInfo(dto);
     }
 
     @Override

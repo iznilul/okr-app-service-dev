@@ -1,14 +1,17 @@
 package com.softlab.okr;
 
 import com.softlab.okr.mapper.BookMapper;
-import com.softlab.okr.model.entity.Book;
-import org.junit.*;
+import com.softlab.okr.model.vo.BookVO;
+import java.util.List;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.List;
 
 /**
  * @program: okr
@@ -54,9 +57,9 @@ public class BookTest {
   //          add(8);
   //        }
   //      };
-  //  BookVO bookVO = new BookVO(null, "a", "a", "a", 123, "a", "空闲", tagIdList);
+  //  BookVO vo = new BookVO(null, "a", "a", "a", 123, "a", "空闲", tagIdList);
   //  try {
-  //    bookMapper.insertBook(bookVO);
+  //    bookMapper.insertBook(vo);
   //  } catch (DataAccessException e) {
   //    System.out.println(e.toString());
   //  }
@@ -64,7 +67,7 @@ public class BookTest {
 
   @Test
   public void selectList() {
-    List<Book> list = bookMapper.selectList();
+    List<BookVO> list = bookMapper.selectList();
     list.forEach(System.out::println);
   }
 

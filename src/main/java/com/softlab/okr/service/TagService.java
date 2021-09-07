@@ -4,7 +4,6 @@ import com.github.pagehelper.PageInfo;
 import com.softlab.okr.exception.ServiceException;
 import com.softlab.okr.model.dto.TagDTO;
 import com.softlab.okr.model.entity.Tag;
-
 import java.util.List;
 
 /**
@@ -23,8 +22,10 @@ public interface TagService {
 
   int removeById(int tagId) throws ServiceException;
 
-  PageInfo<Tag> getTagListByCond(TagDTO tagDTO) throws ServiceException;
+  PageInfo<Tag> getTagListByCond(TagDTO dto) throws ServiceException;
 
   List<Tag> getTagList() throws ServiceException;
+
+  List<Integer> getTagIdList() throws ServiceException;
 
 }

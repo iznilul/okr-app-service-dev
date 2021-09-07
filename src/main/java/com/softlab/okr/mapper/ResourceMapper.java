@@ -3,6 +3,7 @@ package com.softlab.okr.mapper;
 
 import com.softlab.okr.model.bo.RoleResourceBo;
 import com.softlab.okr.model.entity.Resource;
+import com.softlab.okr.model.vo.ResourceVO;
 import java.util.List;
 import java.util.Set;
 import org.springframework.dao.DataAccessException;
@@ -22,7 +23,7 @@ public interface ResourceMapper {
 
   Set<Integer> selectByUserId(Integer userId) throws DataAccessException;
 
-  List<Resource> selectResourceList() throws DataAccessException;
+  List<ResourceVO> selectResourceList() throws DataAccessException;
 
   int insertRoleResource(RoleResourceBo roleResourceBo) throws DataAccessException;
 

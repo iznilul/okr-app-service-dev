@@ -9,8 +9,8 @@
   </resultMap>
 
   <sql id="baseColumn">
-        `tag_id`,`name`,`order`
-    </sql>
+    `tag_id`,`name`,`order`
+  </sql>
 
   <select id="selectByName" resultMap="tagMap">
     select
@@ -46,11 +46,11 @@
   </delete>
 
   <update id="updateTag">
-        update `tag` set
-        `name`=#{name},
-        `order`=#{order}
-        where `tag_id`=#{tagId}
-    </update>
+    update `tag` set
+    `name`=#{name},
+    `order`=#{order}
+    where `tag_id`=#{tagId}
+  </update>
 
 
 </mapper>

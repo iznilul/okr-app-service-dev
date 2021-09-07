@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "b65b93ec-bbf6-4bb0-9835-8dd8c72797cd",
+		"_postman_id": "316c6a5f-0388-4074-9781-1e28ef645750",
 		"name": "okr",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -68,6 +68,41 @@
 			"response": []
 		},
 		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMTAzMjAyNCwiZXhwIjoxNjMyMzI4MDI0fQ.FxRm3gYbPyGCP-uBWhy881eCKoXRPge8AD4KQD6vqUXbgk_F20-BI6-lnrGcfnV4W0Bojb9PPSqUP5FzaKEGsw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"ass\",\r\n    \"name\":\"普通用户\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9101/api/admin/register",
+					"host": [
+						"localhost"
+					],
+					"port": "9101",
+					"path": [
+						"api",
+						"admin",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "test",
 			"request": {
 				"method": "GET",
@@ -120,13 +155,13 @@
 			"response": []
 		},
 		{
-			"name": "getSignUpList",
+			"name": "getSignUp",
 			"request": {
 				"method": "POST",
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYyOTk0ODA1MSwiZXhwIjoxNjMwMjA3MjUxfQ.s6HzFWmAHFYmcY-pTEoIIIkPJVIjSGaHOYzoMknxztJxw72mG7OCt3F20j6I6kuSTLvphoe-vkQ7JFCYsQWj_Q",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMTA4NDM5NSwiZXhwIjoxNjMyMzgwMzk1fQ.84MDKR-wZguG7O_jDTHAplWnQmKxqH9MGe4_H2wglDv4CPsfZJJkGsoMbO-j52T_V_8djjMiFlbrSo8mr7FafA",
 						"type": "text"
 					},
 					{
@@ -141,7 +176,7 @@
 					"raw": "{\n\t\"id\":\"\",\n\t\"name\":\"\",\n\t\"gender\":\"\",\n\t\"qq\":\"\",\n\t\"major\":\"\",\n\t\"status\":\"\",\n\t\"index\":\"1\",\n\t\"pageSize\":\"10\"\n}"
 				},
 				"url": {
-					"raw": "localhost:9101/api/admin/getSignUpList",
+					"raw": "localhost:9101/api/admin/getSignUp",
 					"host": [
 						"localhost"
 					],
@@ -149,7 +184,7 @@
 					"path": [
 						"api",
 						"admin",
-						"getSignUpList"
+						"getSignUp"
 					]
 				}
 			},
@@ -195,16 +230,17 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"id\":\"3\",\n\t\"name\":\"ass\",\n\t\"gender\":\"男\",\n\t\"qq\":\"12233334\",\n\t\"major\":\"挖掘22机\",\n\t\"profile\":\"jfioaejfasjioheuifhgisahfoksjdkfhweuihfseifjdewjfopawijrf309wru[ojskdhuuerg\"\n}"
+					"raw": "{\n\t\"studentId\":\"114514\",\n\t\"name\":\"先辈\",\n\t\"gender\":\"男\",\n\t\"qq\":\"12233334\",\n\t\"major\":\"挖掘22机\",\n\t\"profile\":\"jfioaejfasjioheuifhgisahfoksjdkfhweuihfseifjdewjfopawijrf309wru[ojskdhuuerg\"\n}"
 				},
 				"url": {
-					"raw": "localhost:9101/api/signUp",
+					"raw": "localhost:9101/api/common/signUp",
 					"host": [
 						"localhost"
 					],
 					"port": "9101",
 					"path": [
 						"api",
+						"common",
 						"signUp"
 					]
 				}
@@ -217,7 +253,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:9101/api/common/querySignUp?id=1",
+					"raw": "localhost:9101/api/common/querySignUp?studentId=114514",
 					"host": [
 						"localhost"
 					],
@@ -229,8 +265,8 @@
 					],
 					"query": [
 						{
-							"key": "id",
-							"value": "1"
+							"key": "studentId",
+							"value": "114514"
 						}
 					]
 				}
@@ -238,13 +274,39 @@
 			"response": []
 		},
 		{
-			"name": "modifySignUpList",
+			"name": "exportSignUp",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMTA4NDM5NSwiZXhwIjoxNjMyMzgwMzk1fQ.84MDKR-wZguG7O_jDTHAplWnQmKxqH9MGe4_H2wglDv4CPsfZJJkGsoMbO-j52T_V_8djjMiFlbrSo8mr7FafA",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:9101/api/admin/exportSignUp",
+					"host": [
+						"localhost"
+					],
+					"port": "9101",
+					"path": [
+						"api",
+						"admin",
+						"exportSignUp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "modifySignUp",
 			"request": {
 				"method": "POST",
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYyOTk0NDM3MiwiZXhwIjoxNjMwMTE3MTcyfQ.cTiRiEMU1k05IND_uwqgEK3PLhuXKehsXh8HBJgInjKXr7CSytpWlSWfruVT8HJ9u9hh-OPJW0SAjqKBosf-LA",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMTA4NDM5NSwiZXhwIjoxNjMyMzgwMzk1fQ.84MDKR-wZguG7O_jDTHAplWnQmKxqH9MGe4_H2wglDv4CPsfZJJkGsoMbO-j52T_V_8djjMiFlbrSo8mr7FafA",
 						"type": "text"
 					},
 					{
@@ -256,10 +318,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"id\":\"2\",\n\t\"name\":\"shit\",\n\t\"gender\":\"男\",\n\t\"qq\":\"12333434\",\n\t\"major\":\"挖掘机\",\n\t\"profile\":\"jfioaejfasjioheuifhgisahfoksjdkfhweuihfseifjdewjfopawijrf309wru[ojskdhuuerg\",\n\t\"status\":\"2\",\n\t\"commit\":\"jfduiehsfiusehfiohjesiojfioesjfioejifo\"\n}"
+					"raw": "{\n\t\"studentId\":\"2\",\n\t\"name\":\"shit\",\n\t\"gender\":\"男\",\n\t\"qq\":\"12333434\",\n\t\"major\":\"挖掘机咕噜咕噜\",\n\t\"profile\":\"jfioaejfasjioheuifhgisahfoksjdkfhweuihfseifjdewjfopawijrf309wru[ojskdhuuerg\",\n\t\"status\":\"2\",\n\t\"commit\":\"jfduiehsfiusehfiohjesiojfioesjfioejifo\"\n}"
 				},
 				"url": {
-					"raw": "localhost:9101/api/admin/modifySignUpList",
+					"raw": "localhost:9101/api/admin/modifySignUp",
 					"host": [
 						"localhost"
 					],
@@ -267,7 +329,7 @@
 					"path": [
 						"api",
 						"admin",
-						"modifySignUpList"
+						"modifySignUp"
 					]
 				}
 			},
@@ -312,7 +374,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYyOTk1ODk0MCwiZXhwIjoxNjMwMjE4MTQwfQ.UHyK9bEmA8ulMLg3RPjgyiLwCVlbnzabcrl5jcd_u0k66SPmLm7dlvrnCGXviHxff2HJLoymXwaxcNJDC2nbdg",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDk0MTg4MywiZXhwIjoxNjMyMjM3ODgzfQ.ZdJ-FOjM_hdLkb97lmkbFYJkmHKzi4MIFhizdBxXOEA4ZWh-B0Or8Hosi6YIddnBTmy4qvwYZ_tEgSsGd4Mfzg",
 						"type": "text"
 					},
 					{
@@ -508,7 +570,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"name\":\"Java\",\n\t\"Pattern\":\"DESC\"\n}"
+					"raw": "{\n\t\"name\":\"\",\n\t\"Pattern\":\"DESC\"\n}"
 				},
 				"url": {
 					"raw": "localhost:9101/api/admin/getTagByCond",
@@ -568,7 +630,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYyOTk4OTkzNiwiZXhwIjoxNjMwMjQ5MTM2fQ.L4i8K64UbmtD00mK0kOIwv6WOMvCXroO7LeuIF4czPMtPiYm1leuXTHJgw8PUmgSPwD2G0438MuWKlWnJJBbZQ",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMTEwNDc1MywiZXhwIjoxNjMyNDAwNzUzfQ.NpzBPA9KPRkUEV4Uj3i9Rm4y2RyDKtfjIkSV8fN6Cv3wZF8-S9fkhZz2Tn3I6OWUlEasXSa03ASQgscTRahnaw",
 						"type": "text"
 					}
 				],
@@ -653,11 +715,8 @@
 		},
 		{
 			"name": "modifyBook",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Authorization",
@@ -667,7 +726,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"bookId\":1,\r\n    \"bookName\":\"谢特\",\r\n    \"publisher\":\"jisdf\",\r\n    \"price\":1223,\r\n    \"status\":\"空闲\",\r\n    \"tagIdList\":[5,6,8]\r\n}",
+					"raw": "{\r\n    \"bookId\":1,\r\n    \"bookName\":\"谢特\",\r\n    \"publisher\":\"jisdf\",\r\n    \"price\":114514,\r\n    \"statusName\":\"空闲\",\r\n    \"tagIdList\":[5,6,8]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -955,11 +1014,8 @@
 		},
 		{
 			"name": "getLoginLogByCond",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Authorization",
@@ -969,7 +1025,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\":\"\",\r\n    \"beginTime\":\"\",\r\n    \"endTime\":\"\",\r\n    \"index\":\"\",\r\n    \"pageSize\":\"\"\r\n}",
+					"raw": "{\r\n    \"username\":\"\",\r\n    \"beginTime\":\"2021-09-09\",\r\n    \"endTime\":\"\",\r\n    \"index\":\"\",\r\n    \"pageSize\":\"\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1006,6 +1062,39 @@
 						"api",
 						"common",
 						"csdnRecord"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "returnBook",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMTExOTUwNywiZXhwIjoxNjMyNDE1NTA3fQ.lW4ApEGShFJRqfNFxo_qcc77yxH8gsTMD5KysWAzhI8MmtZ5Bm5TY4Xi_tY0_YfpzCflOlsHTFzTL21nwne_wQ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:9101/api/user/public/returnBook?bookId=1",
+					"host": [
+						"localhost"
+					],
+					"port": "9101",
+					"path": [
+						"api",
+						"user",
+						"public",
+						"returnBook"
+					],
+					"query": [
+						{
+							"key": "bookId",
+							"value": "1"
+						}
 					]
 				}
 			},

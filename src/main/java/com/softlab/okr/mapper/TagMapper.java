@@ -2,10 +2,9 @@ package com.softlab.okr.mapper;
 
 import com.softlab.okr.model.dto.TagDTO;
 import com.softlab.okr.model.entity.Tag;
+import java.util.List;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public interface TagMapper {
@@ -20,5 +19,5 @@ public interface TagMapper {
 
   Tag selectByName(String name) throws DataAccessException;
 
-  List<Tag> selectTagListByCond(TagDTO tagDTO) throws DataAccessException;
+  List<Tag> selectTagListByCond(TagDTO dto) throws DataAccessException;
 }

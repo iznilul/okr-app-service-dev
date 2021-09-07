@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel("updateUserDto 用户信息更新传输类")
+@ApiModel("dto 用户信息更新传输类")
 public class UpdateUserDTO {
 
     @ApiModelProperty(value = "用户名", required = true, example = "123")

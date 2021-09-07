@@ -7,6 +7,7 @@ import com.softlab.okr.model.dto.LoginDTO;
 import com.softlab.okr.model.entity.CsdnSpider;
 import com.softlab.okr.model.entity.SignUp;
 import com.softlab.okr.model.entity.UserEntity;
+import com.softlab.okr.model.enums.returnCode.LoginReturn;
 import com.softlab.okr.model.vo.SignUpVO;
 import com.softlab.okr.model.vo.UserVO;
 import com.softlab.okr.security.AuthenticationService;
@@ -15,7 +16,6 @@ import com.softlab.okr.service.CsdnService;
 import com.softlab.okr.service.SignUpService;
 import com.softlab.okr.service.UserEntityService;
 import com.softlab.okr.utils.Result;
-import com.softlab.okr.utils.ResultCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
@@ -70,13 +70,13 @@ public class CommonController {
     UserEntity user = userEntityService.getByUsername(loginDTO.getUsername());
     // 若没有查到用户或者密码校验失败则抛出异常，将未加密的密码和已加密的密码进行比对
     if (user == null || !passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
-      throw new ApiException(ResultCode.USER_LOGIN_ERROR);
+      throw new ApiException(LoginReturn.USER_NOT_FOUND);
     }
     UserVO userVO = userEntityService.login(user);
     if (userVO != null) {
       return Result.success(userVO);
     } else {
-      return Result.failure(ResultCode.USER_LOGIN_ERROR);
+      return Result.failure(LoginReturn.LOGIN_FAIL);
     }
   }
 
@@ -108,22 +108,22 @@ public class CommonController {
   @PostMapping("signUp")
   @Auth(id = 4, name = "纳新报名")
   public Result signUp(@RequestBody SignUp signUp) {
-    if (signUpService.saveSignUpList(signUp) != 0) {
+    if (signUpService.saveSignUp(signUp) == 1) {
       return Result.success("报名成功，请加入纳新群: " + commonConfig.getQqGroupNumber());
     } else {
-      return Result.failure(ResultCode.SIGNUP_ERROR);
+      return Result.failure();
     }
   }
 
   @ApiOperation("查询报名")
   @GetMapping("querySignUp")
   @Auth(id = 5, name = "报名结果查询")
-  public Result querySignUp(@RequestParam String id) {
-    SignUpVO signUpVO = signUpService.getSignUpListById(id);
+  public Result querySignUp(@RequestParam String studentId) {
+    SignUpVO signUpVO = signUpService.getSignUpById(studentId);
     if (signUpVO != null) {
       return Result.success(signUpVO);
     } else {
-      return Result.failure(ResultCode.QUERY_ERROR);
+      return Result.failure();
     }
   }
 
@@ -136,7 +136,7 @@ public class CommonController {
     if (list.size() > 0) {
       return Result.success(list);
     } else {
-      return Result.failure(ResultCode.DATA_GET_ERROR);
+      return Result.failure();
     }
   }
 }

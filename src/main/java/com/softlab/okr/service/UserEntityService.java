@@ -1,8 +1,7 @@
 package com.softlab.okr.service;
 
 import com.softlab.okr.exception.ServiceException;
-import com.softlab.okr.model.bo.RegisterBo;
-import com.softlab.okr.model.bo.RoleResourceBo;
+import com.softlab.okr.model.dto.RegisterDTO;
 import com.softlab.okr.model.entity.UserEntity;
 import com.softlab.okr.model.vo.UserVO;
 
@@ -21,8 +20,7 @@ public interface UserEntityService {
 
   UserEntity getByUsername(String username) throws ServiceException;
 
-  void register(RegisterBo registerBo, RoleResourceBo roleResourceBo, int roleId)
-      throws ServiceException;
+  void register(RegisterDTO dto) throws ServiceException;
 
   void removeByUsername(String username) throws ServiceException;
 

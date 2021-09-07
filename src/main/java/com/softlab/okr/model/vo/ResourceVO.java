@@ -1,4 +1,4 @@
-package com.softlab.okr.model.bo;
+package com.softlab.okr.model.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,12 +13,18 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookBo {
+public class ResourceVO {
 
-  private String bookName;
+  private Integer resourceId;
 
-  private String publisher;
+  private String path;
+
+  private String name;
+
+  private String method;
 
   private Integer status;
+
+  private String statusName;
 
 }

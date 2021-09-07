@@ -10,29 +10,27 @@ import com.softlab.okr.model.dto.SelectUserDTO;
 import com.softlab.okr.model.dto.UpdateUserDTO;
 import com.softlab.okr.model.entity.UserEntity;
 import com.softlab.okr.model.entity.UserInfo;
+import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public interface UserInfoMapper {
     // 登陆检查
     UserEntity selectByLogin(LoginDTO loginDto) throws DataAccessException;
 
-    int insertUserInfo(int userId, String username, long createTime, long updateTime)
+    int insertUserInfo(int userId, String username)
             throws DataAccessException;
 
     UserInfo selectUserInfoByUsername(String username) throws DataAccessException;
 
-    List<UserInfo> selectUserInfoByCond(SelectUserDTO selectUserDto) throws DataAccessException;
+    List<UserInfo> selectUserInfoByCond(SelectUserDTO dto) throws DataAccessException;
 
     String selectNameById(int userId) throws DataAccessException;
 
     int updateUserInfo(
-            @Param("updateUserDto") UpdateUserDTO updateUserDto,
-            @Param("updateTime") long updateTime)
+        @Param("dto") UpdateUserDTO dto)
             throws DataAccessException;
 
     int register(RegisterBo registerBo) throws DataAccessException;

@@ -6,12 +6,15 @@ import com.softlab.okr.mapper.UserEntityMapper;
 import com.softlab.okr.mapper.UserInfoMapper;
 import com.softlab.okr.model.bo.RegisterBo;
 import com.softlab.okr.model.bo.RoleResourceBo;
+import com.softlab.okr.model.dto.RegisterDTO;
 import com.softlab.okr.model.entity.UserEntity;
+import com.softlab.okr.model.enums.statusCode.RoleStatus;
 import com.softlab.okr.model.vo.UserVO;
 import com.softlab.okr.security.JwtManager;
 import com.softlab.okr.security.UserDetail;
+import com.softlab.okr.service.ResourceService;
 import com.softlab.okr.service.UserEntityService;
-import java.util.Date;
+import com.softlab.okr.utils.MD5Util;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +22,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -42,7 +44,7 @@ public class UserEntityServiceImpl implements UserEntityService,
   private ResourceMapper resourceMapper;
 
   @Autowired
-  private PasswordEncoder passwordEncoder;
+  private ResourceService resourceService;
 
   @Autowired
   private RoleMapper roleMapper;
@@ -89,11 +91,20 @@ public class UserEntityServiceImpl implements UserEntityService,
   @Override
   @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED,
       rollbackFor = Exception.class, readOnly = false)
-  public void register(RegisterBo registerBo, RoleResourceBo roleResourceBo, int roleId) {
-    userEntityMapper.register(registerBo);
-    roleMapper.insertUserRole(registerBo.getUserId(), roleId);
-    userInfoMapper.insertUserInfo(registerBo.getUserId(), registerBo.getUsername(),
-        new Date().getTime(), new Date().getTime());
+  public void register(RegisterDTO dto) {
+
+    String password = MD5Util.string2MD5(dto.getUsername());
+    int roleId = roleMapper.selectByName(dto.getName()).getRoleId();
+
+    RoleResourceBo roleResourceBo =
+        new RoleResourceBo(roleId,
+            resourceService.getResourceIds(RoleStatus.getRole(dto.getName())));
+
+    RegisterBo bo = new RegisterBo(null, dto.getUsername(), password);
+
+    userEntityMapper.register(bo);
+    roleMapper.insertUserRole(bo.getUserId(), roleId);
+    userInfoMapper.insertUserInfo(bo.getUserId(), bo.getUsername());
   }
 
   @Override

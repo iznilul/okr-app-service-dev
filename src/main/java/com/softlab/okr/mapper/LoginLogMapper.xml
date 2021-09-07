@@ -27,6 +27,12 @@
     from `login_log`
     where 1=1
     <if test="username!='' and username!=null">and `username` like '%${username}%'</if>
+    <if test="beginTime!='' and beginTime!=null">
+      and date_format(`time` ,'%Y-%m-%d')&gt;=#{beginTime}
+    </if>
+    <if test="endTime!='' and endTime!=null">
+      and date_format(`time` ,'%Y-%m-%d')&lt;=#{endTime}
+    </if>
   </select>
 
   <insert id="insertLog">

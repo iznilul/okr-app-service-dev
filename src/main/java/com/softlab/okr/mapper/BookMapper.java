@@ -1,8 +1,6 @@
 package com.softlab.okr.mapper;
 
-import com.softlab.okr.model.bo.BookBo;
 import com.softlab.okr.model.bo.BookTagBo;
-import com.softlab.okr.model.entity.Book;
 import com.softlab.okr.model.vo.BookVO;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
@@ -11,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BookMapper {
 
-  int insertBook(BookVO bookVO) throws DataAccessException;
+  int insertBook(BookVO vo) throws DataAccessException;
 
   int deleteById(int bookId) throws DataAccessException;
 
@@ -19,17 +17,20 @@ public interface BookMapper {
 
   int deleteBookTagByTagId(int tagId) throws DataAccessException;
 
-  int updateById(BookVO bookVO) throws DataAccessException;
+  int updateById(BookVO vo) throws DataAccessException;
 
   int insertBookTag(BookTagBo bookTagBo) throws DataAccessException;
 
   int updateBookTag(BookTagBo bookTagBo) throws DataAccessException;
 
-  int borrow(int bookId, int userId) throws DataAccessException;
+  int borrowBook(int bookId, int userId) throws DataAccessException;
 
-  List<Book> selectList() throws DataAccessException;
+  int returnBook(int bookId, int userId) throws DataAccessException;
 
-  List<Book> selectByCond(BookBo bookBo) throws DataAccessException;
+  List<BookVO> selectList() throws DataAccessException;
+
+  List<BookVO> selectByCond(String bookName, String publisher, Integer status)
+      throws DataAccessException;
 
   int updateImg(int bookId, String img) throws DataAccessException;
 

@@ -1,6 +1,5 @@
 package com.softlab.okr.model.entity;
 
-import java.sql.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +19,6 @@ public class LoginLog {
   private String ip;
   private String path;
   private String username;
-  private Timestamp time;
+  private String time;
   private long duration;
 }

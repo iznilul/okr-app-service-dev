@@ -2,7 +2,6 @@ package com.softlab.okr.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.softlab.okr.annotation.Auth;
-import com.softlab.okr.exception.ApiException;
 import com.softlab.okr.model.dto.LoginDTO;
 import com.softlab.okr.model.dto.ModifyPwdDTO;
 import com.softlab.okr.model.dto.SelectUserDTO;
@@ -10,13 +9,11 @@ import com.softlab.okr.model.dto.UpdateUserDTO;
 import com.softlab.okr.model.entity.UserInfo;
 import com.softlab.okr.service.UserInfoService;
 import com.softlab.okr.utils.Result;
-import com.softlab.okr.utils.ResultCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import java.util.Base64;
-import java.util.Date;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,18 +46,18 @@ public class UserInfoController {
   @ApiOperation("更新用户信息")
   @PostMapping("modifyUserInfo")
   @Auth(id = 1, name = "更新用户信息")
-  public Result modifyUserInfo(@RequestBody UpdateUserDTO updateUserDto)
+  public Result modifyUserInfo(@RequestBody UpdateUserDTO dto)
       throws Exception {
-    System.out.println(updateUserDto);
+    System.out.println(dto);
 
-    if (updateUserDto.getUsername().equals("")) {
-      throw new ApiException(ResultCode.PARAM_NOT_COMPLETE);
+    if (dto.getUsername().equals("")) {
+      return Result.failure();
     }
 
-    if (userInfoService.modifyUserInfo(updateUserDto, new Date().getTime()) == 1) {
-      return Result.success("用户信息更新成功");
+    if (userInfoService.modifyUserInfo(dto) == 1) {
+      return Result.success();
     } else {
-      throw new ApiException(ResultCode.DATA_UPDATE_ERROR);
+      return Result.failure();
     }
   }
 
@@ -83,14 +80,14 @@ public class UserInfoController {
     System.out.println(username);
 
     if (username.equals("")) {
-      throw new ApiException(ResultCode.PARAM_NOT_COMPLETE);
+      return Result.failure();
     }
 
     UserInfo userInfo = userInfoService.getUserInfoByUsername(username);
     if (userInfo != null) {
       return Result.success(userInfo);
     } else {
-      throw new ApiException(ResultCode.USER_LOGIN_ERROR);
+      return Result.failure();
     }
   }
 
@@ -109,21 +106,20 @@ public class UserInfoController {
   @PostMapping("userInfoByCond")
   @Auth(id = 3, name = "根据情况选择用户")
   public Result userInfoByCond(
-      @RequestBody SelectUserDTO selectUserDto) throws Exception {
+      @RequestBody SelectUserDTO dto) throws Exception {
 
-    int pageSize = selectUserDto.getPageSize();
-    System.out.println(selectUserDto);
-    PageInfo<UserInfo> userList = userInfoService.getUserInfoByCond(selectUserDto, pageSize);
+    System.out.println(dto);
+    PageInfo<UserInfo> userList = userInfoService.getUserInfoByCond(dto);
 
     if (userList.getSize() > 0) {
       return Result.success(userList);
     } else {   //必须得这么写，不然分页查询有bug
-      selectUserDto.setIndex(1);
-      userList = userInfoService.getUserInfoByCond(selectUserDto, pageSize);
+      dto.setIndex(1);
+      userList = userInfoService.getUserInfoByCond(dto);
       if (userList.getSize() > 0) {
         return Result.success(userList);
       } else {
-        throw new ApiException(ResultCode.UNKNOWN_ERROR);
+        return Result.failure();
       }
     }
   }
@@ -152,7 +148,7 @@ public class UserInfoController {
     // 通过base64来转化图片
     byte[] data = file.getBytes();
     if (data.length > 1024000) {
-        throw new ApiException(ResultCode.FILE_UPLOAD_EXCEED);
+      return Result.failure();
     }
 
     // 将字节流转成字符串
@@ -162,7 +158,7 @@ public class UserInfoController {
     if (userInfoService.uploadAvatar(username, avatar) == 1) {
       return Result.success(avatar);
     } else {
-        throw new ApiException(ResultCode.FILE_UPLOAD_ERROR);
+      return Result.failure();
     }
   }
 
@@ -173,26 +169,25 @@ public class UserInfoController {
   @ApiOperation("修改密码")
   @PostMapping("modifyPassword")
   @Auth(id = 5, name = "修改密码")
-  public Result modifyPassword(@RequestBody ModifyPwdDTO modifyPwdDto)
-      throws Exception {
-    System.out.println(modifyPwdDto);
+  public Result modifyPassword(@RequestBody ModifyPwdDTO dto) {
+    System.out.println(dto);
 
-    if (modifyPwdDto.getUsername().equals("")) {
-      throw new ApiException(ResultCode.PARAM_NOT_COMPLETE);
+    if (dto.getUsername().equals("")) {
+      return Result.failure();
     }
 
-    LoginDTO loginDto = new LoginDTO(modifyPwdDto.getUsername(), modifyPwdDto.getOldPassword
+    LoginDTO loginDto = new LoginDTO(dto.getUsername(), dto.getOldPassword
         ());
     if (userInfoService.loginCheck(loginDto) != null) {
       if (userInfoService.modifyPassword(
-          modifyPwdDto.getUsername(), modifyPwdDto.getNewPassword())
+          dto.getUsername(), dto.getNewPassword())
           == 1) {
         return Result.success("修改密码成功");
       } else {
-        throw new ApiException(ResultCode.DATA_UPDATE_ERROR);
+        return Result.failure();
       }
     } else {
-      throw new ApiException(ResultCode.USER_LOGIN_ERROR);
+      return Result.failure();
     }
   }
 

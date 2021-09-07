@@ -8,10 +8,10 @@ import com.softlab.okr.mapper.TagMapper;
 import com.softlab.okr.model.dto.TagDTO;
 import com.softlab.okr.model.entity.Tag;
 import com.softlab.okr.service.TagService;
+import java.util.LinkedList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @Author: Devhui
@@ -38,9 +38,9 @@ public class TagServiceImpl implements TagService {
   }
 
   @Override
-  public PageInfo<Tag> getTagListByCond(TagDTO tagDTO) {
-    PageHelper.startPage(tagDTO.getIndex(), tagDTO.getPageSize());
-    List<Tag> list = tagMapper.selectTagListByCond(tagDTO);
+  public PageInfo<Tag> getTagListByCond(TagDTO dto) {
+    PageHelper.startPage(dto.getIndex(), dto.getPageSize());
+    List<Tag> list = tagMapper.selectTagListByCond(dto);
     return new PageInfo<>(list);
   }
 
@@ -48,7 +48,7 @@ public class TagServiceImpl implements TagService {
   public int modifyTag(Tag tag) {
     return tagMapper.updateTag(tag);
   }
-  
+
   @Override
   public int removeById(int tagId) {
     bookMapper.deleteBookTagByTagId(tagId);
@@ -58,5 +58,15 @@ public class TagServiceImpl implements TagService {
   @Override
   public List<Tag> getTagList() {
     return tagMapper.selectList();
+  }
+
+  @Override
+  public List<Integer> getTagIdList() {
+    List<Tag> tagList = this.getTagList();
+    List<Integer> list = new LinkedList<>();
+    tagList.forEach(tag -> {
+      list.add(tag.getTagId());
+    });
+    return list;
   }
 }

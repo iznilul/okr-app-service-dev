@@ -1,11 +1,10 @@
 package com.softlab.okr.model.vo;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.validation.constraints.Pattern;
-import java.util.List;
+import org.hibernate.validator.constraints.Range;
 
 /**
  * @program: okr
@@ -30,13 +29,11 @@ public class BookVO {
 
   private String userName;
 
-  @Pattern(regexp = "^$|^(空闲|借阅|丢失)$", message = "书籍状态需要满足规则")
-  private String status;
+  @Range(min = 0, max = 2, message = "书籍状态需要满足规则")
+  private Integer status;
+
+  private String statusName;
 
   private List<Integer> tagIdList;
-
-  public String getStatus() {
-    return status == null || status.equals("") ? "空闲" : status;
-  }
 
 }

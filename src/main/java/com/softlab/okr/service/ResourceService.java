@@ -5,6 +5,7 @@ import com.softlab.okr.exception.ServiceException;
 import com.softlab.okr.model.bo.RoleResourceBo;
 import com.softlab.okr.model.dto.ResourceDTO;
 import com.softlab.okr.model.entity.Resource;
+import com.softlab.okr.model.vo.ResourceVO;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -13,7 +14,7 @@ public interface ResourceService {
 
   int saveResources(List<Resource> resourceList) throws ServiceException;
 
-  int saveRoleResource(RoleResourceBo roleResourceBo) throws ServiceException;
+  int saveRoleResource(RoleResourceBo bo) throws ServiceException;
 
   int removeList() throws ServiceException;
 
@@ -23,9 +24,9 @@ public interface ResourceService {
 
   List<Integer> getResourceIds(String role) throws ServiceException;
 
-  PageInfo<Resource> getResourceList(ResourceDTO resourceDTO) throws ServiceException;
+  PageInfo<ResourceVO> getResourceList(ResourceDTO dto) throws ServiceException;
 
-  int reloadRoleResource(RoleResourceBo roleResourceBo) throws ServiceException;
+  int reloadRoleResource(RoleResourceBo bo) throws ServiceException;
 
   int modifyResourceStatus(int resourceId) throws ServiceException;
 

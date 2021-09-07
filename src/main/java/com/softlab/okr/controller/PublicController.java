@@ -12,7 +12,6 @@ import com.softlab.okr.service.KeyService;
 import com.softlab.okr.service.TagService;
 import com.softlab.okr.service.UserEntityService;
 import com.softlab.okr.utils.Result;
-import com.softlab.okr.utils.ResultCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
@@ -38,14 +37,15 @@ import org.springframework.web.bind.annotation.RestController;
 @Auth(id = 4000, name = "公共物品的操作")
 public class PublicController {
 
-  @Autowired
-  BookService bookService;
 
   @Autowired
-  TagService tagService;
+  private BookService bookService;
 
   @Autowired
-  KeyService keyService;
+  private TagService tagService;
+
+  @Autowired
+  private KeyService keyService;
 
   @Autowired
   AuthenticationService authenticationService;
@@ -56,12 +56,12 @@ public class PublicController {
   @PostMapping("getBookByCond")
   @ApiOperation("书籍列表")
   @Auth(id = 1, name = "书籍列表")
-  public Result getBookByCond(@RequestBody @Validated BookDTO bookDTO) {
-    PageInfo<BookVO> list = bookService.getByCond(bookDTO);
+  public Result getBookByCond(@RequestBody @Validated BookDTO dto) {
+    PageInfo<BookVO> list = bookService.getByCond(dto);
     if (list.getSize() > 0) {
       return Result.success(list);
     } else {
-      return Result.failure(ResultCode.DATA_GET_ERROR);
+      return Result.failure();
     }
   }
 
@@ -73,7 +73,7 @@ public class PublicController {
     if (list.size() > 0) {
       return Result.success(list);
     } else {
-      return Result.failure(ResultCode.DATA_GET_ERROR);
+      return Result.failure();
     }
   }
 
@@ -85,7 +85,7 @@ public class PublicController {
     if (list.size() > 0) {
       return Result.success(list);
     } else {
-      return Result.failure(ResultCode.DATA_GET_ERROR);
+      return Result.failure();
     }
   }
 
@@ -99,7 +99,21 @@ public class PublicController {
     if (bookService.borrowBook(bookId, userId) == 1) {
       return Result.success();
     } else {
-      return Result.failure(ResultCode.DATA_UPDATE_ERROR);
+      return Result.failure();
+    }
+  }
+
+  @GetMapping("returnBook")
+  @ApiOperation("还书")
+  @Auth(id = 5, name = "还书")
+  public Result returnBook(@RequestParam("bookId") @NotNull int bookId) {
+    String username = authenticationService.getPrincipal().getUsername();
+
+    int userId = userEntityService.getByUsername(username).getUserId();
+    if (bookService.returnBook(bookId, userId) == 1) {
+      return Result.success();
+    } else {
+      return Result.failure();
     }
   }
 

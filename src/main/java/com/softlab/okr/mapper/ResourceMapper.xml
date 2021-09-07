@@ -10,15 +10,23 @@
     <result property="status" column="status"/>
   </resultMap>
 
+  <resultMap id="VoMap" type="com.softlab.okr.model.vo.ResourceVO">
+    <id property="resourceId" column="resource_id"/>
+    <result property="method" column="method"/>
+    <result property="path" column="path"/>
+    <result property="name" column="name"/>
+    <result property="status" column="status"/>
+  </resultMap>
+
   <sql id="baseColumn">
-        `resource_id`,`method`,`path`,`name`,`status`
-    </sql>
+    `resource_id`,`method`,`path`,`name`,`status`
+  </sql>
 
   <sql id="table">
-        `resource`
-    </sql>
+    `resource`
+  </sql>
 
-  <select id="selectResourceList" resultMap="resourceMap">
+  <select id="selectResourceList" resultMap="VoMap">
     select
     <include refid="baseColumn"></include>
     from
@@ -26,11 +34,11 @@
   </select>
 
   <select id="selectByUserId" resultType="Integer">
-        select re.resource_id from resource re
-        join role_resource rr on rr.resource_id=re.resource_id
-        join user_role ur on rr.role_id =ur.role_id
-        where ur.user_id=#{userId}
-    </select>
+    select re.resource_id from resource re
+    join role_resource rr on rr.resource_id=re.resource_id
+    join user_role ur on rr.role_id =ur.role_id
+    where ur.user_id=#{userId}
+  </select>
 
   <select id="selectResourceByPath" resultMap="resourceMap">
     select
@@ -56,13 +64,13 @@
   </insert>
 
   <delete id="deleteList">
-        delete  from resource
-    </delete>
+    delete from resource
+  </delete>
 
   <delete id="deleteRoleResource">
-        delete  from role_resource
-        where `role_id`=#{roleId}
-    </delete>
+    delete from role_resource
+    where `role_id`=#{roleId}
+  </delete>
 
   <insert id="insertRoleResource" parameterType="roleresourcebo">
     insert into role_resource(role_id,resource_id)

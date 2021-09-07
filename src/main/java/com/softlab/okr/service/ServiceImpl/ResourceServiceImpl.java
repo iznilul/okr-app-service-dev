@@ -6,6 +6,9 @@ import com.softlab.okr.mapper.ResourceMapper;
 import com.softlab.okr.model.bo.RoleResourceBo;
 import com.softlab.okr.model.dto.ResourceDTO;
 import com.softlab.okr.model.entity.Resource;
+import com.softlab.okr.model.enums.statusCode.ResourceStatus;
+import com.softlab.okr.model.vo.ResourceVO;
+import com.softlab.okr.security.ApiFilter;
 import com.softlab.okr.security.MySecurityMetadataSource;
 import com.softlab.okr.service.ResourceService;
 import java.util.Collection;
@@ -31,8 +34,8 @@ public class ResourceServiceImpl implements ResourceService {
   }
 
   @Override
-  public int saveRoleResource(RoleResourceBo roleResourceBo) {
-    return resourceMapper.insertRoleResource(roleResourceBo);
+  public int saveRoleResource(RoleResourceBo bo) {
+    return resourceMapper.insertRoleResource(bo);
   }
 
   @Override
@@ -41,9 +44,12 @@ public class ResourceServiceImpl implements ResourceService {
   }
 
   @Override
-  public PageInfo<Resource> getResourceList(ResourceDTO resourceDTO) {
-    PageHelper.startPage(resourceDTO.getIndex(), resourceDTO.getPageSize());
-    List<Resource> list = resourceMapper.selectResourceList();
+  public PageInfo<ResourceVO> getResourceList(ResourceDTO dto) {
+    PageHelper.startPage(dto.getIndex(), dto.getPageSize());
+    List<ResourceVO> list = resourceMapper.selectResourceList();
+    list.forEach(vo -> {
+      vo.setStatusName(ResourceStatus.getMessage(vo.getStatus()));
+    });
     return new PageInfo<>(list);
   }
 
@@ -80,13 +86,24 @@ public class ResourceServiceImpl implements ResourceService {
   }
 
   @Override
-  public int reloadRoleResource(RoleResourceBo roleResourceBo) {
-    resourceMapper.deleteRoleResource(roleResourceBo.getRoleId());
-    return this.saveRoleResource(roleResourceBo);
+  @Transactional(
+      propagation = Propagation.REQUIRED,
+      isolation = Isolation.READ_COMMITTED,
+      rollbackFor = Exception.class,
+      readOnly = false)
+  public int reloadRoleResource(RoleResourceBo bo) {
+    resourceMapper.deleteRoleResource(bo.getRoleId());
+    return this.saveRoleResource(bo);
   }
 
   @Override
+  @Transactional(
+      propagation = Propagation.REQUIRED,
+      isolation = Isolation.READ_COMMITTED,
+      rollbackFor = Exception.class,
+      readOnly = false)
   public int modifyResourceStatus(int resourceId) {
+    ApiFilter.updateResources(resourceId);
     return resourceMapper.updateResourceStatus(resourceId);
   }
 

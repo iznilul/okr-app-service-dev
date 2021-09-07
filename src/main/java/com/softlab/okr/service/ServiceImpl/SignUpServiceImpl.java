@@ -6,17 +6,14 @@ import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.softlab.okr.convert.impl.SignUpConvert;
 import com.softlab.okr.mapper.SignUpMapper;
 import com.softlab.okr.model.dto.SignUpDTO;
 import com.softlab.okr.model.entity.SignUp;
+import com.softlab.okr.model.enums.statusCode.SignUpStatus;
 import com.softlab.okr.model.vo.SignUpVO;
 import com.softlab.okr.service.SignUpService;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,21 +30,10 @@ public class SignUpServiceImpl implements SignUpService {
   @Autowired
   private SignUpMapper signUpMapper;
 
-  @Autowired
-  SignUpConvert signUpConvert;
-
-  private static final Map<Integer, String> map = new HashMap<>();
-
-  static {
-    map.put(0, "未审批，请耐心等待");
-    map.put(1, "已录取");
-    map.put(2, "未录取");
-  }
-
   // 报名
   @Override
-  public int saveSignUpList(SignUp signUp) {
-    return signUpMapper.insertSignUpList(signUp);
+  public int saveSignUp(SignUp signUp) {
+    return signUpMapper.insertSignUp(signUp);
   }
 
   // 检查是否已报名
@@ -59,45 +45,42 @@ public class SignUpServiceImpl implements SignUpService {
 
   //录取结果更新
   @Override
-  public int modifySignUpList(SignUp signUp) {
-    return signUpMapper.updateSignUpList(signUp);
+  public int modifySignUp(SignUp signUp) {
+    return signUpMapper.updateSignUp(signUp);
   }
 
   //根据参数返回报名列表
   @Override
-  public PageInfo<SignUpVO> getSignUpListByCond(SignUpDTO signUpDTO) {
+  public PageInfo<SignUpVO> getSignUpByCond(SignUpDTO signUpDTO) {
     PageHelper.startPage(signUpDTO.getIndex(), signUpDTO.getPageSize());
-    List<SignUpVO> list = new LinkedList<>();
-    List<SignUp> signUps = signUpMapper.selectSignUpListByCond(signUpDTO);
+    List<SignUpVO> list = signUpMapper.selectSignUpByCond(signUpDTO);
 
-    signUps.forEach(signUp -> {
-      SignUpVO signUpVO = signUpConvert.convertVO(signUp)
-          .setStatus(map.get(signUp.getStatus()));
-      list.add(signUpVO);
+    list.forEach(vo -> {
+      vo.setStatusName(SignUpStatus.getMessage(vo.getStatus()));
     });
     return new PageInfo<>(list);
   }
 
   //根据id返回用户
   @Override
-  public SignUpVO getSignUpListById(String id) {
-    SignUp signUp = signUpMapper.selectSignUpListById(id);
-    return signUp == null ? null
-        : signUpConvert.convertVO(signUp).setStatus(map.get(signUp.getStatus()));
+  public SignUpVO getSignUpById(String studentId) {
+    SignUpVO signUpVO = signUpMapper.selectSignUpById(studentId);
+    return signUpVO == null ? null
+        : signUpVO.setStatusName(SignUpStatus.getMessage(signUpVO.getStatus()));
   }
 
   // 拉取所有
   @Override
-  public List<SignUp> getSignUpList() {
-    return signUpMapper.selectSignUpList();
+  public List<SignUpVO> getSignUp() {
+    return signUpMapper.selectSignUp();
   }
 
   @Override
-  public void exportSignUpList(HttpServletResponse response) throws IOException {
-    List<SignUp> list = this.getSignUpList();
+  public void exportSignUp(HttpServletResponse response) throws IOException {
+    List<SignUpVO> list = this.getSignUp();
     // 通过工具类创建writer，默认创建xls格式
     ExcelWriter writer = ExcelUtil.getWriter();
-    writer.addHeaderAlias("id", "学号");
+    writer.addHeaderAlias("studentId", "学号");
     writer.addHeaderAlias("name", "姓名");
     writer.addHeaderAlias("gender", "性别");
     writer.addHeaderAlias("qq", "qq号");
@@ -105,6 +88,7 @@ public class SignUpServiceImpl implements SignUpService {
     writer.addHeaderAlias("profile", "个人简介");
     writer.addHeaderAlias("status", "状态");
     writer.addHeaderAlias("comment", "评语");
+    writer.addHeaderAlias("updateTime", "更新时间");
     // 一次性写出内容，使用默认样式，强制输出标题
     writer.write(list, true);
     //out为OutputStream，需要写出到的目标流

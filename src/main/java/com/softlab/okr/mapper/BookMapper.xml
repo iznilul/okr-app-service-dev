@@ -14,10 +14,20 @@
     <result property="updateTime" column="update_time"/>
   </resultMap>
 
+  <resultMap id="VoMap" type="com.softlab.okr.model.vo.BookVO">
+    <id property="bookId" column="book_id"/>
+    <result property="bookName" column="book_name"/>
+    <result property="img" column="img"/>
+    <result property="publisher" column="publisher"/>
+    <result property="price" column="price"/>
+    <result property="userName" column="user_name"/>
+    <result property="status" column="status"/>
+  </resultMap>
+
 
   <sql id="baseColumn">
-        `book_id`,`book_name`,`img`,`publisher`,`price`,`status`,`user_id`,`create_time`,`update_time`
-    </sql>
+    `book_id`,`book_name`,`img`,`publisher`,`price`,`status`,`user_id`,`create_time`,`update_time`
+  </sql>
 
   <sql id="bookTagColumn">
     `book_id`,`tag_id`
@@ -28,17 +38,31 @@
   </sql>
 
   <!--选择全部-->
-  <select id="selectList" resultMap="bookMap">
+  <select id="selectList" resultMap="VoMap">
     select
-    <include refid="baseColumn"></include>
-    from `book`
+    book.book_id,
+    book.book_name,
+    book.img,
+    book.publisher,
+    book.price,
+    user_info.name as user_name,
+    book.status
+    from book
+    join user_info on book.user_id=user_info.user_id
   </select>
 
   <!--    根据条件选取book-->
-  <select id="selectByCond" resultMap="bookMap">
+  <select id="selectByCond" resultMap="VoMap">
     select
-    <include refid="baseColumn"></include>
-    from `book`
+    book.book_id,
+    book.book_name,
+    book.img,
+    book.publisher,
+    book.price,
+    user_info.name as user_name,
+    book.status
+    from book
+    join user_info on book.user_id=user_info.user_id
     where 1=1
     <if test="bookName!='' and bookName!=null">and `book_name` like '%${bookName}%'</if>
     <if test="publisher!='' and publisher!=null">and `publisher` like '%${publisher}%'</if>
@@ -87,24 +111,29 @@
   </delete>
 
   <update id="updateImg">
-        update `book` set `img`=#{img} where `book_id`=#{bookId}
-    </update>
+    update `book` set `img`=#{img} where `book_id`=#{bookId}
+  </update>
 
   <update id="updateById">
     update `book` set
     `book_name`=#{bookName},
     `publisher`=#{publisher},
     `price`=#{price},
-    <if test="status=='空闲'">`status`=0,</if>
-    <if test="status=='借阅'">`status`=1,</if>
-    <if test="status=='丢失'">`status`=2,</if>
-    `update_time`=NOW()
+    `status`=#{status},
+    `update_time`=now()
     where book_id=#{bookId}
   </update>
 
-  <update id="borrow">
+  <update id="borrowBook">
     update `book` set
     `status`=1,
+    `user_id`=#{userId}
+    where `book_id`=#{bookId}
+  </update>
+
+  <update id="returnBook">
+    update `book` set
+    `status`=0,
     `user_id`=#{userId}
     where `book_id`=#{bookId}
   </update>

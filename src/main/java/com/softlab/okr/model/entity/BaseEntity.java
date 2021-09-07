@@ -1,5 +1,6 @@
 package com.softlab.okr.model.entity;
 
+import java.util.Date;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -13,6 +14,6 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public abstract class BaseEntity {
 
-  public long createTime;
-  public long updateTime;
+  public Date createTime;
+  public Date updateTime;
 }

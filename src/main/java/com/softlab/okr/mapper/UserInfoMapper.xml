@@ -41,7 +41,7 @@
         INSERT INTO `user_info`
             (user_id,username,create_time,update_time)
         VALUES
-            (#{userId}, #{username}, #{createTime}, #{updateTime})
+            (#{userId}, #{username}, now(), now())
     </insert>
 
   <!--    根据条件选取用户-->
@@ -77,13 +77,13 @@
   <!--      更新用户信息·-->
   <update id="updateUserInfo">
         update `user_info` set
-        `name`=#{updateUserDto.name},
-        `major`=#{updateUserDto.major},
-        `qq`=#{updateUserDto.qq},
-        `phone`=#{updateUserDto.phone},
-        `weixin`=#{updateUserDto.weixin},
-        `desc`=#{updateUserDto.desc},
-         `update_time`=#{updateTime} where `username`=#{updateUserDto.username}
+        `name`=#{dto.name},
+        `major`=#{dto.major},
+        `qq`=#{dto.qq},
+        `phone`=#{dto.phone},
+        `weixin`=#{dto.weixin},
+        `desc`=#{dto.desc},
+         `update_time`=now() where `username`=#{dto.username}
     </update>
 
   <!--修改密码·-->

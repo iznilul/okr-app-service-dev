@@ -17,22 +17,22 @@ import javax.servlet.http.HttpServletResponse;
 public interface SignUpService {
 
   // 报名
-  int saveSignUpList(SignUp signUp) throws ServiceException;
+  int saveSignUp(SignUp signUp) throws ServiceException;
 
   // 检查是否已报名
   String getIsExist(String id) throws ServiceException;
 
   //录取结果更新
-  int modifySignUpList(SignUp signUp) throws ServiceException;
+  int modifySignUp(SignUp signUp) throws ServiceException;
 
   //根据用户
-  PageInfo<SignUpVO> getSignUpListByCond(SignUpDTO signUpDTO) throws ServiceException;
+  PageInfo<SignUpVO> getSignUpByCond(SignUpDTO dto) throws ServiceException;
 
   //根据id返回用户
-  SignUpVO getSignUpListById(String id) throws ServiceException;
+  SignUpVO getSignUpById(String studentId) throws ServiceException;
 
   // 拉取所有
-  List<SignUp> getSignUpList() throws ServiceException;
+  List<SignUpVO> getSignUp() throws ServiceException;
 
-  void exportSignUpList(HttpServletResponse response) throws ServiceException, IOException;
+  void exportSignUp(HttpServletResponse response) throws ServiceException, IOException;
 }

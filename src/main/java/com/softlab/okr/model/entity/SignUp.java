@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SignUp extends BaseEntity {
 
-  private String id;
+  private Integer id;
+  private String studentId;
   private String name;
   private String gender;
   private String qq;

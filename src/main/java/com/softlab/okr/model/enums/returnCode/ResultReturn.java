@@ -1,4 +1,6 @@
-package com.softlab.okr.utils;
+package com.softlab.okr.model.enums.returnCode;
+
+import com.softlab.okr.model.enums.BaseCode;
 
 /**
  * @program: okr
@@ -6,7 +8,7 @@ package com.softlab.okr.utils;
  * @author: radCircle
  * @ create: 2021-07-02 12:15
  **/
-public enum ResultCode {
+public enum ResultReturn implements BaseCode {
 
   /* 成功状态码 */
   SUCCESS(200, "操作成功"),
@@ -59,7 +61,7 @@ public enum ResultCode {
 
   private String message;
 
-  ResultCode(Integer code, String message) {
+  ResultReturn(Integer code, String message) {
     this.code = code;
     this.message = message;
   }
@@ -73,7 +75,7 @@ public enum ResultCode {
   }
 
   public static String getMessage(String name) {
-    for (ResultCode item : ResultCode.values()) {
+    for (ResultReturn item : ResultReturn.values()) {
       if (item.name().equals(name)) {
         return item.message;
       }
@@ -82,7 +84,7 @@ public enum ResultCode {
   }
 
   public static Integer getCode(String name) {
-    for (ResultCode item : ResultCode.values()) {
+    for (ResultReturn item : ResultReturn.values()) {
       if (item.name().equals(name)) {
         return item.code;
       }
