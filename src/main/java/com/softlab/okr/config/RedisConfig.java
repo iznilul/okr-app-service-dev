@@ -1,24 +1,25 @@
 package com.softlab.okr.config;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.lang.reflect.Method;
+import io.lettuce.core.ClientOptions;
+import io.lettuce.core.resource.ClientResources;
+import io.lettuce.core.resource.DefaultClientResources;
 import java.time.Duration;
-import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.CachingConfigurerSupport;
-import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.cache.interceptor.KeyGenerator;
+import net.javacrumbs.shedlock.core.LockProvider;
+import net.javacrumbs.shedlock.provider.redis.spring.RedisLockProvider;
+import net.javacrumbs.shedlock.spring.ScheduledLockConfiguration;
+import net.javacrumbs.shedlock.spring.ScheduledLockConfigurationBuilder;
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.cache.RedisCacheConfiguration;
-import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisPassword;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
+import org.springframework.data.redis.connection.lettuce.LettucePoolingClientConfiguration;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.RedisSerializationContext;
-import org.springframework.data.redis.serializer.RedisSerializer;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
  * @program: okr
@@ -27,101 +28,78 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * @create: 2021-08-24 22:03
  **/
 @Configuration
-@EnableCaching
-public class RedisConfig extends CachingConfigurerSupport {
+public class RedisConfig {
 
-  /* *
-   * @Author lsc
-   * <p>自定义生成key的规则 </p>
-   * @Param []
-   * @Return KeyGenerator
-   */
-  @Override
-  @Bean
-  public KeyGenerator keyGenerator() {
-    return new KeyGenerator() {
-      @Override
-      public Object generate(Object o, Method method, Object... objects) {
-        //格式化缓存key字符串
-        StringBuilder sb = new StringBuilder();
-        //追加类名
-        sb.append(o.getClass().getName());
-        //追加方法名
-        sb.append(method.getName());
-        //遍历参数并且追加
-        for (Object obj : objects) {
-          sb.append(obj.toString());
-        }
-        return sb.toString();
-      }
-    };
+  @Value("${spring.redis.host}")
+  private String redisHost;
+
+  @Value("${spring.redis.port}")
+  private int redisPort;
+
+  @Value("${spring.redis.password}")
+  private String password;
+
+  @Value("${redis.taskScheduler.poolSize}")
+  private int tasksPoolSize;
+  @Value("${redis.taskScheduler.defaultLockMaxDurationMinutes}")
+  private int lockMaxDuration;
+
+  @Bean(destroyMethod = "shutdown")
+  ClientResources clientResources() {
+    return DefaultClientResources.create();
   }
 
   @Bean
-  public CacheManager cacheManager(RedisConnectionFactory factory) {
-    RedisSerializer<String> redisSerializer = new StringRedisSerializer();
-    Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(
-        Object.class);
+  public RedisStandaloneConfiguration redisStandaloneConfiguration() {
+    RedisStandaloneConfiguration redisStandaloneConfiguration =
+        new RedisStandaloneConfiguration(redisHost, redisPort);
+    if (password != null && !password.trim().equals("")) {
+      RedisPassword redisPassword = RedisPassword.of(password);
+      redisStandaloneConfiguration.setPassword(redisPassword);
+    }
+    return redisStandaloneConfiguration;
+  }
 
-    //解决查询缓存转换异常的问题
-    ObjectMapper om = new ObjectMapper();
-    om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-    om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-    jackson2JsonRedisSerializer.setObjectMapper(om);
+  @Bean
+  public ClientOptions clientOptions() {
+    return ClientOptions.builder()
+        .disconnectedBehavior(ClientOptions.DisconnectedBehavior.REJECT_COMMANDS)
+        .autoReconnect(true).build();
+  }
 
-    // 配置序列化（解决乱码的问题）,过期时间120秒
-    RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
-        .entryTtl(Duration.ofSeconds(120))
-        .serializeKeysWith(
-            RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer))
-        .serializeValuesWith(
-            RedisSerializationContext.SerializationPair.fromSerializer(jackson2JsonRedisSerializer))
-        .disableCachingNullValues();
+  @Bean
+  LettucePoolingClientConfiguration lettucePoolConfig(ClientOptions options, ClientResources dcr) {
+    return LettucePoolingClientConfiguration.builder().poolConfig(new GenericObjectPoolConfig())
+        .clientOptions(options).clientResources(dcr).build();
+  }
 
-    RedisCacheManager cacheManager = RedisCacheManager.builder(factory)
-        .cacheDefaults(config)
+  @Bean
+  public RedisConnectionFactory connectionFactory(
+      RedisStandaloneConfiguration redisStandaloneConfiguration,
+      LettucePoolingClientConfiguration lettucePoolConfig) {
+    return new LettuceConnectionFactory(redisStandaloneConfiguration, lettucePoolConfig);
+  }
+
+  @Bean
+  @ConditionalOnMissingBean(name = "redisTemplate")
+  @Primary
+  public RedisTemplate<Object, Object> redisTemplate(
+      RedisConnectionFactory redisConnectionFactory) {
+    RedisTemplate<Object, Object> template = new RedisTemplate<>();
+    template.setConnectionFactory(redisConnectionFactory);
+    return template;
+  }
+
+  @Bean
+  public LockProvider lockProvider(RedisConnectionFactory connectionFactory) {
+    return new RedisLockProvider(connectionFactory);
+  }
+
+  @Bean
+  public ScheduledLockConfiguration taskSchedulerLocker(LockProvider lockProvider) {
+    return ScheduledLockConfigurationBuilder.withLockProvider(lockProvider)
+        .withPoolSize(tasksPoolSize).withDefaultLockAtMostFor(Duration.ofMinutes(lockMaxDuration))
         .build();
-    return cacheManager;
   }
-
-  @Bean
-  public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
-    // 创建redisTemplate
-    RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-    redisTemplate.setConnectionFactory(connectionFactory);
-
-    // 使用Jackson2JsonRedisSerialize替换默认序列化
-    Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(
-        Object.class);
-
-    ObjectMapper objectMapper = new ObjectMapper();
-    objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-    objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-
-    jackson2JsonRedisSerializer.setObjectMapper(objectMapper);
-
-    //set value serializer
-    redisTemplate.setDefaultSerializer(jackson2JsonRedisSerializer);
-    // key采用String的序列化方式
-    redisTemplate.setKeySerializer(new StringRedisSerializer());
-    // value序列化方式采用jackson
-    redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
-    // hash的key也采用String的序列化方式
-    redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-    // hash的value序列化方式采用jackson
-    redisTemplate.setHashValueSerializer(jackson2JsonRedisSerializer);
-    redisTemplate.afterPropertiesSet();
-    return redisTemplate;
-  }
-
-  //@Bean
-  //public RedisTemplate<String, Object> redisTemplate(LettuceConnectionFactory connectionFactory) {
-  //  RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-  //  redisTemplate.setKeySerializer(new StringRedisSerializer());
-  //  redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
-  //  redisTemplate.setConnectionFactory(connectionFactory);
-  //  //redisTemplate.setEnableTransactionSupport(true);
-  //  return redisTemplate;
-  //}
 }
 

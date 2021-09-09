@@ -2,6 +2,7 @@ package com.softlab.okr.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.softlab.okr.annotation.Auth;
+import com.softlab.okr.annotation.LimitedAccess;
 import com.softlab.okr.exception.ApiException;
 import com.softlab.okr.model.bo.RoleResourceBo;
 import com.softlab.okr.model.dto.LoginLogDTO;
@@ -374,6 +375,7 @@ public class AdminController {
     }
   }
 
+  @LimitedAccess(frequency = 2, second = 30)
   @PostMapping("getLoginLogByCond")
   @ApiOperation("登录日志列表")
   @Auth(id = 25, name = "登录日志列表")

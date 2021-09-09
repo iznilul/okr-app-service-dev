@@ -8,10 +8,8 @@ import com.softlab.okr.security.ApiFilter;
 import com.softlab.okr.security.MySecurityMetadataSource;
 import com.softlab.okr.service.ResourceService;
 import com.softlab.okr.service.TaskService;
-import com.softlab.okr.utils.RedisUtils;
 import io.jsonwebtoken.lang.Collections;
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -47,8 +45,6 @@ public class ApplicationStartup implements ApplicationRunner {
   @Autowired
   private TaskService taskService;
 
-  @Autowired
-  private RedisUtils redisUtils;
 
   private static final String jobPackage = "com.softlab.okr.job";
 
@@ -74,8 +70,8 @@ public class ApplicationStartup implements ApplicationRunner {
     MySecurityMetadataSource.setRESOURCES(set);
 
     //添加资源进缓存
-    redisUtils.remove("resource");
-    redisUtils.add("resource", new HashSet<Resource>(list));
+    //redisUtils.remove("resource");
+    //redisUtils.add("resource", new HashSet<Resource>(list));
     //添加所有资源进过滤器
     ApiFilter.getResources().addAll(list);
     // 这个方法先删除所有操作权限类型的权限资源，待会再新增资源，以实现全量更新（注意，数据库中不要设置外键，否则会删除失败）
