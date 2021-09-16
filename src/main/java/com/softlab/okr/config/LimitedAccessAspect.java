@@ -1,14 +1,16 @@
 package com.softlab.okr.config;
 
 import com.softlab.okr.annotation.LimitedAccess;
-import com.softlab.okr.utils.DataCacheRepository;
+import com.softlab.okr.utils.FilterUtil;
+import com.softlab.okr.utils.RedisUtil;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.log4j.Log4j2;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -22,49 +24,54 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @Aspect
 @Component
 @Log4j2
-//@Order
+@Order(1)
 public class LimitedAccessAspect {
 
-  public static String LIMITED_ACCESS_ASPECT_COLLECTION = "LIMITED_ACCESS_ASPECT_COLLECTION";
+  public static String Collection = "IpLimit";
 
   @Autowired
-  private DataCacheRepository redisCacheService;
+  private RedisUtil redisUtil;
 
+  @Autowired
+  private FilterUtil filterUtil;
+
+  /**
+   * 调用切面类
+   *
+   * @param limitedAccess
+   */
   @Pointcut("@annotation(limitedAccess)")
   public void limitAccessPointCut(LimitedAccess limitedAccess) {
-    // 限制接口调用切面类
   }
 
-  @Around(value = "limitAccessPointCut(limitedAccess)", argNames = "point,limitedAccess")
-  public Object doAround(ProceedingJoinPoint point, LimitedAccess limitedAccess) throws Throwable {
+  @Before(value = "limitAccessPointCut(limitedAccess)", argNames = "point,limitedAccess")
+  public void doBefore(JoinPoint point, LimitedAccess limitedAccess) {
     ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder
         .getRequestAttributes();
     if (null != attributes) {
-      String className = point.getTarget().getClass().getName();
-      String methodName = point.getSignature().getName();
+      //String methodName = point.getSignature().getName();
       HttpServletRequest request = attributes.getRequest();
-      String remoteAddr = request.getRemoteAddr();
-      log.info("remoteAddr地址：" + remoteAddr);
+      String path = filterUtil.getRequestPath(request);
+      String ip = filterUtil.getRequestIp();
+      log.info("ip地址：" + ip);
       //String realRequestIps = request.getHeader("X-Forwarded-For");
-      String key =
-          LIMITED_ACCESS_ASPECT_COLLECTION + className + "." + methodName + "#" + remoteAddr;
+      //log.info("realRequestIps地址:" + realRequestIps);
+      String key = Collection + "." + path + "#" + ip;
       try {
-        long limit = redisCacheService.get(key);
+        Integer limit = (Integer) redisUtil.get(key);
         if (limit > 0) {
           // 时间段内超过访问频次上限 - 阻断
           if (limit >= limitedAccess.frequency()) {
             log.info("接口调用过于频繁 {}", key);
-//
-            return "接口调用过于频繁！！！";
+            throw new Exception();
           }
-          redisCacheService.increment(key);
+          redisUtil.incr(key, 1);
         } else {
-          redisCacheService.set(key, 1, limitedAccess.second());
+          redisUtil.set(key, 1, limitedAccess.second());
         }
       } catch (Exception e) {
         log.debug(e.getStackTrace());
       }
     }
-    return point.proceed();
   }
 }
