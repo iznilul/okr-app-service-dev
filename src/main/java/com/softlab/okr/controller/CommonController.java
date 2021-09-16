@@ -4,8 +4,8 @@ import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.config.CommonConfig;
 import com.softlab.okr.exception.ApiException;
 import com.softlab.okr.model.dto.LoginDTO;
+import com.softlab.okr.model.dto.UserSignUpDTO;
 import com.softlab.okr.model.entity.CsdnSpider;
-import com.softlab.okr.model.entity.SignUp;
 import com.softlab.okr.model.entity.UserEntity;
 import com.softlab.okr.model.enums.returnCode.LoginReturn;
 import com.softlab.okr.model.vo.SignUpVO;
@@ -107,8 +107,10 @@ public class CommonController {
   @ApiOperation("报名")
   @PostMapping("signUp")
   @Auth(id = 4, name = "纳新报名")
-  public Result signUp(@RequestBody SignUp signUp) {
-    if (signUpService.saveSignUp(signUp) == 1) {
+  public Result signUp(@RequestBody UserSignUpDTO dto) {
+    System.out.println(dto);
+
+    if (signUpService.saveSignUp(dto) == 1) {
       return Result.success("报名成功，请加入纳新群: " + commonConfig.getQqGroupNumber());
     } else {
       return Result.failure();

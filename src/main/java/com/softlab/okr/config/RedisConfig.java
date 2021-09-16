@@ -1,14 +1,8 @@
 package com.softlab.okr.config;
 
-import io.lettuce.core.ClientOptions;
+import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
 import io.lettuce.core.resource.ClientResources;
 import io.lettuce.core.resource.DefaultClientResources;
-import java.time.Duration;
-import net.javacrumbs.shedlock.core.LockProvider;
-import net.javacrumbs.shedlock.provider.redis.spring.RedisLockProvider;
-import net.javacrumbs.shedlock.spring.ScheduledLockConfiguration;
-import net.javacrumbs.shedlock.spring.ScheduledLockConfigurationBuilder;
-import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -17,9 +11,9 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
-import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
-import org.springframework.data.redis.connection.lettuce.LettucePoolingClientConfiguration;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
  * @program: okr
@@ -39,13 +33,14 @@ public class RedisConfig {
   @Value("${spring.redis.password}")
   private String password;
 
-  @Value("${redis.taskScheduler.poolSize}")
-  private int tasksPoolSize;
-  @Value("${redis.taskScheduler.defaultLockMaxDurationMinutes}")
-  private int lockMaxDuration;
+  //@Value("${redis.taskScheduler.poolSize}")
+  //private int tasksPoolSize;
+  //
+  //@Value("${redis.taskScheduler.defaultLockMaxDurationMinutes}")
+  //private int lockMaxDuration;
 
   @Bean(destroyMethod = "shutdown")
-  ClientResources clientResources() {
+  public ClientResources clientResources() {
     return DefaultClientResources.create();
   }
 
@@ -61,45 +56,56 @@ public class RedisConfig {
   }
 
   @Bean
-  public ClientOptions clientOptions() {
-    return ClientOptions.builder()
-        .disconnectedBehavior(ClientOptions.DisconnectedBehavior.REJECT_COMMANDS)
-        .autoReconnect(true).build();
-  }
-
-  @Bean
-  LettucePoolingClientConfiguration lettucePoolConfig(ClientOptions options, ClientResources dcr) {
-    return LettucePoolingClientConfiguration.builder().poolConfig(new GenericObjectPoolConfig())
-        .clientOptions(options).clientResources(dcr).build();
-  }
-
-  @Bean
-  public RedisConnectionFactory connectionFactory(
-      RedisStandaloneConfiguration redisStandaloneConfiguration,
-      LettucePoolingClientConfiguration lettucePoolConfig) {
-    return new LettuceConnectionFactory(redisStandaloneConfiguration, lettucePoolConfig);
-  }
-
-  @Bean
   @ConditionalOnMissingBean(name = "redisTemplate")
   @Primary
-  public RedisTemplate<Object, Object> redisTemplate(
+  public RedisTemplate<String, Object> redisTemplate(
       RedisConnectionFactory redisConnectionFactory) {
-    RedisTemplate<Object, Object> template = new RedisTemplate<>();
+    RedisTemplate<String, Object> template = new RedisTemplate<>();
     template.setConnectionFactory(redisConnectionFactory);
+    RedisSerializer<String> redisSerializer = new StringRedisSerializer();
+    FastJsonRedisSerializer<Object> fastJsonRedisSerializer = new FastJsonRedisSerializer<>(
+        Object.class);
+    template.setKeySerializer(redisSerializer);
+    template.setHashKeySerializer(redisSerializer);
+    template.setHashValueSerializer(fastJsonRedisSerializer);
+    //template.setValueSerializer(redisSerializer);
+    template.setValueSerializer(fastJsonRedisSerializer);
     return template;
   }
 
-  @Bean
-  public LockProvider lockProvider(RedisConnectionFactory connectionFactory) {
-    return new RedisLockProvider(connectionFactory);
-  }
+  //@Bean
+  //public ClientOptions clientOptions() {
+  //  return ClientOptions.builder()
+  //      .disconnectedBehavior(DisconnectedBehavior.REJECT_COMMANDS)
+  //      .autoReconnect(true).build();
+  //}
+  //
+  //@Bean
+  //LettucePoolingClientConfiguration lettucePoolConfig(ClientOptions options,
+  //    ClientResources dcr) {
+  //  return LettucePoolingClientConfiguration.builder().poolConfig(new GenericObjectPoolConfig())
+  //      .clientOptions(options).clientResources(dcr).build();
+  //}
+  //
+  //@Bean
+  //public RedisConnectionFactory connectionFactory(
+  //    RedisStandaloneConfiguration redisStandaloneConfiguration,
+  //    LettucePoolingClientConfiguration lettucePoolConfig) {
+  //  return new LettuceConnectionFactory(redisStandaloneConfiguration, lettucePoolConfig);
+  //}
+  //
+  ////分布式锁调度
+  //@Bean
+  //public LockProvider lockProvider(RedisConnectionFactory connectionFactory) {
+  //  return new RedisLockProvider(connectionFactory);
+  //}
+  //
+  //@Bean
+  //public ScheduledLockConfiguration taskSchedulerLocker(LockProvider lockProvider) {
+  //  return ScheduledLockConfigurationBuilder.withLockProvider(lockProvider)
+  //      .withPoolSize(tasksPoolSize).withDefaultLockAtMostFor(Duration.ofMinutes(lockMaxDuration))
+  //      .build();
+  //}
 
-  @Bean
-  public ScheduledLockConfiguration taskSchedulerLocker(LockProvider lockProvider) {
-    return ScheduledLockConfigurationBuilder.withLockProvider(lockProvider)
-        .withPoolSize(tasksPoolSize).withDefaultLockAtMostFor(Duration.ofMinutes(lockMaxDuration))
-        .build();
-  }
 }
 

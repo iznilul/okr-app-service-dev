@@ -3,6 +3,7 @@ package com.softlab.okr.service;
 import com.github.pagehelper.PageInfo;
 import com.softlab.okr.exception.ServiceException;
 import com.softlab.okr.model.dto.SignUpDTO;
+import com.softlab.okr.model.dto.UserSignUpDTO;
 import com.softlab.okr.model.entity.SignUp;
 import com.softlab.okr.model.vo.SignUpVO;
 import java.io.IOException;
@@ -17,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 public interface SignUpService {
 
   // 报名
-  int saveSignUp(SignUp signUp) throws ServiceException;
+  int saveSignUp(UserSignUpDTO dto) throws ServiceException;
 
   // 检查是否已报名
   String getIsExist(String id) throws ServiceException;

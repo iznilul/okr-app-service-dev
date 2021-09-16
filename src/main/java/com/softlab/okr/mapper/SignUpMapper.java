@@ -1,6 +1,7 @@
 package com.softlab.okr.mapper;
 
 import com.softlab.okr.model.dto.SignUpDTO;
+import com.softlab.okr.model.dto.UserSignUpDTO;
 import com.softlab.okr.model.entity.SignUp;
 import com.softlab.okr.model.vo.SignUpVO;
 import java.util.List;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Repository;
 public interface SignUpMapper {
 
   // 报名
-  int insertSignUp(SignUp signUp) throws DataAccessException;
+  int insertSignUp(UserSignUpDTO dto) throws DataAccessException;
 
   // 检查是否已报名
   String selectIsExist(String id) throws DataAccessException;

@@ -8,6 +8,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.softlab.okr.mapper.SignUpMapper;
 import com.softlab.okr.model.dto.SignUpDTO;
+import com.softlab.okr.model.dto.UserSignUpDTO;
 import com.softlab.okr.model.entity.SignUp;
 import com.softlab.okr.model.enums.statusCode.SignUpStatus;
 import com.softlab.okr.model.vo.SignUpVO;
@@ -32,8 +33,8 @@ public class SignUpServiceImpl implements SignUpService {
   
   // 报名
   @Override
-  public int saveSignUp(SignUp signUp) {
-    return signUpMapper.insertSignUp(signUp);
+  public int saveSignUp(UserSignUpDTO dto) {
+    return signUpMapper.insertSignUp(dto);
   }
 
   // 检查是否已报名
