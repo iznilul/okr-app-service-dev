@@ -1,9 +1,9 @@
 package com.softlab.okr.service.ServiceImpl;
 
-import com.softlab.okr.mapper.ResourceMapper;
-import com.softlab.okr.mapper.RoleMapper;
-import com.softlab.okr.mapper.UserEntityMapper;
-import com.softlab.okr.mapper.UserInfoMapper;
+import com.softlab.okr.dao.ResourceMapper;
+import com.softlab.okr.dao.RoleMapper;
+import com.softlab.okr.dao.UserEntityMapper;
+import com.softlab.okr.dao.UserInfoMapper;
 import com.softlab.okr.model.bo.RegisterBo;
 import com.softlab.okr.model.bo.RoleResourceBo;
 import com.softlab.okr.model.dto.RegisterDTO;

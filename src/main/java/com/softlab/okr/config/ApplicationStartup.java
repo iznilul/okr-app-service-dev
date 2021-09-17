@@ -70,8 +70,7 @@ public class ApplicationStartup implements ApplicationRunner {
     MySecurityMetadataSource.setRESOURCES(set);
 
     //添加资源进缓存
-    //redisUtils.remove("resource");
-    //redisUtils.add("resource", new HashSet<Resource>(list));
+
     //添加所有资源进过滤器
     ApiFilter.getResources().addAll(list);
     // 这个方法先删除所有操作权限类型的权限资源，待会再新增资源，以实现全量更新（注意，数据库中不要设置外键，否则会删除失败）

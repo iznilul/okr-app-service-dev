@@ -1,6 +1,6 @@
 package com.softlab.okr.service.ServiceImpl;
 
-import com.softlab.okr.mapper.KeyMapper;
+import com.softlab.okr.dao.KeyMapper;
 import com.softlab.okr.model.entity.Key;
 import com.softlab.okr.service.KeyService;
 import java.util.List;

@@ -65,7 +65,7 @@ public class CommonController {
   @ApiOperation("登录")
   @PostMapping("login")
   @Auth(id = 1, name = "用户登录")
-  public Result login(@RequestBody LoginDTO loginDTO) {
+  public Result login(@RequestBody LoginDTO loginDTO) throws Exception {
     // 根据用户名查询出用户实体对象
     UserEntity user = userEntityService.getByUsername(loginDTO.getUsername());
     // 若没有查到用户或者密码校验失败则抛出异常，将未加密的密码和已加密的密码进行比对

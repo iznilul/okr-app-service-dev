@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.softlab.okr.dao.TaskTriggerMapper">
+  <resultMap id="taskTriggerMap" type="com.softlab.okr.model.entity.TaskTrigger">
+    <id property="triggerId" column="trigger_id"/>
+    <result property="taskId" column="task_id"/>
+    <result property="description" column="description"/>
+    <result property="cron" column="cron"/>
+    <result property="status" column="status"/>
+  </resultMap>
+
+  <sql id="baseColumn">
+        `trigger_id`,`task_id`,`description`,`cron`,`status`
+    </sql>
+
+  <select id="selectByTaskId" resultMap="taskTriggerMap">
+    select
+    <include refid="baseColumn"></include>
+    from `task_trigger` where `task_id`=#{taskId}
+  </select>
+
+  <select id="selectList" resultMap="taskTriggerMap">
+    select
+    <include refid="baseColumn"></include>
+    from `task_trigger`
+  </select>
+
+  <select id="selectByStatus" resultMap="taskTriggerMap">
+    select
+    <include refid="baseColumn"></include>
+    from `task_trigger`
+    where status=#{status}
+  </select>
+
+  <select id="selectTaskIdAndByStatus" resultMap="taskTriggerMap">
+    select
+    <include refid="baseColumn"></include>
+    from `task_trigger`
+    where status=#{status} and task_id=#{taskId}
+  </select>
+
+  <insert id="insertTaskTrigger">
+    insert into
+    `task_trigger`(<include refid="baseColumn"></include>)
+    values
+    (null,#{taskId},#{description},#{cron},#{status})
+  </insert>
+
+  <delete id="deleteById">
+    delete from `task_trigger`
+    where task_id =#{taskId}
+  </delete>
+
+  <update id="updateTaskTrigger">
+        update `task_trigger` set
+        `description`=#{description},
+        `cron`=#{cron},
+        `status`=#{status}
+        where `task_id`=#{taskid}
+    </update>
+
+
+</mapper>

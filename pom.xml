@@ -20,6 +20,7 @@
     <java.version>1.8</java.version>
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
+    <mybatis-plus-boot-starter.version>3.4.0</mybatis-plus-boot-starter.version>
     <docker.image.prefix>springboot</docker.image.prefix>
     <start-class>com.softlab.okr.App</start-class>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -148,30 +149,16 @@
       <artifactId>springfox-swagger-ui</artifactId>
       <version>2.9.2</version>
     </dependency>
-
     <!-- oshi获取系统信息 -->
     <dependency>
       <groupId>com.github.oshi</groupId>
       <artifactId>oshi-core</artifactId>
       <version>3.9.1</version>
     </dependency>
-
     <!--actuator监控-->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
-    </dependency>
-
-    <!-- POI读取xls -->
-    <dependency>
-      <groupId>org.apache.poi</groupId>
-      <artifactId>poi</artifactId>
-      <version>4.1.2</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.poi</groupId>
-      <artifactId>poi-ooxml</artifactId>
-      <version>4.1.2</version>
     </dependency>
     <!--集成redis-->
     <dependency>
@@ -188,7 +175,7 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-quartz</artifactId>
     </dependency>
-    <!--    hutool操作工具-->
+    <!-- hutool操作工具-->
     <dependency>
       <groupId>cn.hutool</groupId>
       <artifactId>hutool-all</artifactId>
@@ -226,8 +213,18 @@
       <artifactId>shedlock-spring</artifactId>
       <version>2.3.0</version>
     </dependency>
+    <!--MyBatis-plus，ORM框架，访问并操作数据库-->
+    <!--<dependency>-->
+    <!--  <groupId>com.baomidou</groupId>-->
+    <!--  <artifactId>mybatis-plus-boot-starter</artifactId>-->
+    <!--  <version>${mybatis-plus-boot-starter.version}</version>-->
+    <!--</dependency>-->
+    <!--<dependency>-->
+    <!--  <groupId>com.baomidou</groupId>-->
+    <!--  <artifactId>mybatis-plus-generator</artifactId>-->
+    <!--  <version>${mybatis-plus-boot-starter.version}</version>-->
+    <!--</dependency>-->
   </dependencies>
-
   <build>
     <!-- 目的是让mapper.xml也会打包进来 否则会异常-->
     <resources>

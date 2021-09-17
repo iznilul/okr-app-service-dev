@@ -6,7 +6,7 @@ import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.softlab.okr.mapper.SignUpMapper;
+import com.softlab.okr.dao.SignUpMapper;
 import com.softlab.okr.model.dto.SignUpDTO;
 import com.softlab.okr.model.entity.SignUp;
 import com.softlab.okr.model.enums.statusCode.SignUpStatus;
@@ -29,7 +29,7 @@ public class SignUpServiceImpl implements SignUpService {
 
   @Autowired
   private SignUpMapper signUpMapper;
-  
+
   // 报名
   @Override
   public int saveSignUp(SignUp signUp) {

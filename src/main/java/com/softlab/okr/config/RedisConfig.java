@@ -68,7 +68,6 @@ public class RedisConfig {
     template.setKeySerializer(redisSerializer);
     template.setHashKeySerializer(redisSerializer);
     template.setHashValueSerializer(fastJsonRedisSerializer);
-    //template.setValueSerializer(redisSerializer);
     template.setValueSerializer(fastJsonRedisSerializer);
     return template;
   }

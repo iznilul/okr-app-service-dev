@@ -14,6 +14,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public abstract class BaseEntity {
 
+  //@TableField(fill = FieldFill.INSERT)
   public Date createTime;
+
+  //@TableField(fill = FieldFill.INSERT_UPDATE)
   public Date updateTime;
 }

@@ -1,6 +1,6 @@
 package com.softlab.okr;
 
-import com.softlab.okr.mapper.BookMapper;
+import com.softlab.okr.dao.BookMapper;
 import com.softlab.okr.model.vo.BookVO;
 import java.util.List;
 import org.junit.After;
