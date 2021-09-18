@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
       IOException e) {
     log.error("IO错误: " + e.toString());
     log.error("定位: " + e.getStackTrace()[0].toString());
-    return Result.failure(ResultReturn.IO_ERROR);
+    return Result.failure();
   }
 
   /**
@@ -63,7 +63,7 @@ public class GlobalExceptionHandler {
       UsernameNotFoundException e) {
     log.error("用户错误: " + e.toString());
     log.error("定位: " + e.getStackTrace()[0].toString());
-    return Result.failure(ResultReturn.USER_LOGIN_ERROR);
+    return Result.failure();
   }
 
   /**
@@ -79,7 +79,7 @@ public class GlobalExceptionHandler {
       IllegalArgumentException e) {
     log.error("参数错误: " + e.toString());
     log.error("定位: " + e.getStackTrace()[0].toString());
-    return Result.failure(ResultReturn.PARAM_NOT_COMPLETE, e.getMessage());
+    return Result.failure();
   }
 
   /**
@@ -96,7 +96,7 @@ public class GlobalExceptionHandler {
     log.error("用户Token已过期:" + e.toString());
     //定位打印抛出错误的地方
     log.error("定位:" + e.getStackTrace()[0].toString());
-    return Result.failure(ResultReturn.USER_TOKEN_EXPIRE);
+    return Result.failure();
   }
 
   /**
@@ -113,7 +113,7 @@ public class GlobalExceptionHandler {
     log.error("Mybatis持久化层错误:" + e.toString());
     //定位打印抛出错误的地方
     log.error("定位:" + e.getStackTrace()[0].toString());
-    return Result.failure(ResultReturn.IBATIS_ERROR);
+    return Result.failure();
   }
 
   /**
@@ -133,7 +133,7 @@ public class GlobalExceptionHandler {
     Set<ConstraintViolation<?>> cves = e.getConstraintViolations();
     StringBuilder errorMsg = new StringBuilder();
     cves.forEach(ex -> errorMsg.append(ex.getMessage()));
-    return Result.failure(ResultReturn.PARAM_NOT_COMPLETE, errorMsg.toString());
+    return Result.failure();
   }
 
   /**
@@ -154,7 +154,7 @@ public class GlobalExceptionHandler {
         .stream()
         .map(ObjectError::getDefaultMessage)
         .collect(Collectors.toList());
-    return Result.failure(ResultReturn.PARAM_NOT_COMPLETE, errorInformation);
+    return Result.failure();
   }
 
 
@@ -177,7 +177,7 @@ public class GlobalExceptionHandler {
     if (fieldError != null) {
       message = fieldError.getDefaultMessage();
     }
-    return Result.failure(ResultReturn.PARAM_NOT_COMPLETE, message);
+    return Result.failure();
   }
 
   /**
@@ -194,7 +194,7 @@ public class GlobalExceptionHandler {
     log.error("Service层异常" + e.toString());
     //定位打印抛出错误的地方
     log.error("定位:" + e.getStackTrace()[0].toString());
-    return Result.failure(ResultReturn.SERVICE_ERROR);
+    return Result.failure();
   }
 
   /**
@@ -212,12 +212,12 @@ public class GlobalExceptionHandler {
     if (exception != null) {
       log.error("sql语句异常: " + exception.toString());
       log.error("定位: " + exception.getStackTrace()[0].toString());
-      return Result.failure(ResultReturn.BAD_SQL_ERROR);
+      return Result.failure();
     }
     log.error("Dao层异常" + e.toString());
     //定位打印抛出错误的地方
     log.error("定位:" + e.getStackTrace()[0].toString());
-    return Result.failure(ResultReturn.MAPPER_ERROR);
+    return Result.failure();
   }
 
   @ExceptionHandler(value = RuntimeException.class)
@@ -235,7 +235,7 @@ public class GlobalExceptionHandler {
     } else {
       log.error("运行时错误: " + e.toString());
       log.error("定位: " + e.getStackTrace()[0].toString());
-      return Result.failure(ResultReturn.SYSTEM_INNER_ERROR);
+      return Result.failure();
     }
   }
 
@@ -249,8 +249,12 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(value = Exception.class)
   public Result exceptionHandler(Exception e) {
+    if (e instanceof SQLException) {
+      log.error("sql语句错误");
+      return Result.failure(ResultReturn.SQL_ERROR);
+    }
     log.error("不知名错误: " + e.toString());
     log.error("定位: " + e.getStackTrace()[0].toString());
-    return Result.failure(ResultReturn.UNKNOWN_ERROR);
+    return Result.failure();
   }
 }

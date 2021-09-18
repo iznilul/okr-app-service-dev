@@ -13,7 +13,6 @@ import com.softlab.okr.model.dto.TagDTO;
 import com.softlab.okr.model.entity.LoginLog;
 import com.softlab.okr.model.entity.SignUp;
 import com.softlab.okr.model.entity.Tag;
-import com.softlab.okr.model.enums.returnCode.ResultReturn;
 import com.softlab.okr.model.vo.BookVO;
 import com.softlab.okr.model.vo.ResourceVO;
 import com.softlab.okr.model.vo.SignUpVO;
@@ -269,7 +268,7 @@ public class AdminController {
     // 通过base64来转化图片
     byte[] data = file.getBytes();
     if (data.length > 1024000) {
-      throw new ApiException(ResultReturn.FILE_UPLOAD_EXCEED);
+      throw new ApiException();
     }
 
     // 将字节流转成字符串

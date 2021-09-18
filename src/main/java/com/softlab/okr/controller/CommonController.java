@@ -111,7 +111,8 @@ public class CommonController {
     System.out.println(dto);
 
     if (signUpService.saveSignUp(dto) == 1) {
-      return Result.success("报名成功，请加入纳新群: " + commonConfig.getQqGroupNumber());
+      return Result.failure();
+      //return Result.success("报名成功，请加入纳新群: " + commonConfig.getQqGroupNumber());
     } else {
       return Result.failure();
     }

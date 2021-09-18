@@ -1,7 +1,6 @@
 package com.softlab.okr.security;
 
 import com.alibaba.fastjson.JSON;
-import com.softlab.okr.model.enums.returnCode.ResultReturn;
 import com.softlab.okr.utils.Result;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -28,7 +27,7 @@ public class MyEntryPoint implements AuthenticationEntryPoint {
     response.setContentType("application/json;charset=utf-8");
     PrintWriter out = response.getWriter();
     //封装一个结果返回类
-    out.write(JSON.toJSONString(Result.failure(ResultReturn.USER_NOT_LOGGED_IN)));
+    out.write(JSON.toJSONString(Result.failure()));
     out.flush();
     out.close();
   }

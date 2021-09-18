@@ -47,15 +47,6 @@
     <include refid="table"></include>
     (<include refid="baseColumn"></include>)
     values (null,#{studentId}, #{name}, #{gender}, #{qq}, #{major}, #{profile}, 0,null,NOW(),NOW())
-    -- on duplicate key update
-    -- `name`=#{name},
-    -- `gender`=#{gender},
-    -- `qq`=#{qq},
-    -- `major`=#{major},
-    -- `profile`=#{profile},
-    -- `status`= 0,
-    -- `comment`=null,
-    -- `update_time`=now()
   </insert>
 
   <select id="isExist" parameterType="string" resultType="string">

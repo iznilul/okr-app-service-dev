@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class UserSignUpDTO {
 
   @ApiModelProperty(value = "学号", required = true, example = "123")
-  private Integer studentId;
+  private String studentId;
 
   @ApiModelProperty(value = "姓名", required = true, example = "臭臭")
   private String name;
