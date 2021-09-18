@@ -264,7 +264,7 @@ public class AdminController {
   @Auth(id = 17, name = "上传书籍照片")
   public Result modifyBookImg(
       @RequestParam("bookId") int bookId, @RequestParam("file") MultipartFile file)
-      throws IOException {
+      throws IOException, Exception {
 
     // 通过base64来转化图片
     byte[] data = file.getBytes();

@@ -2,8 +2,8 @@ package com.softlab.okr.service.ServiceImpl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.softlab.okr.mapper.BookMapper;
-import com.softlab.okr.mapper.UserInfoMapper;
+import com.softlab.okr.dao.BookMapper;
+import com.softlab.okr.dao.UserInfoMapper;
 import com.softlab.okr.model.bo.BookTagBo;
 import com.softlab.okr.model.dto.BookDTO;
 import com.softlab.okr.model.enums.statusCode.BookStatus;

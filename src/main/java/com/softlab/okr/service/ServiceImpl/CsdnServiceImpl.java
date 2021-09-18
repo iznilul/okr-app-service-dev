@@ -1,6 +1,6 @@
 package com.softlab.okr.service.ServiceImpl;
 
-import com.softlab.okr.mapper.CsdnSpiderMapper;
+import com.softlab.okr.dao.CsdnSpiderMapper;
 import com.softlab.okr.model.entity.CsdnSpider;
 import com.softlab.okr.service.CsdnService;
 import java.util.List;

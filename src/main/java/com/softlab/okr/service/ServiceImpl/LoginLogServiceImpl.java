@@ -2,7 +2,7 @@ package com.softlab.okr.service.ServiceImpl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.softlab.okr.mapper.LoginLogMapper;
+import com.softlab.okr.dao.LoginLogMapper;
 import com.softlab.okr.model.dto.LoginLogDTO;
 import com.softlab.okr.model.entity.LoginLog;
 import com.softlab.okr.service.LoginLogService;

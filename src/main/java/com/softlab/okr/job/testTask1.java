@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.softlab.okr.annotation.TaskInfo;
-import com.softlab.okr.mapper.CsdnSpiderMapper;
+import com.softlab.okr.dao.CsdnSpiderMapper;
 import com.softlab.okr.model.entity.CsdnSpider;
 import com.softlab.okr.utils.HttpClientUtil;
 import java.util.ArrayList;

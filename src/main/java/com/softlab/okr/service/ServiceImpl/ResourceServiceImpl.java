@@ -2,7 +2,7 @@ package com.softlab.okr.service.ServiceImpl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.softlab.okr.mapper.ResourceMapper;
+import com.softlab.okr.dao.ResourceMapper;
 import com.softlab.okr.model.bo.RoleResourceBo;
 import com.softlab.okr.model.dto.ResourceDTO;
 import com.softlab.okr.model.entity.Resource;

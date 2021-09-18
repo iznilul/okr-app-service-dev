@@ -1,6 +1,6 @@
 package com.softlab.okr.service.ServiceImpl;
 
-import com.softlab.okr.mapper.TaskMapper;
+import com.softlab.okr.dao.TaskMapper;
 import com.softlab.okr.model.entity.Task;
 import com.softlab.okr.service.TaskService;
 import java.util.List;

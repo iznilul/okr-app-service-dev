@@ -2,7 +2,7 @@ package com.softlab.okr.service.ServiceImpl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.softlab.okr.mapper.UserInfoMapper;
+import com.softlab.okr.dao.UserInfoMapper;
 import com.softlab.okr.model.dto.LoginDTO;
 import com.softlab.okr.model.dto.SelectUserDTO;
 import com.softlab.okr.model.dto.UpdateUserDTO;
@@ -25,43 +25,43 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = false)
 public class UserInfoServiceImpl implements UserInfoService {
 
-    @Autowired
-    UserInfoMapper userInfoMapper;
+  @Autowired
+  UserInfoMapper userInfoMapper;
 
-    @Override
-    public UserEntity loginCheck(LoginDTO loginDto) {
-        return userInfoMapper.selectByLogin(loginDto);
-    }
+  @Override
+  public UserEntity loginCheck(LoginDTO loginDto) {
+    return userInfoMapper.selectByLogin(loginDto);
+  }
 
-    @Override
-    public void saveUserInfo(int userId, String username) {
-        userInfoMapper.insertUserInfo(userId, username);
-    }
+  @Override
+  public void saveUserInfo(int userId, String username) {
+    userInfoMapper.insertUserInfo(userId, username);
+  }
 
-    @Override
-    public UserInfo getUserInfoByUsername(String username) {
-        return userInfoMapper.selectUserInfoByUsername(username);
-    }
+  @Override
+  public UserInfo getUserInfoByUsername(String username) {
+    return userInfoMapper.selectUserInfoByUsername(username);
+  }
 
-    @Override
-    public PageInfo<UserInfo> getUserInfoByCond(SelectUserDTO dto) {
-        PageHelper.startPage(dto.getIndex(), dto.getPageSize());
-        List<UserInfo> userInfoList = userInfoMapper.selectUserInfoByCond(dto);
-        return new PageInfo<>(userInfoList);
-    }
+  @Override
+  public PageInfo<UserInfo> getUserInfoByCond(SelectUserDTO dto) {
+    PageHelper.startPage(dto.getIndex(), dto.getPageSize());
+    List<UserInfo> userInfoList = userInfoMapper.selectUserInfoByCond(dto);
+    return new PageInfo<>(userInfoList);
+  }
 
-    @Override
-    public int modifyUserInfo(UpdateUserDTO dto) {
-        return userInfoMapper.updateUserInfo(dto);
-    }
+  @Override
+  public int modifyUserInfo(UpdateUserDTO dto) {
+    return userInfoMapper.updateUserInfo(dto);
+  }
 
-    @Override
-    public int uploadAvatar(String username, String avatar) {
-        return userInfoMapper.uploadAvatar(username, avatar);
-    }
+  @Override
+  public int uploadAvatar(String username, String avatar) {
+    return userInfoMapper.uploadAvatar(username, avatar);
+  }
 
-    @Override
-    public int modifyPassword(String username, String password) {
-        return userInfoMapper.updatePassword(username, password);
-    }
+  @Override
+  public int modifyPassword(String username, String password) {
+    return userInfoMapper.updatePassword(username, password);
+  }
 }

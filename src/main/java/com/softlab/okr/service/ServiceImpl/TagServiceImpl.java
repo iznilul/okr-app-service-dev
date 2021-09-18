@@ -3,8 +3,8 @@ package com.softlab.okr.service.ServiceImpl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.softlab.okr.mapper.BookMapper;
-import com.softlab.okr.mapper.TagMapper;
+import com.softlab.okr.dao.BookMapper;
+import com.softlab.okr.dao.TagMapper;
 import com.softlab.okr.model.dto.TagDTO;
 import com.softlab.okr.model.entity.Tag;
 import com.softlab.okr.service.TagService;
