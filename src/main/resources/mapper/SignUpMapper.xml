@@ -49,8 +49,8 @@
     values (null,#{studentId}, #{name}, #{gender}, #{qq}, #{major}, #{profile}, 0,null,NOW(),NOW())
   </insert>
 
-  <select id="isExist" parameterType="string" resultType="string">
-    select student_id from <include refid="table"></include> where id=#{id} limit 1
+  <select id="selectIsExist" parameterType="string" resultType="Integer">
+    select id from <include refid="table"></include> where student_id=#{studentId} limit 1
   </select>
 
   <update id="updateSignUp">

@@ -21,7 +21,7 @@ public interface SignUpMapper {
   int insertSignUp(UserSignUpDTO dto) throws DataAccessException;
 
   // 检查是否已报名
-  String selectIsExist(String id) throws DataAccessException;
+  Integer selectIsExist(String id) throws DataAccessException;
 
   //录取结果更新
   int updateSignUp(SignUp signUp) throws DataAccessException;

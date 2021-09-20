@@ -21,7 +21,7 @@ public interface SignUpService {
   int saveSignUp(UserSignUpDTO dto) throws ServiceException;
 
   // 检查是否已报名
-  String getIsExist(String id) throws ServiceException;
+  Integer getIsExist(String id) throws ServiceException;
 
   //录取结果更新
   int modifySignUp(SignUp signUp) throws ServiceException;

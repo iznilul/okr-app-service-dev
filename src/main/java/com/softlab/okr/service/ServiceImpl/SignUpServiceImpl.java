@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,13 +35,20 @@ public class SignUpServiceImpl implements SignUpService {
   // 报名
   @Override
   public int saveSignUp(UserSignUpDTO dto) {
+    Integer id = this.getIsExist(dto.getStudentId());
+    if (null != id) {
+      SignUp signUp = new SignUp();
+      BeanUtils.copyProperties(dto, signUp);
+      signUp.setStatus(0);
+      return signUpMapper.updateSignUp(signUp);
+    }
     return signUpMapper.insertSignUp(dto);
   }
 
   // 检查是否已报名
   @Override
-  public String getIsExist(String id) {
-    return signUpMapper.selectIsExist(id);
+  public Integer getIsExist(String studentId) {
+    return signUpMapper.selectIsExist(studentId);
   }
 
 

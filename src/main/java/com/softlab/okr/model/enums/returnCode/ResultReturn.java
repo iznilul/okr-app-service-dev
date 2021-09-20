@@ -13,7 +13,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public enum ResultReturn implements BaseCode {
-  SQL_ERROR(1005, "sql语句错误");
+  SQL_ERROR(1005, "sql语句错误"),
+  API_ERROR(1006, "请求接口暂时未开启"),
+  QUERY_SIGNUP_ERROR(2002, "查无此人");
 
   private Integer code;
 

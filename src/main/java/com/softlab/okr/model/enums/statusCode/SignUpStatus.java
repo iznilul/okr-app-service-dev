@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public enum SignUpStatus implements BaseCode {
-  UNDECLARED(0, "未公布"),
+  UNDECLARED(0, "等待考核"),
   OFFER(1, "录取"),
   REJECT(2, "未录取");
 

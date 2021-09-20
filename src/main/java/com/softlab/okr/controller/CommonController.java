@@ -8,6 +8,7 @@ import com.softlab.okr.model.dto.UserSignUpDTO;
 import com.softlab.okr.model.entity.CsdnSpider;
 import com.softlab.okr.model.entity.UserEntity;
 import com.softlab.okr.model.enums.returnCode.LoginReturn;
+import com.softlab.okr.model.enums.returnCode.ResultReturn;
 import com.softlab.okr.model.vo.SignUpVO;
 import com.softlab.okr.model.vo.UserVO;
 import com.softlab.okr.security.AuthenticationService;
@@ -108,11 +109,10 @@ public class CommonController {
   @PostMapping("signUp")
   @Auth(id = 4, name = "纳新报名")
   public Result signUp(@RequestBody UserSignUpDTO dto) {
-    System.out.println(dto);
+    //System.out.println(dto);
 
     if (signUpService.saveSignUp(dto) == 1) {
-      return Result.failure();
-      //return Result.success("报名成功，请加入纳新群: " + commonConfig.getQqGroupNumber());
+      return Result.success("报名成功，请加入纳新群: " + commonConfig.getQqGroupNumber());
     } else {
       return Result.failure();
     }
@@ -126,7 +126,7 @@ public class CommonController {
     if (signUpVO != null) {
       return Result.success(signUpVO);
     } else {
-      return Result.failure();
+      return Result.failure(ResultReturn.QUERY_SIGNUP_ERROR);
     }
   }
 
