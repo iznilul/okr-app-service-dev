@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
-@MapperScan(basePackages = {"com.softlab.okr.dao"})
+@MapperScan(basePackages = {"com.softlab.okr.mapper"})
 @EnableTransactionManagement
 public class App {
 

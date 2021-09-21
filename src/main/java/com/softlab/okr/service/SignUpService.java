@@ -1,10 +1,10 @@
 package com.softlab.okr.service;
 
 import com.github.pagehelper.PageInfo;
+import com.softlab.okr.entity.SignUp;
 import com.softlab.okr.exception.ServiceException;
 import com.softlab.okr.model.dto.SignUpDTO;
 import com.softlab.okr.model.dto.UserSignUpDTO;
-import com.softlab.okr.model.entity.SignUp;
 import com.softlab.okr.model.vo.SignUpVO;
 import java.io.IOException;
 import java.util.List;

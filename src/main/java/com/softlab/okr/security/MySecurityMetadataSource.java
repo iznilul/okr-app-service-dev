@@ -1,6 +1,6 @@
 package com.softlab.okr.security;
 
-import com.softlab.okr.model.entity.Resource;
+import com.softlab.okr.entity.Resource;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;

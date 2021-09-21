@@ -2,11 +2,11 @@ package com.softlab.okr.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.softlab.okr.annotation.Auth;
+import com.softlab.okr.entity.UserInfo;
 import com.softlab.okr.model.dto.LoginDTO;
 import com.softlab.okr.model.dto.ModifyPwdDTO;
 import com.softlab.okr.model.dto.SelectUserDTO;
 import com.softlab.okr.model.dto.UpdateUserDTO;
-import com.softlab.okr.model.entity.UserInfo;
 import com.softlab.okr.service.UserInfoService;
 import com.softlab.okr.utils.Result;
 import io.swagger.annotations.Api;

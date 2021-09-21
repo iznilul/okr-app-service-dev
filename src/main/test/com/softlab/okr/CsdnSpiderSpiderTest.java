@@ -3,7 +3,7 @@ package com.softlab.okr;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.softlab.okr.model.entity.CsdnSpider;
+import com.softlab.okr.entity.CsdnSpider;
 import com.softlab.okr.utils.HttpClientUtil;
 import java.io.IOException;
 import java.net.URISyntaxException;

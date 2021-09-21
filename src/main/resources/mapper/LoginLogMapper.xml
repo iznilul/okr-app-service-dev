@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.softlab.okr.dao.LoginLogMapper">
-  <resultMap id="loginLogMap" type="com.softlab.okr.model.entity.LoginLog">
+<mapper namespace="com.softlab.okr.mapper.LoginLogMapper">
+
+  <resultMap id="BaseResultMap" type="com.softlab.okr.entity.LoginLog">
     <id property="loginId" column="login_id"/>
     <result property="ip" column="ip"/>
     <result property="username" column="username"/>
@@ -11,22 +12,18 @@
     <result property="duration" column="duration"/>
   </resultMap>
 
-  <sql id="base_column">
+  <sql id="Base_Column_List">
     `login_id`,`ip`,`path`,`username`,`time`,`duration`
   </sql>
 
-  <select id="selectList" resultMap="loginLogMap">
+  <select id="selectByCond" resultMap="BaseResultMap">
     select
-    <include refid="base_column"></include>
-    from `login_log`
-  </select>
-
-  <select id="selectByCond" resultMap="loginLogMap">
-    select
-    <include refid="base_column"></include>
+    <include refid="Base_Column_List"></include>
     from `login_log`
     where 1=1
-    <if test="username!='' and username!=null">and `username` like '%${username}%'</if>
+    <if test="username!='' and username!=null">
+      and `username` like '%${username}%'
+    </if>
     <if test="beginTime!='' and beginTime!=null">
       and date_format(`time` ,'%Y-%m-%d')&gt;=#{beginTime}
     </if>
@@ -34,11 +31,6 @@
       and date_format(`time` ,'%Y-%m-%d')&lt;=#{endTime}
     </if>
   </select>
-
-  <insert id="insertLog">
-    insert into `login_log`(<include refid="base_column"></include>)
-    values (null,#{ip},#{path},#{username},now(),#{duration})
-  </insert>
 
 </mapper>
 

@@ -1,7 +1,7 @@
 package com.softlab.okr;
 
-import com.softlab.okr.dao.UserEntityMapper;
-import com.softlab.okr.model.entity.UserEntity;
+import com.softlab.okr.entity.UserEntity;
+import com.softlab.okr.mapper.UserEntityMapper;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

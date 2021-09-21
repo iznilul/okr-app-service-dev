@@ -1,9 +1,9 @@
 package com.softlab.okr.service;
 
 import com.github.pagehelper.PageInfo;
+import com.softlab.okr.entity.Tag;
 import com.softlab.okr.exception.ServiceException;
 import com.softlab.okr.model.dto.TagDTO;
-import com.softlab.okr.model.entity.Tag;
 import java.util.List;
 
 /**

@@ -7,8 +7,10 @@ package com.softlab.okr.aspect;
  * @Date: 2021-08-31 11:53
  **/
 
-import com.softlab.okr.service.LoginLogService;
+import com.softlab.okr.entity.LoginLog;
+import com.softlab.okr.service.ILoginLogService;
 import com.softlab.okr.utils.FilterUtil;
+import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -32,7 +34,7 @@ public class WebLogAspect {
   ThreadLocal<Long> startTime = new ThreadLocal<>();
 
   @Autowired
-  private LoginLogService loginLogService;
+  private ILoginLogService loginLogService;
 
   @Autowired
   private FilterUtil filterUtil;
@@ -72,7 +74,8 @@ public class WebLogAspect {
     String username = filterUtil.getRequestUsername();
     String ip = filterUtil.getRequestIp();
     long duration = System.currentTimeMillis() - startTime.get();
-    loginLogService.saveLog(ip, path, username, duration);
+    LoginLog loginLog = new LoginLog(null, ip, path, username, new Date(), duration);
+    loginLogService.saveRecord(loginLog);
     log.info("username:{}", username);
     log.info("ip:{}", ip);
     log.info("path:{}", path);

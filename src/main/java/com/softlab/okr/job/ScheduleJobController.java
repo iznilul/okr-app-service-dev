@@ -1,8 +1,7 @@
 package com.softlab.okr.job;
 
-
+import com.softlab.okr.entity.TaskTrigger;
 import com.softlab.okr.model.dto.TaskTriggerDTO;
-import com.softlab.okr.model.entity.TaskTrigger;
 import java.util.Set;
 import javax.validation.constraints.NotBlank;
 import org.quartz.JobKey;
@@ -25,7 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Mybatis-plus自动生成
  * @since 2021-08-24
  */
-
 
 @RestController
 @RequestMapping("/job")

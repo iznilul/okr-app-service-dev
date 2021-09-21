@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.softlab.okr.dao.KeyMapper">
-  <resultMap id="keyMap" type="com.softlab.okr.model.entity.Key">
+<mapper namespace="com.softlab.okr.mapper.KeyMapper">
+  <resultMap id="keyMap" type="com.softlab.okr.entity.Key">
     <id property="keyId" column="key_id"/>
     <result property="keyName" column="key_name"/>
   </resultMap>

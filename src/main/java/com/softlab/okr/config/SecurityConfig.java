@@ -6,7 +6,7 @@ import com.softlab.okr.security.LoginFilter;
 import com.softlab.okr.security.MyDeniedHandler;
 import com.softlab.okr.security.MyEntryPoint;
 import com.softlab.okr.security.MyPasswordEncoder;
-import com.softlab.okr.service.ServiceImpl.UserEntityServiceImpl;
+import com.softlab.okr.service.impl.UserEntityServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
