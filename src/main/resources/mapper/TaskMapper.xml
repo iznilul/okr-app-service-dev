@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.softlab.okr.dao.TaskMapper">
-  <resultMap id="TaskMap" type="com.softlab.okr.model.entity.Task">
+<mapper namespace="com.softlab.okr.mapper.TaskMapper">
+  <resultMap id="TaskMap" type="com.softlab.okr.entity.Task">
     <id property="taskId" column="task_id"/>
     <result property="name" column="name"/>
     <result property="className" column="class_name"/>

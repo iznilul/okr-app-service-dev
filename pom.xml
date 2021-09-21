@@ -213,17 +213,22 @@
       <artifactId>shedlock-spring</artifactId>
       <version>2.3.0</version>
     </dependency>
-    <!--MyBatis-plus，ORM框架，访问并操作数据库-->
-    <!--<dependency>-->
-    <!--  <groupId>com.baomidou</groupId>-->
-    <!--  <artifactId>mybatis-plus-boot-starter</artifactId>-->
-    <!--  <version>${mybatis-plus-boot-starter.version}</version>-->
-    <!--</dependency>-->
-    <!--<dependency>-->
-    <!--  <groupId>com.baomidou</groupId>-->
-    <!--  <artifactId>mybatis-plus-generator</artifactId>-->
-    <!--  <version>${mybatis-plus-boot-starter.version}</version>-->
-    <!--</dependency>-->
+<!--    MyBatis-plus，ORM框架，访问并操作数据库-->
+    <dependency>
+      <groupId>com.baomidou</groupId>
+      <artifactId>mybatis-plus-boot-starter</artifactId>
+      <version>${mybatis-plus-boot-starter.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.baomidou</groupId>
+      <artifactId>mybatis-plus-generator</artifactId>
+      <version>${mybatis-plus-boot-starter.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.freemarker</groupId>
+      <artifactId>freemarker</artifactId>
+      <version>2.3.29</version>
+    </dependency>
   </dependencies>
   <build>
     <!-- 目的是让mapper.xml也会打包进来 否则会异常-->

@@ -1,8 +1,8 @@
 package com.softlab.okr.job;
 
 
+import com.softlab.okr.entity.TaskTrigger;
 import com.softlab.okr.model.dto.TaskTriggerDTO;
-import com.softlab.okr.model.entity.TaskTrigger;
 import java.util.Set;
 import javax.validation.constraints.NotBlank;
 import org.quartz.JobKey;

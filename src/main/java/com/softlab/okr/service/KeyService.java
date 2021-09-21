@@ -1,7 +1,7 @@
 package com.softlab.okr.service;
 
+import com.softlab.okr.entity.Key;
 import com.softlab.okr.exception.ServiceException;
-import com.softlab.okr.model.entity.Key;
 import java.util.List;
 
 public interface KeyService {

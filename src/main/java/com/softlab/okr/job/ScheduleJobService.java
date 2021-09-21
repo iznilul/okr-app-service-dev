@@ -1,9 +1,9 @@
 package com.softlab.okr.job;
 
 
-import com.softlab.okr.dao.TaskMapper;
-import com.softlab.okr.dao.TaskTriggerMapper;
-import com.softlab.okr.model.entity.TaskTrigger;
+import com.softlab.okr.entity.TaskTrigger;
+import com.softlab.okr.mapper.TaskMapper;
+import com.softlab.okr.mapper.TaskTriggerMapper;
 import java.util.List;
 import java.util.Set;
 import lombok.extern.log4j.Log4j2;

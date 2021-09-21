@@ -1,7 +1,7 @@
 package com.softlab.okr.service;
 
+import com.softlab.okr.entity.Task;
 import com.softlab.okr.exception.ServiceException;
-import com.softlab.okr.model.entity.Task;
 import java.util.List;
 
 public interface TaskService {

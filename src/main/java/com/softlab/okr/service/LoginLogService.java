@@ -1,9 +1,9 @@
 package com.softlab.okr.service;
 
 import com.github.pagehelper.PageInfo;
+import com.softlab.okr.entity.LoginLog;
 import com.softlab.okr.exception.ServiceException;
 import com.softlab.okr.model.dto.LoginLogDTO;
-import com.softlab.okr.model.entity.LoginLog;
 import java.util.List;
 
 public interface LoginLogService {

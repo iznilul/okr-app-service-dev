@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.softlab.okr.dao.BookMapper">
-  <resultMap id="bookMap" type="com.softlab.okr.model.entity.Book">
+<mapper namespace="com.softlab.okr.mapper.BookMapper">
+  <resultMap id="bookMap" type="com.softlab.okr.entity.Book">
     <id property="bookId" column="book_id"/>
     <result property="bookName" column="book_name"/>
     <result property="img" column="img"/>

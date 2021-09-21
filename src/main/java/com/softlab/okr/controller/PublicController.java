@@ -2,9 +2,9 @@ package com.softlab.okr.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.softlab.okr.annotation.Auth;
+import com.softlab.okr.entity.Key;
+import com.softlab.okr.entity.Tag;
 import com.softlab.okr.model.dto.BookDTO;
-import com.softlab.okr.model.entity.Key;
-import com.softlab.okr.model.entity.Tag;
 import com.softlab.okr.model.vo.BookVO;
 import com.softlab.okr.security.AuthenticationService;
 import com.softlab.okr.service.BookService;

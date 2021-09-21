@@ -2,8 +2,8 @@ package com.softlab.okr.config;
 
 import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.annotation.TaskInfo;
-import com.softlab.okr.model.entity.Resource;
-import com.softlab.okr.model.entity.Task;
+import com.softlab.okr.entity.Resource;
+import com.softlab.okr.entity.Task;
 import com.softlab.okr.security.ApiFilter;
 import com.softlab.okr.security.MySecurityMetadataSource;
 import com.softlab.okr.service.ResourceService;

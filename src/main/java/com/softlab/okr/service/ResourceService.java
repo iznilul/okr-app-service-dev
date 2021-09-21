@@ -1,10 +1,10 @@
 package com.softlab.okr.service;
 
 import com.github.pagehelper.PageInfo;
+import com.softlab.okr.entity.Resource;
 import com.softlab.okr.exception.ServiceException;
 import com.softlab.okr.model.bo.RoleResourceBo;
 import com.softlab.okr.model.dto.ResourceDTO;
-import com.softlab.okr.model.entity.Resource;
 import com.softlab.okr.model.vo.ResourceVO;
 import java.util.Collection;
 import java.util.List;

@@ -1,12 +1,12 @@
 package com.softlab.okr.service;
 
 import com.github.pagehelper.PageInfo;
+import com.softlab.okr.entity.UserEntity;
+import com.softlab.okr.entity.UserInfo;
 import com.softlab.okr.exception.ServiceException;
 import com.softlab.okr.model.dto.LoginDTO;
 import com.softlab.okr.model.dto.SelectUserDTO;
 import com.softlab.okr.model.dto.UpdateUserDTO;
-import com.softlab.okr.model.entity.UserEntity;
-import com.softlab.okr.model.entity.UserInfo;
 
 /**
  * @Author: Devhui
