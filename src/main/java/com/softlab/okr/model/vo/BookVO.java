@@ -1,5 +1,6 @@
 package com.softlab.okr.model.vo;
 
+import com.softlab.okr.entity.Tag;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,6 +35,6 @@ public class BookVO {
 
   private String statusName;
 
-  private List<Integer> tagIdList;
+  private List<Tag> tagList;
 
 }

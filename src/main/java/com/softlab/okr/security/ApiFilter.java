@@ -1,7 +1,7 @@
 package com.softlab.okr.security;
 
 import com.alibaba.fastjson.JSON;
-import com.softlab.okr.model.entity.Resource;
+import com.softlab.okr.entity.Resource;
 import com.softlab.okr.model.enums.returnCode.ResultReturn;
 import com.softlab.okr.utils.Result;
 import java.io.IOException;

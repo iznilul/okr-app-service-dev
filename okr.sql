@@ -11,7 +11,7 @@
  Target Server Version : 50722
  File Encoding         : 65001
 
- Date: 09/09/2021 01:38:04
+ Date: 26/09/2021 01:40:31
 */
 
 SET NAMES utf8mb4;
@@ -22,7 +22,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `book`;
 CREATE TABLE `book`  (
-  `book_id` bigint(11) NOT NULL AUTO_INCREMENT COMMENT '书的id',
+  `book_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '书的id',
   `book_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '书名',
   `img` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '书封面',
   `publisher` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '出版社',
@@ -44,8 +44,8 @@ INSERT INTO `book` VALUES (1, '谢特', 'data:image/png;base64,/9j/4AAQSkZJRgABA
 -- ----------------------------
 DROP TABLE IF EXISTS `book_tag`;
 CREATE TABLE `book_tag`  (
-  `book_id` bigint(11) NOT NULL COMMENT '书id',
-  `tag_id` bigint(11) NOT NULL COMMENT '标签id',
+  `book_id` int(11) NOT NULL COMMENT '书id',
+  `tag_id` int(11) NOT NULL COMMENT '标签id',
   PRIMARY KEY (`book_id`, `tag_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
@@ -134,7 +134,7 @@ CREATE TABLE `login_log`  (
   `time` datetime(0) NULL DEFAULT NULL COMMENT '请求时间点',
   `duration` int(11) NULL DEFAULT NULL COMMENT '用时 单位ms',
   PRIMARY KEY (`login_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 83 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 587 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of login_log
@@ -220,6 +220,510 @@ INSERT INTO `login_log` VALUES (79, '0:0:0:0:0:0:0:1', '/api/common/querySignUp'
 INSERT INTO `login_log` VALUES (80, '0:0:0:0:0:0:0:1', '/api/common/signUp', 'anonymousUser', '2021-09-09 01:25:07', 4);
 INSERT INTO `login_log` VALUES (81, '0:0:0:0:0:0:0:1', '/api/common/signUp', 'anonymousUser', '2021-09-09 01:26:57', 144);
 INSERT INTO `login_log` VALUES (82, '0:0:0:0:0:0:0:1', '/api/common/signUp', 'anonymousUser', '2021-09-09 01:30:26', 86);
+INSERT INTO `login_log` VALUES (83, '0:0:0:0:0:0:0:1', '/api/common/querySignUp', 'anonymousUser', '2021-09-09 01:52:56', 18);
+INSERT INTO `login_log` VALUES (84, '0:0:0:0:0:0:0:1', '/api/admin/getResourceByCond', 'admin', '2021-09-09 01:54:08', 62);
+INSERT INTO `login_log` VALUES (85, '0:0:0:0:0:0:0:1', '/api/admin/getLoginLogByCond', 'admin', '2021-09-09 01:54:22', 13);
+INSERT INTO `login_log` VALUES (86, '0:0:0:0:0:0:0:1', '/api/common/querySignUp', 'anonymousUser', '2021-09-09 01:54:32', 9);
+INSERT INTO `login_log` VALUES (87, '0:0:0:0:0:0:0:1', '/api/admin/getLoginLogByCond', 'admin', '2021-09-10 00:42:48', 140);
+INSERT INTO `login_log` VALUES (88, '0:0:0:0:0:0:0:1', '/api/admin/getLoginLogByCond', 'admin', '2021-09-10 00:42:52', 9);
+INSERT INTO `login_log` VALUES (89, '0:0:0:0:0:0:0:1', '/api/admin/getLoginLogByCond', 'admin', '2021-09-10 00:44:46', 4);
+INSERT INTO `login_log` VALUES (90, '0:0:0:0:0:0:0:1', '/api/admin/getLoginLogByCond', 'admin', '2021-09-10 00:45:17', 6);
+INSERT INTO `login_log` VALUES (91, '0:0:0:0:0:0:0:1', '/api/admin/getLoginLogByCond', 'admin', '2021-09-10 00:45:29', 5);
+INSERT INTO `login_log` VALUES (92, '0:0:0:0:0:0:0:1', '/api/admin/getLoginLogByCond', 'admin', '2021-09-10 01:41:44', 57);
+INSERT INTO `login_log` VALUES (93, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-18 01:40:53', 8);
+INSERT INTO `login_log` VALUES (94, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-18 01:50:53', 6);
+INSERT INTO `login_log` VALUES (95, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-18 01:53:28', 11);
+INSERT INTO `login_log` VALUES (96, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-18 01:55:30', 9);
+INSERT INTO `login_log` VALUES (97, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-18 22:20:19', 10);
+INSERT INTO `login_log` VALUES (98, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-18 22:23:25', 9124);
+INSERT INTO `login_log` VALUES (99, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-18 22:33:09', 24424);
+INSERT INTO `login_log` VALUES (100, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-18 22:35:38', 2045);
+INSERT INTO `login_log` VALUES (101, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-18 22:36:02', 19524);
+INSERT INTO `login_log` VALUES (102, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-18 22:40:21', 42315);
+INSERT INTO `login_log` VALUES (103, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-18 22:43:24', 8399);
+INSERT INTO `login_log` VALUES (104, '0:0:0:0:0:0:0:1', '/api/common/signUp', 'anonymousUser', '2021-09-18 22:43:50', 7823);
+INSERT INTO `login_log` VALUES (105, '0:0:0:0:0:0:0:1', '/api/common/signUp', 'anonymousUser', '2021-09-18 22:52:16', 3142);
+INSERT INTO `login_log` VALUES (106, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-18 22:54:00', 1854);
+INSERT INTO `login_log` VALUES (107, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-18 22:57:41', 114);
+INSERT INTO `login_log` VALUES (108, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-18 22:59:32', 145);
+INSERT INTO `login_log` VALUES (109, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-18 22:59:40', 129);
+INSERT INTO `login_log` VALUES (110, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-18 23:00:25', 64);
+INSERT INTO `login_log` VALUES (111, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-18 23:00:33', 136);
+INSERT INTO `login_log` VALUES (112, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-18 23:01:38', 135);
+INSERT INTO `login_log` VALUES (113, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-18 23:02:00', 178);
+INSERT INTO `login_log` VALUES (114, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-19 01:38:22', 587);
+INSERT INTO `login_log` VALUES (115, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-20 01:13:29', 116);
+INSERT INTO `login_log` VALUES (116, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-20 01:35:45', 136);
+INSERT INTO `login_log` VALUES (117, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-20 17:50:53', 202);
+INSERT INTO `login_log` VALUES (118, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-20 18:00:27', 5);
+INSERT INTO `login_log` VALUES (119, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-20 18:01:35', 4);
+INSERT INTO `login_log` VALUES (120, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-20 18:03:19', 61);
+INSERT INTO `login_log` VALUES (121, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-20 18:04:45', 135);
+INSERT INTO `login_log` VALUES (122, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-20 19:04:54', 18052);
+INSERT INTO `login_log` VALUES (123, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-20 19:05:52', 53);
+INSERT INTO `login_log` VALUES (124, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-20 19:10:43', 23931);
+INSERT INTO `login_log` VALUES (125, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-20 19:12:48', 6093);
+INSERT INTO `login_log` VALUES (126, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-20 19:13:48', 156);
+INSERT INTO `login_log` VALUES (127, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-20 19:13:57', 129);
+INSERT INTO `login_log` VALUES (128, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-20 19:14:06', 136);
+INSERT INTO `login_log` VALUES (129, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-20 19:14:13', 139);
+INSERT INTO `login_log` VALUES (130, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-20 20:32:06', 14);
+INSERT INTO `login_log` VALUES (131, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-20 20:32:22', 2);
+INSERT INTO `login_log` VALUES (132, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-20 20:32:31', 2);
+INSERT INTO `login_log` VALUES (133, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-20 21:03:53', 9);
+INSERT INTO `login_log` VALUES (134, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-20 21:03:58', 4);
+INSERT INTO `login_log` VALUES (135, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-20 21:04:33', 2);
+INSERT INTO `login_log` VALUES (136, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-20 21:04:54', 3);
+INSERT INTO `login_log` VALUES (137, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-20 21:05:25', 1);
+INSERT INTO `login_log` VALUES (138, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-20 21:10:33', 7);
+INSERT INTO `login_log` VALUES (139, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-20 21:12:40', 3);
+INSERT INTO `login_log` VALUES (140, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-20 21:13:00', 4);
+INSERT INTO `login_log` VALUES (141, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-20 21:13:03', 1);
+INSERT INTO `login_log` VALUES (142, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-20 21:13:24', 2);
+INSERT INTO `login_log` VALUES (143, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-20 21:13:27', 2);
+INSERT INTO `login_log` VALUES (144, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-20 21:13:29', 2);
+INSERT INTO `login_log` VALUES (145, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-20 21:14:33', 3);
+INSERT INTO `login_log` VALUES (146, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-20 21:16:50', 3);
+INSERT INTO `login_log` VALUES (147, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-20 21:17:27', 2);
+INSERT INTO `login_log` VALUES (148, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-20 21:19:51', 4);
+INSERT INTO `login_log` VALUES (149, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-20 21:20:06', 4);
+INSERT INTO `login_log` VALUES (150, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-20 21:20:24', 3);
+INSERT INTO `login_log` VALUES (151, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-20 21:20:37', 2);
+INSERT INTO `login_log` VALUES (152, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-20 21:22:23', 2);
+INSERT INTO `login_log` VALUES (153, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-20 21:22:37', 3);
+INSERT INTO `login_log` VALUES (154, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-20 21:24:51', 2);
+INSERT INTO `login_log` VALUES (155, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-20 21:25:01', 1);
+INSERT INTO `login_log` VALUES (156, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-20 21:25:24', 1);
+INSERT INTO `login_log` VALUES (157, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-20 21:25:39', 1);
+INSERT INTO `login_log` VALUES (158, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-20 21:41:40', 2);
+INSERT INTO `login_log` VALUES (159, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-20 21:42:23', 1);
+INSERT INTO `login_log` VALUES (160, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-20 21:43:18', 1);
+INSERT INTO `login_log` VALUES (161, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-20 21:47:51', 17);
+INSERT INTO `login_log` VALUES (162, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-20 21:48:50', 67);
+INSERT INTO `login_log` VALUES (163, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-20 21:49:14', 1);
+INSERT INTO `login_log` VALUES (164, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 00:28:50', 29);
+INSERT INTO `login_log` VALUES (165, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 00:29:34', 3);
+INSERT INTO `login_log` VALUES (166, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 00:31:43', 3);
+INSERT INTO `login_log` VALUES (167, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 00:41:42', 3);
+INSERT INTO `login_log` VALUES (168, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 00:45:09', 11590);
+INSERT INTO `login_log` VALUES (169, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 00:46:09', 5375);
+INSERT INTO `login_log` VALUES (170, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 00:48:44', 16523);
+INSERT INTO `login_log` VALUES (171, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 00:52:02', 177951);
+INSERT INTO `login_log` VALUES (172, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 00:53:16', 5516);
+INSERT INTO `login_log` VALUES (173, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:06:17', 757687);
+INSERT INTO `login_log` VALUES (174, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:06:17', 8);
+INSERT INTO `login_log` VALUES (175, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:08:53', 16);
+INSERT INTO `login_log` VALUES (176, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:09:26', 3);
+INSERT INTO `login_log` VALUES (177, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:09:47', 3);
+INSERT INTO `login_log` VALUES (178, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:10:40', 2);
+INSERT INTO `login_log` VALUES (179, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:10:58', 3);
+INSERT INTO `login_log` VALUES (180, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:11:03', 1);
+INSERT INTO `login_log` VALUES (181, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:11:05', 3);
+INSERT INTO `login_log` VALUES (182, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:11:15', 3);
+INSERT INTO `login_log` VALUES (183, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:11:17', 2);
+INSERT INTO `login_log` VALUES (184, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:14:12', 5);
+INSERT INTO `login_log` VALUES (185, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:16:28', 4);
+INSERT INTO `login_log` VALUES (186, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:17:10', 4);
+INSERT INTO `login_log` VALUES (187, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:17:20', 2);
+INSERT INTO `login_log` VALUES (188, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:19:38', 11);
+INSERT INTO `login_log` VALUES (189, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:19:44', 6);
+INSERT INTO `login_log` VALUES (190, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:19:48', 10);
+INSERT INTO `login_log` VALUES (191, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:19:53', 4);
+INSERT INTO `login_log` VALUES (192, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:20:01', 2);
+INSERT INTO `login_log` VALUES (193, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:20:02', 2);
+INSERT INTO `login_log` VALUES (194, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:20:04', 2);
+INSERT INTO `login_log` VALUES (195, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:20:11', 2);
+INSERT INTO `login_log` VALUES (196, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:22:01', 2);
+INSERT INTO `login_log` VALUES (197, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:22:08', 2);
+INSERT INTO `login_log` VALUES (198, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:22:12', 2);
+INSERT INTO `login_log` VALUES (199, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:22:13', 1);
+INSERT INTO `login_log` VALUES (200, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:22:24', 2);
+INSERT INTO `login_log` VALUES (201, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:22:27', 2);
+INSERT INTO `login_log` VALUES (202, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:22:30', 1);
+INSERT INTO `login_log` VALUES (203, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:22:32', 2);
+INSERT INTO `login_log` VALUES (204, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:22:34', 2);
+INSERT INTO `login_log` VALUES (205, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:22:35', 2);
+INSERT INTO `login_log` VALUES (206, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:22:37', 1);
+INSERT INTO `login_log` VALUES (207, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:22:43', 1);
+INSERT INTO `login_log` VALUES (208, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:22:53', 3);
+INSERT INTO `login_log` VALUES (209, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:23:00', 2);
+INSERT INTO `login_log` VALUES (210, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:23:01', 1);
+INSERT INTO `login_log` VALUES (211, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:23:07', 2);
+INSERT INTO `login_log` VALUES (212, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:23:17', 2);
+INSERT INTO `login_log` VALUES (213, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:23:18', 1);
+INSERT INTO `login_log` VALUES (214, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:23:20', 2);
+INSERT INTO `login_log` VALUES (215, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:23:47', 1);
+INSERT INTO `login_log` VALUES (216, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:23:48', 1);
+INSERT INTO `login_log` VALUES (217, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:23:50', 1);
+INSERT INTO `login_log` VALUES (218, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:23:52', 1);
+INSERT INTO `login_log` VALUES (219, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:23:55', 1);
+INSERT INTO `login_log` VALUES (220, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:23:56', 2);
+INSERT INTO `login_log` VALUES (221, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:24:14', 2);
+INSERT INTO `login_log` VALUES (222, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:24:17', 2);
+INSERT INTO `login_log` VALUES (223, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:24:40', 2);
+INSERT INTO `login_log` VALUES (224, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-21 01:28:20', 153);
+INSERT INTO `login_log` VALUES (225, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-21 01:29:37', 139);
+INSERT INTO `login_log` VALUES (226, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-21 01:29:38', 194);
+INSERT INTO `login_log` VALUES (227, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-21 01:39:01', 71);
+INSERT INTO `login_log` VALUES (228, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:39:10', 4);
+INSERT INTO `login_log` VALUES (229, '127.0.0.1', '/api/common/signUp', 'anonymousUser', '2021-09-21 01:39:55', 39);
+INSERT INTO `login_log` VALUES (230, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:39:59', 2);
+INSERT INTO `login_log` VALUES (231, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:40:04', 2);
+INSERT INTO `login_log` VALUES (232, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:40:28', 2);
+INSERT INTO `login_log` VALUES (233, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:40:54', 3);
+INSERT INTO `login_log` VALUES (234, '0:0:0:0:0:0:0:1', '/api/common/login', 'anonymousUser', '2021-09-21 01:44:27', 19);
+INSERT INTO `login_log` VALUES (235, '0:0:0:0:0:0:0:1', '/api/admin/modifyResourceStatus', 'admin', '2021-09-21 01:44:39', 156);
+INSERT INTO `login_log` VALUES (236, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:57:14', 15);
+INSERT INTO `login_log` VALUES (237, '0:0:0:0:0:0:0:1', '/api/admin/modifyResourceStatus', 'admin', '2021-09-21 01:57:23', 359);
+INSERT INTO `login_log` VALUES (238, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 01:58:39', 12);
+INSERT INTO `login_log` VALUES (239, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 16:22:58', 42);
+INSERT INTO `login_log` VALUES (240, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 16:23:02', 3);
+INSERT INTO `login_log` VALUES (241, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 16:23:19', 2);
+INSERT INTO `login_log` VALUES (242, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 16:23:21', 2);
+INSERT INTO `login_log` VALUES (243, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 16:23:33', 2);
+INSERT INTO `login_log` VALUES (244, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 16:23:36', 2);
+INSERT INTO `login_log` VALUES (245, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 16:23:44', 2);
+INSERT INTO `login_log` VALUES (246, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 16:23:46', 2);
+INSERT INTO `login_log` VALUES (247, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 16:23:48', 2);
+INSERT INTO `login_log` VALUES (248, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 16:23:49', 1);
+INSERT INTO `login_log` VALUES (249, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 16:27:47', 2);
+INSERT INTO `login_log` VALUES (250, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 16:27:49', 4);
+INSERT INTO `login_log` VALUES (251, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 16:27:51', 2);
+INSERT INTO `login_log` VALUES (252, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 16:27:52', 2);
+INSERT INTO `login_log` VALUES (253, '127.0.0.1', '/api/common/querySignUp', 'anonymousUser', '2021-09-21 16:28:05', 3);
+INSERT INTO `login_log` VALUES (254, '0:0:0:0:0:0:0:1', '/api/common/csdnRecord', 'anonymousUser', '2021-09-22 01:01:12', 253);
+INSERT INTO `login_log` VALUES (255, '0:0:0:0:0:0:0:1', '/api/common/csdnRecord', 'anonymousUser', '2021-09-22 01:04:39', 16);
+INSERT INTO `login_log` VALUES (256, '127.0.0.1', '/api/common/login', 'anonymousUser', '2021-09-23 00:04:12', 61);
+INSERT INTO `login_log` VALUES (257, '127.0.0.1', '/api/user/info/userInfoByUsername', 'admin', '2021-09-23 00:04:12', 63);
+INSERT INTO `login_log` VALUES (258, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:04:14', 2135);
+INSERT INTO `login_log` VALUES (259, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:04:33', 1169);
+INSERT INTO `login_log` VALUES (260, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:04:53', 1168);
+INSERT INTO `login_log` VALUES (261, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:05:13', 1161);
+INSERT INTO `login_log` VALUES (262, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:05:33', 1171);
+INSERT INTO `login_log` VALUES (263, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:05:53', 1164);
+INSERT INTO `login_log` VALUES (264, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:06:13', 1163);
+INSERT INTO `login_log` VALUES (265, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:06:33', 1204);
+INSERT INTO `login_log` VALUES (266, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:06:53', 1150);
+INSERT INTO `login_log` VALUES (267, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:07:13', 1159);
+INSERT INTO `login_log` VALUES (268, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:07:33', 1158);
+INSERT INTO `login_log` VALUES (269, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:07:53', 1152);
+INSERT INTO `login_log` VALUES (270, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:08:13', 1155);
+INSERT INTO `login_log` VALUES (271, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:08:33', 1174);
+INSERT INTO `login_log` VALUES (272, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:08:53', 1192);
+INSERT INTO `login_log` VALUES (273, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:09:13', 1174);
+INSERT INTO `login_log` VALUES (274, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:09:33', 1186);
+INSERT INTO `login_log` VALUES (275, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:09:53', 1161);
+INSERT INTO `login_log` VALUES (276, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:10:13', 1155);
+INSERT INTO `login_log` VALUES (277, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:10:33', 1158);
+INSERT INTO `login_log` VALUES (278, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:10:53', 1161);
+INSERT INTO `login_log` VALUES (279, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:11:13', 1152);
+INSERT INTO `login_log` VALUES (280, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:11:33', 1183);
+INSERT INTO `login_log` VALUES (281, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:11:53', 1155);
+INSERT INTO `login_log` VALUES (282, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:12:13', 1165);
+INSERT INTO `login_log` VALUES (283, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:12:33', 1195);
+INSERT INTO `login_log` VALUES (284, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:12:53', 1149);
+INSERT INTO `login_log` VALUES (285, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:13:13', 1149);
+INSERT INTO `login_log` VALUES (286, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:13:33', 1173);
+INSERT INTO `login_log` VALUES (287, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:13:53', 1154);
+INSERT INTO `login_log` VALUES (288, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:14:13', 1171);
+INSERT INTO `login_log` VALUES (289, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:14:33', 1155);
+INSERT INTO `login_log` VALUES (290, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:14:53', 1167);
+INSERT INTO `login_log` VALUES (291, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:15:13', 1149);
+INSERT INTO `login_log` VALUES (292, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:15:33', 1153);
+INSERT INTO `login_log` VALUES (293, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:15:53', 1151);
+INSERT INTO `login_log` VALUES (294, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:16:13', 1158);
+INSERT INTO `login_log` VALUES (295, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:16:33', 1158);
+INSERT INTO `login_log` VALUES (296, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:16:53', 1149);
+INSERT INTO `login_log` VALUES (297, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:17:13', 1174);
+INSERT INTO `login_log` VALUES (298, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:17:33', 1164);
+INSERT INTO `login_log` VALUES (299, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:17:53', 1160);
+INSERT INTO `login_log` VALUES (300, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:18:13', 1195);
+INSERT INTO `login_log` VALUES (301, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:18:33', 1160);
+INSERT INTO `login_log` VALUES (302, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:18:53', 1188);
+INSERT INTO `login_log` VALUES (303, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:19:13', 1178);
+INSERT INTO `login_log` VALUES (304, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:19:33', 1179);
+INSERT INTO `login_log` VALUES (305, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:19:53', 1142);
+INSERT INTO `login_log` VALUES (306, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:20:13', 1160);
+INSERT INTO `login_log` VALUES (307, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:20:33', 1169);
+INSERT INTO `login_log` VALUES (308, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:20:53', 1194);
+INSERT INTO `login_log` VALUES (309, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:21:13', 1159);
+INSERT INTO `login_log` VALUES (310, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:21:33', 1193);
+INSERT INTO `login_log` VALUES (311, '127.0.0.1', '/api/user/info/userInfoByUsername', 'admin', '2021-09-23 00:21:45', 5);
+INSERT INTO `login_log` VALUES (312, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:21:46', 1175);
+INSERT INTO `login_log` VALUES (313, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:22:06', 1170);
+INSERT INTO `login_log` VALUES (314, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:22:26', 1191);
+INSERT INTO `login_log` VALUES (315, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:22:46', 1161);
+INSERT INTO `login_log` VALUES (316, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:23:06', 1162);
+INSERT INTO `login_log` VALUES (317, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:23:26', 1186);
+INSERT INTO `login_log` VALUES (318, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:23:46', 1166);
+INSERT INTO `login_log` VALUES (319, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:24:06', 1164);
+INSERT INTO `login_log` VALUES (320, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:24:26', 1192);
+INSERT INTO `login_log` VALUES (321, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:24:46', 1213);
+INSERT INTO `login_log` VALUES (322, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:25:06', 1190);
+INSERT INTO `login_log` VALUES (323, '127.0.0.1', '/api/user/info/userInfoByUsername', 'admin', '2021-09-23 00:25:20', 2);
+INSERT INTO `login_log` VALUES (324, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:25:21', 1181);
+INSERT INTO `login_log` VALUES (325, '127.0.0.1', '/api/user/info/userInfoByUsername', 'admin', '2021-09-23 00:25:32', 2);
+INSERT INTO `login_log` VALUES (326, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:25:33', 1174);
+INSERT INTO `login_log` VALUES (327, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:25:53', 1169);
+INSERT INTO `login_log` VALUES (328, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:26:13', 1163);
+INSERT INTO `login_log` VALUES (329, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:26:33', 1188);
+INSERT INTO `login_log` VALUES (330, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:26:53', 1194);
+INSERT INTO `login_log` VALUES (331, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:27:13', 1187);
+INSERT INTO `login_log` VALUES (332, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:27:33', 1169);
+INSERT INTO `login_log` VALUES (333, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:27:53', 1195);
+INSERT INTO `login_log` VALUES (334, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:28:13', 1197);
+INSERT INTO `login_log` VALUES (335, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:28:33', 1199);
+INSERT INTO `login_log` VALUES (336, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:28:53', 1165);
+INSERT INTO `login_log` VALUES (337, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:29:13', 1155);
+INSERT INTO `login_log` VALUES (338, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:29:33', 1156);
+INSERT INTO `login_log` VALUES (339, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:29:53', 1189);
+INSERT INTO `login_log` VALUES (340, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:30:13', 1154);
+INSERT INTO `login_log` VALUES (341, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:30:33', 1165);
+INSERT INTO `login_log` VALUES (342, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:30:53', 1202);
+INSERT INTO `login_log` VALUES (343, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:31:13', 1165);
+INSERT INTO `login_log` VALUES (344, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:31:33', 1155);
+INSERT INTO `login_log` VALUES (345, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:31:53', 1153);
+INSERT INTO `login_log` VALUES (346, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:32:41', 1182);
+INSERT INTO `login_log` VALUES (347, '127.0.0.1', '/api/common/login', 'anonymousUser', '2021-09-23 00:34:37', 3);
+INSERT INTO `login_log` VALUES (348, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:36:04', 1237);
+INSERT INTO `login_log` VALUES (349, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:36:24', 1170);
+INSERT INTO `login_log` VALUES (350, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:36:44', 1201);
+INSERT INTO `login_log` VALUES (351, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:37:04', 1253);
+INSERT INTO `login_log` VALUES (352, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:37:24', 1207);
+INSERT INTO `login_log` VALUES (353, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:37:44', 1174);
+INSERT INTO `login_log` VALUES (354, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:38:04', 1154);
+INSERT INTO `login_log` VALUES (355, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:38:24', 1186);
+INSERT INTO `login_log` VALUES (356, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:38:44', 1187);
+INSERT INTO `login_log` VALUES (357, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:39:04', 1216);
+INSERT INTO `login_log` VALUES (358, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:39:24', 1163);
+INSERT INTO `login_log` VALUES (359, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:39:44', 1156);
+INSERT INTO `login_log` VALUES (360, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:40:04', 1248);
+INSERT INTO `login_log` VALUES (361, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:40:25', 1183);
+INSERT INTO `login_log` VALUES (362, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:40:44', 1169);
+INSERT INTO `login_log` VALUES (363, '127.0.0.1', '/api/user/info/userInfoByCond', 'admin', '2021-09-23 00:40:55', 66);
+INSERT INTO `login_log` VALUES (364, '127.0.0.1', '/api/user/info/userInfoByCond', 'admin', '2021-09-23 00:41:04', 5);
+INSERT INTO `login_log` VALUES (365, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:43:54', 1184);
+INSERT INTO `login_log` VALUES (366, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:44:14', 1228);
+INSERT INTO `login_log` VALUES (367, '127.0.0.1', '/api/common/login', 'anonymousUser', '2021-09-23 00:44:35', 3);
+INSERT INTO `login_log` VALUES (368, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:44:36', 1173);
+INSERT INTO `login_log` VALUES (369, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:44:56', 1179);
+INSERT INTO `login_log` VALUES (370, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:45:16', 1166);
+INSERT INTO `login_log` VALUES (371, '127.0.0.1', '/api/user/info/userInfoByUsername', 'admin', '2021-09-23 00:45:35', 4);
+INSERT INTO `login_log` VALUES (372, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:45:37', 1184);
+INSERT INTO `login_log` VALUES (373, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:45:57', 1176);
+INSERT INTO `login_log` VALUES (374, '127.0.0.1', '/api/user/info/userInfoByUsername', 'admin', '2021-09-23 00:46:40', 3);
+INSERT INTO `login_log` VALUES (375, '127.0.0.1', '/api/user/info/modifyUserInfo', 'admin', '2021-09-23 00:46:41', 160);
+INSERT INTO `login_log` VALUES (376, '127.0.0.1', '/api/user/info/modifyUserInfo', 'admin', '2021-09-23 00:46:56', 137);
+INSERT INTO `login_log` VALUES (377, '127.0.0.1', '/api/user/info/modifyUserInfo', 'admin', '2021-09-23 00:47:01', 142);
+INSERT INTO `login_log` VALUES (378, '127.0.0.1', '/api/user/info/userInfoByCond', 'admin', '2021-09-23 00:47:14', 3);
+INSERT INTO `login_log` VALUES (379, '127.0.0.1', '/api/user/info/userInfoByCond', 'admin', '2021-09-23 00:47:16', 6);
+INSERT INTO `login_log` VALUES (380, '127.0.0.1', '/api/user/info/userInfoByCond', 'admin', '2021-09-23 00:47:18', 6);
+INSERT INTO `login_log` VALUES (381, '127.0.0.1', '/api/user/info/userInfoByCond', 'admin', '2021-09-23 00:47:19', 3);
+INSERT INTO `login_log` VALUES (382, '127.0.0.1', '/api/user/info/userInfoByCond', 'admin', '2021-09-23 00:47:25', 4);
+INSERT INTO `login_log` VALUES (383, '127.0.0.1', '/api/admin/reloadAdminRoleResource', 'admin', '2021-09-23 00:47:28', 301);
+INSERT INTO `login_log` VALUES (384, '127.0.0.1', '/api/admin/reloadAdminRoleResource', 'admin', '2021-09-23 00:47:33', 51);
+INSERT INTO `login_log` VALUES (385, '127.0.0.1', '/api/admin/reloadAdminRoleResource', 'admin', '2021-09-23 00:47:39', 46);
+INSERT INTO `login_log` VALUES (386, '127.0.0.1', '/api/admin/reloadUserRoleResource', 'admin', '2021-09-23 00:47:45', 56);
+INSERT INTO `login_log` VALUES (387, '127.0.0.1', '/api/admin/reloadUserRoleResource', 'admin', '2021-09-23 00:47:47', 55);
+INSERT INTO `login_log` VALUES (388, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:47:53', 1176);
+INSERT INTO `login_log` VALUES (389, '127.0.0.1', '/api/user/info/modifyUserInfo', 'admin', '2021-09-23 00:47:56', 51);
+INSERT INTO `login_log` VALUES (390, '127.0.0.1', '/api/user/info/modifyUserInfo', 'admin', '2021-09-23 00:48:23', 40);
+INSERT INTO `login_log` VALUES (391, '127.0.0.1', '/api/user/info/userInfoByUsername', 'admin', '2021-09-23 00:49:21', 2);
+INSERT INTO `login_log` VALUES (392, '127.0.0.1', '/api/user/info/modifyUserInfo', 'admin', '2021-09-23 00:49:23', 49);
+INSERT INTO `login_log` VALUES (393, '127.0.0.1', '/api/user/info/userInfoByUsername', 'admin', '2021-09-23 00:50:17', 4);
+INSERT INTO `login_log` VALUES (394, '127.0.0.1', '/api/user/info/modifyUserInfo', 'admin', '2021-09-23 00:50:35', 130);
+INSERT INTO `login_log` VALUES (395, '127.0.0.1', '/api/user/info/userInfoByUsername', 'admin', '2021-09-23 00:51:17', 3);
+INSERT INTO `login_log` VALUES (396, '127.0.0.1', '/api/user/info/modifyUserInfo', 'admin', '2021-09-23 00:51:19', 60);
+INSERT INTO `login_log` VALUES (397, '127.0.0.1', '/api/user/info/modifyUserInfo', 'admin', '2021-09-23 00:51:36', 60);
+INSERT INTO `login_log` VALUES (398, '127.0.0.1', '/api/user/info/userInfoByUsername', 'admin', '2021-09-23 00:53:25', 2);
+INSERT INTO `login_log` VALUES (399, '127.0.0.1', '/api/user/info/modifyUserInfo', 'admin', '2021-09-23 00:53:34', 132);
+INSERT INTO `login_log` VALUES (400, '127.0.0.1', '/api/user/info/userInfoByUsername', 'admin', '2021-09-23 00:55:45', 1);
+INSERT INTO `login_log` VALUES (401, '127.0.0.1', '/api/user/info/userInfoByUsername', 'admin', '2021-09-23 00:55:58', 3);
+INSERT INTO `login_log` VALUES (402, '127.0.0.1', '/api/common/login', 'anonymousUser', '2021-09-23 00:56:04', 2);
+INSERT INTO `login_log` VALUES (403, '127.0.0.1', '/api/user/info/userInfoByUsername', 'admin', '2021-09-23 00:56:04', 2);
+INSERT INTO `login_log` VALUES (404, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:56:06', 1202);
+INSERT INTO `login_log` VALUES (405, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:56:26', 1185);
+INSERT INTO `login_log` VALUES (406, '127.0.0.1', '/api/user/info/userInfoByUsername', 'admin', '2021-09-23 00:56:30', 2);
+INSERT INTO `login_log` VALUES (407, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:56:31', 1174);
+INSERT INTO `login_log` VALUES (408, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-23 00:56:51', 1184);
+INSERT INTO `login_log` VALUES (409, '127.0.0.1', '/api/user/info/modifyUserInfo', 'admin', '2021-09-23 00:56:58', 138);
+INSERT INTO `login_log` VALUES (410, '127.0.0.1', '/api/user/info/modifyUserInfo', 'admin', '2021-09-23 00:57:12', 55);
+INSERT INTO `login_log` VALUES (411, '127.0.0.1', '/api/user/info/userInfoByUsername', 'admin', '2021-09-23 00:57:42', 2);
+INSERT INTO `login_log` VALUES (412, '127.0.0.1', '/api/user/info/modifyUserInfo', 'admin', '2021-09-23 00:58:21', 39);
+INSERT INTO `login_log` VALUES (413, '127.0.0.1', '/api/user/info/userInfoByUsername', 'admin', '2021-09-24 00:34:47', 87);
+INSERT INTO `login_log` VALUES (414, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:34:49', 2289);
+INSERT INTO `login_log` VALUES (415, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:35:07', 1195);
+INSERT INTO `login_log` VALUES (416, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:35:27', 1145);
+INSERT INTO `login_log` VALUES (417, '127.0.0.1', '/api/user/info/userInfoByCond', 'admin', '2021-09-24 00:35:46', 53);
+INSERT INTO `login_log` VALUES (418, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:36:49', 1164);
+INSERT INTO `login_log` VALUES (419, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:37:09', 1165);
+INSERT INTO `login_log` VALUES (420, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:37:29', 1174);
+INSERT INTO `login_log` VALUES (421, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:37:49', 1212);
+INSERT INTO `login_log` VALUES (422, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:38:09', 1207);
+INSERT INTO `login_log` VALUES (423, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:38:29', 1175);
+INSERT INTO `login_log` VALUES (424, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:38:49', 1191);
+INSERT INTO `login_log` VALUES (425, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:39:09', 1177);
+INSERT INTO `login_log` VALUES (426, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:39:29', 1204);
+INSERT INTO `login_log` VALUES (427, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:39:49', 1174);
+INSERT INTO `login_log` VALUES (428, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:40:09', 1169);
+INSERT INTO `login_log` VALUES (429, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:40:29', 1173);
+INSERT INTO `login_log` VALUES (430, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:40:49', 1154);
+INSERT INTO `login_log` VALUES (431, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:41:09', 1159);
+INSERT INTO `login_log` VALUES (432, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:41:29', 1223);
+INSERT INTO `login_log` VALUES (433, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:41:49', 1162);
+INSERT INTO `login_log` VALUES (434, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:42:09', 1184);
+INSERT INTO `login_log` VALUES (435, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:42:29', 1148);
+INSERT INTO `login_log` VALUES (436, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:42:49', 1157);
+INSERT INTO `login_log` VALUES (437, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:43:09', 1165);
+INSERT INTO `login_log` VALUES (438, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:43:29', 1233);
+INSERT INTO `login_log` VALUES (439, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:43:49', 1184);
+INSERT INTO `login_log` VALUES (440, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:44:09', 1165);
+INSERT INTO `login_log` VALUES (441, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:44:29', 1166);
+INSERT INTO `login_log` VALUES (442, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:44:49', 1156);
+INSERT INTO `login_log` VALUES (443, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:45:09', 1173);
+INSERT INTO `login_log` VALUES (444, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:45:29', 1184);
+INSERT INTO `login_log` VALUES (445, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:45:49', 1227);
+INSERT INTO `login_log` VALUES (446, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:46:09', 1169);
+INSERT INTO `login_log` VALUES (447, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:46:29', 1149);
+INSERT INTO `login_log` VALUES (448, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:46:49', 1177);
+INSERT INTO `login_log` VALUES (449, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:47:09', 1159);
+INSERT INTO `login_log` VALUES (450, '127.0.0.1', '/api/user/info/userInfoByUsername', 'admin', '2021-09-24 00:47:18', 5);
+INSERT INTO `login_log` VALUES (451, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:47:19', 1175);
+INSERT INTO `login_log` VALUES (452, '127.0.0.1', '/api/user/info/modifyUserInfo', 'admin', '2021-09-24 00:47:23', 230);
+INSERT INTO `login_log` VALUES (453, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:47:56', 1168);
+INSERT INTO `login_log` VALUES (454, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:48:16', 1173);
+INSERT INTO `login_log` VALUES (455, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:48:36', 1158);
+INSERT INTO `login_log` VALUES (456, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:48:56', 1197);
+INSERT INTO `login_log` VALUES (457, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:49:16', 1168);
+INSERT INTO `login_log` VALUES (458, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:49:36', 1170);
+INSERT INTO `login_log` VALUES (459, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:49:56', 1155);
+INSERT INTO `login_log` VALUES (460, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:50:16', 1165);
+INSERT INTO `login_log` VALUES (461, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:50:36', 1167);
+INSERT INTO `login_log` VALUES (462, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:50:56', 1170);
+INSERT INTO `login_log` VALUES (463, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:51:16', 1161);
+INSERT INTO `login_log` VALUES (464, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:51:36', 1154);
+INSERT INTO `login_log` VALUES (465, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:51:57', 1257);
+INSERT INTO `login_log` VALUES (466, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:52:16', 1167);
+INSERT INTO `login_log` VALUES (467, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:52:36', 1214);
+INSERT INTO `login_log` VALUES (468, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:52:56', 1207);
+INSERT INTO `login_log` VALUES (469, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:53:16', 1185);
+INSERT INTO `login_log` VALUES (470, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:53:36', 1171);
+INSERT INTO `login_log` VALUES (471, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:53:56', 1165);
+INSERT INTO `login_log` VALUES (472, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:54:16', 1202);
+INSERT INTO `login_log` VALUES (473, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:54:36', 1219);
+INSERT INTO `login_log` VALUES (474, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:54:56', 1157);
+INSERT INTO `login_log` VALUES (475, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:55:16', 1164);
+INSERT INTO `login_log` VALUES (476, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:55:36', 1153);
+INSERT INTO `login_log` VALUES (477, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:55:56', 1166);
+INSERT INTO `login_log` VALUES (478, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:56:16', 1166);
+INSERT INTO `login_log` VALUES (479, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:56:36', 1190);
+INSERT INTO `login_log` VALUES (480, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:56:56', 1176);
+INSERT INTO `login_log` VALUES (481, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:57:16', 1176);
+INSERT INTO `login_log` VALUES (482, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:57:36', 1196);
+INSERT INTO `login_log` VALUES (483, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:57:56', 1161);
+INSERT INTO `login_log` VALUES (484, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:58:16', 1180);
+INSERT INTO `login_log` VALUES (485, '127.0.0.1', '/api/user/info/userInfoByUsername', 'admin', '2021-09-24 00:58:19', 3);
+INSERT INTO `login_log` VALUES (486, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:58:20', 1190);
+INSERT INTO `login_log` VALUES (487, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:58:40', 1207);
+INSERT INTO `login_log` VALUES (488, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:59:00', 1164);
+INSERT INTO `login_log` VALUES (489, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:59:20', 1202);
+INSERT INTO `login_log` VALUES (490, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 00:59:40', 1176);
+INSERT INTO `login_log` VALUES (491, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:00:00', 1192);
+INSERT INTO `login_log` VALUES (492, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:00:20', 1198);
+INSERT INTO `login_log` VALUES (493, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:00:40', 1181);
+INSERT INTO `login_log` VALUES (494, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:01:00', 1163);
+INSERT INTO `login_log` VALUES (495, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:01:20', 1172);
+INSERT INTO `login_log` VALUES (496, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:01:40', 1187);
+INSERT INTO `login_log` VALUES (497, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:02:00', 1155);
+INSERT INTO `login_log` VALUES (498, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:02:20', 1231);
+INSERT INTO `login_log` VALUES (499, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:02:40', 1212);
+INSERT INTO `login_log` VALUES (500, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:03:00', 1172);
+INSERT INTO `login_log` VALUES (501, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:03:20', 1171);
+INSERT INTO `login_log` VALUES (502, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:03:40', 1187);
+INSERT INTO `login_log` VALUES (503, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:04:00', 1187);
+INSERT INTO `login_log` VALUES (504, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:04:20', 1193);
+INSERT INTO `login_log` VALUES (505, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:04:40', 1188);
+INSERT INTO `login_log` VALUES (506, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:05:00', 1192);
+INSERT INTO `login_log` VALUES (507, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:05:20', 1183);
+INSERT INTO `login_log` VALUES (508, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:05:40', 1177);
+INSERT INTO `login_log` VALUES (509, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:06:00', 1170);
+INSERT INTO `login_log` VALUES (510, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:06:20', 1169);
+INSERT INTO `login_log` VALUES (511, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:06:40', 1163);
+INSERT INTO `login_log` VALUES (512, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:07:00', 1177);
+INSERT INTO `login_log` VALUES (513, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:07:20', 1165);
+INSERT INTO `login_log` VALUES (514, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:07:40', 1171);
+INSERT INTO `login_log` VALUES (515, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:08:00', 1183);
+INSERT INTO `login_log` VALUES (516, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:08:20', 1159);
+INSERT INTO `login_log` VALUES (517, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:08:40', 1176);
+INSERT INTO `login_log` VALUES (518, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:09:00', 1158);
+INSERT INTO `login_log` VALUES (519, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:09:20', 1185);
+INSERT INTO `login_log` VALUES (520, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:09:40', 1172);
+INSERT INTO `login_log` VALUES (521, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:10:00', 1157);
+INSERT INTO `login_log` VALUES (522, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:10:20', 1176);
+INSERT INTO `login_log` VALUES (523, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:10:40', 1194);
+INSERT INTO `login_log` VALUES (524, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:11:00', 1169);
+INSERT INTO `login_log` VALUES (525, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:11:20', 1156);
+INSERT INTO `login_log` VALUES (526, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:11:40', 1180);
+INSERT INTO `login_log` VALUES (527, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:12:00', 1156);
+INSERT INTO `login_log` VALUES (528, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:12:20', 1185);
+INSERT INTO `login_log` VALUES (529, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:12:40', 1157);
+INSERT INTO `login_log` VALUES (530, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:13:00', 1223);
+INSERT INTO `login_log` VALUES (531, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:13:20', 1158);
+INSERT INTO `login_log` VALUES (532, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:13:40', 1154);
+INSERT INTO `login_log` VALUES (533, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:14:00', 1162);
+INSERT INTO `login_log` VALUES (534, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:14:20', 1163);
+INSERT INTO `login_log` VALUES (535, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:14:40', 1175);
+INSERT INTO `login_log` VALUES (536, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:15:00', 1169);
+INSERT INTO `login_log` VALUES (537, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:15:20', 1175);
+INSERT INTO `login_log` VALUES (538, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:15:40', 1164);
+INSERT INTO `login_log` VALUES (539, '127.0.0.1', '/api/user/info/userInfoByUsername', 'admin', '2021-09-24 01:15:44', 3);
+INSERT INTO `login_log` VALUES (540, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:15:45', 1195);
+INSERT INTO `login_log` VALUES (541, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:16:05', 1178);
+INSERT INTO `login_log` VALUES (542, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:16:25', 1167);
+INSERT INTO `login_log` VALUES (543, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:16:45', 1174);
+INSERT INTO `login_log` VALUES (544, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:17:05', 1147);
+INSERT INTO `login_log` VALUES (545, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:17:24', 1169);
+INSERT INTO `login_log` VALUES (546, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:17:44', 1171);
+INSERT INTO `login_log` VALUES (547, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:18:04', 1178);
+INSERT INTO `login_log` VALUES (548, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:18:24', 1174);
+INSERT INTO `login_log` VALUES (549, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:18:44', 1158);
+INSERT INTO `login_log` VALUES (550, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:19:04', 1157);
+INSERT INTO `login_log` VALUES (551, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:19:24', 1186);
+INSERT INTO `login_log` VALUES (552, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:19:44', 1182);
+INSERT INTO `login_log` VALUES (553, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:20:04', 1176);
+INSERT INTO `login_log` VALUES (554, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:20:24', 1172);
+INSERT INTO `login_log` VALUES (555, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:20:44', 1192);
+INSERT INTO `login_log` VALUES (556, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:21:04', 1163);
+INSERT INTO `login_log` VALUES (557, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:21:24', 1158);
+INSERT INTO `login_log` VALUES (558, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:21:44', 1163);
+INSERT INTO `login_log` VALUES (559, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:22:04', 1160);
+INSERT INTO `login_log` VALUES (560, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:22:24', 1197);
+INSERT INTO `login_log` VALUES (561, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:22:44', 1198);
+INSERT INTO `login_log` VALUES (562, '127.0.0.1', '/api/common/login', 'anonymousUser', '2021-09-24 01:32:48', 15);
+INSERT INTO `login_log` VALUES (563, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:32:50', 1189);
+INSERT INTO `login_log` VALUES (564, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:33:10', 1219);
+INSERT INTO `login_log` VALUES (565, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:33:30', 1157);
+INSERT INTO `login_log` VALUES (566, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:33:50', 1195);
+INSERT INTO `login_log` VALUES (567, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:34:10', 1156);
+INSERT INTO `login_log` VALUES (568, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:34:30', 1188);
+INSERT INTO `login_log` VALUES (569, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:34:50', 1170);
+INSERT INTO `login_log` VALUES (570, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:35:10', 1168);
+INSERT INTO `login_log` VALUES (571, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:35:30', 1169);
+INSERT INTO `login_log` VALUES (572, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:35:50', 1157);
+INSERT INTO `login_log` VALUES (573, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:36:10', 1181);
+INSERT INTO `login_log` VALUES (574, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:36:30', 1156);
+INSERT INTO `login_log` VALUES (575, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:36:50', 1170);
+INSERT INTO `login_log` VALUES (576, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:37:10', 1211);
+INSERT INTO `login_log` VALUES (577, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:37:30', 1172);
+INSERT INTO `login_log` VALUES (578, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:37:50', 1172);
+INSERT INTO `login_log` VALUES (579, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:38:10', 1174);
+INSERT INTO `login_log` VALUES (580, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:38:30', 1186);
+INSERT INTO `login_log` VALUES (581, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:38:50', 1169);
+INSERT INTO `login_log` VALUES (582, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-24 01:39:10', 1166);
+INSERT INTO `login_log` VALUES (583, '127.0.0.1', '/api/common/login', 'anonymousUser', '2021-09-24 01:39:25', 2);
+INSERT INTO `login_log` VALUES (584, '127.0.0.1', '/api/common/login', 'admin', '2021-09-24 01:39:29', 2);
+INSERT INTO `login_log` VALUES (585, '127.0.0.1', '/api/common/login', 'admin', '2021-09-24 01:40:15', 4);
+INSERT INTO `login_log` VALUES (586, '127.0.0.1', '/api/common/login', 'admin', '2021-09-24 01:41:20', 2);
 
 -- ----------------------------
 -- Table structure for resource
@@ -305,59 +809,63 @@ CREATE TABLE `role_resource`  (
   `resource_id` int(11) NOT NULL COMMENT '资源id',
   PRIMARY KEY (`id`, `role_id`, `resource_id`) USING BTREE,
   INDEX `resource_id`(`resource_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9817 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色-权限关系' ROW_FORMAT = Dynamic;
-INSERT INTO `role_resource` VALUES (9780, 1, 2001);
-INSERT INTO `role_resource` VALUES (9802, 1, 2002);
-INSERT INTO `role_resource` VALUES (9792, 1, 2003);
-INSERT INTO `role_resource` VALUES (9797, 1, 2004);
-INSERT INTO `role_resource` VALUES (9790, 1, 2005);
-INSERT INTO `role_resource` VALUES (9775, 1, 2006);
-INSERT INTO `role_resource` VALUES (9779, 1, 2009);
-INSERT INTO `role_resource` VALUES (9791, 1, 2010);
-INSERT INTO `role_resource` VALUES (9805, 1, 2011);
-INSERT INTO `role_resource` VALUES (9781, 1, 2012);
-INSERT INTO `role_resource` VALUES (9784, 1, 2013);
-INSERT INTO `role_resource` VALUES (9773, 1, 2014);
-INSERT INTO `role_resource` VALUES (9795, 1, 2015);
-INSERT INTO `role_resource` VALUES (9803, 1, 2016);
-INSERT INTO `role_resource` VALUES (9800, 1, 2017);
-INSERT INTO `role_resource` VALUES (9785, 1, 2018);
-INSERT INTO `role_resource` VALUES (9782, 1, 2019);
-INSERT INTO `role_resource` VALUES (9798, 1, 2020);
-INSERT INTO `role_resource` VALUES (9776, 1, 2021);
-INSERT INTO `role_resource` VALUES (9793, 1, 2022);
-INSERT INTO `role_resource` VALUES (9774, 1, 2023);
-INSERT INTO `role_resource` VALUES (9788, 1, 2024);
-INSERT INTO `role_resource` VALUES (9778, 1, 2025);
-INSERT INTO `role_resource` VALUES (9786, 1, 3001);
-INSERT INTO `role_resource` VALUES (9809, 2, 3001);
-INSERT INTO `role_resource` VALUES (9789, 1, 3002);
-INSERT INTO `role_resource` VALUES (9811, 2, 3002);
-INSERT INTO `role_resource` VALUES (9772, 1, 3003);
-INSERT INTO `role_resource` VALUES (9806, 2, 3003);
-INSERT INTO `role_resource` VALUES (9794, 1, 3004);
-INSERT INTO `role_resource` VALUES (9812, 2, 3004);
-INSERT INTO `role_resource` VALUES (9799, 1, 3005);
-INSERT INTO `role_resource` VALUES (9814, 2, 3005);
-INSERT INTO `role_resource` VALUES (9787, 1, 4001);
-INSERT INTO `role_resource` VALUES (9810, 2, 4001);
-INSERT INTO `role_resource` VALUES (9801, 1, 4002);
-INSERT INTO `role_resource` VALUES (9815, 2, 4002);
-INSERT INTO `role_resource` VALUES (9783, 1, 4003);
-INSERT INTO `role_resource` VALUES (9808, 2, 4003);
-INSERT INTO `role_resource` VALUES (9777, 1, 4004);
-INSERT INTO `role_resource` VALUES (9807, 2, 4004);
-INSERT INTO `role_resource` VALUES (9796, 1, 4005);
-INSERT INTO `role_resource` VALUES (9813, 2, 4005);
-INSERT INTO `role_resource` VALUES (9804, 1, 8001);
-INSERT INTO `role_resource` VALUES (9816, 2, 8001);
+) ENGINE = InnoDB AUTO_INCREMENT = 11786 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色-权限关系' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of role_resource
+-- ----------------------------
+INSERT INTO `role_resource` VALUES (11749, 1, 2001);
+INSERT INTO `role_resource` VALUES (11771, 1, 2002);
+INSERT INTO `role_resource` VALUES (11761, 1, 2003);
+INSERT INTO `role_resource` VALUES (11766, 1, 2004);
+INSERT INTO `role_resource` VALUES (11759, 1, 2005);
+INSERT INTO `role_resource` VALUES (11744, 1, 2006);
+INSERT INTO `role_resource` VALUES (11748, 1, 2009);
+INSERT INTO `role_resource` VALUES (11760, 1, 2010);
+INSERT INTO `role_resource` VALUES (11774, 1, 2011);
+INSERT INTO `role_resource` VALUES (11750, 1, 2012);
+INSERT INTO `role_resource` VALUES (11753, 1, 2013);
+INSERT INTO `role_resource` VALUES (11743, 1, 2014);
+INSERT INTO `role_resource` VALUES (11764, 1, 2015);
+INSERT INTO `role_resource` VALUES (11772, 1, 2016);
+INSERT INTO `role_resource` VALUES (11769, 1, 2017);
+INSERT INTO `role_resource` VALUES (11754, 1, 2018);
+INSERT INTO `role_resource` VALUES (11751, 1, 2019);
+INSERT INTO `role_resource` VALUES (11767, 1, 2020);
+INSERT INTO `role_resource` VALUES (11745, 1, 2021);
+INSERT INTO `role_resource` VALUES (11762, 1, 2022);
+INSERT INTO `role_resource` VALUES (11742, 1, 2023);
+INSERT INTO `role_resource` VALUES (11757, 1, 2024);
+INSERT INTO `role_resource` VALUES (11747, 1, 2025);
+INSERT INTO `role_resource` VALUES (11755, 1, 3001);
+INSERT INTO `role_resource` VALUES (11778, 2, 3001);
+INSERT INTO `role_resource` VALUES (11758, 1, 3002);
+INSERT INTO `role_resource` VALUES (11780, 2, 3002);
+INSERT INTO `role_resource` VALUES (11741, 1, 3003);
+INSERT INTO `role_resource` VALUES (11775, 2, 3003);
+INSERT INTO `role_resource` VALUES (11763, 1, 3004);
+INSERT INTO `role_resource` VALUES (11781, 2, 3004);
+INSERT INTO `role_resource` VALUES (11768, 1, 3005);
+INSERT INTO `role_resource` VALUES (11783, 2, 3005);
+INSERT INTO `role_resource` VALUES (11756, 1, 4001);
+INSERT INTO `role_resource` VALUES (11779, 2, 4001);
+INSERT INTO `role_resource` VALUES (11770, 1, 4002);
+INSERT INTO `role_resource` VALUES (11784, 2, 4002);
+INSERT INTO `role_resource` VALUES (11752, 1, 4003);
+INSERT INTO `role_resource` VALUES (11777, 2, 4003);
+INSERT INTO `role_resource` VALUES (11746, 1, 4004);
+INSERT INTO `role_resource` VALUES (11776, 2, 4004);
+INSERT INTO `role_resource` VALUES (11765, 1, 4005);
+INSERT INTO `role_resource` VALUES (11782, 2, 4005);
+INSERT INTO `role_resource` VALUES (11773, 1, 8001);
+INSERT INTO `role_resource` VALUES (11785, 2, 8001);
 
 -- ----------------------------
 -- Table structure for route
 -- ----------------------------
 DROP TABLE IF EXISTS `route`;
 CREATE TABLE `route`  (
-  `route_id` bigint(11) NOT NULL COMMENT '主键',
+  `route_id` int(11) NOT NULL COMMENT '主键',
   `path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '路径',
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '名称',
   `status` tinyint(1) NOT NULL COMMENT '路径状态 0关闭 1开启',
@@ -381,12 +889,12 @@ CREATE TABLE `signup`  (
   `create_time` datetime(0) NULL DEFAULT NULL,
   `update_time` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 33 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 53 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of signup
 -- ----------------------------
-INSERT INTO `signup` VALUES (1, '1', 'shit', '男', '12334', '挖掘机', 'jfioaejfasjioheuifhgisahfoksjdkfhweuihfseifjdewjfopawijrf309wru[ojskdhuuerg', 0, NULL, NULL, NULL);
+INSERT INTO `signup` VALUES (1, '1', 'shit', '男', '12334', '挖掘机', 'jfioaejfasjioheuifhgisahfoksjdkfhweuihfseifjdewjfopawijrf309wru[ojskdhuuerg', 0, '团长 你就是个zipper', NULL, '2021-09-20 21:42:15');
 INSERT INTO `signup` VALUES (2, '18110571234', '程成', '男', '501966782', '信管本2002', '熟悉golang。Java。cpp。vue。熟悉开源社区。github.com/devhg。熟悉Linux   ', 0, NULL, NULL, NULL);
 INSERT INTO `signup` VALUES (3, '19111405056', '杨叶江', '男', '424133224', '工商1902', '目前属于基础检查，目标方向是为了能运用Python进行数据分析等，无项目经历。\n竞赛主要有省级三项，校级奖项若干', 0, NULL, NULL, NULL);
 INSERT INTO `signup` VALUES (4, '19111407001', '宣佳栋', '男', '1413452856', '市销1901', '       在思想方面，本人理想信念坚定，积极向党组织靠拢。\n       在工作方面，担任班级学习委员，青年服务部工作人员，课程助理，市销2001班带班，积极为老师排忧解难。\n       在学习方面，学习认真努力，成绩优异，当前学业成绩和综合测评成绩均位于专业第一位，被授予校级“优秀学生”、“优秀共青团员”等称号，并获得校级二等奖学金。\n       在比赛方面，积极参加大型比赛，曾获：\n1.全国花间校园街坊总站国家级优秀奖\n2.“尖峰时刻”全球案例大赛省级一等奖\n3.全国大学生工程训练综合能力竞赛省级二等奖\n4.全国大学生市场调查与分析大赛省级三等奖\n5.“挑战杯”大学生课外学术科技作品大赛校级三等奖\n6.淄博市“创意青春 智赢未来”营销方案设计大赛市级二等奖\n7.山东理工大学青春踏歌行合唱比赛校级特等奖\n8.第一届山东理工大学创新方法应用大赛校级三等奖\n9.山东理工大学大学生科技创新大赛校级三等奖\n10.山东理工大学青年创客挑战赛校级优秀奖\n11.第三届全国管理模拟决策大赛校级三等奖\n12.第四届全国管理模拟决策大赛校级二等奖\n13.“庆国庆 青年行”爱国寻图比赛校级一等奖\n14.全国大学生电子商务“创新 创意 创业”挑战赛校级二等奖\n       在社会实践方面，两次获得社会实践校级奖项，被授予“社会实践先进个人”称号。\n       在科研成果方面，跟随导师进行小农户与现代化衔接方面的研究，自学SPSS分析、Java和citespace，并主持校级立项一项。\n', 0, NULL, NULL, NULL);
@@ -415,16 +923,18 @@ INSERT INTO `signup` VALUES (26, '20121408061', '张玉洁', '女', '2889770573'
 INSERT INTO `signup` VALUES (27, '20121408071', '曹琪', '女', '1138576292', '信管2001', '对计算机方向很感兴趣，想要进一步了解前端技术。虽然目前技术还处于基础阶段，但是我会很努力的。\n(去实验室的时间:只要是我没课的时候都可以去，包括假期我也都是留校)', 0, NULL, NULL, NULL);
 INSERT INTO `signup` VALUES (28, '20121493080', '葛越荷', '女', '1787738998', '信管本2001', '主要学习JAVA相关知识，会不断复习学过的JAVA知识，并且开始学习一部分c语言知识。希望以后在研究生阶段进行学习软件开发的方向，所以会在大学开始就为考试做准备。', 0, NULL, NULL, NULL);
 INSERT INTO `signup` VALUES (29, '3', 'ass', '男', '12233334', '挖掘22机', 'jfioaejfasjioheuifhgisahfoksjdkfhweuihfseifjdewjfopawijrf309wru[ojskdhuuerg', 0, NULL, NULL, NULL);
-INSERT INTO `signup` VALUES (30, '114514', '先辈', '男', '12233334', '挖掘22机', 'jfioaejfasjioheuifhgisahfoksjdkfhweuihfseifjdewjfopawijrf309wru[ojskdhuuerg', 0, NULL, '2021-09-09 01:19:39', '2021-09-09 01:19:39');
-INSERT INTO `signup` VALUES (31, '114514', '先辈', '男', '12233334', '挖掘22机', 'jfioaejfasjioheuifhgisahfoksjdkfhweuihfseifjdewjfopawijrf309wru[ojskdhuuerg', 0, NULL, '2021-09-09 01:26:57', '2021-09-09 01:26:57');
-INSERT INTO `signup` VALUES (32, '114514', '先辈', '男', '12233334', '挖掘22机', 'jfioaejfasjioheuifhgisahfoksjdkfhweuihfseifjdewjfopawijrf309wru[ojskdhuuerg', 0, NULL, '2021-09-09 01:30:26', '2021-09-09 01:30:26');
+INSERT INTO `signup` VALUES (30, '114514', 'asefesf', '女', 'asefsefes', 'asefseaf', 'asefsef', 0, NULL, '2021-09-09 01:19:39', '2021-09-20 19:14:13');
+INSERT INTO `signup` VALUES (49, '1145144', 'asefesf', '女', 'asefsefes', 'asefseaf', 'asefsef', 0, NULL, '2021-09-20 19:13:57', '2021-09-20 19:14:06');
+INSERT INTO `signup` VALUES (50, '18111493050', 'lulinzi', '男', '1773950094', '信管本', 'asfjuiasefhiusehfwuoejrfiwjhfopasehfiposaehfiohsfkhiueahfiuasehfiuh哈覅u合肥欧服哈怂i返回覅u水分后期完结飞鸟无回复i啊瓦活佛i合法哦i是覅和', 0, NULL, '2021-09-20 21:48:50', '2021-09-21 01:39:55');
+INSERT INTO `signup` VALUES (51, '123123', '1231231', '男', '123123', '123123', '', 0, NULL, '2021-09-21 01:28:20', '2021-09-21 01:28:20');
+INSERT INTO `signup` VALUES (52, '123', '123', '男', '123', '123', '', 0, NULL, '2021-09-21 01:29:37', '2021-09-21 01:29:38');
 
 -- ----------------------------
 -- Table structure for tag
 -- ----------------------------
 DROP TABLE IF EXISTS `tag`;
 CREATE TABLE `tag`  (
-  `tag_id` bigint(11) NOT NULL AUTO_INCREMENT COMMENT '标签id',
+  `tag_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标签id',
   `name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '标签名',
   `order` int(11) NOT NULL COMMENT '排序权重',
   PRIMARY KEY (`tag_id`) USING BTREE
@@ -460,7 +970,7 @@ INSERT INTO `task` VALUES ('T3', '测试任务3', 'com.softlab.okr.job.testTask3
 -- ----------------------------
 DROP TABLE IF EXISTS `task_config`;
 CREATE TABLE `task_config`  (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `task_id` varchar(8) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '任务id',
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '任务描述',
   `cron` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'cron表达式',
@@ -518,7 +1028,7 @@ INSERT INTO `user` VALUES (24, 'ass', '964d72e72d053d501f2949969849b96c');
 -- ----------------------------
 DROP TABLE IF EXISTS `user_info`;
 CREATE TABLE `user_info`  (
-  `user_id` bigint(11) NOT NULL COMMENT '主键id',
+  `user_id` int(11) NOT NULL COMMENT '主键id',
   `username` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户名(学号)',
   `name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '姓名',
   `avatar` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '头像',
@@ -536,7 +1046,7 @@ CREATE TABLE `user_info`  (
 -- Records of user_info
 -- ----------------------------
 INSERT INTO `user_info` VALUES (1, '123', '先辈', 'data:image/png;base64,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', '下北泽1802', '1773950094', '13335158225', 'sasdf', 'web全栈，只会crud的一只很臭的臭乐色ef', NULL, NULL);
-INSERT INTO `user_info` VALUES (20, 'admin', '基佬', 'data:image/png;base64,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EhhZPz962AcR8NbgEmfP+7v/2gAMAwEAAgADAAAAEP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8Ad/y//DzTD/s13v8A8NNN3/8A/wD/APf/AHLNGNLJFK+PO6/LAAN//wD/APrUU/8AHNP/ANfiij/nzTgwhf8A/wD/AP8A/b38c0c88ErswP78o/8A9/8A/wD/AP6++L/3DOPP6889z/M893//AP8A/wD/AO+//wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/8QAHBEB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', '蓝翔', '123456', '654321', 'shit', '一起搞基，先生！', NULL, NULL);
+INSERT INTO `user_info` VALUES (20, 'admin', '基佬', 'data:image/png;base64,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EhhZPz962AcR8NbgEmfP+7v/2gAMAwEAAgADAAAAEP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8Ad/y//DzTD/s13v8A8NNN3/8A/wD/APf/AHLNGNLJFK+PO6/LAAN//wD/APrUU/8AHNP/ANfiij/nzTgwhf8A/wD/AP8A/b38c0c88ErswP78o/8A9/8A/wD/AP6++L/3DOPP6889z/M893//AP8A/wD/AO+//wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/8QAHBEB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', '蓝翔', '123456', '654321', 'shit', '一起搞基，先生！', NULL, '2021-09-24 00:47:23');
 INSERT INTO `user_info` VALUES (21, 'test', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `user_info` VALUES (22, 'test1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `user_info` VALUES (23, 'shit', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-09-08 00:27:54', '2021-09-08 00:27:54');

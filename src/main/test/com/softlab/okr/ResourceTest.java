@@ -1,8 +1,8 @@
 package com.softlab.okr;
 
-import com.softlab.okr.dao.ResourceMapper;
+import com.softlab.okr.entity.Resource;
+import com.softlab.okr.mapper.ResourceMapper;
 import com.softlab.okr.model.bo.RoleResourceBo;
-import com.softlab.okr.model.entity.Resource;
 import com.softlab.okr.security.MySecurityMetadataSource;
 import com.softlab.okr.service.ResourceService;
 import java.util.Set;

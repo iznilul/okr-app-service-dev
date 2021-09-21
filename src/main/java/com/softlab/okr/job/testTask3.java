@@ -12,7 +12,7 @@ import org.quartz.JobExecutionException;
  * @create: 2021-08-24 16:15
  **/
 
-@TaskInfo(taskId = "T3", name = "测试任务3", function = "测试用的,输出数字")
+@TaskInfo(taskId = "T3", name = "三号测试任务", function = "测试用的,输出数字")
 public class testTask3 implements Job {
 
   @Override

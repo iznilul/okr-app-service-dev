@@ -1,6 +1,6 @@
 package com.softlab.okr.security;
 
-import com.softlab.okr.service.ServiceImpl.UserEntityServiceImpl;
+import com.softlab.okr.service.impl.UserEntityServiceImpl;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import java.io.IOException;

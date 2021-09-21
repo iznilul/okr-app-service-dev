@@ -1,13 +1,10 @@
 package com.softlab.okr;
 
-import com.softlab.okr.dao.BookMapper;
-import com.softlab.okr.model.vo.BookVO;
-import java.util.List;
+import com.softlab.okr.mapper.BookMapper;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -64,12 +61,6 @@ public class BookTest {
   //    System.out.println(e.toString());
   //  }
   //}
-
-  @Test
-  public void selectList() {
-    List<BookVO> list = bookMapper.selectList();
-    list.forEach(System.out::println);
-  }
 
   //@Test
   //public void updateById() {

@@ -1,6 +1,6 @@
 package com.softlab.okr.utils;
 
-import com.softlab.okr.security.AuthenticationService;
+import com.softlab.okr.security.AuthenticationServiceImpl;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 public class FilterUtil {
 
   @Autowired
-  private AuthenticationService authenticationService;
+  private AuthenticationServiceImpl authenticationService;
 
   public String getRequestIp() {
     Authentication authentication = authenticationService.getAuthentication();

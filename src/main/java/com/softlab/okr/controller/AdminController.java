@@ -3,31 +3,28 @@ package com.softlab.okr.controller;
 import com.github.pagehelper.PageInfo;
 import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.annotation.LimitedAccess;
-import com.softlab.okr.exception.ApiException;
+import com.softlab.okr.entity.SignUp;
 import com.softlab.okr.model.bo.RoleResourceBo;
 import com.softlab.okr.model.dto.LoginLogDTO;
 import com.softlab.okr.model.dto.RegisterDTO;
 import com.softlab.okr.model.dto.ResourceDTO;
 import com.softlab.okr.model.dto.SignUpDTO;
 import com.softlab.okr.model.dto.TagDTO;
-import com.softlab.okr.model.entity.LoginLog;
-import com.softlab.okr.model.entity.SignUp;
-import com.softlab.okr.model.entity.Tag;
 import com.softlab.okr.model.vo.BookVO;
 import com.softlab.okr.model.vo.ResourceVO;
 import com.softlab.okr.model.vo.SignUpVO;
-import com.softlab.okr.service.BookService;
-import com.softlab.okr.service.KeyService;
-import com.softlab.okr.service.LoginLogService;
+import com.softlab.okr.service.IBookService;
+import com.softlab.okr.service.IKeyService;
+import com.softlab.okr.service.IKeyUserService;
+import com.softlab.okr.service.ILoginLogService;
+import com.softlab.okr.service.ITagService;
 import com.softlab.okr.service.ResourceService;
 import com.softlab.okr.service.SignUpService;
-import com.softlab.okr.service.TagService;
 import com.softlab.okr.service.UserEntityService;
 import com.softlab.okr.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.io.IOException;
-import java.util.Base64;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -63,16 +60,19 @@ public class AdminController {
   private SignUpService signUpService;
 
   @Autowired
-  private TagService tagService;
+  private ITagService tagService;
 
   @Autowired
-  private BookService bookService;
+  private IBookService bookService;
 
   @Autowired
-  private KeyService keyService;
+  private IKeyService keyService;
 
   @Autowired
-  private LoginLogService loginLogService;
+  private IKeyUserService keyUserService;
+
+  @Autowired
+  private ILoginLogService loginLogService;
 
   @ApiOperation("注册用户")
   @PostMapping("register")
@@ -195,16 +195,7 @@ public class AdminController {
   public Result addTag(
       @NotBlank(message = "名称不能为空") @RequestParam("name") String name,
       @NotNull(message = "排序权重不能为空") @RequestParam("order") int order) {
-
-    if (tagService.getTagByName(name) == null) {
-      if (tagService.saveTag(name, order) == 1) {
-        return Result.success();
-      } else {
-        return Result.failure();
-      }
-    } else {
-      return Result.failure();
-    }
+    return tagService.saveTag(name, order);
   }
 
   @ApiOperation("更新标签")
@@ -214,35 +205,21 @@ public class AdminController {
       @NotNull(message = "标签id不能为空") @RequestParam("tagId") int tagId,
       @NotBlank(message = "名称不能为空") @RequestParam("name") String name,
       @NotNull(message = "排序权重不能为空") @RequestParam("order") int order) {
-    Tag tag = new Tag(tagId, name, order);
-    if (tagService.modifyTag(tag) == 1) {
-      return Result.success();
-    } else {
-      return Result.failure();
-    }
+    return tagService.modifyTag(tagId, name, order);
   }
 
   @ApiOperation("删除标签")
   @GetMapping("removeTag")
   @Auth(id = 14, name = "删除标签")
   public Result removeTag(@RequestParam("tagId") @NotNull int tagId) {
-    if (tagService.removeById(tagId) == 1) {
-      return Result.success();
-    } else {
-      return Result.failure();
-    }
+    return tagService.removeById(tagId);
   }
 
   @ApiOperation("获取标签列表")
   @PostMapping("getTagByCond")
   @Auth(id = 15, name = "获取标签列表")
   public Result getTagByCond(@RequestBody @Validated TagDTO dto) {
-    PageInfo<Tag> tagList = tagService.getTagListByCond(dto);
-    if (tagList != null) {
-      return Result.success(tagList);
-    } else {
-      return Result.failure();
-    }
+    return tagService.getTagListByCond(dto);
   }
 
   @PostMapping("saveBook")
@@ -251,35 +228,17 @@ public class AdminController {
   public Result saveBook(@RequestBody BookVO vo) {
     System.out.println(vo);
 
-    if (bookService.saveBook(vo) == 1) {
-      return Result.success();
-    } else {
-      return Result.failure();
-    }
+    return bookService.saveBook(vo);
   }
 
-  @GetMapping("modifyBookImg")
+  @GetMapping("uploadBookImg")
   @ApiOperation("上传书籍照片")
   @Auth(id = 17, name = "上传书籍照片")
   public Result modifyBookImg(
       @RequestParam("bookId") int bookId, @RequestParam("file") MultipartFile file)
-      throws IOException, Exception {
+      throws Exception {
 
-    // 通过base64来转化图片
-    byte[] data = file.getBytes();
-    if (data.length > 1024000) {
-      throw new ApiException();
-    }
-
-    // 将字节流转成字符串
-    Base64.Encoder encoder = Base64.getEncoder();
-    String img = "data:image/png;base64," + encoder.encodeToString(file.getBytes());
-
-    if (bookService.modifyBookImg(bookId, img) == 1) {
-      return Result.success(img);
-    } else {
-      return Result.failure();
-    }
+    return bookService.uploadBookImg(bookId, file);
   }
 
   @PostMapping("modifyBook")
@@ -288,11 +247,7 @@ public class AdminController {
   public Result modifyBook(@RequestBody @Validated BookVO vo) {
     System.out.println(vo);
 
-    if (bookService.modifyById(vo) == 1) {
-      return Result.success();
-    } else {
-      return Result.failure();
-    }
+    return bookService.modifyBook(vo);
   }
 
   @GetMapping("removeBook")
@@ -300,23 +255,14 @@ public class AdminController {
   @Auth(id = 19, name = "删除书籍")
   public Result removeBook(@RequestParam("bookId") @NotNull int bookId) {
 
-    if (bookService.removeById(bookId) == 1) {
-      return Result.success();
-    } else {
-      return Result.failure();
-    }
+    return bookService.removeBook(bookId);
   }
 
   @GetMapping("saveKey")
   @ApiOperation("增加钥匙")
   @Auth(id = 20, name = "增加钥匙")
   public Result saveKey(@RequestParam("keyName") @NotBlank String keyName) {
-
-    if (keyService.saveKey(keyName) == 1) {
-      return Result.success();
-    } else {
-      return Result.failure();
-    }
+    return keyService.saveKey(keyName);
   }
 
   @GetMapping("modifyKey")
@@ -324,24 +270,14 @@ public class AdminController {
   @Auth(id = 21, name = "修改钥匙")
   public Result saveKey(@RequestParam("keyId") @NotNull int keyId,
       @RequestParam("keyName") @NotBlank String keyName) {
-
-    if (keyService.modifyKey(keyId, keyName) == 1) {
-      return Result.success();
-    } else {
-      return Result.failure();
-    }
+    return keyService.modifyKey(keyId, keyName);
   }
 
   @GetMapping("removeKey")
   @ApiOperation("删除钥匙")
   @Auth(id = 22, name = "删除钥匙")
   public Result removeKey(@RequestParam("keyId") @NotNull int keyId) {
-
-    if (keyService.removeById(keyId) == 1) {
-      return Result.success();
-    } else {
-      return Result.failure();
-    }
+    return keyService.removeById(keyId);
   }
 
   @GetMapping("saveKeyUser")
@@ -349,12 +285,7 @@ public class AdminController {
   @Auth(id = 23, name = "增加钥匙持有人")
   public Result saveKeyUser(@RequestParam("keyId") @NotNull int keyId,
       @RequestParam("userId") @NotNull int userId) {
-
-    if (keyService.saveKeyUser(keyId, userId) == 1) {
-      return Result.success();
-    } else {
-      return Result.failure();
-    }
+    return keyUserService.saveKeyUser(keyId, userId);
   }
 
   @GetMapping("removeKeyUser")
@@ -362,12 +293,7 @@ public class AdminController {
   @Auth(id = 24, name = "删除钥匙持有人")
   public Result saveKey(@RequestParam("keyId") @NotNull int keyId,
       @RequestParam("userId") @NotNull int userId) {
-
-    if (keyService.removeByUserId(keyId, userId) == 1) {
-      return Result.success();
-    } else {
-      return Result.failure();
-    }
+    return keyUserService.removeByUserId(keyId, userId);
   }
 
   @LimitedAccess(frequency = 2, second = 30)
@@ -375,13 +301,8 @@ public class AdminController {
   @ApiOperation("登录日志列表")
   @Auth(id = 25, name = "登录日志列表")
   public Result getLoginLogList(@RequestBody @Validated LoginLogDTO dto) {
-    System.out.println(dto);
+    //System.out.println(dto);
 
-    PageInfo<LoginLog> list = loginLogService.getByCond(dto);
-    if (list.getSize() > 0) {
-      return Result.success(list);
-    } else {
-      return Result.failure();
-    }
+    return loginLogService.getByCond(dto);
   }
 }

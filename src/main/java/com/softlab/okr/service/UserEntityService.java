@@ -1,8 +1,8 @@
 package com.softlab.okr.service;
 
+import com.softlab.okr.entity.UserEntity;
 import com.softlab.okr.exception.ServiceException;
 import com.softlab.okr.model.dto.RegisterDTO;
-import com.softlab.okr.model.entity.UserEntity;
 import com.softlab.okr.model.vo.UserVO;
 
 /**
