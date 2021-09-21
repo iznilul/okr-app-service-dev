@@ -18,13 +18,25 @@ public class BookTag {
   private static final long serialVersionUID = 1L;
 
   /**
+<<<<<<< HEAD
    * 书id
    */
   private Long bookId;
+=======
+   * 主键
+   */
+  @TableId(value = "id", type = IdType.AUTO)
+  private Integer id;
+  /**
+   * 书id
+   */
+  private Integer bookId;
+>>>>>>> mybatis plus重构
 
   /**
    * 标签id
    */
+<<<<<<< HEAD
   private Long tagId;
 
   /**
@@ -32,6 +44,10 @@ public class BookTag {
    */
   @TableId(value = "id", type = IdType.AUTO)
   private Long id;
+=======
+  private Integer tagId;
+
+>>>>>>> mybatis plus重构
 
 
 }

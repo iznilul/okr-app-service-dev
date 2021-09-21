@@ -1,7 +1,11 @@
 package com.softlab.okr.job;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+>>>>>>> mybatis plus重构
 =======
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 >>>>>>> mybatis plus重构

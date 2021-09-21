@@ -4,7 +4,6 @@ import com.github.pagehelper.PageInfo;
 import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.annotation.LimitedAccess;
 import com.softlab.okr.entity.SignUp;
-import com.softlab.okr.entity.Tag;
 import com.softlab.okr.model.bo.RoleResourceBo;
 import com.softlab.okr.model.dto.LoginLogDTO;
 import com.softlab.okr.model.dto.RegisterDTO;
@@ -15,11 +14,12 @@ import com.softlab.okr.model.vo.BookVO;
 import com.softlab.okr.model.vo.ResourceVO;
 import com.softlab.okr.model.vo.SignUpVO;
 import com.softlab.okr.service.IBookService;
+import com.softlab.okr.service.IKeyService;
+import com.softlab.okr.service.IKeyUserService;
 import com.softlab.okr.service.ILoginLogService;
-import com.softlab.okr.service.KeyService;
+import com.softlab.okr.service.ITagService;
 import com.softlab.okr.service.ResourceService;
 import com.softlab.okr.service.SignUpService;
-import com.softlab.okr.service.TagService;
 import com.softlab.okr.service.UserEntityService;
 import com.softlab.okr.utils.Result;
 import io.swagger.annotations.Api;
@@ -60,13 +60,16 @@ public class AdminController {
   private SignUpService signUpService;
 
   @Autowired
-  private TagService tagService;
+  private ITagService tagService;
 
   @Autowired
   private IBookService bookService;
 
   @Autowired
-  private KeyService keyService;
+  private IKeyService keyService;
+
+  @Autowired
+  private IKeyUserService keyUserService;
 
   @Autowired
   private ILoginLogService loginLogService;
@@ -192,16 +195,7 @@ public class AdminController {
   public Result addTag(
       @NotBlank(message = "名称不能为空") @RequestParam("name") String name,
       @NotNull(message = "排序权重不能为空") @RequestParam("order") int order) {
-
-    if (tagService.getTagByName(name) == null) {
-      if (tagService.saveTag(name, order) == 1) {
-        return Result.success();
-      } else {
-        return Result.failure();
-      }
-    } else {
-      return Result.failure();
-    }
+    return tagService.saveTag(name, order);
   }
 
   @ApiOperation("更新标签")
@@ -211,35 +205,21 @@ public class AdminController {
       @NotNull(message = "标签id不能为空") @RequestParam("tagId") int tagId,
       @NotBlank(message = "名称不能为空") @RequestParam("name") String name,
       @NotNull(message = "排序权重不能为空") @RequestParam("order") int order) {
-    Tag tag = new Tag(tagId, name, order);
-    if (tagService.modifyTag(tag) == 1) {
-      return Result.success();
-    } else {
-      return Result.failure();
-    }
+    return tagService.modifyTag(tagId, name, order);
   }
 
   @ApiOperation("删除标签")
   @GetMapping("removeTag")
   @Auth(id = 14, name = "删除标签")
   public Result removeTag(@RequestParam("tagId") @NotNull int tagId) {
-    if (tagService.removeById(tagId) == 1) {
-      return Result.success();
-    } else {
-      return Result.failure();
-    }
+    return tagService.removeById(tagId);
   }
 
   @ApiOperation("获取标签列表")
   @PostMapping("getTagByCond")
   @Auth(id = 15, name = "获取标签列表")
   public Result getTagByCond(@RequestBody @Validated TagDTO dto) {
-    PageInfo<Tag> tagList = tagService.getTagListByCond(dto);
-    if (tagList != null) {
-      return Result.success(tagList);
-    } else {
-      return Result.failure();
-    }
+    return tagService.getTagListByCond(dto);
   }
 
   @PostMapping("saveBook")
@@ -282,12 +262,7 @@ public class AdminController {
   @ApiOperation("增加钥匙")
   @Auth(id = 20, name = "增加钥匙")
   public Result saveKey(@RequestParam("keyName") @NotBlank String keyName) {
-
-    if (keyService.saveKey(keyName) == 1) {
-      return Result.success();
-    } else {
-      return Result.failure();
-    }
+    return keyService.saveKey(keyName);
   }
 
   @GetMapping("modifyKey")
@@ -295,24 +270,14 @@ public class AdminController {
   @Auth(id = 21, name = "修改钥匙")
   public Result saveKey(@RequestParam("keyId") @NotNull int keyId,
       @RequestParam("keyName") @NotBlank String keyName) {
-
-    if (keyService.modifyKey(keyId, keyName) == 1) {
-      return Result.success();
-    } else {
-      return Result.failure();
-    }
+    return keyService.modifyKey(keyId, keyName);
   }
 
   @GetMapping("removeKey")
   @ApiOperation("删除钥匙")
   @Auth(id = 22, name = "删除钥匙")
   public Result removeKey(@RequestParam("keyId") @NotNull int keyId) {
-
-    if (keyService.removeById(keyId) == 1) {
-      return Result.success();
-    } else {
-      return Result.failure();
-    }
+    return keyService.removeById(keyId);
   }
 
   @GetMapping("saveKeyUser")
@@ -320,12 +285,7 @@ public class AdminController {
   @Auth(id = 23, name = "增加钥匙持有人")
   public Result saveKeyUser(@RequestParam("keyId") @NotNull int keyId,
       @RequestParam("userId") @NotNull int userId) {
-
-    if (keyService.saveKeyUser(keyId, userId) == 1) {
-      return Result.success();
-    } else {
-      return Result.failure();
-    }
+    return keyUserService.saveKeyUser(keyId, userId);
   }
 
   @GetMapping("removeKeyUser")
@@ -333,12 +293,7 @@ public class AdminController {
   @Auth(id = 24, name = "删除钥匙持有人")
   public Result saveKey(@RequestParam("keyId") @NotNull int keyId,
       @RequestParam("userId") @NotNull int userId) {
-
-    if (keyService.removeByUserId(keyId, userId) == 1) {
-      return Result.success();
-    } else {
-      return Result.failure();
-    }
+    return keyUserService.removeByUserId(keyId, userId);
   }
 
   @LimitedAccess(frequency = 2, second = 30)

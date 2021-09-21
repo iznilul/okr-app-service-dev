@@ -3,7 +3,12 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.softlab.okr.mapper.TaskTriggerMapper">
 <<<<<<< HEAD
+<<<<<<< HEAD
   <resultMap id="taskTriggerMap" type="com.softlab.okr.entity.TaskTrigger">
+=======
+
+  <resultMap id="BaseResultMap" type="com.softlab.okr.entity.TaskTrigger">
+>>>>>>> mybatis plus重构
 =======
 
   <resultMap id="BaseResultMap" type="com.softlab.okr.entity.TaskTrigger">

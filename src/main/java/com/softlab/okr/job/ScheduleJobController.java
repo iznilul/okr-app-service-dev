@@ -1,7 +1,10 @@
 package com.softlab.okr.job;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> mybatis plus重构
 =======
 >>>>>>> mybatis plus重构
 import com.softlab.okr.entity.TaskTrigger;
