@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 
 @Service
-@Transactional(readOnly = false)
+@Transactional
 public class UserInfoServiceImpl implements UserInfoService {
 
   @Autowired

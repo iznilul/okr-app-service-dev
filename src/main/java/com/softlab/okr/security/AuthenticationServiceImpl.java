@@ -1,5 +1,7 @@
 package com.softlab.okr.security;
 
+import com.softlab.okr.service.UserEntityService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -11,8 +13,10 @@ import org.springframework.stereotype.Service;
  * @create: 2021-08-29 22:28
  **/
 @Service
-public class AuthenticationService implements IAuthentication {
+public class AuthenticationServiceImpl implements IAuthenticationService {
 
+  @Autowired
+  private UserEntityService userEntityService;
 
   @Override
   public Authentication getAuthentication() {
@@ -22,6 +26,12 @@ public class AuthenticationService implements IAuthentication {
   @Override
   public UserDetail getPrincipal() {
     return (UserDetail) this.getAuthentication().getPrincipal();
+  }
+
+  @Override
+  public Integer getUserId() {
+    String username = this.getPrincipal().getUsername();
+    return userEntityService.getByUsername(username).getUserId();
   }
 }
 

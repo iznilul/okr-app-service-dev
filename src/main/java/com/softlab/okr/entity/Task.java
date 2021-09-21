@@ -1,5 +1,6 @@
 package com.softlab.okr.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
  * </p>
  *
  * @author Mybatis-plus自动生成
- * @since 2021-08-25
+ * @since 2021-09-22
  */
 @Data
 @AllArgsConstructor
@@ -22,6 +23,7 @@ public class Task {
   /**
    * 任务id
    */
+  @TableId(value = "task_id")
   private String taskId;
 
   /**

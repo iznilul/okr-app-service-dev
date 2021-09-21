@@ -89,8 +89,7 @@ public class ResourceServiceImpl implements ResourceService {
   @Transactional(
       propagation = Propagation.REQUIRED,
       isolation = Isolation.READ_COMMITTED,
-      rollbackFor = Exception.class,
-      readOnly = false)
+      rollbackFor = Exception.class)
   public int reloadRoleResource(RoleResourceBo bo) {
     resourceMapper.deleteRoleResource(bo.getRoleId());
     return this.saveRoleResource(bo);
@@ -100,8 +99,7 @@ public class ResourceServiceImpl implements ResourceService {
   @Transactional(
       propagation = Propagation.REQUIRED,
       isolation = Isolation.READ_COMMITTED,
-      rollbackFor = Exception.class,
-      readOnly = false)
+      rollbackFor = Exception.class)
   public int modifyResourceStatus(int resourceId) {
     ApiFilter.updateResources(resourceId);
     return resourceMapper.updateResourceStatus(resourceId);
@@ -111,8 +109,7 @@ public class ResourceServiceImpl implements ResourceService {
   @Transactional(
       propagation = Propagation.REQUIRED,
       isolation = Isolation.READ_COMMITTED,
-      rollbackFor = Exception.class,
-      readOnly = false)
+      rollbackFor = Exception.class)
   public void appStartLoad(List<Resource> list) {
     this.removeList();
     this.saveResources(list);

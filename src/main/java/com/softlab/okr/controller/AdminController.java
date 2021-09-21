@@ -3,10 +3,8 @@ package com.softlab.okr.controller;
 import com.github.pagehelper.PageInfo;
 import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.annotation.LimitedAccess;
-import com.softlab.okr.entity.LoginLog;
 import com.softlab.okr.entity.SignUp;
 import com.softlab.okr.entity.Tag;
-import com.softlab.okr.exception.ApiException;
 import com.softlab.okr.model.bo.RoleResourceBo;
 import com.softlab.okr.model.dto.LoginLogDTO;
 import com.softlab.okr.model.dto.RegisterDTO;
@@ -16,9 +14,9 @@ import com.softlab.okr.model.dto.TagDTO;
 import com.softlab.okr.model.vo.BookVO;
 import com.softlab.okr.model.vo.ResourceVO;
 import com.softlab.okr.model.vo.SignUpVO;
-import com.softlab.okr.service.BookService;
+import com.softlab.okr.service.IBookService;
+import com.softlab.okr.service.ILoginLogService;
 import com.softlab.okr.service.KeyService;
-import com.softlab.okr.service.LoginLogService;
 import com.softlab.okr.service.ResourceService;
 import com.softlab.okr.service.SignUpService;
 import com.softlab.okr.service.TagService;
@@ -27,7 +25,6 @@ import com.softlab.okr.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.io.IOException;
-import java.util.Base64;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -66,13 +63,13 @@ public class AdminController {
   private TagService tagService;
 
   @Autowired
-  private BookService bookService;
+  private IBookService bookService;
 
   @Autowired
   private KeyService keyService;
 
   @Autowired
-  private LoginLogService loginLogService;
+  private ILoginLogService loginLogService;
 
   @ApiOperation("注册用户")
   @PostMapping("register")
@@ -251,35 +248,17 @@ public class AdminController {
   public Result saveBook(@RequestBody BookVO vo) {
     System.out.println(vo);
 
-    if (bookService.saveBook(vo) == 1) {
-      return Result.success();
-    } else {
-      return Result.failure();
-    }
+    return bookService.saveBook(vo);
   }
 
-  @GetMapping("modifyBookImg")
+  @GetMapping("uploadBookImg")
   @ApiOperation("上传书籍照片")
   @Auth(id = 17, name = "上传书籍照片")
   public Result modifyBookImg(
       @RequestParam("bookId") int bookId, @RequestParam("file") MultipartFile file)
-      throws IOException, Exception {
+      throws Exception {
 
-    // 通过base64来转化图片
-    byte[] data = file.getBytes();
-    if (data.length > 1024000) {
-      throw new ApiException();
-    }
-
-    // 将字节流转成字符串
-    Base64.Encoder encoder = Base64.getEncoder();
-    String img = "data:image/png;base64," + encoder.encodeToString(file.getBytes());
-
-    if (bookService.modifyBookImg(bookId, img) == 1) {
-      return Result.success(img);
-    } else {
-      return Result.failure();
-    }
+    return bookService.uploadBookImg(bookId, file);
   }
 
   @PostMapping("modifyBook")
@@ -288,11 +267,7 @@ public class AdminController {
   public Result modifyBook(@RequestBody @Validated BookVO vo) {
     System.out.println(vo);
 
-    if (bookService.modifyById(vo) == 1) {
-      return Result.success();
-    } else {
-      return Result.failure();
-    }
+    return bookService.modifyBook(vo);
   }
 
   @GetMapping("removeBook")
@@ -300,11 +275,7 @@ public class AdminController {
   @Auth(id = 19, name = "删除书籍")
   public Result removeBook(@RequestParam("bookId") @NotNull int bookId) {
 
-    if (bookService.removeById(bookId) == 1) {
-      return Result.success();
-    } else {
-      return Result.failure();
-    }
+    return bookService.removeBook(bookId);
   }
 
   @GetMapping("saveKey")
@@ -375,13 +346,8 @@ public class AdminController {
   @ApiOperation("登录日志列表")
   @Auth(id = 25, name = "登录日志列表")
   public Result getLoginLogList(@RequestBody @Validated LoginLogDTO dto) {
-    System.out.println(dto);
+    //System.out.println(dto);
 
-    PageInfo<LoginLog> list = loginLogService.getByCond(dto);
-    if (list.getSize() > 0) {
-      return Result.success(list);
-    } else {
-      return Result.failure();
-    }
+    return loginLogService.getByCond(dto);
   }
 }

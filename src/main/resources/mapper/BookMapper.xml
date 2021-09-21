@@ -2,7 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.softlab.okr.mapper.BookMapper">
+<<<<<<< HEAD
   <resultMap id="bookMap" type="com.softlab.okr.entity.Book">
+=======
+  <resultMap id="BaseResultMap" type="com.softlab.okr.entity.Book">
+>>>>>>> mybatis plus重构
     <id property="bookId" column="book_id"/>
     <result property="bookName" column="book_name"/>
     <result property="img" column="img"/>
@@ -25,7 +29,7 @@
   </resultMap>
 
 
-  <sql id="baseColumn">
+  <sql id="Base_Column_List">
     `book_id`,`book_name`,`img`,`publisher`,`price`,`status`,`user_id`,`create_time`,`update_time`
   </sql>
 
@@ -33,23 +37,9 @@
     `book_id`,`tag_id`
   </sql>
 
-  <sql id="table">
+  <sql id="tag">
     `book_tag`
   </sql>
-
-  <!--选择全部-->
-  <select id="selectList" resultMap="VoMap">
-    select
-    book.book_id,
-    book.book_name,
-    book.img,
-    book.publisher,
-    book.price,
-    user_info.name as user_name,
-    book.status
-    from book
-    join user_info on book.user_id=user_info.user_id
-  </select>
 
   <!--    根据条件选取book-->
   <select id="selectByCond" resultMap="VoMap">
@@ -62,80 +52,22 @@
     user_info.name as user_name,
     book.status
     from book
-    join user_info on book.user_id=user_info.user_id
+    join user_info on book.user_id is not null and book.user_id=user_info.user_id
     where 1=1
     <if test="bookName!='' and bookName!=null">and `book_name` like '%${bookName}%'</if>
     <if test="publisher!='' and publisher!=null">and `publisher` like '%${publisher}%'</if>
     <if test="status!=null">and `status` = #{status}</if>
   </select>
 
-  <insert id="insertBook" useGeneratedKeys="true" keyProperty="bookId">
-    insert into
-    `book`(<include refid="baseColumn"></include>)
-    values
-    (null,#{bookName},#{img},#{publisher},#{price},0,null,NOW(),NOW())
-  </insert>
-
-  <select id="selectTagIdByBookId" resultType="Integer">
-    select
-    `tag_id`
-    from
-    <include refid="table"></include>
-    where `book_id`=#{bookId}
-  </select>
-
-  <insert id="insertBookTag" parameterType="com.softlab.okr.model.bo.BookTagBo">
-    insert into
-    `book_tag`(<include refid="bookTagColumn"></include>)
-    values
-    <foreach collection="tagIdList" item="item" separator=",">
-      (#{bookId},#{item})
-    </foreach>
-  </insert>
-
-  <delete id="deleteBookTagByBookId">
-    delete from
-    <include refid="table"></include>
-    where book_id=#{bookId}
-  </delete>
-
-  <delete id="deleteBookTagByTagId">
-    delete from
-    <include refid="table"></include>
-    where tag_id=#{tagId}
-  </delete>
-
-  <delete id="deleteById">
-    delete from `book`
-    where book_id =#{bookId}
-  </delete>
-
-  <update id="updateImg">
-    update `book` set `img`=#{img} where `book_id`=#{bookId}
-  </update>
-
-  <update id="updateById">
+  <update id="updateBook">
     update `book` set
     `book_name`=#{bookName},
     `publisher`=#{publisher},
     `price`=#{price},
     `status`=#{status},
+    `user_id`=(select user_id from `user` where `name`=#{userName}),
     `update_time`=now()
     where book_id=#{bookId}
-  </update>
-
-  <update id="borrowBook">
-    update `book` set
-    `status`=1,
-    `user_id`=#{userId}
-    where `book_id`=#{bookId}
-  </update>
-
-  <update id="returnBook">
-    update `book` set
-    `status`=0,
-    `user_id`=#{userId}
-    where `book_id`=#{bookId}
   </update>
 
 

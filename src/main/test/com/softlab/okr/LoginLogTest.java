@@ -1,7 +1,6 @@
 package com.softlab.okr;
 
-import com.softlab.okr.service.LoginLogService;
-import org.junit.jupiter.api.Test;
+import com.softlab.okr.service.ILoginLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -15,11 +14,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class LoginLogTest {
 
   @Autowired
-  LoginLogService loginLogService;
+  ILoginLogService loginLogService;
 
-  @Test
-  public void saveLoginLog() {
-    System.out.println(loginLogService.saveLog("192.168.1.1", "/api/common/log", "admin", 12));
-  }
+  //@Test
+  //public void saveLoginLog() {
+  //  System.out.println(loginLogService.saveLog("192.168.1.1", "/api/common/log", "admin", 12));
+  //}
 
 }

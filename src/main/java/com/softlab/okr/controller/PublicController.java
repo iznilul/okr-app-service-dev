@@ -1,16 +1,18 @@
 package com.softlab.okr.controller;
 
-import com.github.pagehelper.PageInfo;
 import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.entity.Key;
 import com.softlab.okr.entity.Tag;
 import com.softlab.okr.model.dto.BookDTO;
+<<<<<<< HEAD
 import com.softlab.okr.model.vo.BookVO;
 import com.softlab.okr.security.AuthenticationService;
 import com.softlab.okr.service.BookService;
+=======
+import com.softlab.okr.service.IBookService;
+>>>>>>> mybatis plus重构
 import com.softlab.okr.service.KeyService;
 import com.softlab.okr.service.TagService;
-import com.softlab.okr.service.UserEntityService;
 import com.softlab.okr.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -39,7 +41,7 @@ public class PublicController {
 
 
   @Autowired
-  private BookService bookService;
+  private IBookService bookService;
 
   @Autowired
   private TagService tagService;
@@ -47,22 +49,11 @@ public class PublicController {
   @Autowired
   private KeyService keyService;
 
-  @Autowired
-  AuthenticationService authenticationService;
-
-  @Autowired
-  UserEntityService userEntityService;
-
   @PostMapping("getBookByCond")
   @ApiOperation("书籍列表")
   @Auth(id = 1, name = "书籍列表")
   public Result getBookByCond(@RequestBody @Validated BookDTO dto) {
-    PageInfo<BookVO> list = bookService.getByCond(dto);
-    if (list.getSize() > 0) {
-      return Result.success(list);
-    } else {
-      return Result.failure();
-    }
+    return bookService.getByCond(dto);
   }
 
   @GetMapping("getTagList")
@@ -93,28 +84,14 @@ public class PublicController {
   @ApiOperation("借书")
   @Auth(id = 4, name = "借书")
   public Result borrowBook(@RequestParam("bookId") @NotNull int bookId) {
-    String username = authenticationService.getPrincipal().getUsername();
-
-    int userId = userEntityService.getByUsername(username).getUserId();
-    if (bookService.borrowBook(bookId, userId) == 1) {
-      return Result.success();
-    } else {
-      return Result.failure();
-    }
+    return bookService.borrowBook(bookId);
   }
 
   @GetMapping("returnBook")
   @ApiOperation("还书")
   @Auth(id = 5, name = "还书")
   public Result returnBook(@RequestParam("bookId") @NotNull int bookId) {
-    String username = authenticationService.getPrincipal().getUsername();
-
-    int userId = userEntityService.getByUsername(username).getUserId();
-    if (bookService.returnBook(bookId, userId) == 1) {
-      return Result.success();
-    } else {
-      return Result.failure();
-    }
+    return bookService.returnBook(bookId);
   }
 
 }

@@ -10,7 +10,7 @@ import com.softlab.okr.model.enums.returnCode.LoginReturn;
 import com.softlab.okr.model.enums.returnCode.ResultReturn;
 import com.softlab.okr.model.vo.SignUpVO;
 import com.softlab.okr.model.vo.UserVO;
-import com.softlab.okr.security.AuthenticationService;
+import com.softlab.okr.security.AuthenticationServiceImpl;
 import com.softlab.okr.security.UserDetail;
 import com.softlab.okr.service.ICsdnSpiderService;
 import com.softlab.okr.service.SignUpService;
@@ -52,7 +52,7 @@ public class CommonController {
   private CommonConfig commonConfig;
 
   @Autowired
-  private AuthenticationService authenticationService;
+  private AuthenticationServiceImpl authenticationService;
 
   @Autowired
   private PasswordEncoder passwordEncoder;

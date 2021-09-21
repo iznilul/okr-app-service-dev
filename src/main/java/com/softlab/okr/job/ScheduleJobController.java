@@ -1,6 +1,9 @@
 package com.softlab.okr.job;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> mybatis plus重构
 import com.softlab.okr.entity.TaskTrigger;
 import com.softlab.okr.model.dto.TaskTriggerDTO;
 import java.util.Set;
@@ -25,7 +28,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Mybatis-plus自动生成
  * @since 2021-08-24
  */
-
 
 @RestController
 @RequestMapping("/job")

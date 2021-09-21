@@ -1,6 +1,10 @@
 package com.softlab.okr.job;
 
+<<<<<<< HEAD
 
+=======
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+>>>>>>> mybatis plus重构
 import com.softlab.okr.entity.TaskTrigger;
 import com.softlab.okr.mapper.TaskMapper;
 import com.softlab.okr.mapper.TaskTriggerMapper;
@@ -50,7 +54,8 @@ public class ScheduleJobService {
    * @Date: 2021/8/25
    */
   public void startJob() {
-    List<TaskTrigger> taskTriggerEntities = taskTriggerMapper.selectByStatus(1);
+    List<TaskTrigger> taskTriggerEntities = taskTriggerMapper
+        .selectList(new QueryWrapper<TaskTrigger>().eq("status", 1));
     if (taskTriggerEntities == null || taskTriggerEntities.size() == 0) {
       log.error("定时任务加载数据为空");
       return;
@@ -94,7 +99,7 @@ public class ScheduleJobService {
    * @Date: 2021/8/25
    */
   public void addTaskTrigger(TaskTrigger taskTrigger) throws SchedulerConfigException {
-    taskTriggerMapper.insertTaskTrigger(taskTrigger);
+    taskTriggerMapper.insert(taskTrigger);
     if (taskTrigger.getStatus() == 1) {
       loadJob(taskTrigger.getTaskId());
     }
@@ -122,7 +127,7 @@ public class ScheduleJobService {
   public void modifyTaskTrigger(TaskTrigger taskTrigger) throws SchedulerException {
     unloadJob(taskTrigger.getTaskId());
     taskTriggerMapper
-        .updateTaskTrigger(taskTrigger);
+        .updateById(taskTrigger);
     if (taskTrigger.getStatus() == 1) {
       loadJob(taskTrigger.getTaskId());
     }
@@ -158,7 +163,8 @@ public class ScheduleJobService {
    * @Date: 2021/8/25
    */
   public void loadJob(String taskId) throws SchedulerConfigException {
-    TaskTrigger taskTrigger = taskTriggerMapper.selectByTaskIdAndStatus(taskId, 1);
+    TaskTrigger taskTrigger = taskTriggerMapper
+        .selectOne(new QueryWrapper<TaskTrigger>().eq("task_id", taskId).eq("status", 1));
     if (taskTrigger == null) {
       throw new SchedulerConfigException("未找到相关Job配置");
     }
@@ -196,7 +202,8 @@ public class ScheduleJobService {
    * @Date: 2021/8/25
    */
   public void reloadJob(String taskId) throws Exception {
-    TaskTrigger taskTrigger = taskTriggerMapper.selectByTaskIdAndStatus(taskId, 1);
+    TaskTrigger taskTrigger = taskTriggerMapper
+        .selectOne(new QueryWrapper<TaskTrigger>().eq("task_id", taskId).eq("status", 1));
 
     String jobCode = taskTrigger.getTaskId();
     // 获取以前的触发器
@@ -224,7 +231,7 @@ public class ScheduleJobService {
   private JobDetail getJobDetail(TaskTrigger taskTrigger) throws ClassNotFoundException {
     JobDetail jobDetail = null;
     //反射实例化job类
-    String className = taskMapper.selectByTaskId(taskTrigger.getTaskId()).getClassName();
+    String className = taskMapper.selectById(taskTrigger.getTaskId()).getClassName();
     Class<? extends Job> aClass = Class.forName(className).asSubclass(Job.class);
 
     jobDetail = JobBuilder.newJob()

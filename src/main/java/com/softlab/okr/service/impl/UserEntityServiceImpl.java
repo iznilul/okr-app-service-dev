@@ -90,7 +90,7 @@ public class UserEntityServiceImpl implements UserEntityService,
 
   @Override
   @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED,
-      rollbackFor = Exception.class, readOnly = false)
+      rollbackFor = Exception.class)
   public void register(RegisterDTO dto) {
 
     String password = MD5Util.string2MD5(dto.getUsername());
