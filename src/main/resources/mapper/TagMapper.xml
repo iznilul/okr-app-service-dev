@@ -12,14 +12,4 @@
     `tag_id`,`name`,`order`
   </sql>
 
-  <select id="selectTagListByCond" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"></include>
-    from tag
-    where 1=1
-    <if test="dto.name!='' and dto.name!=null">and `name` like '%${dto.name}%'</if>
-    <if test="dto.orderRule!='' and dto.orderRule!=null">order by `order` ${dto.orderRule}</if>
-  </select>
-
-
 </mapper>

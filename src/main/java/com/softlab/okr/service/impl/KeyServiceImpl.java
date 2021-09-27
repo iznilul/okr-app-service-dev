@@ -1,31 +1,31 @@
 package com.softlab.okr.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.softlab.okr.entity.Key;
 import com.softlab.okr.mapper.KeyMapper;
-import com.softlab.okr.service.KeyService;
-import java.util.List;
+import com.softlab.okr.model.dto.PageDTO;
+import com.softlab.okr.model.vo.KeyVO;
+import com.softlab.okr.service.IKeyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class KeyServiceImpl implements KeyService {
+public class KeyServiceImpl extends ServiceImpl<KeyMapper, Key> implements IKeyService {
 
   @Autowired
-  KeyMapper keyMapper;
+  private KeyMapper keyMapper;
 
   @Override
   public int saveKey(String keyName) {
-    return keyMapper.insertKey(keyName);
+    Key key = new Key(null, keyName);
+    return keyMapper.insert(key);
   }
 
   @Override
   public int modifyKey(int keyId, String keyName) {
-    return keyMapper.updateKey(keyId, keyName);
-  }
-
-  @Override
-  public int saveKeyUser(int keyId, int userId) {
-    return keyMapper.insertUser(keyId, userId);
+    Key key = new Key(keyId, keyName);
+    return keyMapper.updateById(key);
   }
 
   @Override
@@ -34,12 +34,8 @@ public class KeyServiceImpl implements KeyService {
   }
 
   @Override
-  public int removeByUserId(int keyId, int userId) {
-    return keyMapper.deleteByUserId(keyId, userId);
-  }
-
-  @Override
-  public List<Key> list() {
-    return keyMapper.selectList();
+  public Page<KeyVO> getKey(PageDTO dto) {
+    Page<Key> page = new Page<>(dto.getIndex(), dto.getPageSize());
+    return keyMapper.getKey(page);
   }
 }

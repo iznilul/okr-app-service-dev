@@ -1,22 +1,14 @@
 package com.softlab.okr.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.softlab.okr.entity.Key;
-import java.util.List;
-import org.springframework.dao.DataAccessException;
+import com.softlab.okr.model.vo.KeyVO;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface KeyMapper {
+public interface KeyMapper extends BaseMapper<Key> {
 
-  int insertKey(String keyName) throws DataAccessException;
-
-  int updateKey(int keyId, String keyName) throws DataAccessException;
-
-  int insertUser(int keyId, int userId) throws DataAccessException;
-
-  int deleteById(int keyId) throws DataAccessException;
-
-  int deleteByUserId(int keyId, int userId) throws DataAccessException;
-
-  List<Key> selectList() throws DataAccessException;
+  Page<KeyVO> getKey(@Param("page") Page<Key> page);
 }

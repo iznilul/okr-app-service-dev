@@ -1,5 +1,8 @@
 package com.softlab.okr.utils;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,5 +47,14 @@ public class Constants {
      * 未登录者角色
      */
     public static final String ROLE_LOGIN = "role_login";
+
+    /**
+     * 时间戳格式
+     */
+    public static DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+    public static String DateToString(Date date) {
+        return format.format(new Date());
+    }
 
 }

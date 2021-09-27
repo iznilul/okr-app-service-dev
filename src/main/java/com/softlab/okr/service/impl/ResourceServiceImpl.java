@@ -2,7 +2,6 @@ package com.softlab.okr.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.pagehelper.PageInfo;
 import com.softlab.okr.entity.Resource;
 import com.softlab.okr.mapper.ResourceMapper;
 import com.softlab.okr.model.bo.RoleResourceBo;
@@ -12,11 +11,14 @@ import com.softlab.okr.model.vo.ResourceVO;
 import com.softlab.okr.security.ApiFilter;
 import com.softlab.okr.security.MySecurityMetadataSource;
 import com.softlab.okr.service.IResourceService;
+import com.softlab.okr.utils.Result;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -31,28 +33,17 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
   private ResourceMapper resourceMapper;
 
   @Override
-  public int saveResources(List<Resource> resourceList) {
-    return resourceMapper.insertResourceList(resourceList);
-  }
-
-  @Override
-  public int saveRoleResource(RoleResourceBo bo) {
-    return resourceMapper.insertRoleResource(bo);
-  }
-
-  @Override
-  public int removeList() {
-    return resourceMapper.delete(null);
-  }
-
-  @Override
-  public List<ResourceVO> getResourceList(ResourceDTO dto) {
-    Page<Resource> page = new Page(dto.getIndex(), dto.getPageSize());
-    Page<ResourceVO> list = resourceMapper();
-    list.forEach(vo -> {
-      vo.setStatusName(ResourceStatus.getMessage(vo.getStatus()));
+  public Result getResourceList(ResourceDTO dto) {
+    Page<Resource> page = new Page<>(dto.getIndex(), dto.getPageSize());
+    Page<Resource> resourcePage = resourceMapper.selectPage(page, null);
+    List<ResourceVO> list = new ArrayList<>();
+    resourcePage.getRecords().forEach(resource -> {
+      ResourceVO vo = new ResourceVO();
+      BeanUtils.copyProperties(resource, vo);
+      vo.setStatusName(ResourceStatus.getMessage(resource.getStatus()));
+      list.add(vo);
     });
-    return new PageInfo<>(list);
+    return Result.success(list, resourcePage.getTotal());
   }
 
   @Override

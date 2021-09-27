@@ -1,10 +1,10 @@
 package com.softlab.okr.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.softlab.okr.entity.Tag;
 import com.softlab.okr.exception.ServiceException;
 import com.softlab.okr.model.dto.TagDTO;
-import com.softlab.okr.utils.Result;
 import java.util.List;
 
 /**
@@ -14,20 +14,15 @@ import java.util.List;
  */
 public interface ITagService extends IService<Tag> {
 
-  Result getTagListByCond(TagDTO dto) throws ServiceException;
+  Page<Tag> getTagListByCond(TagDTO dto) throws ServiceException;
 
+  int saveTag(String name, int order);
 
-  Result saveTag(String name, int order);
+  Tag getTag(String name);
 
+  int modifyTag(Integer tagId, String name, Integer order);
 
-  Result getTag(String name);
-
-
-  Result modifyTag(Integer tagId, String name, Integer order);
-
-
-  Result removeById(int tagId);
-
+  int removeById(int tagId);
 
   List<Tag> getTagList();
 
