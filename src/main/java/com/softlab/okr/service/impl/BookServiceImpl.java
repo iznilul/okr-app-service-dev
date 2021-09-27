@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.softlab.okr.entity.Book;
 import com.softlab.okr.entity.BookTag;
+import com.softlab.okr.entity.Tag;
 import com.softlab.okr.exception.ApiException;
 import com.softlab.okr.mapper.BookMapper;
 import com.softlab.okr.model.dto.BookDTO;
@@ -14,10 +15,12 @@ import com.softlab.okr.model.vo.BookVO;
 import com.softlab.okr.security.IAuthenticationService;
 import com.softlab.okr.service.IBookService;
 import com.softlab.okr.service.IBookTagService;
+import com.softlab.okr.service.ITagService;
 import com.softlab.okr.utils.Result;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -38,6 +41,9 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements
   @Autowired
   private IBookTagService bookTagService;
 
+  @Autowired
+  private ITagService tagService;
+
   @Override
   @Transactional(
       propagation = Propagation.REQUIRED,
@@ -45,8 +51,10 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements
       rollbackFor = Exception.class)
   public Result saveBook(BookVO vo) {
     Book book = new Book(null, vo.getBookName(), null, vo.getPublisher(), vo.getPrice(), 0, null);
+    List<Integer> tagIdList = vo.getTagList().stream().map(Tag::getTagId)
+        .collect(Collectors.toList());
     boolean flag = (bookMapper.insert(book) == 1) && (
-        bookTagService.saveBookTag(vo.getBookId(), vo.getTagIdList()) == 1);
+        bookTagService.saveBookTag(vo.getBookId(), tagIdList) == 1);
     return flag ?
         Result.success() : Result.failure();
   }
@@ -87,9 +95,11 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements
   public Result modifyBook(BookVO vo) {
     vo.setStatus(BookStatus.getCode(vo.getStatusName()));
     int bookId = vo.getBookId();
+    List<Integer> tagIdList = vo.getTagList().stream().map(Tag::getTagId)
+        .collect(Collectors.toList());
     boolean flag = (bookTagService
         .remove(new QueryWrapper<BookTag>().eq("book_id", bookId)))
-        && (bookTagService.saveBookTag(bookId, vo.getTagIdList()) == 1)
+        && (bookTagService.saveBookTag(bookId, tagIdList) == 1)
         && (bookMapper.updateBook(vo) == 1);
     return flag ? Result.success() : Result.failure();
   }
@@ -118,7 +128,7 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements
     List<BookVO> list = bookVOPage.getRecords();
     list.forEach(vo -> {
       vo.setStatusName(BookStatus.getMessage(vo.getStatus()));
-      vo.setTagIdList(bookTagService.list(new QueryWrapper<BookTag>()
+      vo.setTagList(tagService.list(new QueryWrapper<Tag>()
           .select("tag_id").eq("book_id", vo.getBookId())));
     });
     return list.size() > 0 ? Result.success(list) : Result.failure();

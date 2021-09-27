@@ -18,20 +18,20 @@ public class BookTag {
   private static final long serialVersionUID = 1L;
 
   /**
+   * 主键
+   */
+  @TableId(value = "id", type = IdType.AUTO)
+  private Integer id;
+  /**
    * 书id
    */
-  private Long bookId;
+  private Integer bookId;
 
   /**
    * 标签id
    */
-  private Long tagId;
+  private Integer tagId;
 
-  /**
-   * 主键
-   */
-  @TableId(value = "id", type = IdType.AUTO)
-  private Long id;
 
 
 }

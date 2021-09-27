@@ -1,12 +1,11 @@
 package com.softlab.okr.controller;
 
 import com.softlab.okr.annotation.Auth;
-import com.softlab.okr.entity.Key;
 import com.softlab.okr.entity.Tag;
 import com.softlab.okr.model.dto.BookDTO;
 import com.softlab.okr.service.IBookService;
-import com.softlab.okr.service.KeyService;
-import com.softlab.okr.service.TagService;
+import com.softlab.okr.service.IKeyService;
+import com.softlab.okr.service.ITagService;
 import com.softlab.okr.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -38,10 +37,10 @@ public class PublicController {
   private IBookService bookService;
 
   @Autowired
-  private TagService tagService;
+  private ITagService ITagService;
 
   @Autowired
-  private KeyService keyService;
+  private IKeyService keyService;
 
   @PostMapping("getBookByCond")
   @ApiOperation("书籍列表")
@@ -54,7 +53,7 @@ public class PublicController {
   @ApiOperation("标签列表")
   @Auth(id = 2, name = "标签列表")
   public Result getTagList() {
-    List<Tag> list = tagService.getTagList();
+    List<Tag> list = ITagService.getTagList();
     if (list.size() > 0) {
       return Result.success(list);
     } else {
@@ -66,12 +65,7 @@ public class PublicController {
   @ApiOperation("钥匙列表")
   @Auth(id = 3, name = "钥匙列表")
   public Result getKeyList() {
-    List<Key> list = keyService.list();
-    if (list.size() > 0) {
-      return Result.success(list);
-    } else {
-      return Result.failure();
-    }
+    return keyService.getKey();
   }
 
   @GetMapping("borrowBook")

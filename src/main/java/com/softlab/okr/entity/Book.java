@@ -19,6 +19,8 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class Book extends BaseEntity {
 
+  private static final long serialVersionUID = 1L;
+
   /**
    * 主键
    */

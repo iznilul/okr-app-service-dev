@@ -34,8 +34,7 @@ public class BookTagServiceImpl extends ServiceImpl<BookTagMapper, BookTag> impl
   public List<Integer> getTagIdList(int bookId) {
     List<BookTag> items = bookTagMapper.selectList(new QueryWrapper<BookTag>()
         .eq("book_id", bookId));
-    List<Long> list = items.stream().map(BookTag::getTagId).collect(Collectors.toList());
-    
+    return items.stream().map(BookTag::getTagId).collect(Collectors.toList());
   }
 
 }
