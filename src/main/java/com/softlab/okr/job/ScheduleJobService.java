@@ -1,14 +1,6 @@
 package com.softlab.okr.job;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
->>>>>>> mybatis plus重构
-=======
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
->>>>>>> mybatis plus重构
 import com.softlab.okr.entity.TaskTrigger;
 import com.softlab.okr.mapper.TaskMapper;
 import com.softlab.okr.mapper.TaskTriggerMapper;

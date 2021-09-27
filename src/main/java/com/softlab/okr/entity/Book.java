@@ -19,11 +19,8 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class Book extends BaseEntity {
 
-<<<<<<< HEAD:src/main/java/com/softlab/okr/entity/Book.java
-=======
   private static final long serialVersionUID = 1L;
 
->>>>>>> mybatis plus重构:src/main/java/com/softlab/okr/model/entity/Book.java
   /**
    * 主键
    */

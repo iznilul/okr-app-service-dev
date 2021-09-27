@@ -4,14 +4,7 @@ import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.annotation.TaskInfo;
 import com.softlab.okr.entity.Resource;
 import com.softlab.okr.entity.Task;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 import com.softlab.okr.mapper.TaskMapper;
->>>>>>> mybatis plus重构
-=======
-import com.softlab.okr.mapper.TaskMapper;
->>>>>>> mybatis plus重构
 import com.softlab.okr.security.ApiFilter;
 import com.softlab.okr.security.MySecurityMetadataSource;
 import com.softlab.okr.service.IResourceService;

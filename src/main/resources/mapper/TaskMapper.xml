@@ -1,17 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-<<<<<<< HEAD
-<<<<<<< HEAD
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.softlab.okr.mapper.TaskMapper">
-  <resultMap id="TaskMap" type="com.softlab.okr.entity.Task">
-    <id property="taskId" column="task_id"/>
-    <result property="name" column="name"/>
-    <result property="className" column="class_name"/>
-    <result property="function" column="function"/>
-=======
-=======
->>>>>>> mybatis plus重构
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.softlab.okr.mapper.TaskMapper">
 
@@ -21,10 +9,6 @@
     <result column="name" property="name"/>
     <result column="class_name" property="className"/>
     <result column="function" property="function"/>
-<<<<<<< HEAD
->>>>>>> mybatis plus重构
-=======
->>>>>>> mybatis plus重构
   </resultMap>
 
   <!-- 通用查询结果列 -->

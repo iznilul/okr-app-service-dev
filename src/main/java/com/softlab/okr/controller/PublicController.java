@@ -1,26 +1,11 @@
 package com.softlab.okr.controller;
 
 import com.softlab.okr.annotation.Auth;
-<<<<<<< HEAD
-import com.softlab.okr.entity.Key;
-import com.softlab.okr.entity.Tag;
-import com.softlab.okr.model.dto.BookDTO;
-<<<<<<< HEAD
-import com.softlab.okr.model.vo.BookVO;
-import com.softlab.okr.security.AuthenticationService;
-import com.softlab.okr.service.BookService;
-=======
-import com.softlab.okr.service.IBookService;
->>>>>>> mybatis plus重构
-import com.softlab.okr.service.KeyService;
-import com.softlab.okr.service.TagService;
-=======
 import com.softlab.okr.entity.Tag;
 import com.softlab.okr.model.dto.BookDTO;
 import com.softlab.okr.service.IBookService;
 import com.softlab.okr.service.IKeyService;
 import com.softlab.okr.service.ITagService;
->>>>>>> mybatis plus重构
 import com.softlab.okr.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -55,11 +40,7 @@ public class PublicController {
   private ITagService ITagService;
 
   @Autowired
-<<<<<<< HEAD
-  private KeyService keyService;
-=======
   private IKeyService keyService;
->>>>>>> mybatis plus重构
 
   @PostMapping("getBookByCond")
   @ApiOperation("书籍列表")
