@@ -14,7 +14,7 @@ import com.softlab.okr.mapper.TaskMapper;
 >>>>>>> mybatis plus重构
 import com.softlab.okr.security.ApiFilter;
 import com.softlab.okr.security.MySecurityMetadataSource;
-import com.softlab.okr.service.ResourceService;
+import com.softlab.okr.service.IResourceService;
 import io.jsonwebtoken.lang.Collections;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -46,7 +46,7 @@ public class ApplicationStartup implements ApplicationRunner {
   private RequestMappingInfoHandlerMapping requestMappingInfoHandlerMapping;
 
   @Autowired
-  private ResourceService resourceService;
+  private IResourceService resourceService;
 
 
   @Autowired

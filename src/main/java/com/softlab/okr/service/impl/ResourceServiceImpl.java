@@ -1,6 +1,7 @@
 package com.softlab.okr.service.impl;
 
-import com.github.pagehelper.PageHelper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageInfo;
 import com.softlab.okr.entity.Resource;
 import com.softlab.okr.mapper.ResourceMapper;
@@ -10,7 +11,7 @@ import com.softlab.okr.model.enums.statusCode.ResourceStatus;
 import com.softlab.okr.model.vo.ResourceVO;
 import com.softlab.okr.security.ApiFilter;
 import com.softlab.okr.security.MySecurityMetadataSource;
-import com.softlab.okr.service.ResourceService;
+import com.softlab.okr.service.IResourceService;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -23,14 +24,15 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class ResourceServiceImpl implements ResourceService {
+public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> implements
+    IResourceService {
 
   @Autowired
-  ResourceMapper resourceMapper;
+  private ResourceMapper resourceMapper;
 
   @Override
   public int saveResources(List<Resource> resourceList) {
-    return resourceMapper.insertResource(resourceList);
+    return resourceMapper.insertResourceList(resourceList);
   }
 
   @Override
@@ -40,27 +42,17 @@ public class ResourceServiceImpl implements ResourceService {
 
   @Override
   public int removeList() {
-    return resourceMapper.deleteList();
+    return resourceMapper.delete(null);
   }
 
   @Override
-  public PageInfo<ResourceVO> getResourceList(ResourceDTO dto) {
-    PageHelper.startPage(dto.getIndex(), dto.getPageSize());
-    List<ResourceVO> list = resourceMapper.selectResourceList();
+  public List<ResourceVO> getResourceList(ResourceDTO dto) {
+    Page<Resource> page = new Page(dto.getIndex(), dto.getPageSize());
+    Page<ResourceVO> list = resourceMapper();
     list.forEach(vo -> {
       vo.setStatusName(ResourceStatus.getMessage(vo.getStatus()));
     });
     return new PageInfo<>(list);
-  }
-
-  @Override
-  public Resource getResourceByPath(String path) {
-    return resourceMapper.selectResourceByPath(path);
-  }
-
-  @Override
-  public Resource getResourceById(int resourceId) {
-    return resourceMapper.selectResourceById(resourceId);
   }
 
   @Override

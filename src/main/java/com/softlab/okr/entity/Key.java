@@ -1,5 +1,7 @@
 package com.softlab.okr.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +16,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Key {
-    private Integer keyId;
-    private String keyName;
+
+  private static final long serialVersionUID = 1L;
+
+  @TableId(value = "key_id", type = IdType.AUTO)
+  private Integer keyId;
+  private String keyName;
 }

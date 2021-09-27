@@ -11,25 +11,26 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author Mybatis-plus自动生成
  * @since 2021-09-27
  */
 @Service
-public class KeyUserServiceImpl extends ServiceImpl<KeyUserMapper, KeyUser> implements IKeyUserService {
+public class KeyUserServiceImpl extends ServiceImpl<KeyUserMapper, KeyUser> implements
+    IKeyUserService {
 
   @Autowired
   private KeyUserMapper keyUserMapper;
 
-  public Result saveKeyUser(int keyId, int userId){
-    KeyUser keyUser=new KeyUser(keyId, userId);
+  public Result saveKeyUser(int keyId, int userId) {
+    KeyUser keyUser = new KeyUser(keyId, userId);
     int flag = keyUserMapper.insert(keyUser);
     return flag == 1 ? Result.success() : Result.failure();
   }
 
-  public Result removeByUserId(int keyId, int userId){
+  public Result removeByUserId(int keyId, int userId) {
     int flag = keyUserMapper.delete(new QueryWrapper<KeyUser>()
         .eq("key_id", keyId).eq("user_id", userId));
     return flag == 1 ? Result.success() : Result.failure();

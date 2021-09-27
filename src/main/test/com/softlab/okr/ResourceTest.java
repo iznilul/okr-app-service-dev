@@ -4,7 +4,7 @@ import com.softlab.okr.entity.Resource;
 import com.softlab.okr.mapper.ResourceMapper;
 import com.softlab.okr.model.bo.RoleResourceBo;
 import com.softlab.okr.security.MySecurityMetadataSource;
-import com.softlab.okr.service.ResourceService;
+import com.softlab.okr.service.IResourceService;
 import java.util.Set;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -30,7 +30,7 @@ public class ResourceTest {
   ResourceMapper resourceMapper;
 
   @Autowired
-  ResourceService resourceService;
+  IResourceService resourceService;
 
   @BeforeClass    //公开表态无返回值
   public static void beforeClass() throws Exception {

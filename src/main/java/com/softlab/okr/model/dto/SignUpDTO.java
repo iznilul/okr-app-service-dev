@@ -6,8 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
-
 /**
  * @program: okr
  * @description:
@@ -17,11 +15,11 @@ import javax.validation.constraints.NotNull;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel("signUpDTO 用户报名传输类")
-public class SignUpDTO {
+@ApiModel("signUpDTO 查询报名传输类")
+public class SignUpDTO extends PageDTO {
 
   @ApiModelProperty(value = "学号", required = true, example = "123")
-  private Integer id;
+  private Integer studentId;
 
   @ApiModelProperty(value = "姓名", required = true, example = "臭臭")
   private String name;
@@ -35,22 +33,9 @@ public class SignUpDTO {
   @ApiModelProperty(value = "专业班级", required = true, example = "挖掘机1802")
   private String major;
 
-  @ApiModelProperty(value = "录取状态", required = true, example = "0")
+  @ApiModelProperty(value = "录取状态名", required = true, example = "0")
+  private String statueName;
+
+  @ApiModelProperty(value = "录取状态码", required = true, example = "0")
   private Integer status;
-
-  @NotNull(message = "当前页不能为空")
-  @ApiModelProperty(value = "当前页", required = true, example = "1")
-  private Integer index;
-
-  @NotNull(message = "页大小不能为空")
-  @ApiModelProperty(value = "页大小", required = true, example = "8")
-  private Integer pageSize;
-
-  public Integer getIndex() {
-    return index = index == null ? 1 : index;
-  }
-
-  public Integer getPageSize() {
-    return pageSize = pageSize == null ? 5 : pageSize;
-  }
 }

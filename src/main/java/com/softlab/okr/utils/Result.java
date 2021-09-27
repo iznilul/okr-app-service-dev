@@ -21,12 +21,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Result {
 
-  @ApiModelProperty(value = "成功失败的标志", required = true, example = "200")
+  @ApiModelProperty(value = "标志", required = true, example = "200")
   private Integer code;
-  @ApiModelProperty(value = "成功失败的响应信息", required = true)
+  @ApiModelProperty(value = "响应信息", required = true)
   private String msg;
-  @ApiModelProperty(value = "成功失败的响应数据", required = false)
+  @ApiModelProperty(value = "响应数据", required = false)
   private Object data;
+  @ApiModelProperty(value = "数据数量", required = false)
+  private Long total;
 
   public Result(Integer code, String msg) {
     this.code = code;
@@ -43,6 +45,14 @@ public class Result {
     Result result = new Result();
     result.setResultCode(CommonReturn.SUCCESS);
     result.setData(data);
+    return result;
+  }
+
+  public static Result success(Object data, Long total) {
+    Result result = new Result();
+    result.setResultCode(CommonReturn.SUCCESS);
+    result.setData(data);
+    result.setTotal(total);
     return result;
   }
 
