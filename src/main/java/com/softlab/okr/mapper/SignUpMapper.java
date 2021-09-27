@@ -1,10 +1,11 @@
 package com.softlab.okr.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.softlab.okr.entity.SignUp;
 import com.softlab.okr.model.dto.SignUpDTO;
-import com.softlab.okr.model.dto.UserSignUpDTO;
 import com.softlab.okr.model.vo.SignUpVO;
-import java.util.List;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
@@ -15,24 +16,10 @@ import org.springframework.stereotype.Repository;
  * @Version: 1.0
  */
 @Repository
-public interface SignUpMapper {
-
-  // 报名
-  int insertSignUp(UserSignUpDTO dto) throws DataAccessException;
-
-  // 检查是否已报名
-  Integer selectIsExist(String id) throws DataAccessException;
-
-  //录取结果更新
-  int updateSignUp(SignUp signUp) throws DataAccessException;
+public interface SignUpMapper extends BaseMapper<SignUp> {
 
   //根据传入的参数返回用户
-  List<SignUpVO> selectSignUpByCond(SignUpDTO dto) throws DataAccessException;
-
-  //根据id返回用户
-  SignUpVO selectSignUpById(String studentId) throws DataAccessException;
-
-  // 拉取所有
-  List<SignUpVO> selectSignUp() throws DataAccessException;
+  Page<SignUpVO> selectSignUpByCond(@Param("page") Page<SignUp> page, @Param("dto") SignUpDTO dto)
+      throws DataAccessException;
 
 }

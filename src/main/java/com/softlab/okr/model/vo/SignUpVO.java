@@ -18,6 +18,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class SignUpVO {
 
+  private Integer id;
   private String studentId;
   private String name;
   private String gender;

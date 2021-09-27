@@ -4,16 +4,19 @@ package com.softlab.okr.service.impl;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.softlab.okr.entity.SignUp;
 import com.softlab.okr.mapper.SignUpMapper;
 import com.softlab.okr.model.dto.SignUpDTO;
 import com.softlab.okr.model.dto.UserSignUpDTO;
 import com.softlab.okr.model.enums.statusCode.SignUpStatus;
 import com.softlab.okr.model.vo.SignUpVO;
-import com.softlab.okr.service.SignUpService;
+import com.softlab.okr.service.ISignUpService;
+import com.softlab.okr.utils.Result;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -27,66 +30,72 @@ import org.springframework.stereotype.Service;
  * @Version 1.0
  */
 @Service
-public class SignUpServiceImpl implements SignUpService {
+public class SignUpServiceImpl extends ServiceImpl<SignUpMapper, SignUp> implements ISignUpService {
 
   @Autowired
   private SignUpMapper signUpMapper;
 
   // 报名
   @Override
-  public int saveSignUp(UserSignUpDTO dto) {
-    Integer id = this.getIsExist(dto.getStudentId());
-    if (null != id) {
-      SignUp signUp = new SignUp();
-      BeanUtils.copyProperties(dto, signUp);
-      signUp.setStatus(0);
-      return signUpMapper.updateSignUp(signUp);
+  public Result saveSignUp(UserSignUpDTO dto) {
+    QueryWrapper<SignUp> wrapper = new QueryWrapper<SignUp>().eq("student_id", dto.getStudentId());
+    SignUp signUp = new SignUp();
+    BeanUtils.copyProperties(dto, signUp);
+    signUp.setStatus(0);
+    int flag = 0;
+    if (null != signUpMapper.selectOne(wrapper)) {
+      flag = signUpMapper.update(signUp, wrapper);
+    } else {
+      flag = signUpMapper.insert(signUp);
     }
-    return signUpMapper.insertSignUp(dto);
+    return flag == 1 ? Result.success() : Result.failure();
   }
-
-  // 检查是否已报名
-  @Override
-  public Integer getIsExist(String studentId) {
-    return signUpMapper.selectIsExist(studentId);
-  }
-
 
   //录取结果更新
   @Override
-  public int modifySignUp(SignUp signUp) {
-    return signUpMapper.updateSignUp(signUp);
+  public Result modifySignUp(SignUp signUp) {
+    int flag = signUpMapper.updateById(signUp);
+    return flag == 1 ? Result.success() : Result.failure();
   }
 
   //根据参数返回报名列表
   @Override
-  public PageInfo<SignUpVO> getSignUpByCond(SignUpDTO signUpDTO) {
-    PageHelper.startPage(signUpDTO.getIndex(), signUpDTO.getPageSize());
-    List<SignUpVO> list = signUpMapper.selectSignUpByCond(signUpDTO);
-
+  public List<SignUpVO> getSignUpByCond(SignUpDTO dto) {
+    dto.setStatus(dto.getStatueName() == null ? null : SignUpStatus.getCode(dto.getStatueName()));
+    Page<SignUp> page = new Page<>(dto.getIndex(), dto.getPageSize());
+    Page<SignUpVO> voPage = signUpMapper.selectSignUpByCond(page, dto);
+    List<SignUpVO> list = voPage.getRecords();
     list.forEach(vo -> {
       vo.setStatusName(SignUpStatus.getMessage(vo.getStatus()));
     });
-    return new PageInfo<>(list);
+    return list;
   }
 
   //根据id返回用户
   @Override
-  public SignUpVO getSignUpById(String studentId) {
-    SignUpVO signUpVO = signUpMapper.selectSignUpById(studentId);
-    return signUpVO == null ? null
-        : signUpVO.setStatusName(SignUpStatus.getMessage(signUpVO.getStatus()));
-  }
-
-  // 拉取所有
-  @Override
-  public List<SignUpVO> getSignUp() {
-    return signUpMapper.selectSignUp();
+  public Result getSignUpById(String studentId) {
+    SignUp signUp = signUpMapper
+        .selectOne(new QueryWrapper<SignUp>().eq("student_id", studentId));
+    if (signUp != null) {
+      SignUpVO vo = new SignUpVO();
+      BeanUtils.copyProperties(signUp, vo);
+      vo.setStatusName(SignUpStatus.getMessage(vo.getStatus()));
+      return Result.success(vo);
+    } else {
+      return Result.failure();
+    }
   }
 
   @Override
   public void exportSignUp(HttpServletResponse response) throws IOException {
-    List<SignUpVO> list = this.getSignUp();
+    List<SignUp> list = signUpMapper.selectList(null);
+    List<SignUpVO> voList = new ArrayList<>();
+    list.forEach(signUp -> {
+      SignUpVO vo = new SignUpVO();
+      BeanUtils.copyProperties(signUp, vo);
+      vo.setStatusName(SignUpStatus.getMessage(signUp.getStatus()));
+      voList.add(vo);
+    });
     // 通过工具类创建writer，默认创建xls格式
     ExcelWriter writer = ExcelUtil.getWriter();
     writer.addHeaderAlias("studentId", "学号");
@@ -99,7 +108,7 @@ public class SignUpServiceImpl implements SignUpService {
     writer.addHeaderAlias("comment", "评语");
     writer.addHeaderAlias("updateTime", "更新时间");
     // 一次性写出内容，使用默认样式，强制输出标题
-    writer.write(list, true);
+    writer.write(voList, true);
     //out为OutputStream，需要写出到的目标流
 
     //response为HttpServletResponse对象

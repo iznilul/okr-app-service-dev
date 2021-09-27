@@ -5,15 +5,12 @@ import com.softlab.okr.config.CommonConfig;
 import com.softlab.okr.entity.UserEntity;
 import com.softlab.okr.exception.ApiException;
 import com.softlab.okr.model.dto.LoginDTO;
-import com.softlab.okr.model.dto.UserSignUpDTO;
 import com.softlab.okr.model.enums.returnCode.LoginReturn;
-import com.softlab.okr.model.enums.returnCode.ResultReturn;
-import com.softlab.okr.model.vo.SignUpVO;
 import com.softlab.okr.model.vo.UserVO;
 import com.softlab.okr.security.AuthenticationServiceImpl;
 import com.softlab.okr.security.UserDetail;
 import com.softlab.okr.service.ICsdnSpiderService;
-import com.softlab.okr.service.SignUpService;
+import com.softlab.okr.service.ISignUpService;
 import com.softlab.okr.service.UserEntityService;
 import com.softlab.okr.utils.Result;
 import io.swagger.annotations.Api;
@@ -28,7 +25,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -46,7 +42,7 @@ public class CommonController {
   private UserEntityService userEntityService;
 
   @Autowired
-  private SignUpService signUpService;
+  private ISignUpService signUpService;
 
   @Autowired
   private CommonConfig commonConfig;
@@ -103,30 +99,30 @@ public class CommonController {
     return Result.success();
   }
 
-  @ApiOperation("报名")
-  @PostMapping("signUp")
-  @Auth(id = 4, name = "纳新报名")
-  public Result signUp(@RequestBody UserSignUpDTO dto) {
-    //System.out.println(dto);
-
-    if (signUpService.saveSignUp(dto) == 1) {
-      return Result.success("报名成功，请加入纳新群: " + commonConfig.getQqGroupNumber());
-    } else {
-      return Result.failure();
-    }
-  }
-
-  @ApiOperation("查询报名")
-  @GetMapping("querySignUp")
-  @Auth(id = 5, name = "报名结果查询")
-  public Result querySignUp(@RequestParam String studentId) {
-    SignUpVO signUpVO = signUpService.getSignUpById(studentId);
-    if (signUpVO != null) {
-      return Result.success(signUpVO);
-    } else {
-      return Result.failure(ResultReturn.QUERY_SIGNUP_ERROR);
-    }
-  }
+  //@ApiOperation("报名")
+  //@PostMapping("signUp")
+  //@Auth(id = 4, name = "纳新报名")
+  //public Result signUp(@RequestBody UserSignUpDTO dto) {
+  //  //System.out.println(dto);
+  //
+  //  if (signUpService.saveSignUp(dto) == 1) {
+  //    return Result.success("报名成功，请加入纳新群: " + commonConfig.getQqGroupNumber());
+  //  } else {
+  //    return Result.failure();
+  //  }
+  //}
+  //
+  //@ApiOperation("查询报名")
+  //@GetMapping("querySignUp")
+  //@Auth(id = 5, name = "报名结果查询")
+  //public Result querySignUp(@RequestParam String studentId) {
+  //  SignUpVO signUpVO = signUpService.getSignUpById(studentId);
+  //  if (signUpVO != null) {
+  //    return Result.success(signUpVO);
+  //  } else {
+  //    return Result.failure(ResultReturn.QUERY_SIGNUP_ERROR);
+  //  }
+  //}
 
   @ApiOperation("csdn实时展示")
   @GetMapping("csdnRecord")

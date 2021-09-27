@@ -12,7 +12,7 @@ import com.softlab.okr.model.enums.statusCode.RoleStatus;
 import com.softlab.okr.model.vo.UserVO;
 import com.softlab.okr.security.JwtManager;
 import com.softlab.okr.security.UserDetail;
-import com.softlab.okr.service.ResourceService;
+import com.softlab.okr.service.IResourceService;
 import com.softlab.okr.service.UserEntityService;
 import com.softlab.okr.utils.MD5Util;
 import java.util.Set;
@@ -44,7 +44,7 @@ public class UserEntityServiceImpl implements UserEntityService,
   private ResourceMapper resourceMapper;
 
   @Autowired
-  private ResourceService resourceService;
+  private IResourceService resourceService;
 
   @Autowired
   private RoleMapper roleMapper;
