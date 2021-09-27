@@ -1,5 +1,6 @@
 package com.softlab.okr.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.softlab.okr.entity.UserEntity;
 import com.softlab.okr.exception.ServiceException;
 import com.softlab.okr.model.dto.RegisterDTO;
@@ -8,7 +9,7 @@ import com.softlab.okr.model.vo.UserVO;
 /**
  * @author RudeCrab
  */
-public interface UserEntityService {
+public interface IUserEntityService extends IService<UserEntity> {
 
   /**
    * 登录
@@ -20,8 +21,8 @@ public interface UserEntityService {
 
   UserEntity getByUsername(String username) throws ServiceException;
 
-  void register(RegisterDTO dto) throws ServiceException;
+  int register(RegisterDTO dto) throws ServiceException;
 
-  void removeByUsername(String username) throws ServiceException;
+  int removeByUsername(String username) throws ServiceException;
 
 }

@@ -55,16 +55,5 @@
     <if test="status!=null">and `status` = #{status}</if>
   </select>
 
-  <update id="updateBook">
-    update `book` set
-    `book_name`=#{bookName},
-    `publisher`=#{publisher},
-    `price`=#{price},
-    `status`=#{status},
-    `user_id`=(select user_id from `user` where `name`=#{userName}),
-    `update_time`=now()
-    where book_id=#{bookId}
-  </update>
-
 
 </mapper>

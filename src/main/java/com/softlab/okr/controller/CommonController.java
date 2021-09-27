@@ -11,7 +11,7 @@ import com.softlab.okr.security.AuthenticationServiceImpl;
 import com.softlab.okr.security.UserDetail;
 import com.softlab.okr.service.ICsdnSpiderService;
 import com.softlab.okr.service.ISignUpService;
-import com.softlab.okr.service.UserEntityService;
+import com.softlab.okr.service.IUserEntityService;
 import com.softlab.okr.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -39,7 +39,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CommonController {
 
   @Autowired
-  private UserEntityService userEntityService;
+  private IUserEntityService userEntityService;
 
   @Autowired
   private ISignUpService signUpService;

@@ -96,7 +96,7 @@ package com.softlab.okr.controller;
 //  @ApiOperation("获取资源接口")
 //  @PostMapping("getResourceByCond")
 //  @Auth(id = 6, name = "获取资源接口")
-//  public Result getResourceByCond(@RequestBody ResourceDTO dto) {
+//  public Result getResourceByCond(@RequestBody PageDTO dto) {
 //    PageInfo<ResourceVO> pageInfo = resourceService.getResourceList(dto);
 //    if (pageInfo.getSize() > 0) {
 //      return Result.success(pageInfo);

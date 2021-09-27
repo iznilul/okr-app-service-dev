@@ -14,42 +14,19 @@
     `resource_id`,`method`,`path`,`name`,`status`
   </sql>
 
-  <select id="selectByUserId" resultType="Integer">
-    select re.resource_id from resource re
-    join role_resource rr on rr.resource_id=re.resource_id
-    join user_role ur on rr.role_id =ur.role_id
-    where ur.user_id=#{userId}
-  </select>
-
-  <insert id="insertResource">
-    insert into resource
-    (<include refid="Base_Column_List"></include>)
-    values
-    <foreach collection="list" item="item" separator=",">
-      (#{item.resourceId},#{item.method},#{item.path},#{item.name},#{item.status})
-    </foreach>
-  </insert>
-
-
-  <delete id="deleteRoleResource">
-    delete from role_resource
-    where `role_id`=#{roleId}
-  </delete>
-
-  <insert id="insertRoleResource" parameterType="com.softlab.okr.model.bo.RoleResourceBo">
-    insert into role_resource(role_id,resource_id)
-    values
-    <foreach collection="resourceIds" item="item" separator=",">
-      (#{roleId},#{item})
-    </foreach>
-  </insert>
-
   <update id="updateResourceStatus">
     update
     resource
     set status=ABS(status-1)
     where `resource_id`=#{resourceId}
   </update>
+
+  <select id="selectByUserId" resultType="Integer">
+    select re.resource_id from resource re
+    join role_resource rr on rr.resource_id=re.resource_id
+    join user_role ur on rr.role_id =ur.role_id
+    where ur.user_id=#{userId}
+  </select>
 
 
 </mapper>

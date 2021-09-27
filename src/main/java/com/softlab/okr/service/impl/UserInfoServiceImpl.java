@@ -1,15 +1,18 @@
 package com.softlab.okr.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.softlab.okr.entity.UserEntity;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.softlab.okr.entity.UserInfo;
 import com.softlab.okr.mapper.UserInfoMapper;
-import com.softlab.okr.model.dto.LoginDTO;
 import com.softlab.okr.model.dto.SelectUserDTO;
 import com.softlab.okr.model.dto.UpdateUserDTO;
-import com.softlab.okr.service.UserInfoService;
-import java.util.List;
+import com.softlab.okr.service.IUserEntityService;
+import com.softlab.okr.service.IUserInfoService;
+import com.softlab.okr.utils.Result;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,45 +26,54 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class UserInfoServiceImpl implements UserInfoService {
+public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> implements
+    IUserInfoService {
 
   @Autowired
-  UserInfoMapper userInfoMapper;
+  private UserInfoMapper userInfoMapper;
+
+  @Autowired
+  private IUserEntityService userEntityService;
 
   @Override
-  public UserEntity loginCheck(LoginDTO loginDto) {
-    return userInfoMapper.selectByLogin(loginDto);
+  public int saveUserInfo(int userId, String username) {
+    UserInfo userInfo = new UserInfo(userId, username, null, null, null, null, null, null, null);
+    return userInfoMapper.insert(userInfo);
   }
 
   @Override
-  public void saveUserInfo(int userId, String username) {
-    userInfoMapper.insertUserInfo(userId, username);
+  public UserInfo getUserInfo(String username) {
+    return userInfoMapper.selectOne(new QueryWrapper<UserInfo>()
+        .eq("username", username));
   }
 
   @Override
-  public UserInfo getUserInfoByUsername(String username) {
-    return userInfoMapper.selectUserInfoByUsername(username);
-  }
-
-  @Override
-  public PageInfo<UserInfo> getUserInfoByCond(SelectUserDTO dto) {
-    PageHelper.startPage(dto.getIndex(), dto.getPageSize());
-    List<UserInfo> userInfoList = userInfoMapper.selectUserInfoByCond(dto);
-    return new PageInfo<>(userInfoList);
+  public Result getUserInfoByCond(SelectUserDTO dto) {
+    Page<UserInfo> page = new Page<>(dto.getIndex(), dto.getPageSize());
+    Page<UserInfo> userInfoPage = userInfoMapper.selectPage(page, new QueryWrapper<UserInfo>()
+        .eq(StringUtils.isNotBlank(dto.getUsername()), "username", dto.getUsername())
+        .like(StringUtils.isNotBlank(dto.getName()), "name", dto.getName())
+        .like(StringUtils.isNotBlank(dto.getMajor()), "major", dto.getMajor()));
+    return Result.success(userInfoPage.getRecords(), userInfoPage.getTotal());
   }
 
   @Override
   public int modifyUserInfo(UpdateUserDTO dto) {
-    return userInfoMapper.updateUserInfo(dto);
+    Integer userId = userEntityService.getByUsername(dto.getUsername()).getUserId();
+    if (null == userId) {
+      return 0;
+    } else {
+      UserInfo userInfo = new UserInfo();
+      BeanUtils.copyProperties(dto, userInfo);
+      userInfo.setUserId(userId);
+      return userInfoMapper.updateById(userInfo);
+    }
   }
 
   @Override
   public int uploadAvatar(String username, String avatar) {
-    return userInfoMapper.uploadAvatar(username, avatar);
-  }
-
-  @Override
-  public int modifyPassword(String username, String password) {
-    return userInfoMapper.updatePassword(username, password);
+    return userInfoMapper.update(null, new UpdateWrapper<UserInfo>()
+        .eq("username", username)
+        .set("avatar", avatar));
   }
 }

@@ -16,11 +16,4 @@
         task_id, `name`, class_name, `function`
     </sql>
 
-  <insert id="insertBatch">
-    insert into `task`(task_id,`name`,class_name,`function`)
-    values
-    <foreach collection="list" item="item" separator=",">
-      (#{item.taskId},#{item.name},#{item.className},#{item.function})
-    </foreach>
-  </insert>
 </mapper>

@@ -18,6 +18,8 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 public class Resource {
 
+  private static final long serialVersionUID = 1L;
+
   @TableId(value = "resource_id", type = IdType.AUTO)
   private Integer resourceId;
   /**

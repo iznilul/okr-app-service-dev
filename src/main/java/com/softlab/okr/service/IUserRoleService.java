@@ -1,7 +1,7 @@
 package com.softlab.okr.service;
 
-import com.softlab.okr.entity.UserRole;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.softlab.okr.entity.UserRole;
 
 /**
  * <p>
@@ -12,5 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2021-09-27
  */
 public interface IUserRoleService extends IService<UserRole> {
-
+    
 }

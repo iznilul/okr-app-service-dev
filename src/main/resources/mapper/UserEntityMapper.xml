@@ -2,30 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.softlab.okr.mapper.UserEntityMapper">
-  <resultMap id="userMap" type="com.softlab.okr.entity.UserEntity">
+  <resultMap id="BaseResultMap" type="com.softlab.okr.entity.UserEntity">
     <id property="userId" column="user_id"/>
     <result property="username" column="username"/>
     <result property="password" column="password"/>
   </resultMap>
 
-  <select id="selectByUsername" resultMap="userMap">
-        select user_id,username,password  from `user`
-        where username=#{username}
-    </select>
-
-
-  <update id="updateById" parameterType="com.softlab.okr.entity.UserEntity">
-        update `user` set
-        password=#{password},
-        where `user_id`=#{userId}
-    </update>
-
-  <insert id="register" useGeneratedKeys="true" keyProperty="userId"
-    parameterType="com.softlab.okr.model.bo.RegisterBo">
-        insert `user` (username,password)
-        values
-        (#{username},#{password})
-    </insert>
+  <sql id="Base_Column_List">
+    `user_id`,`username`,`password`
+  </sql>
 
   <delete id="deleteByUsername">
         delete u,ui,ur from `user` u,`user_info` ui,`user_role` ur

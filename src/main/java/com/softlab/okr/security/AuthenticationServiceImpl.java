@@ -1,6 +1,6 @@
 package com.softlab.okr.security;
 
-import com.softlab.okr.service.UserEntityService;
+import com.softlab.okr.service.IUserEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 public class AuthenticationServiceImpl implements IAuthenticationService {
 
   @Autowired
-  private UserEntityService userEntityService;
+  private IUserEntityService userEntityService;
 
   @Override
   public Authentication getAuthentication() {

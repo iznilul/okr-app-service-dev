@@ -7,7 +7,7 @@ import com.softlab.okr.model.dto.LoginDTO;
 import com.softlab.okr.model.dto.ModifyPwdDTO;
 import com.softlab.okr.model.dto.SelectUserDTO;
 import com.softlab.okr.model.dto.UpdateUserDTO;
-import com.softlab.okr.service.UserInfoService;
+import com.softlab.okr.service.IUserInfoService;
 import com.softlab.okr.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -36,7 +36,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class UserInfoController {
 
   @Autowired
-  UserInfoService userInfoService;
+  IUserInfoService userInfoService;
 
 
   /**

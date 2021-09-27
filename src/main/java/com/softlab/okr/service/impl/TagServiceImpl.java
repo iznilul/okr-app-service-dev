@@ -1,15 +1,16 @@
 package com.softlab.okr.service.impl;
 
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.softlab.okr.entity.Tag;
-import com.softlab.okr.mapper.BookMapper;
 import com.softlab.okr.mapper.TagMapper;
 import com.softlab.okr.model.dto.TagDTO;
-import com.softlab.okr.service.TagService;
-import java.util.LinkedList;
+import com.softlab.okr.service.ITagService;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,54 +20,50 @@ import org.springframework.stereotype.Service;
  * @Version 1.0
  */
 @Service
-public class TagServiceImpl implements TagService {
+public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements ITagService {
 
   @Autowired
   private TagMapper tagMapper;
 
-  @Autowired
-  private BookMapper bookMapper;
-
   @Override
   public int saveTag(String name, int order) {
-    return tagMapper.insertTag(name, order);
+    Tag tag = new Tag(null, name, order);
+    return tagMapper.insert(tag);
   }
 
   @Override
-  public Tag getTagByName(String name) {
-    return tagMapper.selectByName(name);
+  public Tag getTag(String name) {
+    return tagMapper.selectOne(new QueryWrapper<Tag>().eq("name", name));
   }
 
   @Override
-  public PageInfo<Tag> getTagListByCond(TagDTO dto) {
-    PageHelper.startPage(dto.getIndex(), dto.getPageSize());
-    List<Tag> list = tagMapper.selectTagListByCond(dto);
-    return new PageInfo<>(list);
+  public Page<Tag> getTagListByCond(TagDTO dto) {
+    Page<Tag> page = new Page<>(dto.getIndex(), dto.getPageSize());
+    Page<Tag> tagPage = tagMapper.selectPage(page, new QueryWrapper<Tag>()
+        .like((StringUtils.isNotBlank(dto.getName())), "name", dto.getName())
+        .orderBy(dto.getOrderRule().equals("ASC"), true, "order"));
+    return page;
   }
 
   @Override
-  public int modifyTag(Tag tag) {
-    return tagMapper.updateTag(tag);
+  public int modifyTag(Integer tagId, String name, Integer order) {
+    Tag tag = new Tag(tagId, name, order);
+    return tagMapper.updateById(tag);
   }
 
   @Override
   public int removeById(int tagId) {
-    bookMapper.deleteBookTagByTagId(tagId);
     return tagMapper.deleteById(tagId);
   }
 
   @Override
   public List<Tag> getTagList() {
-    return tagMapper.selectList();
+    return tagMapper.selectList(null);
   }
 
   @Override
   public List<Integer> getTagIdList() {
     List<Tag> tagList = this.getTagList();
-    List<Integer> list = new LinkedList<>();
-    tagList.forEach(tag -> {
-      list.add(tag.getTagId());
-    });
-    return list;
+    return tagList.stream().map(Tag::getTagId).collect(Collectors.toList());
   }
 }
