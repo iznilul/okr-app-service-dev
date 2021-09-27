@@ -1,7 +1,9 @@
 package com.softlab.okr.mapper;
 
+import com.softlab.okr.entity.SignUp;
 import com.softlab.okr.model.dto.SignUpDTO;
-import com.softlab.okr.model.entity.SignUp;
+import com.softlab.okr.model.dto.UserSignUpDTO;
+import com.softlab.okr.model.vo.SignUpVO;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
@@ -16,21 +18,21 @@ import org.springframework.stereotype.Repository;
 public interface SignUpMapper {
 
   // 报名
-  int insertSignUpList(SignUp signUp) throws DataAccessException;
+  int insertSignUp(UserSignUpDTO dto) throws DataAccessException;
 
   // 检查是否已报名
-  String selectIsExist(String id) throws DataAccessException;
+  Integer selectIsExist(String id) throws DataAccessException;
 
   //录取结果更新
-  int updateSignUpList(SignUp signUp) throws DataAccessException;
+  int updateSignUp(SignUp signUp) throws DataAccessException;
 
   //根据传入的参数返回用户
-  List<SignUp> selectSignUpListByCond(SignUpDTO signUpDTO) throws DataAccessException;
+  List<SignUpVO> selectSignUpByCond(SignUpDTO dto) throws DataAccessException;
 
   //根据id返回用户
-  SignUp selectSignUpListById(String id) throws DataAccessException;
+  SignUpVO selectSignUpById(String studentId) throws DataAccessException;
 
   // 拉取所有
-  List<SignUp> selectSignUpList() throws DataAccessException;
+  List<SignUpVO> selectSignUp() throws DataAccessException;
 
 }

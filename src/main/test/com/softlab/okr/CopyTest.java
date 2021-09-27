@@ -1,10 +1,7 @@
 package com.softlab.okr;
 
-import com.softlab.okr.model.entity.SignUp;
-import com.softlab.okr.model.vo.SignUpVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.BeanUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -20,9 +17,8 @@ public class CopyTest {
 
   @Test
   public void copySignVo() {
-    SignUpVO signUpVO = new SignUpVO();
-    SignUp signUp = new SignUp("1", "1", "1", "1", "1", "1", 1, "1");
-    BeanUtils.copyProperties(signUp, signUpVO);
-    System.out.println(signUpVO.toString());
+    //SignUpVO signUpVO = new SignUpVO();
+    //SignUp signUp = new SignUp("1", "1", "1", "1", "1", "1", 1, "1");
+    //System.out.println(signUpVO.toString());
   }
 }

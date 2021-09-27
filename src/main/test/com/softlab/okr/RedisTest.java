@@ -1,8 +1,5 @@
 package com.softlab.okr;
 
-import com.softlab.okr.model.entity.Resource;
-import com.softlab.okr.security.MySecurityMetadataSource;
-import java.util.Set;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -49,14 +46,14 @@ public class RedisTest {
 
   @Test
   public void redisTest() {
-    redisTemplate.delete("resource");
-    System.out.println(redisTemplate.opsForSet().size("resource"));
-
-    Set<Resource> set = MySecurityMetadataSource.getRESOURCES();
-    set.forEach(
-        resource -> {
-          redisTemplate.opsForSet().add("resource", resource);
-        });
-    System.out.println(redisTemplate.opsForSet().size("resource"));
+    //redisTemplate.delete("resource");
+    //System.out.println(redisTemplate.opsForSet().size("resource"));
+    //
+    //Set<Resource> set = MySecurityMetadataSource.getRESOURCES();
+    //set.forEach(
+    //    resource -> {
+    //      redisTemplate.opsForSet().add("resource", resource);
+    //    });
+    //System.out.println(redisTemplate.opsForSet().size("resource"));
   }
 }

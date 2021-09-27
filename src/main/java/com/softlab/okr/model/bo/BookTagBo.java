@@ -1,9 +1,10 @@
 package com.softlab.okr.model.bo;
 
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 /**
  * @program: okr
@@ -17,5 +18,5 @@ import lombok.NoArgsConstructor;
 public class BookTagBo {
 
   private Integer bookId;
-  private List<Integer> tagIds;
+  private List<Integer> tagIdList;
 }

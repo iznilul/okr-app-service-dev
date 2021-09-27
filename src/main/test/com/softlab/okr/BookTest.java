@@ -1,15 +1,17 @@
 package com.softlab.okr;
 
 import com.softlab.okr.mapper.BookMapper;
-import com.softlab.okr.model.entity.Book;
-import org.junit.*;
+import com.softlab.okr.model.vo.BookVO;
+import java.util.List;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.List;
 
 /**
  * @program: okr
@@ -44,26 +46,35 @@ public class BookTest {
     //每个测试案例执行完成后都会执行一次
   }
 
-  @Test
-  public void resourceTest() {
-    Book book = new Book(3, "a", "a", "a", 1, 1, 1);
-    try {
-      bookMapper.insertBook(book);
-    } catch (DataAccessException e) {
-      System.out.println(e.toString());
-    }
-  }
+  //@Test
+  //public void resourceTest() {
+  //  List<Integer> tagIdList =
+  //      new LinkedList<Integer>() {
+  //        {
+  //          add(5);
+  //          add(6);
+  //          add(7);
+  //          add(8);
+  //        }
+  //      };
+  //  BookVO vo = new BookVO(null, "a", "a", "a", 123, "a", "空闲", tagIdList);
+  //  try {
+  //    bookMapper.insertBook(vo);
+  //  } catch (DataAccessException e) {
+  //    System.out.println(e.toString());
+  //  }
+  //}
 
   @Test
   public void selectList() {
-    List<Book> list = bookMapper.selectList();
+    List<BookVO> list = bookMapper.selectList();
     list.forEach(System.out::println);
   }
 
-  @Test
-  public void updateById() {
-    Book book = new Book(3, "a", "c", "c", 3, 3, 3);
-    bookMapper.updateById(book);
-  }
+  //@Test
+  //public void updateById() {
+  //  Book book = new Book(3, "a", "c", "c", 3, 3, 3);
+  //  bookMapper.updateById(book);
+  //}
 }
 

@@ -6,8 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
-
 /**
  * @program: okr
  * @description:
@@ -18,7 +16,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @ApiModel("SelectUesrDto 选择用户接口传输类")
-public class SelectUserDTO {
+public class SelectUserDTO extends PageDTO {
 
     @ApiModelProperty(value = "用户名", required = true, example = "123")
     private String username;
@@ -29,19 +27,4 @@ public class SelectUserDTO {
     @ApiModelProperty(value = "专业班级", required = true, example = "1802")
     private String major;
 
-    @NotNull(message = "当前页不能为空")
-    @ApiModelProperty(value = "当前页", required = true, example = "1")
-    private Integer index;
-
-    @NotNull(message = "页大小不能为空")
-    @ApiModelProperty(value = "页大小", required = true, example = "8")
-    private Integer pageSize;
-
-    public Integer getIndex() {
-        return index = index == null ? 1 : index;
-    }
-
-    public Integer getPageSize() {
-        return pageSize = pageSize == null ? 5 : pageSize;
-    }
 }
