@@ -243,7 +243,8 @@ public class AdminController {
   @Auth(id = 23, name = "增加钥匙持有人")
   public Result saveKeyUser(@RequestParam("keyId") @NotNull int keyId,
       @RequestParam("userId") @NotNull int userId) {
-    return keyUserService.saveKeyUser(keyId, userId);
+    return keyUserService.saveKeyUser(keyId, userId) == 1 ?
+        Result.success() : Result.failure();
   }
 
   @GetMapping("removeKeyUser")
@@ -251,7 +252,8 @@ public class AdminController {
   @Auth(id = 24, name = "删除钥匙持有人")
   public Result saveKey(@RequestParam("keyId") @NotNull int keyId,
       @RequestParam("userId") @NotNull int userId) {
-    return keyUserService.removeByUserId(keyId, userId);
+    return keyUserService.removeByUserId(keyId, userId) == 1 ?
+        Result.success() : Result.failure();
   }
 
   @LimitedAccess(frequency = 2, second = 30)

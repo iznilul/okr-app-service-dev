@@ -11,7 +11,7 @@
  Target Server Version : 50722
  File Encoding         : 65001
 
- Date: 26/09/2021 01:40:31
+ Date: 30/09/2021 02:43:59
 */
 
 SET NAMES utf8mb4;
@@ -46,15 +46,16 @@ DROP TABLE IF EXISTS `book_tag`;
 CREATE TABLE `book_tag`  (
   `book_id` int(11) NOT NULL COMMENT '书id',
   `tag_id` int(11) NOT NULL COMMENT '标签id',
-  PRIMARY KEY (`book_id`, `tag_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of book_tag
 -- ----------------------------
-INSERT INTO `book_tag` VALUES (1, 5);
-INSERT INTO `book_tag` VALUES (1, 6);
-INSERT INTO `book_tag` VALUES (1, 8);
+INSERT INTO `book_tag` VALUES (1, 5, 1);
+INSERT INTO `book_tag` VALUES (1, 6, 2);
+INSERT INTO `book_tag` VALUES (1, 8, 3);
 
 -- ----------------------------
 -- Table structure for csdn_spider
@@ -119,8 +120,9 @@ DROP TABLE IF EXISTS `key_user`;
 CREATE TABLE `key_user`  (
   `key_id` int(11) NOT NULL COMMENT '钥匙id',
   `user_id` int(11) NOT NULL COMMENT '用户id',
-  PRIMARY KEY (`key_id`, `user_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for login_log
@@ -134,7 +136,7 @@ CREATE TABLE `login_log`  (
   `time` datetime(0) NULL DEFAULT NULL COMMENT '请求时间点',
   `duration` int(11) NULL DEFAULT NULL COMMENT '用时 单位ms',
   PRIMARY KEY (`login_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 587 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 591 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of login_log
@@ -724,6 +726,10 @@ INSERT INTO `login_log` VALUES (583, '127.0.0.1', '/api/common/login', 'anonymou
 INSERT INTO `login_log` VALUES (584, '127.0.0.1', '/api/common/login', 'admin', '2021-09-24 01:39:29', 2);
 INSERT INTO `login_log` VALUES (585, '127.0.0.1', '/api/common/login', 'admin', '2021-09-24 01:40:15', 4);
 INSERT INTO `login_log` VALUES (586, '127.0.0.1', '/api/common/login', 'admin', '2021-09-24 01:41:20', 2);
+INSERT INTO `login_log` VALUES (587, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-30 02:14:43', 1964);
+INSERT INTO `login_log` VALUES (588, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-30 02:15:03', 1153);
+INSERT INTO `login_log` VALUES (589, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-30 02:15:23', 1148);
+INSERT INTO `login_log` VALUES (590, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-09-30 02:15:42', 1199);
 
 -- ----------------------------
 -- Table structure for resource
@@ -749,8 +755,7 @@ INSERT INTO `resource` VALUES (1005, '/api/common/querySignUp', '报名结果查
 INSERT INTO `resource` VALUES (1006, '/api/common/csdnRecord', 'csdn实时展示', 'GET', 1);
 INSERT INTO `resource` VALUES (2001, '/api/admin/register', '注册用户', 'POST', 1);
 INSERT INTO `resource` VALUES (2002, '/api/admin/removeByUsername', '删除用户', 'GET', 1);
-INSERT INTO `resource` VALUES (2003, '/api/admin/reloadAdminRoleResource', '重载管理员资源', 'GET', 1);
-INSERT INTO `resource` VALUES (2004, '/api/admin/reloadUserRoleResource', '重载用户资源', 'GET', 1);
+INSERT INTO `resource` VALUES (2003, '/api/admin/reloadRoleResource', '重载角色资源', 'GET', 1);
 INSERT INTO `resource` VALUES (2005, '/api/admin/modifyResourceStatus', '更改接口开放状态', 'GET', 1);
 INSERT INTO `resource` VALUES (2006, '/api/admin/getResourceByCond', '获取资源接口', 'POST', 1);
 INSERT INTO `resource` VALUES (2009, '/api/admin/getSignUp', '获取报名记录', 'POST', 1);
@@ -761,7 +766,7 @@ INSERT INTO `resource` VALUES (2013, '/api/admin/modifyTag', '更新标签', 'GE
 INSERT INTO `resource` VALUES (2014, '/api/admin/removeTag', '删除标签', 'GET', 1);
 INSERT INTO `resource` VALUES (2015, '/api/admin/getTagByCond', '获取标签列表', 'POST', 1);
 INSERT INTO `resource` VALUES (2016, '/api/admin/saveBook', '添加书籍', 'POST', 1);
-INSERT INTO `resource` VALUES (2017, '/api/admin/modifyBookImg', '上传书籍照片', 'GET', 1);
+INSERT INTO `resource` VALUES (2017, '/api/admin/uploadBookImg', '上传书籍照片', 'GET', 1);
 INSERT INTO `resource` VALUES (2018, '/api/admin/modifyBook', '修改书籍', 'POST', 1);
 INSERT INTO `resource` VALUES (2019, '/api/admin/removeBook', '删除书籍', 'GET', 1);
 INSERT INTO `resource` VALUES (2020, '/api/admin/saveKey', '增加钥匙', 'GET', 1);
@@ -809,56 +814,56 @@ CREATE TABLE `role_resource`  (
   `resource_id` int(11) NOT NULL COMMENT '资源id',
   PRIMARY KEY (`id`, `role_id`, `resource_id`) USING BTREE,
   INDEX `resource_id`(`resource_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11786 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色-权限关系' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11876 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色-权限关系' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of role_resource
 -- ----------------------------
-INSERT INTO `role_resource` VALUES (11749, 1, 2001);
-INSERT INTO `role_resource` VALUES (11771, 1, 2002);
-INSERT INTO `role_resource` VALUES (11761, 1, 2003);
-INSERT INTO `role_resource` VALUES (11766, 1, 2004);
-INSERT INTO `role_resource` VALUES (11759, 1, 2005);
-INSERT INTO `role_resource` VALUES (11744, 1, 2006);
-INSERT INTO `role_resource` VALUES (11748, 1, 2009);
-INSERT INTO `role_resource` VALUES (11760, 1, 2010);
-INSERT INTO `role_resource` VALUES (11774, 1, 2011);
-INSERT INTO `role_resource` VALUES (11750, 1, 2012);
-INSERT INTO `role_resource` VALUES (11753, 1, 2013);
-INSERT INTO `role_resource` VALUES (11743, 1, 2014);
-INSERT INTO `role_resource` VALUES (11764, 1, 2015);
-INSERT INTO `role_resource` VALUES (11772, 1, 2016);
-INSERT INTO `role_resource` VALUES (11769, 1, 2017);
-INSERT INTO `role_resource` VALUES (11754, 1, 2018);
-INSERT INTO `role_resource` VALUES (11751, 1, 2019);
-INSERT INTO `role_resource` VALUES (11767, 1, 2020);
-INSERT INTO `role_resource` VALUES (11745, 1, 2021);
-INSERT INTO `role_resource` VALUES (11762, 1, 2022);
-INSERT INTO `role_resource` VALUES (11742, 1, 2023);
-INSERT INTO `role_resource` VALUES (11757, 1, 2024);
-INSERT INTO `role_resource` VALUES (11747, 1, 2025);
-INSERT INTO `role_resource` VALUES (11755, 1, 3001);
-INSERT INTO `role_resource` VALUES (11778, 2, 3001);
-INSERT INTO `role_resource` VALUES (11758, 1, 3002);
-INSERT INTO `role_resource` VALUES (11780, 2, 3002);
-INSERT INTO `role_resource` VALUES (11741, 1, 3003);
-INSERT INTO `role_resource` VALUES (11775, 2, 3003);
-INSERT INTO `role_resource` VALUES (11763, 1, 3004);
-INSERT INTO `role_resource` VALUES (11781, 2, 3004);
-INSERT INTO `role_resource` VALUES (11768, 1, 3005);
-INSERT INTO `role_resource` VALUES (11783, 2, 3005);
-INSERT INTO `role_resource` VALUES (11756, 1, 4001);
-INSERT INTO `role_resource` VALUES (11779, 2, 4001);
-INSERT INTO `role_resource` VALUES (11770, 1, 4002);
-INSERT INTO `role_resource` VALUES (11784, 2, 4002);
-INSERT INTO `role_resource` VALUES (11752, 1, 4003);
-INSERT INTO `role_resource` VALUES (11777, 2, 4003);
-INSERT INTO `role_resource` VALUES (11746, 1, 4004);
-INSERT INTO `role_resource` VALUES (11776, 2, 4004);
-INSERT INTO `role_resource` VALUES (11765, 1, 4005);
-INSERT INTO `role_resource` VALUES (11782, 2, 4005);
-INSERT INTO `role_resource` VALUES (11773, 1, 8001);
-INSERT INTO `role_resource` VALUES (11785, 2, 8001);
+INSERT INTO `role_resource` VALUES (11839, 1, 2001);
+INSERT INTO `role_resource` VALUES (11861, 1, 2002);
+INSERT INTO `role_resource` VALUES (11851, 1, 2003);
+INSERT INTO `role_resource` VALUES (11856, 1, 2004);
+INSERT INTO `role_resource` VALUES (11849, 1, 2005);
+INSERT INTO `role_resource` VALUES (11835, 1, 2006);
+INSERT INTO `role_resource` VALUES (11838, 1, 2009);
+INSERT INTO `role_resource` VALUES (11850, 1, 2010);
+INSERT INTO `role_resource` VALUES (11864, 1, 2011);
+INSERT INTO `role_resource` VALUES (11840, 1, 2012);
+INSERT INTO `role_resource` VALUES (11843, 1, 2013);
+INSERT INTO `role_resource` VALUES (11832, 1, 2014);
+INSERT INTO `role_resource` VALUES (11854, 1, 2015);
+INSERT INTO `role_resource` VALUES (11862, 1, 2016);
+INSERT INTO `role_resource` VALUES (11858, 1, 2017);
+INSERT INTO `role_resource` VALUES (11844, 1, 2018);
+INSERT INTO `role_resource` VALUES (11841, 1, 2019);
+INSERT INTO `role_resource` VALUES (11857, 1, 2020);
+INSERT INTO `role_resource` VALUES (11834, 1, 2021);
+INSERT INTO `role_resource` VALUES (11852, 1, 2022);
+INSERT INTO `role_resource` VALUES (11833, 1, 2023);
+INSERT INTO `role_resource` VALUES (11847, 1, 2024);
+INSERT INTO `role_resource` VALUES (11837, 1, 2025);
+INSERT INTO `role_resource` VALUES (11845, 1, 3001);
+INSERT INTO `role_resource` VALUES (11868, 2, 3001);
+INSERT INTO `role_resource` VALUES (11848, 1, 3002);
+INSERT INTO `role_resource` VALUES (11870, 2, 3002);
+INSERT INTO `role_resource` VALUES (11831, 1, 3003);
+INSERT INTO `role_resource` VALUES (11865, 2, 3003);
+INSERT INTO `role_resource` VALUES (11853, 1, 3004);
+INSERT INTO `role_resource` VALUES (11871, 2, 3004);
+INSERT INTO `role_resource` VALUES (11859, 1, 3005);
+INSERT INTO `role_resource` VALUES (11873, 2, 3005);
+INSERT INTO `role_resource` VALUES (11846, 1, 4001);
+INSERT INTO `role_resource` VALUES (11869, 2, 4001);
+INSERT INTO `role_resource` VALUES (11860, 1, 4002);
+INSERT INTO `role_resource` VALUES (11874, 2, 4002);
+INSERT INTO `role_resource` VALUES (11842, 1, 4003);
+INSERT INTO `role_resource` VALUES (11867, 2, 4003);
+INSERT INTO `role_resource` VALUES (11836, 1, 4004);
+INSERT INTO `role_resource` VALUES (11866, 2, 4004);
+INSERT INTO `role_resource` VALUES (11855, 1, 4005);
+INSERT INTO `role_resource` VALUES (11872, 2, 4005);
+INSERT INTO `role_resource` VALUES (11863, 1, 8001);
+INSERT INTO `role_resource` VALUES (11875, 2, 8001);
 
 -- ----------------------------
 -- Table structure for route
@@ -962,8 +967,8 @@ CREATE TABLE `task`  (
 -- Records of task
 -- ----------------------------
 INSERT INTO `task` VALUES ('T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
-INSERT INTO `task` VALUES ('T2', '测试任务2', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
-INSERT INTO `task` VALUES ('T3', '测试任务3', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES ('T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES ('T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
 
 -- ----------------------------
 -- Table structure for task_config
@@ -1003,10 +1008,10 @@ CREATE TABLE `task_trigger`  (
 INSERT INTO `task_trigger` VALUES (1, 'T1', '爬虫', '*/10 * * * * ?', 1);
 
 -- ----------------------------
--- Table structure for user
+-- Table structure for user_entity
 -- ----------------------------
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user`  (
+DROP TABLE IF EXISTS `user_entity`;
+CREATE TABLE `user_entity`  (
   `user_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户id，当主键用',
   `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户名(账户)',
   `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密码',
@@ -1014,21 +1019,21 @@ CREATE TABLE `user`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of user
+-- Records of user_entity
 -- ----------------------------
-INSERT INTO `user` VALUES (1, '123', '202cb962ac59075b964b07152d234b70');
-INSERT INTO `user` VALUES (20, 'admin', '21232f297a57a5a743894a0e4a801fc3');
-INSERT INTO `user` VALUES (21, 'test', '098f6bcd4621d373cade4e832627b4f6');
-INSERT INTO `user` VALUES (22, 'test1', '5a105e8b9d40e1329780d62ea2265d8a');
-INSERT INTO `user` VALUES (23, 'shit', '1223b8c30a347321299611f873b449ad');
-INSERT INTO `user` VALUES (24, 'ass', '964d72e72d053d501f2949969849b96c');
+INSERT INTO `user_entity` VALUES (1, '123', '202cb962ac59075b964b07152d234b70');
+INSERT INTO `user_entity` VALUES (20, 'admin', '21232f297a57a5a743894a0e4a801fc3');
+INSERT INTO `user_entity` VALUES (21, 'test', '098f6bcd4621d373cade4e832627b4f6');
+INSERT INTO `user_entity` VALUES (22, 'test1', '5a105e8b9d40e1329780d62ea2265d8a');
+INSERT INTO `user_entity` VALUES (23, 'shit', '1223b8c30a347321299611f873b449ad');
+INSERT INTO `user_entity` VALUES (24, 'ass', '964d72e72d053d501f2949969849b96c');
 
 -- ----------------------------
 -- Table structure for user_info
 -- ----------------------------
 DROP TABLE IF EXISTS `user_info`;
 CREATE TABLE `user_info`  (
-  `user_id` int(11) NOT NULL COMMENT '主键id',
+  `user_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `username` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户名(学号)',
   `name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '姓名',
   `avatar` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '头像',
@@ -1040,7 +1045,7 @@ CREATE TABLE `user_info`  (
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '成员表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '成员表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_info
