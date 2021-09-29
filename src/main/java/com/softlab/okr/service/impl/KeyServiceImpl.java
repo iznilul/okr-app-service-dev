@@ -7,6 +7,7 @@ import com.softlab.okr.mapper.KeyMapper;
 import com.softlab.okr.model.dto.PageDTO;
 import com.softlab.okr.model.vo.KeyVO;
 import com.softlab.okr.service.IKeyService;
+import com.softlab.okr.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +24,7 @@ public class KeyServiceImpl extends ServiceImpl<KeyMapper, Key> implements IKeyS
   }
 
   @Override
-  public int modifyKey(int keyId, String keyName) {
-    Key key = new Key(keyId, keyName);
+  public int modifyKey(Key key) {
     return keyMapper.updateById(key);
   }
 
@@ -34,8 +34,13 @@ public class KeyServiceImpl extends ServiceImpl<KeyMapper, Key> implements IKeyS
   }
 
   @Override
-  public Page<KeyVO> getKey(PageDTO dto) {
+  public Result getKey(PageDTO dto) {
     Page<Key> page = new Page<>(dto.getIndex(), dto.getPageSize());
-    return keyMapper.getKey(page);
+    Page<KeyVO> voPage = keyMapper.getKey(page);
+    if (voPage.getSize() == 0) {
+      page.setCurrent(1);
+      voPage = keyMapper.getKey(page);
+    }
+    return Result.success(voPage.getRecords(), voPage.getTotal());
   }
 }

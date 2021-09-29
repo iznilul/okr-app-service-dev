@@ -2,10 +2,9 @@ package com.softlab.okr.controller;
 
 import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.config.CommonConfig;
-import com.softlab.okr.entity.UserEntity;
-import com.softlab.okr.exception.ApiException;
 import com.softlab.okr.model.dto.LoginDTO;
-import com.softlab.okr.model.enums.returnCode.LoginReturn;
+import com.softlab.okr.model.dto.UserSignUpDTO;
+import com.softlab.okr.model.vo.SignUpVO;
 import com.softlab.okr.model.vo.UserVO;
 import com.softlab.okr.security.AuthenticationServiceImpl;
 import com.softlab.okr.security.UserDetail;
@@ -20,11 +19,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -51,28 +50,15 @@ public class CommonController {
   private AuthenticationServiceImpl authenticationService;
 
   @Autowired
-  private PasswordEncoder passwordEncoder;
-
-  @Autowired
   private ICsdnSpiderService csdnSpiderService;
 
   //将登录后的用户信息包括token返回给前端页面
   @ApiOperation("登录")
   @PostMapping("login")
   @Auth(id = 1, name = "用户登录")
-  public Result login(@RequestBody LoginDTO loginDTO) throws Exception {
-    // 根据用户名查询出用户实体对象
-    UserEntity user = userEntityService.getByUsername(loginDTO.getUsername());
-    // 若没有查到用户或者密码校验失败则抛出异常，将未加密的密码和已加密的密码进行比对
-    if (user == null || !passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
-      throw new ApiException(LoginReturn.USER_NOT_FOUND);
-    }
-    UserVO userVO = userEntityService.login(user);
-    if (userVO != null) {
-      return Result.success(userVO);
-    } else {
-      return Result.failure(LoginReturn.LOGIN_FAIL);
-    }
+  public Result login(@RequestBody LoginDTO dto) throws Exception {
+    UserVO userVO = userEntityService.login(dto);
+    return userVO != null ? Result.success(userVO) : Result.failure();
   }
 
   @ApiOperation("测试")
@@ -99,30 +85,24 @@ public class CommonController {
     return Result.success();
   }
 
-  //@ApiOperation("报名")
-  //@PostMapping("signUp")
-  //@Auth(id = 4, name = "纳新报名")
-  //public Result signUp(@RequestBody UserSignUpDTO dto) {
-  //  //System.out.println(dto);
-  //
-  //  if (signUpService.saveSignUp(dto) == 1) {
-  //    return Result.success("报名成功，请加入纳新群: " + commonConfig.getQqGroupNumber());
-  //  } else {
-  //    return Result.failure();
-  //  }
-  //}
-  //
-  //@ApiOperation("查询报名")
-  //@GetMapping("querySignUp")
-  //@Auth(id = 5, name = "报名结果查询")
-  //public Result querySignUp(@RequestParam String studentId) {
-  //  SignUpVO signUpVO = signUpService.getSignUpById(studentId);
-  //  if (signUpVO != null) {
-  //    return Result.success(signUpVO);
-  //  } else {
-  //    return Result.failure(ResultReturn.QUERY_SIGNUP_ERROR);
-  //  }
-  //}
+  @ApiOperation("报名")
+  @PostMapping("signUp")
+  @Auth(id = 4, name = "纳新报名")
+  public Result signUp(@RequestBody UserSignUpDTO dto) {
+    //System.out.println(dto);
+
+    return signUpService.saveSignUp(dto) == 1
+        ? Result.success("报名成功，请加入纳新群: " + commonConfig.getQqGroupNumber())
+        : Result.failure();
+  }
+
+  @ApiOperation("查询报名")
+  @GetMapping("querySignUp")
+  @Auth(id = 5, name = "报名结果查询")
+  public Result querySignUp(@RequestParam String studentId) {
+    SignUpVO signUpVO = signUpService.getSignUpById(studentId);
+    return signUpVO != null ? Result.success(signUpVO) : Result.failure();
+  }
 
   @ApiOperation("csdn实时展示")
   @GetMapping("csdnRecord")

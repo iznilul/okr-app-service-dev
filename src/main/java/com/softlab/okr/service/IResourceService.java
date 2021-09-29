@@ -17,7 +17,7 @@ public interface IResourceService extends IService<Resource> {
 
   Set<Integer> getResourceIds(String role) throws ServiceException;
 
-  void appStartLoad(List<Resource> list) throws ServiceException;
+  boolean appStartLoad(List<Resource> list) throws ServiceException;
 
   Set<Resource> filterResource(Collection<Resource> list) throws ServiceException;
 

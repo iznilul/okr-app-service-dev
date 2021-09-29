@@ -5,16 +5,19 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.softlab.okr.entity.Book;
+import com.softlab.okr.entity.BookTag;
 import com.softlab.okr.entity.Tag;
 import com.softlab.okr.exception.ApiException;
 import com.softlab.okr.mapper.BookMapper;
 import com.softlab.okr.model.dto.BookDTO;
+import com.softlab.okr.model.dto.BookQueryDTO;
 import com.softlab.okr.model.enums.statusCode.BookStatus;
 import com.softlab.okr.model.vo.BookVO;
 import com.softlab.okr.security.IAuthenticationService;
 import com.softlab.okr.service.IBookService;
 import com.softlab.okr.service.IBookTagService;
 import com.softlab.okr.service.ITagService;
+import com.softlab.okr.utils.Result;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
@@ -47,12 +50,18 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements
       propagation = Propagation.REQUIRED,
       isolation = Isolation.READ_COMMITTED,
       rollbackFor = Exception.class)
-  public boolean saveBook(BookVO vo) {
-    Book book = new Book(null, vo.getBookName(), null, vo.getPublisher(), vo.getPrice(), 0, null);
-    List<Integer> tagIdList = vo.getTagList().stream().map(Tag::getTagId)
-        .collect(Collectors.toList());
-    return (bookMapper.insert(book) == 1) && (
-        bookTagService.saveBookTag(vo.getBookId(), tagIdList) == 1);
+  public boolean saveBook(BookDTO dto) {
+    Book book = dto.getBook();
+    book.setStatus(0);
+    int bookId = bookMapper.insert(book);
+    if (bookId == 0) {
+      return false;
+    } else {
+      List<Tag> tagList = dto.getTagList();
+      List<Integer> tagIdList = tagList.stream().map(Tag::getTagId)
+          .collect(Collectors.toList());
+      return bookTagService.saveBookTag(bookId, tagIdList);
+    }
   }
 
   @Override
@@ -60,8 +69,9 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements
       propagation = Propagation.REQUIRED,
       isolation = Isolation.READ_COMMITTED,
       rollbackFor = Exception.class)
-  public int removeBook(int bookId) {
-    return bookMapper.deleteById(bookId);
+  public boolean removeBook(int bookId) {
+    return bookTagService.remove(new QueryWrapper<BookTag>().eq("book_id", bookId)) &&
+        bookMapper.deleteById(bookId) == 1;
   }
 
   @Override
@@ -85,19 +95,14 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements
       propagation = Propagation.REQUIRED,
       isolation = Isolation.READ_COMMITTED,
       rollbackFor = Exception.class)
-  public boolean modifyBook(BookVO vo) {
-    //vo.setStatus(BookStatus.getCode(vo.getStatusName()));
-    //int bookId = vo.getBookId();
-    //List<Integer> tagIdList = vo.getTagList().stream().map(Tag::getTagId)
-    //    .collect(Collectors.toList());
-    //Book book = new Book();
-    //BeanUtils.copyProperties(vo, book);
-    //book.setUserId()
-    //boolean flag = (bookTagService
-    //    .remove(new QueryWrapper<BookTag>().eq("book_id", bookId)))
-    //    && (bookTagService.saveBookTag(bookId, tagIdList) == 1)
-    //    && (bookMapper.(vo) == 1);
-    return false;
+  public boolean modifyBook(BookDTO dto) {
+    Book book = dto.getBook();
+    List<Integer> tagIdList = dto.getTagList().stream().map(Tag::getTagId)
+        .collect(Collectors.toList());
+    return bookTagService
+        .remove(new QueryWrapper<BookTag>().eq("book_id", book.getBookId()))
+        && bookTagService.saveBookTag(book.getBookId(), tagIdList)
+        && (bookMapper.updateById(book) == 1);
   }
 
   @Override
@@ -116,15 +121,20 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements
   }
 
   @Override
-  public Page<BookVO> getByCond(BookDTO dto) {
+  public Result getByCond(BookQueryDTO dto) {
     Page<Book> page = new Page<>(dto.getIndex(), dto.getPageSize());
     Page<BookVO> voPage = bookMapper.selectByCond(page, dto.getBookName(), dto.getPublisher(),
         BookStatus.getCode(dto.getStatusName()));
+    if (voPage.getSize() == 0) {
+      page.setCurrent(1);
+      voPage = bookMapper.selectByCond(page, dto.getBookName(), dto.getPublisher(),
+          BookStatus.getCode(dto.getStatusName()));
+    }
     voPage.getRecords().forEach(vo -> {
       vo.setStatusName(BookStatus.getMessage(vo.getStatus()));
       vo.setTagList(tagService.list(new QueryWrapper<Tag>()
           .select("tag_id").eq("book_id", vo.getBookId())));
     });
-    return voPage;
+    return Result.success(voPage.getRecords(), voPage.getTotal());
   }
 }

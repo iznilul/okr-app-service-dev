@@ -26,8 +26,14 @@ public class BookTagServiceImpl extends ServiceImpl<BookTagMapper, BookTag> impl
   private BookTagMapper bookTagMapper;
 
   @Override
-  public int saveBookTag(int bookId, List<Integer> list) {
-    return bookTagMapper.insertBookTag(bookId, list);
+  public boolean saveBookTag(int bookId, List<Integer> list) {
+    List<BookTag> bookTagList = list.stream().map(tagId -> {
+      BookTag bookTag = new BookTag();
+      bookTag.setBookId(bookId);
+      bookTag.setTagId(tagId);
+      return bookTag;
+    }).collect(Collectors.toList());
+    return this.saveBatch(bookTagList);
   }
 
   @Override

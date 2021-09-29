@@ -3,7 +3,6 @@ package com.softlab.okr.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.softlab.okr.entity.Resource;
-import com.softlab.okr.entity.Role;
 import com.softlab.okr.mapper.ResourceMapper;
 import com.softlab.okr.model.dto.PageDTO;
 import com.softlab.okr.model.enums.statusCode.ResourceStatus;
@@ -12,7 +11,6 @@ import com.softlab.okr.security.ApiFilter;
 import com.softlab.okr.security.MySecurityMetadataSource;
 import com.softlab.okr.service.IResourceService;
 import com.softlab.okr.service.IRoleResourceService;
-import com.softlab.okr.service.IRoleService;
 import com.softlab.okr.utils.Result;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,13 +34,14 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
   @Autowired
   private IRoleResourceService roleResourceService;
 
-  @Autowired
-  private IRoleService roleService;
-
   @Override
   public Result getResourceList(PageDTO dto) {
     Page<Resource> page = new Page<>(dto.getIndex(), dto.getPageSize());
     Page<Resource> resourcePage = resourceMapper.selectPage(page, null);
+    if (resourcePage.getSize() == 0) {
+      page.setCurrent(1);
+      resourcePage = resourceMapper.selectPage(page, null);
+    }
     List<ResourceVO> list = new ArrayList<>();
     resourcePage.getRecords().forEach(resource -> {
       ResourceVO vo = new ResourceVO();
@@ -82,11 +81,10 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
       propagation = Propagation.REQUIRED,
       isolation = Isolation.READ_COMMITTED,
       rollbackFor = Exception.class)
-  public void appStartLoad(List<Resource> list) {
+  public boolean appStartLoad(List<Resource> list) {
     resourceMapper.delete(null);
-    this.saveOrUpdateBatch(list);
-    List<Role> roleList = roleService.list();
-    roleResourceService.reloadRoleResource(roleList);
+    this.saveBatch(list);
+    return roleResourceService.reloadRoleResource();
   }
 
   @Override

@@ -1,10 +1,7 @@
 package com.softlab.okr.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.softlab.okr.entity.BaseEntity;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * <p>
@@ -15,26 +12,25 @@ import lombok.EqualsAndHashCode;
  * @since 2021-09-27
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class RoleResource extends BaseEntity {
+public class RoleResource {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    /**
-     * 主键
-     */
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+  /**
+   * 主键
+   */
+  @TableId(value = "id")
+  private Integer id;
 
-    /**
-     * 角色id
-     */
-    private Integer roleId;
+  /**
+   * 角色id
+   */
+  private Integer roleId;
 
-    /**
-     * 资源id
-     */
-    private Integer resourceId;
+  /**
+   * 资源id
+   */
+  private Integer resourceId;
 
 
 }

@@ -9,6 +9,7 @@ package com.softlab.okr.aspect;
 
 import com.softlab.okr.entity.LoginLog;
 import com.softlab.okr.service.ILoginLogService;
+import com.softlab.okr.utils.Constants;
 import com.softlab.okr.utils.FilterUtil;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
@@ -74,8 +75,9 @@ public class WebLogAspect {
     String username = filterUtil.getRequestUsername();
     String ip = filterUtil.getRequestIp();
     long duration = System.currentTimeMillis() - startTime.get();
-    LoginLog loginLog = new LoginLog(null, ip, path, username, new Date(), duration);
-    loginLogService.saveRecord(loginLog);
+    LoginLog loginLog = new LoginLog(null, ip, path, username, Constants.DateToString(new Date()),
+        duration);
+    loginLogService.saveLog(loginLog);
     log.info("username:{}", username);
     log.info("ip:{}", ip);
     log.info("path:{}", path);

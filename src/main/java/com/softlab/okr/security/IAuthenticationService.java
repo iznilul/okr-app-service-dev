@@ -9,4 +9,6 @@ public interface IAuthenticationService {
   UserDetail getPrincipal();
 
   Integer getUserId();
+
+  String getUsername();
 }

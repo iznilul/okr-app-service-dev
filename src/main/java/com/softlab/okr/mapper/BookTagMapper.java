@@ -2,8 +2,6 @@ package com.softlab.okr.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.softlab.okr.entity.BookTag;
-import java.util.List;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -16,7 +14,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface BookTagMapper extends BaseMapper<BookTag> {
-
-  int insertBookTag(int bookId, List<Integer> list) throws DataAccessException;
 
 }

@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface IBookTagService extends IService<BookTag> {
 
-  int saveBookTag(int bookId, List<Integer> list);
+  boolean saveBookTag(int bookId, List<Integer> list);
 
   List<Integer> getTagIdList(int bookId);
 }

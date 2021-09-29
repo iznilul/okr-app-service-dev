@@ -6,6 +6,7 @@ import com.softlab.okr.entity.RoleResource;
 import com.softlab.okr.mapper.RoleResourceMapper;
 import com.softlab.okr.service.IResourceService;
 import com.softlab.okr.service.IRoleResourceService;
+import com.softlab.okr.service.IRoleService;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -30,6 +31,9 @@ public class RoleResourceServiceImpl extends
   @Autowired
   private IResourceService resourceService;
 
+  @Autowired
+  private IRoleService roleService;
+
   @Override
   public List<RoleResource> buildRoleResourceList(Integer roleId, Set<Integer> resourceIdList) {
     return resourceIdList.stream().map(resource ->
@@ -46,7 +50,8 @@ public class RoleResourceServiceImpl extends
       propagation = Propagation.REQUIRED,
       isolation = Isolation.READ_COMMITTED,
       rollbackFor = Exception.class)
-  public boolean reloadRoleResource(List<Role> roleList) {
+  public boolean reloadRoleResource() {
+    List<Role> roleList = roleService.list();
     for (Role role : roleList) {
       Set<Integer> set = resourceService.getResourceIds(role.getName());
       List<RoleResource> list = this.buildRoleResourceList(role.getRoleId(), set);

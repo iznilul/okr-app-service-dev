@@ -15,13 +15,4 @@
         book_id, tag_id, id
     </sql>
 
-  <insert id="insertBookTag">
-    insert into
-    `book_tag`(`book_id`,`tag_id`)
-    values
-    <foreach collection="list" item="item" separator=",">
-      (#{bookId},#{item})
-    </foreach>
-  </insert>
-
 </mapper>

@@ -1,16 +1,13 @@
 package com.softlab.okr;
 
-import com.softlab.okr.entity.UserEntity;
 import com.softlab.okr.mapper.UserEntityMapper;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
@@ -46,14 +43,14 @@ public class UserTest {
     //每个测试案例执行完成后都会执行一次
   }
 
-  @Test
-  public void userTest() {
-    UserEntity userEntity = userEntityMapper.selectByUsername("123");
-    if (userEntity != null) {
-      System.out.println(userEntity.toString());
-    } else {
-      throw new UsernameNotFoundException("admin:  do not exist!");
-    }
-  }
+  //@Test
+  //public void userTest() {
+  //  UserEntity userEntity = userEntityMapper.selectByUsername("123");
+  //  if (userEntity != null) {
+  //    System.out.println(userEntity.toString());
+  //  } else {
+  //    throw new UsernameNotFoundException("admin:  do not exist!");
+  //  }
+  //}
 }
 

@@ -12,10 +12,13 @@ import com.softlab.okr.model.dto.UpdateUserDTO;
 import com.softlab.okr.service.IUserEntityService;
 import com.softlab.okr.service.IUserInfoService;
 import com.softlab.okr.utils.Result;
+import java.io.IOException;
+import java.util.Base64;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @Author: Devhui
@@ -54,6 +57,13 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         .eq(StringUtils.isNotBlank(dto.getUsername()), "username", dto.getUsername())
         .like(StringUtils.isNotBlank(dto.getName()), "name", dto.getName())
         .like(StringUtils.isNotBlank(dto.getMajor()), "major", dto.getMajor()));
+    if (userInfoPage.getSize() == 0) {
+      page.setCurrent(1);
+      userInfoPage = userInfoMapper.selectPage(page, new QueryWrapper<UserInfo>()
+          .eq(StringUtils.isNotBlank(dto.getUsername()), "username", dto.getUsername())
+          .like(StringUtils.isNotBlank(dto.getName()), "name", dto.getName())
+          .like(StringUtils.isNotBlank(dto.getMajor()), "major", dto.getMajor()));
+    }
     return Result.success(userInfoPage.getRecords(), userInfoPage.getTotal());
   }
 
@@ -71,7 +81,14 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
   }
 
   @Override
-  public int uploadAvatar(String username, String avatar) {
+  public int uploadAvatar(String username, MultipartFile file) throws IOException {
+    byte[] data = file.getBytes();
+    if (data.length > 1024000) {
+      return 0;
+    }
+    // 将字节流转成字符串
+    Base64.Encoder encoder = Base64.getEncoder();
+    String avatar = "data:image/png;base64," + encoder.encodeToString(file.getBytes());
     return userInfoMapper.update(null, new UpdateWrapper<UserInfo>()
         .eq("username", username)
         .set("avatar", avatar));

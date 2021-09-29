@@ -37,52 +37,53 @@ public class SignUpServiceImpl extends ServiceImpl<SignUpMapper, SignUp> impleme
 
   // 报名
   @Override
-  public Result saveSignUp(UserSignUpDTO dto) {
+  public int saveSignUp(UserSignUpDTO dto) {
     QueryWrapper<SignUp> wrapper = new QueryWrapper<SignUp>().eq("student_id", dto.getStudentId());
     SignUp signUp = new SignUp();
     BeanUtils.copyProperties(dto, signUp);
     signUp.setStatus(0);
-    int flag = 0;
     if (null != signUpMapper.selectOne(wrapper)) {
-      flag = signUpMapper.update(signUp, wrapper);
+      return signUpMapper.update(signUp, wrapper);
     } else {
-      flag = signUpMapper.insert(signUp);
+      return signUpMapper.insert(signUp);
     }
-    return flag == 1 ? Result.success() : Result.failure();
   }
 
   //录取结果更新
   @Override
-  public Result modifySignUp(SignUp signUp) {
-    int flag = signUpMapper.updateById(signUp);
-    return flag == 1 ? Result.success() : Result.failure();
+  public int modifySignUp(SignUp signUp) {
+    return signUpMapper.updateById(signUp);
   }
 
   //根据参数返回报名列表
   @Override
-  public List<SignUpVO> getSignUpByCond(SignUpDTO dto) {
+  public Result getSignUpByCond(SignUpDTO dto) {
     dto.setStatus(dto.getStatueName() == null ? null : SignUpStatus.getCode(dto.getStatueName()));
     Page<SignUp> page = new Page<>(dto.getIndex(), dto.getPageSize());
     Page<SignUpVO> voPage = signUpMapper.selectSignUpByCond(page, dto);
+    if (voPage.getSize() == 0) {
+      page.setCurrent(1);
+      voPage = signUpMapper.selectSignUpByCond(page, dto);
+    }
     List<SignUpVO> list = voPage.getRecords();
     list.forEach(vo -> {
       vo.setStatusName(SignUpStatus.getMessage(vo.getStatus()));
     });
-    return list;
+    return Result.success(list, voPage.getTotal());
   }
 
   //根据id返回用户
   @Override
-  public Result getSignUpById(String studentId) {
+  public SignUpVO getSignUpById(String studentId) {
     SignUp signUp = signUpMapper
         .selectOne(new QueryWrapper<SignUp>().eq("student_id", studentId));
     if (signUp != null) {
       SignUpVO vo = new SignUpVO();
       BeanUtils.copyProperties(signUp, vo);
       vo.setStatusName(SignUpStatus.getMessage(vo.getStatus()));
-      return Result.success(vo);
+      return vo;
     } else {
-      return Result.failure();
+      return null;
     }
   }
 

@@ -2,7 +2,8 @@ package com.softlab.okr.controller;
 
 import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.entity.Tag;
-import com.softlab.okr.model.dto.BookDTO;
+import com.softlab.okr.model.dto.BookQueryDTO;
+import com.softlab.okr.model.dto.PageDTO;
 import com.softlab.okr.service.IBookService;
 import com.softlab.okr.service.IKeyService;
 import com.softlab.okr.service.ITagService;
@@ -45,7 +46,7 @@ public class PublicController {
   @PostMapping("getBookByCond")
   @ApiOperation("书籍列表")
   @Auth(id = 1, name = "书籍列表")
-  public Result getBookByCond(@RequestBody @Validated BookDTO dto) {
+  public Result getBookByCond(@RequestBody @Validated BookQueryDTO dto) {
     return bookService.getByCond(dto);
   }
 
@@ -54,32 +55,30 @@ public class PublicController {
   @Auth(id = 2, name = "标签列表")
   public Result getTagList() {
     List<Tag> list = ITagService.getTagList();
-    if (list.size() > 0) {
-      return Result.success(list);
-    } else {
-      return Result.failure();
-    }
+    return Result.success(list);
   }
 
   @GetMapping("getKeyList")
   @ApiOperation("钥匙列表")
   @Auth(id = 3, name = "钥匙列表")
-  public Result getKeyList() {
-    return keyService.getKey();
+  public Result getKeyList(@RequestBody PageDTO dto) {
+    return keyService.getKey(dto);
   }
 
   @GetMapping("borrowBook")
   @ApiOperation("借书")
   @Auth(id = 4, name = "借书")
   public Result borrowBook(@RequestParam("bookId") @NotNull int bookId) {
-    return bookService.borrowBook(bookId);
+    return bookService.borrowBook(bookId) == 1 ?
+        Result.success() : Result.failure();
   }
 
   @GetMapping("returnBook")
   @ApiOperation("还书")
   @Auth(id = 5, name = "还书")
   public Result returnBook(@RequestParam("bookId") @NotNull int bookId) {
-    return bookService.returnBook(bookId);
+    return bookService.returnBook(bookId) == 1 ?
+        Result.success() : Result.failure();
   }
 
 }

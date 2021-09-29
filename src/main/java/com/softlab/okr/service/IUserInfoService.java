@@ -6,6 +6,8 @@ import com.softlab.okr.exception.ServiceException;
 import com.softlab.okr.model.dto.SelectUserDTO;
 import com.softlab.okr.model.dto.UpdateUserDTO;
 import com.softlab.okr.utils.Result;
+import java.io.IOException;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @Author: Devhui
@@ -25,6 +27,6 @@ public interface IUserInfoService extends IService<UserInfo> {
 
   int modifyUserInfo(UpdateUserDTO dto) throws ServiceException;
 
-  int uploadAvatar(String username, String avatar) throws ServiceException;
+  int uploadAvatar(String username, MultipartFile file) throws ServiceException, IOException;
 
 }

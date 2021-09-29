@@ -6,14 +6,18 @@ import com.softlab.okr.entity.Role;
 import com.softlab.okr.entity.UserEntity;
 import com.softlab.okr.entity.UserRole;
 import com.softlab.okr.mapper.UserEntityMapper;
+import com.softlab.okr.model.dto.LoginDTO;
+import com.softlab.okr.model.dto.ModifyPwdDTO;
 import com.softlab.okr.model.dto.RegisterDTO;
 import com.softlab.okr.model.vo.UserVO;
+import com.softlab.okr.security.IAuthenticationService;
 import com.softlab.okr.security.JwtManager;
 import com.softlab.okr.security.UserDetail;
 import com.softlab.okr.service.IResourceService;
 import com.softlab.okr.service.IRoleService;
 import com.softlab.okr.service.IUserEntityService;
 import com.softlab.okr.service.IUserInfoService;
+import com.softlab.okr.service.IUserRoleService;
 import com.softlab.okr.utils.MD5Util;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -22,6 +26,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -50,18 +55,35 @@ public class UserEntityServiceImpl extends ServiceImpl<UserEntityMapper, UserEnt
   @Autowired
   private IUserInfoService userInfoService;
 
+  @Autowired
+  private IUserRoleService userRoleService;
+
+  @Autowired
+  private IUserEntityService userEntityService;
+
+  @Autowired
+  private PasswordEncoder passwordEncoder;
+
+  @Autowired
+  private IAuthenticationService authenticationService;
+
   //登录操作
   @Override
-  public UserVO login(UserEntity userEntity) {
-
-    //VO是返回给前端用户展示的实体类，不过可以统一包装返回类
-    UserVO userVO = new UserVO();
-    userVO.setUserId(userEntity.getUserId())
-        .setUsername(userEntity.getUsername())
-        // 生成token
-        .setToken(jwtManager.generate(userEntity.getUsername()))//用jwt生成token
-        .setResourceIds(resourceService.getResourceByUserId(userEntity.getUserId()));
-    return userVO;
+  public UserVO login(LoginDTO dto) {
+    // 根据用户名查询出用户实体对象
+    UserEntity userEntity = userEntityService.getByUsername(dto.getUsername());
+    if (!loginCheck(userEntity, dto.getPassword())) {
+      return null;
+    } else {
+      //VO是返回给前端用户展示的实体类，不过可以统一包装返回类
+      UserVO userVO = new UserVO();
+      userVO.setUserId(userEntity.getUserId())
+          .setUsername(userEntity.getUsername())
+          // 生成token
+          .setToken(jwtManager.generate(userEntity.getUsername()))//用jwt生成token
+          .setResourceIds(resourceService.getResourceByUserId(userEntity.getUserId()));
+      return userVO;
+    }
   }
 
   @Override
@@ -91,26 +113,51 @@ public class UserEntityServiceImpl extends ServiceImpl<UserEntityMapper, UserEnt
   @Override
   @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED,
       rollbackFor = Exception.class)
-  public int register(RegisterDTO dto) {
+  public boolean register(RegisterDTO dto) {
     if (null != this.getByUsername(dto.getUsername())) {
-      return 0;
+      return false;
     } else {
       String password = MD5Util.string2MD5(dto.getUsername());
       UserEntity userEntity = new UserEntity(null, dto.getUsername(), password);
       int userId = userEntityMapper.insert(userEntity);
       if (userId == 0) {
-        return 0;
+        return false;
       } else {
         int roleId = roleService.getOne(new QueryWrapper<Role>().eq("name", dto.getName()))
             .getRoleId();
         UserRole userRole = new UserRole(null, userId, roleId);
-        return userInfoService.saveUserInfo(userId, dto.getUsername());
+        return userInfoService.saveUserInfo(userId, dto.getUsername()) == 1 && userRoleService
+            .save(userRole);
       }
     }
   }
 
   @Override
   public int removeByUsername(String username) {
-    return userEntityMapper.deleteByUsername(username);
+    if (null != this.getByUsername(username)) {
+      return 0;
+    } else {
+      return userEntityMapper.deleteByUsername(username);
+    }
+  }
+
+  @Override
+  public boolean loginCheck(UserEntity userEntity, String password) {
+    // 若没有查到用户或者密码校验失败则抛出异常，将未加密的密码和已加密的密码进行比对
+    return userEntity != null && passwordEncoder
+        .matches(password, userEntity.getPassword());
+  }
+
+  @Override
+  public boolean modifyPassword(ModifyPwdDTO dto) {
+    String username = authenticationService.getUsername();
+    UserEntity userEntity = userEntityService.getByUsername(username);
+
+    if (loginCheck(userEntity, dto.getOldPassword())) {
+      userEntity.setPassword(dto.getNewPassword());
+      return this.updateById(userEntity);
+    } else {
+      return false;
+    }
   }
 }
