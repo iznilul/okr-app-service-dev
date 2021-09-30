@@ -41,7 +41,7 @@ public class ApiFilter implements Filter {
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
       throws IOException, ServletException {
     log.info("----ApiFilter 接口过滤器----");
-    HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+    //HttpServletRequest httpServletRequest = (HttpServletRequest) request;
     String path = ((HttpServletRequest) request).getRequestURI();
     for (Resource resource : resources) {
       if (resource.getPath().equals(path)) {

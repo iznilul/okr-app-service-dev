@@ -34,5 +34,5 @@ public class UserInfo extends BaseEntity {
   private String qq;
   private String phone;
   private String weixin;
-  private String desc;
+  private String research;
 }

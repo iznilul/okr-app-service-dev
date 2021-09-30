@@ -18,9 +18,6 @@ import lombok.NoArgsConstructor;
 @ApiModel("dto 用户信息更新传输类")
 public class UpdateUserDTO {
 
-    @ApiModelProperty(value = "用户名", required = true, example = "123")
-    private String username;
-
     @ApiModelProperty(value = "真实姓名", required = true, example = "llz")
     private String name;
 
@@ -37,5 +34,5 @@ public class UpdateUserDTO {
     private String weixin;
 
     @ApiModelProperty(value = "学习/研究方向", required = false, example = "只会crud的臭乐色")
-    private String desc;
+    private String research;
 }

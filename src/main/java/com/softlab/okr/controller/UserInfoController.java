@@ -11,6 +11,7 @@ import com.softlab.okr.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.io.IOException;
+import java.util.Base64;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,13 +56,12 @@ public class UserInfoController {
    * @Description: 返回用户信息 @Param: [param, req]
    * @return: com.softlab.okr.utils.Result @Author: radCircle @Date: 2021/7/3
    */
-  @ApiOperation("根据账号选择用户")
-  @GetMapping("userInfoByUsername")
+  @ApiOperation("获取用户信息")
+  @GetMapping("getUserInfo")
   @Auth(id = 2, name = "根据账号选择用户")
-  public Result userInfoByUsername(
-      @RequestParam(value = "username", required = true) String username) {
+  public Result getUserInfo() {
 
-    UserInfo userInfo = userInfoService.getUserInfo(username);
+    UserInfo userInfo = userInfoService.getUserInfo();
     return userInfo != null ? Result.success(userInfo) : Result.failure();
   }
 
@@ -83,13 +83,16 @@ public class UserInfoController {
    * @return: com.softlab.okr.utils.Result @Author: radCircle @Date: 2021/7/4
    */
   @ApiOperation("上传头像文件")
+
   @PostMapping("upload")
   @Auth(id = 4, name = "上传头像文件")
   public Result upload(
-      @RequestParam("username") String username, @RequestParam("file") MultipartFile file)
+      @RequestParam("file") MultipartFile file)
       throws IOException {
-    return userInfoService.uploadAvatar(username, file) == 1 ?
-        Result.success() : Result.failure();
+    return userInfoService.uploadAvatar(file) == 1 ?
+        Result
+            .success("data:image/png;base64," + Base64.getEncoder().encodeToString(file.getBytes()))
+        : Result.failure();
   }
 
   /**
