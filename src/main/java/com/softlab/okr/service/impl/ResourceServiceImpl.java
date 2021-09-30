@@ -89,7 +89,7 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
 
   @Override
   public Set<Resource> filterResource(Collection<Resource> list) {
-    return list.stream().filter(resource -> resource.getPath().split("/")[2].equals(("common")))
+    return list.stream().filter(resource -> !resource.getPath().split("/")[2].equals(("common")))
         .collect(Collectors.toSet());
   }
 
