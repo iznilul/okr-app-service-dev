@@ -211,7 +211,8 @@ public class GlobalExceptionHandler {
     SQLException exception = (SQLException) e.getCause();
     if (exception != null) {
       log.error("sql语句异常: " + exception.toString());
-      log.error("定位: " + exception.getStackTrace()[0].toString());
+      //log.error("定位: " + exception.getStackTrace()[0].toString());
+      log.error(e.getMessage());
       return Result.failure();
     }
     log.error("Dao层异常" + e.toString());

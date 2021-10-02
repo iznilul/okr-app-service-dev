@@ -9,6 +9,7 @@ import com.softlab.okr.entity.UserInfo;
 import com.softlab.okr.mapper.UserInfoMapper;
 import com.softlab.okr.model.dto.SelectUserDTO;
 import com.softlab.okr.model.dto.UpdateUserDTO;
+import com.softlab.okr.security.IAuthenticationService;
 import com.softlab.okr.service.IUserEntityService;
 import com.softlab.okr.service.IUserInfoService;
 import com.softlab.okr.utils.Result;
@@ -38,6 +39,9 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
   @Autowired
   private IUserEntityService userEntityService;
 
+  @Autowired
+  private IAuthenticationService authenticationService;
+
   @Override
   public int saveUserInfo(int userId, String username) {
     UserInfo userInfo = new UserInfo(userId, username, null, null, null, null, null, null, null);
@@ -45,7 +49,9 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
   }
 
   @Override
-  public UserInfo getUserInfo(String username) {
+  public UserInfo getUserInfo() {
+    String username = authenticationService.getUsername();
+    //System.out.println(username);
     return userInfoMapper.selectOne(new QueryWrapper<UserInfo>()
         .eq("username", username));
   }
@@ -69,7 +75,8 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
 
   @Override
   public int modifyUserInfo(UpdateUserDTO dto) {
-    Integer userId = userEntityService.getByUsername(dto.getUsername()).getUserId();
+    String username = authenticationService.getUsername();
+    Integer userId = userEntityService.getByUsername(username).getUserId();
     if (null == userId) {
       return 0;
     } else {
@@ -81,7 +88,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
   }
 
   @Override
-  public int uploadAvatar(String username, MultipartFile file) throws IOException {
+  public int uploadAvatar(MultipartFile file) throws IOException {
     byte[] data = file.getBytes();
     if (data.length > 1024000) {
       return 0;
@@ -89,6 +96,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
     // 将字节流转成字符串
     Base64.Encoder encoder = Base64.getEncoder();
     String avatar = "data:image/png;base64," + encoder.encodeToString(file.getBytes());
+    String username = authenticationService.getUsername();
     return userInfoMapper.update(null, new UpdateWrapper<UserInfo>()
         .eq("username", username)
         .set("avatar", avatar));

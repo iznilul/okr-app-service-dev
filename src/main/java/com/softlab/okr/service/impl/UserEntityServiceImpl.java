@@ -144,8 +144,7 @@ public class UserEntityServiceImpl extends ServiceImpl<UserEntityMapper, UserEnt
   @Override
   public boolean loginCheck(UserEntity userEntity, String password) {
     // 若没有查到用户或者密码校验失败则抛出异常，将未加密的密码和已加密的密码进行比对
-    return userEntity != null && passwordEncoder
-        .matches(password, userEntity.getPassword());
+    return userEntity != null && userEntity.getPassword().equals(password);
   }
 
   @Override

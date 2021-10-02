@@ -11,13 +11,13 @@
     <result property="qq" column="qq"/>
     <result property="phone" column="phone"/>
     <result property="weixin" column="weixin"/>
-    <result property="desc" column="desc"/>
+    <result property="research" column="research"/>
     <result property="createTime" column="create_time"/>
     <result property="updateTime" column="update_time"/>
   </resultMap>
 
   <sql id="Base_Column_List">
-        user_id,username,`name`,avatar,major,qq,phone,weixin,`desc`,create_time,update_time
+        user_id,username,`name`,avatar,major,qq,phone,weixin,`research`,create_time,update_time
     </sql>
 
 </mapper>

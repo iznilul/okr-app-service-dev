@@ -21,12 +21,12 @@ public interface IUserInfoService extends IService<UserInfo> {
 
   int saveUserInfo(int userId, String username) throws ServiceException;
 
-  UserInfo getUserInfo(String username) throws ServiceException;
+  UserInfo getUserInfo() throws ServiceException;
 
   Result getUserInfoByCond(SelectUserDTO dto) throws ServiceException;
 
   int modifyUserInfo(UpdateUserDTO dto) throws ServiceException;
 
-  int uploadAvatar(String username, MultipartFile file) throws ServiceException, IOException;
+  int uploadAvatar(MultipartFile file) throws ServiceException, IOException;
 
 }
