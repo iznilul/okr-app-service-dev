@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.softlab.okr.entity.Role;
 import com.softlab.okr.entity.RoleResource;
 import com.softlab.okr.mapper.RoleResourceMapper;
+import com.softlab.okr.model.enums.statusCode.RoleStatus;
 import com.softlab.okr.service.IResourceService;
 import com.softlab.okr.service.IRoleResourceService;
 import com.softlab.okr.service.IRoleService;
@@ -39,7 +40,8 @@ public class RoleResourceServiceImpl extends
     return resourceIdList.stream().map(resource ->
     {
       RoleResource roleResource = new RoleResource();
-      roleResource.setId(roleId);
+      roleResource.setId(null);
+      roleResource.setRoleId(roleId);
       roleResource.setResourceId(resource);
       return roleResource;
     }).collect(Collectors.toList());
@@ -52,8 +54,9 @@ public class RoleResourceServiceImpl extends
       rollbackFor = Exception.class)
   public boolean reloadRoleResource() {
     List<Role> roleList = roleService.list();
+    this.remove(null);
     for (Role role : roleList) {
-      Set<Integer> set = resourceService.getResourceIds(role.getName());
+      Set<Integer> set = resourceService.getResourceIds(RoleStatus.getRole(role.getName()));
       List<RoleResource> list = this.buildRoleResourceList(role.getRoleId(), set);
       if (!this.saveBatch(list)) {
         return false;

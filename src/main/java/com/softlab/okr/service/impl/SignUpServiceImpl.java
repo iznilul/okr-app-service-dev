@@ -69,7 +69,7 @@ public class SignUpServiceImpl extends ServiceImpl<SignUpMapper, SignUp> impleme
     list.forEach(vo -> {
       vo.setStatusName(SignUpStatus.getMessage(vo.getStatus()));
     });
-    return Result.success(list, voPage.getTotal());
+    return Result.success(list, voPage.getCurrent(), voPage.getTotal());
   }
 
   //根据id返回用户

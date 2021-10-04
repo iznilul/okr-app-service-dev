@@ -49,7 +49,7 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements ITagS
           .like((StringUtils.isNotBlank(dto.getName())), "name", dto.getName())
           .orderBy(dto.getOrderRule().equals("ASC"), true, "order"));
     }
-    return Result.success(tagPage.getRecords(), tagPage.getTotal());
+    return Result.success(tagPage.getRecords(), tagPage.getCurrent(), tagPage.getTotal());
   }
 
   @Override

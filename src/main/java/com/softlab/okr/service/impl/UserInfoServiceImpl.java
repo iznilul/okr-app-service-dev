@@ -70,7 +70,8 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
           .like(StringUtils.isNotBlank(dto.getName()), "name", dto.getName())
           .like(StringUtils.isNotBlank(dto.getMajor()), "major", dto.getMajor()));
     }
-    return Result.success(userInfoPage.getRecords(), userInfoPage.getTotal());
+    return Result
+        .success(userInfoPage.getRecords(), userInfoPage.getCurrent(), userInfoPage.getTotal());
   }
 
   @Override
