@@ -32,6 +32,7 @@ public class LoginLogServiceImpl extends ServiceImpl<LoginLogMapper, LoginLog> i
       loginLogPage = loginLogMapper
           .selectByCond(page, dto.getUsername(), dto.getBeginTime(), dto.getEndTime());
     }
-    return Result.success(loginLogPage.getRecords(), loginLogPage.getTotal());
+    return Result
+        .success(loginLogPage.getRecords(), loginLogPage.getCurrent(), loginLogPage.getTotal());
   }
 }

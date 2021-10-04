@@ -41,6 +41,6 @@ public class KeyServiceImpl extends ServiceImpl<KeyMapper, Key> implements IKeyS
       page.setCurrent(1);
       voPage = keyMapper.getKey(page);
     }
-    return Result.success(voPage.getRecords(), voPage.getTotal());
+    return Result.success(voPage.getRecords(), voPage.getCurrent(), voPage.getTotal());
   }
 }

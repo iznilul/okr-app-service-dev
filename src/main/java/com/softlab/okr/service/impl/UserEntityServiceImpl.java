@@ -119,12 +119,13 @@ public class UserEntityServiceImpl extends ServiceImpl<UserEntityMapper, UserEnt
     } else {
       String password = MD5Util.string2MD5(dto.getUsername());
       UserEntity userEntity = new UserEntity(null, dto.getUsername(), password);
-      int userId = userEntityMapper.insert(userEntity);
-      if (userId == 0) {
+
+      if (userEntityMapper.insert(userEntity) == 0) {
         return false;
       } else {
         int roleId = roleService.getOne(new QueryWrapper<Role>().eq("name", dto.getName()))
             .getRoleId();
+        int userId = userEntity.getUserId();
         UserRole userRole = new UserRole(null, userId, roleId);
         return userInfoService.saveUserInfo(userId, dto.getUsername()) == 1 && userRoleService
             .save(userRole);
@@ -134,7 +135,7 @@ public class UserEntityServiceImpl extends ServiceImpl<UserEntityMapper, UserEnt
 
   @Override
   public int removeByUsername(String username) {
-    if (null != this.getByUsername(username)) {
+    if (null == this.getByUsername(username)) {
       return 0;
     } else {
       return userEntityMapper.deleteByUsername(username);

@@ -41,7 +41,7 @@ public class ApiFilter implements Filter {
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
       throws IOException, ServletException {
     log.info("----ApiFilter 接口过滤器----");
-    //HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+    int flag = 0;
     String path = ((HttpServletRequest) request).getRequestURI();
     for (Resource resource : resources) {
       if (resource.getPath().equals(path)) {
@@ -51,12 +51,21 @@ public class ApiFilter implements Filter {
           response.setContentType("application/json;charset=utf-8");
           PrintWriter out = response.getWriter();
           //封装一个结果返回类
-          out.write(JSON.toJSONString(Result.failure(ResultReturn.API_ERROR)));
+          out.write(JSON.toJSONString(Result.failure(ResultReturn.API_NOT_OPEN)));
           out.flush();
           out.close();
         }
+        flag = 1;
         break;
       }
+    }
+    if (flag == 0) {
+      //若没有找到请求接口，返回错误
+      response.setContentType("application/json;charset=utf-8");
+      PrintWriter out = response.getWriter();
+      out.write(JSON.toJSONString(Result.failure(ResultReturn.API_ERROR)));
+      out.flush();
+      out.close();
     }
   }
 

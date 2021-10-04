@@ -89,7 +89,7 @@ public class AdminController {
   public Result removeByUsername(
       @NotBlank(message = "username不能为空") @RequestParam("username") String username) {
 
-    return userEntityService.removeByUsername(username) == 1 ?
+    return userEntityService.removeByUsername(username) > 0 ?
         Result.success() : Result.failure();
   }
 

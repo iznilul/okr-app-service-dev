@@ -1,5 +1,6 @@
 package com.softlab.okr.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
@@ -19,7 +20,7 @@ public class RoleResource {
   /**
    * 主键
    */
-  @TableId(value = "id")
+  @TableId(value = "id", type = IdType.AUTO)
   private Integer id;
 
   /**

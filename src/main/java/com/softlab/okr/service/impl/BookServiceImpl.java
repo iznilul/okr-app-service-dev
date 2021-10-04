@@ -135,6 +135,6 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements
       vo.setTagList(tagService.list(new QueryWrapper<Tag>()
           .select("tag_id").eq("book_id", vo.getBookId())));
     });
-    return Result.success(voPage.getRecords(), voPage.getTotal());
+    return Result.success(voPage.getRecords(), voPage.getCurrent(), voPage.getTotal());
   }
 }

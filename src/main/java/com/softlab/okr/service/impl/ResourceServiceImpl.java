@@ -49,7 +49,7 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
       vo.setStatusName(ResourceStatus.getMessage(resource.getStatus()));
       list.add(vo);
     });
-    return Result.success(list, resourcePage.getTotal());
+    return Result.success(list, resourcePage.getCurrent(), resourcePage.getTotal());
   }
 
   @Override

@@ -27,6 +27,8 @@ public class Result {
   private String msg;
   @ApiModelProperty(value = "响应数据", required = false)
   private Object data;
+  @ApiModelProperty(value = "当前页目录", required = false)
+  private Long current;
   @ApiModelProperty(value = "数据数量", required = false)
   private Long total;
 
@@ -48,10 +50,11 @@ public class Result {
     return result;
   }
 
-  public static Result success(Object data, Long total) {
+  public static Result success(Object data, Long current, Long total) {
     Result result = new Result();
     result.setResultCode(CommonReturn.SUCCESS);
     result.setData(data);
+    result.setCurrent(current);
     result.setTotal(total);
     return result;
   }
