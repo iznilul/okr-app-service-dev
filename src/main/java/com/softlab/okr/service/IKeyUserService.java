@@ -3,6 +3,8 @@ package com.softlab.okr.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.softlab.okr.entity.KeyUser;
 import com.softlab.okr.exception.ServiceException;
+import com.softlab.okr.model.dto.PageDTO;
+import com.softlab.okr.utils.Result;
 
 /**
  * <p>
@@ -16,5 +18,9 @@ public interface IKeyUserService extends IService<KeyUser> {
 
   int saveKeyUser(int keyId, int userId) throws ServiceException;
 
-  int removeByUserId(int keyId, int userId) throws ServiceException;
+  int modifyKeyUser(int keyId, int userId, int status);
+
+  Result getKeyUser(PageDTO dto);
+
+  int removeByUserId(int id) throws ServiceException;
 }

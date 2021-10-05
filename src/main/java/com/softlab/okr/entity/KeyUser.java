@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * <p>
@@ -17,7 +18,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class KeyUser {
+@Accessors(chain = true)
+public class KeyUser extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -35,6 +37,8 @@ public class KeyUser {
      * 用户id
      */
     private Integer userId;
+
+    private Integer status;
 
 
 }

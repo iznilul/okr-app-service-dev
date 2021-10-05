@@ -5,22 +5,25 @@
   <resultMap id="BaseResultMap" type="com.softlab.okr.entity.Key">
     <id property="keyId" column="key_id"/>
     <result property="keyName" column="key_name"/>
+    <result property="status" column="status"/>
   </resultMap>
 
   <resultMap id="VOMap" type="com.softlab.okr.model.vo.KeyVO">
     <id property="keyId" column="key_id"/>
     <result property="keyName" column="key_name"/>
+    <result property="status" column="status"/>
     <result property="userName" column="name"/>
   </resultMap>
 
   <sql id="Base_Column_List">
-        'key_id',`key_name`
+        `key_id`,`key_name`,`status`
     </sql>
 
   <select id="selectKey" resultMap="VOMap">
     select
     key.key_id,
     key.key_name,
+    key.status,
     user_info.name
     from `key`,`key_user`
     join user_info on key.key_id=key_user.key_id and key_user.user_id=user_info.user_id

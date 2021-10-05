@@ -37,4 +37,8 @@ public class UserDetail extends User {
     public String getUsername() {
         return this.userEntity.getUsername();
     }
+
+    public Integer getUserId() {
+        return this.userEntity.getUserId();
+    }
 }

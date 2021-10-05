@@ -51,7 +51,12 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
   @Override
   public UserInfo getUserInfo() {
     String username = authenticationService.getUsername();
-    //System.out.println(username);
+    return userInfoMapper.selectOne(new QueryWrapper<UserInfo>()
+        .eq("username", username));
+  }
+
+  @Override
+  public UserInfo getUserInfoByUsername(String username) {
     return userInfoMapper.selectOne(new QueryWrapper<UserInfo>()
         .eq("username", username));
   }
@@ -76,7 +81,8 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
 
   @Override
   public int modifyUserInfo(UpdateUserDTO dto) {
-    String username = authenticationService.getUsername();
+    String username =
+        dto.getUsername() != null ? dto.getUsername() : authenticationService.getUsername();
     Integer userId = userEntityService.getByUsername(username).getUserId();
     if (null == userId) {
       return 0;

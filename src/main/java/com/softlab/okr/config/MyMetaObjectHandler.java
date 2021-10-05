@@ -17,14 +17,14 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
   public void insertFill(MetaObject metaObject) {
     log.info("start insert fill ....");
     Date date = new Date();
-    this.setFieldValByName("createDate", date, metaObject);
-    this.setFieldValByName("updateDate", date, metaObject);
+    this.setFieldValByName("createTime", date, metaObject);
+    this.setFieldValByName("updateTime", date, metaObject);
   }
 
   @Override
   public void updateFill(MetaObject metaObject) {
     log.info("start update fill ....");
     Date date = new Date();
-    this.setFieldValByName("updateDate", date, metaObject);
+    this.setFieldValByName("updateTime", date, metaObject);
   }
 }

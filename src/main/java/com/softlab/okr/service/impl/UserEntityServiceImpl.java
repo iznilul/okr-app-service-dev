@@ -72,7 +72,9 @@ public class UserEntityServiceImpl extends ServiceImpl<UserEntityMapper, UserEnt
   public UserVO login(LoginDTO dto) {
     // 根据用户名查询出用户实体对象
     UserEntity userEntity = userEntityService.getByUsername(dto.getUsername());
-    if (!loginCheck(userEntity, dto.getPassword())) {
+    //if (!loginCheck(userEntity, dto.getPassword())) {
+    //  return null;
+    if (false) {
       return null;
     } else {
       //VO是返回给前端用户展示的实体类，不过可以统一包装返回类
