@@ -1,4 +1,4 @@
-package com.softlab.okr.controller;
+package com.softlab.okr.controller.user;
 
 import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.model.monitor.Server;
@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
  **/
 @RestController
 @RequestMapping("/api/user/monitor")
-@Api(tags = "监控操作")
-@Auth(id = 8000, name = "监控操作")
-public class MonitorController {
+@Api(tags = "用户 性能接口")
+@Auth(id = 3200, name = "用户 性能接口")
+public class UserMonitorController {
 
-  @GetMapping("/server")
+  @GetMapping("server")
   @ApiOperation("服务器监控")
   @Auth(id = 1, name = "服务器监控")
   public Result server() throws Exception {

@@ -1,16 +1,11 @@
-package com.softlab.okr.controller;
+package com.softlab.okr.controller.user;
 
 import com.softlab.okr.annotation.Auth;
-import com.softlab.okr.entity.Tag;
 import com.softlab.okr.model.dto.BookQueryDTO;
-import com.softlab.okr.model.dto.PageDTO;
 import com.softlab.okr.service.IBookService;
-import com.softlab.okr.service.IKeyService;
-import com.softlab.okr.service.ITagService;
 import com.softlab.okr.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import java.util.List;
 import javax.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -28,54 +23,32 @@ import org.springframework.web.bind.annotation.RestController;
  * @create: 2021-08-05 13:47
  **/
 @RestController
-@RequestMapping("/api/user/public")
-@Api(tags = "公共物品的操作")
-@Auth(id = 4000, name = "公共物品的操作")
-public class PublicController {
-
+@RequestMapping("/api/user/book")
+@Api(tags = "用户 书籍接口")
+@Auth(id = 3500, name = "用户 书籍接口")
+public class UserBookController {
 
   @Autowired
   private IBookService bookService;
 
-  @Autowired
-  private ITagService ITagService;
-
-  @Autowired
-  private IKeyService keyService;
-
-  @PostMapping("getBookByCond")
+  @PostMapping("query")
   @ApiOperation("书籍列表")
   @Auth(id = 1, name = "书籍列表")
-  public Result getBookByCond(@RequestBody @Validated BookQueryDTO dto) {
+  public Result queryBook(@RequestBody @Validated BookQueryDTO dto) {
     return bookService.getByCond(dto);
   }
 
-  @GetMapping("getTagList")
-  @ApiOperation("标签列表")
-  @Auth(id = 2, name = "标签列表")
-  public Result getTagList() {
-    List<Tag> list = ITagService.getTagList();
-    return Result.success(list);
-  }
-
-  @GetMapping("getKeyList")
-  @ApiOperation("钥匙列表")
-  @Auth(id = 3, name = "钥匙列表")
-  public Result getKeyList(@RequestBody PageDTO dto) {
-    return keyService.getKey(dto);
-  }
-
-  @GetMapping("borrowBook")
+  @GetMapping("borrow")
   @ApiOperation("借书")
-  @Auth(id = 4, name = "借书")
+  @Auth(id = 2, name = "借书")
   public Result borrowBook(@RequestParam("bookId") @NotNull int bookId) {
     return bookService.borrowBook(bookId) == 1 ?
         Result.success() : Result.failure();
   }
 
-  @GetMapping("returnBook")
+  @GetMapping("return")
   @ApiOperation("还书")
-  @Auth(id = 5, name = "还书")
+  @Auth(id = 3, name = "还书")
   public Result returnBook(@RequestParam("bookId") @NotNull int bookId) {
     return bookService.returnBook(bookId) == 1 ?
         Result.success() : Result.failure();

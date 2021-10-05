@@ -1,15 +1,10 @@
-package com.softlab.okr.controller;
+package com.softlab.okr.controller.common;
 
 import com.softlab.okr.annotation.Auth;
-import com.softlab.okr.config.CommonConfig;
 import com.softlab.okr.model.dto.LoginDTO;
-import com.softlab.okr.model.dto.UserSignUpDTO;
-import com.softlab.okr.model.vo.SignUpVO;
 import com.softlab.okr.model.vo.UserVO;
-import com.softlab.okr.security.AuthenticationServiceImpl;
+import com.softlab.okr.security.IAuthenticationService;
 import com.softlab.okr.security.UserDetail;
-import com.softlab.okr.service.ICsdnSpiderService;
-import com.softlab.okr.service.ISignUpService;
 import com.softlab.okr.service.IUserEntityService;
 import com.softlab.okr.utils.Result;
 import io.swagger.annotations.Api;
@@ -23,7 +18,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -32,25 +26,16 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Slf4j
 @RestController
-@Api(tags = "通用操作")
+@Api(tags = "通用 登陆部分接口")
 @RequestMapping("/api/common")
-@Auth(id = 1000, name = "通用操作")
-public class CommonController {
+@Auth(id = 1100, name = "通用 登陆部分接口")
+public class CommonLoginController {
 
   @Autowired
   private IUserEntityService userEntityService;
 
   @Autowired
-  private ISignUpService signUpService;
-
-  @Autowired
-  private CommonConfig commonConfig;
-
-  @Autowired
-  private AuthenticationServiceImpl authenticationService;
-
-  @Autowired
-  private ICsdnSpiderService csdnSpiderService;
+  private IAuthenticationService authenticationService;
 
   //将登录后的用户信息包括token返回给前端页面
   @ApiOperation("登录")
@@ -83,31 +68,5 @@ public class CommonController {
     log.info("用户注销: " + context.getAuthentication().getName());
     context.setAuthentication(null);
     return Result.success();
-  }
-
-  @ApiOperation("报名")
-  @PostMapping("signUp")
-  @Auth(id = 4, name = "纳新报名")
-  public Result signUp(@RequestBody UserSignUpDTO dto) {
-    //System.out.println(dto);
-
-    return signUpService.saveSignUp(dto) == 1
-        ? Result.success("报名成功，请加入纳新群: " + commonConfig.getQqGroupNumber())
-        : Result.failure();
-  }
-
-  @ApiOperation("查询报名")
-  @GetMapping("querySignUp")
-  @Auth(id = 5, name = "报名结果查询")
-  public Result querySignUp(@RequestParam String studentId) {
-    SignUpVO signUpVO = signUpService.getSignUpById(studentId);
-    return signUpVO != null ? Result.success(signUpVO) : Result.failure();
-  }
-
-  @ApiOperation("csdn实时展示")
-  @GetMapping("csdnRecord")
-  @Auth(id = 6, name = "csdn实时展示")
-  public Result csdnRecord() {
-    return csdnSpiderService.getAll();
   }
 }

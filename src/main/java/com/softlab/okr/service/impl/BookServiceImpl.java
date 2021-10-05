@@ -106,7 +106,7 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements
   }
 
   @Override
-  public int uploadBookImg(int bookId, MultipartFile file) throws IOException {
+  public int modifyBookImg(int bookId, MultipartFile file) throws IOException {
     // 通过base64来转化图片
     byte[] data = file.getBytes();
     if (data.length > 1024000) {

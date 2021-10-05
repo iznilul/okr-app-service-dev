@@ -18,6 +18,9 @@ import lombok.NoArgsConstructor;
 @ApiModel("dto 用户信息更新传输类")
 public class UpdateUserDTO {
 
+    @ApiModelProperty(value = "用户名", required = true, example = "admin")
+    private String username;
+
     @ApiModelProperty(value = "真实姓名", required = true, example = "llz")
     private String name;
 

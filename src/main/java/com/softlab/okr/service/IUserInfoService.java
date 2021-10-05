@@ -23,6 +23,8 @@ public interface IUserInfoService extends IService<UserInfo> {
 
   UserInfo getUserInfo() throws ServiceException;
 
+  UserInfo getUserInfoByUsername(String username) throws ServiceException;
+
   Result getUserInfoByCond(SelectUserDTO dto) throws ServiceException;
 
   int modifyUserInfo(UpdateUserDTO dto) throws ServiceException;

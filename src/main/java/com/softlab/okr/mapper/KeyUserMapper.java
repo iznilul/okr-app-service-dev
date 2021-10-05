@@ -1,7 +1,9 @@
 package com.softlab.okr.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.softlab.okr.entity.KeyUser;
+import com.softlab.okr.model.vo.KeyUserVO;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -15,4 +17,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface KeyUserMapper extends BaseMapper<KeyUser> {
 
+  Page<KeyUserVO> selectKeyUserVO(Page<KeyUser> page);
 }

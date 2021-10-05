@@ -1,5 +1,6 @@
-package com.softlab.okr.model.vo;
+package com.softlab.okr.model.dto;
 
+import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,10 +14,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class KeyVO {
+public class KeyDTO {
 
   private Integer keyId;
   private String keyName;
-  private Integer status;
+  @Pattern(regexp = "^(未借走|已借走|已丢失)$", message = "请输入正确的格式")
   private String statusName;
 }

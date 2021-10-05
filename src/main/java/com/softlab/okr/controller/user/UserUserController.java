@@ -1,4 +1,4 @@
-package com.softlab.okr.controller;
+package com.softlab.okr.controller.user;
 
 import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.entity.UserInfo;
@@ -28,10 +28,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/user/info")
-@Api(tags = "用户操作")
-@Auth(id = 3000, name = "用户操作")
-public class UserInfoController {
+@RequestMapping("/api/user/user")
+@Api(tags = "用户 用户接口")
+@Auth(id = 3100, name = "用户 用户接口")
+public class UserUserController {
 
   @Autowired
   private IUserInfoService userInfoService;
@@ -44,49 +44,37 @@ public class UserInfoController {
    * @return: com.softlab.okr.utils.Result @Author: radCircle @Date: 2021/7/3
    */
   @ApiOperation("更新用户信息")
-  @PostMapping("modifyUserInfo")
+  @PostMapping("change")
   @Auth(id = 1, name = "更新用户信息")
-  public Result modifyUserInfo(@RequestBody UpdateUserDTO dto) {
+  public Result changeUser(@RequestBody UpdateUserDTO dto) {
 
     return userInfoService.modifyUserInfo(dto) == 1 ?
         Result.success() : Result.failure();
   }
 
-  /**
-   * @Description: 返回用户信息 @Param: [param, req]
-   * @return: com.softlab.okr.utils.Result @Author: radCircle @Date: 2021/7/3
-   */
   @ApiOperation("获取用户信息")
-  @GetMapping("getUserInfo")
+  @GetMapping("query")
   @Auth(id = 2, name = "根据账号选择用户")
-  public Result getUserInfo() {
+  public Result queryUser() {
 
     UserInfo userInfo = userInfoService.getUserInfo();
     return userInfo != null ? Result.success(userInfo) : Result.failure();
   }
 
-  /**
-   * @Description: 根据条件获取用户 @Param: [param, req]
-   * @return: com.softlab.okr.utils.Result @Author: radCircle @Date: 2021/7/3
-   */
   @ApiOperation("根据条件选择用户")
-  @PostMapping("userInfoByCond")
+  @PostMapping("queryList")
   @Auth(id = 3, name = "根据情况选择用户")
-  public Result userInfoByCond(
+  public Result queryUserList(
       @RequestBody SelectUserDTO dto) throws Exception {
 
     return userInfoService.getUserInfoByCond(dto);
   }
 
-  /**
-   * @Description: 用户上传头像 @Param: [file,username,req]
-   * @return: com.softlab.okr.utils.Result @Author: radCircle @Date: 2021/7/4
-   */
   @ApiOperation("上传头像文件")
 
-  @PostMapping("upload")
+  @PostMapping("changeImg")
   @Auth(id = 4, name = "上传头像文件")
-  public Result upload(
+  public Result changeUserImg(
       @RequestParam("file") MultipartFile file)
       throws IOException {
     return userInfoService.uploadAvatar(file) == 1 ?
@@ -95,16 +83,21 @@ public class UserInfoController {
         : Result.failure();
   }
 
-  /**
-   * @Description: 修改密码 @Param: [param, req]
-   * @return: com.softlab.okr.utils.Result @Author: radCircle @Date: 2021/7/5
-   */
   @ApiOperation("修改密码")
-  @PostMapping("modifyPassword")
+  @PostMapping("changePassword")
   @Auth(id = 5, name = "修改密码")
-  public Result modifyPassword(@RequestBody ModifyPwdDTO dto) {
+  public Result changePassword(@RequestBody ModifyPwdDTO dto) {
     return userEntityService.modifyPassword(dto) ?
         Result.success() : Result.failure();
+  }
+
+  @ApiOperation("根据用户名获取用户信息")
+  @GetMapping("queryUserByUsername")
+  @Auth(id = 6, name = "根据用户名选择用户")
+  public Result queryUserByUsername(@RequestParam("username") String username) {
+
+    UserInfo userInfo = userInfoService.getUserInfoByUsername(username);
+    return userInfo != null ? Result.success(userInfo) : Result.failure();
   }
 
 }

@@ -15,7 +15,7 @@ public interface IBookService extends IService<Book> {
 
   boolean modifyBook(BookDTO dto) throws ServiceException;
 
-  int uploadBookImg(int bookId, MultipartFile file) throws ServiceException, IOException;
+  int modifyBookImg(int bookId, MultipartFile file) throws ServiceException, IOException;
 
   int borrowBook(int bookId) throws ServiceException;
 

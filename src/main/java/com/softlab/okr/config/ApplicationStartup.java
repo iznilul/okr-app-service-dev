@@ -142,7 +142,7 @@ public class ApplicationStartup implements ApplicationRunner {
         //判断是否有指定主解
         TaskInfo taskInfo = clazz.getAnnotation(TaskInfo.class);
         if (taskInfo != null) {
-          Task task = new Task(taskInfo.taskId(), taskInfo.name(), classname,
+          Task task = new Task(null, taskInfo.taskId(), taskInfo.name(), classname,
               taskInfo.function());
           list.add(task);
         }
