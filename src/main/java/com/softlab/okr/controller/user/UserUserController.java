@@ -92,7 +92,7 @@ public class UserUserController {
   }
 
   @ApiOperation("根据用户名获取用户信息")
-  @GetMapping("queryUserByUsername")
+  @GetMapping("queryByUsername")
   @Auth(id = 6, name = "根据用户名选择用户")
   public Result queryUserByUsername(@RequestParam("username") String username) {
 

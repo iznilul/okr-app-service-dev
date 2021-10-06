@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public enum KeyUserStatus implements BaseCode {
-  NORMAL(0, "暂保管"),
+  NORMAL(0, "未归还"),
   BORROWED(1, "已归还");
 
   private Integer code;

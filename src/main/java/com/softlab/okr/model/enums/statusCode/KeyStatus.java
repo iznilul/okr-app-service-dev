@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public enum KeyStatus implements BaseCode {
-  NORMAL(0, "未借走"),
-  BORROWED(1, "已借走"),
+  NORMAL(0, "空闲"),
+  BORROWED(1, "有人保管"),
   LOST(2, "已丢失");
 
 
