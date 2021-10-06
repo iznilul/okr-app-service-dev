@@ -19,15 +19,5 @@
         `key_id`,`key_name`,`status`
     </sql>
 
-  <select id="selectKey" resultMap="VOMap">
-    select
-    key.key_id,
-    key.key_name,
-    key.status,
-    user_info.name
-    from `key`,`key_user`
-    join user_info on key.key_id=key_user.key_id and key_user.user_id=user_info.user_id
-  </select>
-
 </mapper>
 

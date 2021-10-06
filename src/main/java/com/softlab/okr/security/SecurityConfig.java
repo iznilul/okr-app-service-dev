@@ -1,13 +1,8 @@
-package com.softlab.okr.config;
+package com.softlab.okr.security;
 
-import com.softlab.okr.security.ApiFilter;
-import com.softlab.okr.security.AuthFilter;
-import com.softlab.okr.security.LoginFilter;
-import com.softlab.okr.security.MyDeniedHandler;
-import com.softlab.okr.security.MyEntryPoint;
-import com.softlab.okr.security.MyPasswordEncoder;
 import com.softlab.okr.service.impl.UserEntityServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -35,6 +30,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Autowired
   private AuthFilter authFilter;
 
+  @Value("${spring.security.switch}")
+  private boolean securitySwitch;
+
   //@Autowired
   //private MyLogoutSuccessHandler myLogoutSuccessHandler;
 
@@ -52,10 +50,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .requestMatchers(CorsUtils::isPreFlightRequest)
         .permitAll()
         // 指定某些接口不需要通过验证即可访问。像登陆、测试接口肯定是不需要认证的
-        .antMatchers("/api/common/**")
+        .antMatchers(securitySwitch ? "/api/common/**" : "/api/**")
         .permitAll()
         // 这里意思是其它所有接口需要认证才能访问
-        .antMatchers("/api/**")
+        .anyRequest()
         .authenticated()
         // 关于登录认证的错误处理器
         .and()

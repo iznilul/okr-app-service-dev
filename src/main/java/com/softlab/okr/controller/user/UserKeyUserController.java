@@ -7,7 +7,7 @@ import com.softlab.okr.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +27,7 @@ public class UserKeyUserController {
   @Autowired
   private IKeyUserService keyUserService;
 
-  @GetMapping("query")
+  @PostMapping("query")
   @ApiOperation("钥匙记录列表")
   @Auth(id = 1, name = "钥匙记录列表")
   public Result queryKeyUser(@RequestBody PageDTO dto) {
