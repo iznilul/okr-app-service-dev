@@ -1,6 +1,8 @@
 package com.softlab.okr.model.enums.statusCode;
 
 import com.softlab.okr.model.enums.BaseCode;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -13,8 +15,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public enum KeyStatus implements BaseCode {
-  NORMAL(0, "未借走"),
-  BORROWED(1, "已借走"),
+  NORMAL(0, "空闲"),
+  BORROWED(1, "有人保管"),
   LOST(2, "已丢失");
 
 
@@ -51,6 +53,14 @@ public enum KeyStatus implements BaseCode {
   @Override
   public String toString() {
     return this.code().toString() + " " + this.message();
+  }
+
+  public static List<String> getList() {
+    List<String> list = new ArrayList<>();
+    for (KeyStatus status : KeyStatus.values()) {
+      list.add(status.message);
+    }
+    return list;
   }
 
 }

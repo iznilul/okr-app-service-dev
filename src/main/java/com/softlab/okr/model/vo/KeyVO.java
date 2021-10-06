@@ -19,4 +19,5 @@ public class KeyVO {
   private String keyName;
   private Integer status;
   private String statusName;
+  private Integer userId;
 }

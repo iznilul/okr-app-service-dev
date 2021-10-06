@@ -6,1099 +6,1310 @@
 	},
 	"item": [
 		{
-			"name": "reloadUserRoleResource",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"type": "text",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYyOTQ0NzE5NCwiZXhwIjoxNjI5NTMzNTk0fQ.H1YpG7yl1ijUZw-uInhGBxEI9EsFNbEequNnUIHNkmHELxUanPOz11IepBDzTSavBletfz2JRjOvT_ZGsrAJYQ"
-					}
-				],
-				"url": {
-					"raw": "localhost:9101/api/admin/reloadUserRoleResource",
-					"host": [
-						"localhost"
-					],
-					"port": "9101",
-					"path": [
-						"api",
-						"admin",
-						"reloadUserRoleResource"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "login",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					},
-					{
-						"key": "",
-						"value": "",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"username\":\"admin\",\n\t\"password\":\"admin\"\n}"
-				},
-				"url": {
-					"raw": "localhost:9101/api/common/login",
-					"host": [
-						"localhost"
-					],
-					"port": "9101",
-					"path": [
-						"api",
-						"common",
-						"login"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "register",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMTAzMjAyNCwiZXhwIjoxNjMyMzI4MDI0fQ.FxRm3gYbPyGCP-uBWhy881eCKoXRPge8AD4KQD6vqUXbgk_F20-BI6-lnrGcfnV4W0Bojb9PPSqUP5FzaKEGsw",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"username\":\"ass\",\r\n    \"name\":\"普通用户\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:9101/api/admin/register",
-					"host": [
-						"localhost"
-					],
-					"port": "9101",
-					"path": [
-						"api",
-						"admin",
-						"register"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "test",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDMwMDAxNiwiZXhwIjoxNjMxNTk2MDE2fQ.Gnb89HDs4IH6LlC2G4WcaluEHQWAub5bD5z_nptY3Q2d8zfnjMyjSUUOl6xinA58xwOuvs8-mgsLh6l3QIKvAA",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "localhost:9101/api/common/test",
-					"host": [
-						"localhost"
-					],
-					"port": "9101",
-					"path": [
-						"api",
-						"common",
-						"test"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "logout",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDMwMDAxNiwiZXhwIjoxNjMxNTk2MDE2fQ.Gnb89HDs4IH6LlC2G4WcaluEHQWAub5bD5z_nptY3Q2d8zfnjMyjSUUOl6xinA58xwOuvs8-mgsLh6l3QIKvAA",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "localhost:9101/api/common/logout",
-					"host": [
-						"localhost"
-					],
-					"port": "9101",
-					"path": [
-						"api",
-						"common",
-						"logout"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "getSignUp",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMTA4NDM5NSwiZXhwIjoxNjMyMzgwMzk1fQ.84MDKR-wZguG7O_jDTHAplWnQmKxqH9MGe4_H2wglDv4CPsfZJJkGsoMbO-j52T_V_8djjMiFlbrSo8mr7FafA",
-						"type": "text"
-					},
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"id\":\"\",\n\t\"name\":\"\",\n\t\"gender\":\"\",\n\t\"qq\":\"\",\n\t\"major\":\"\",\n\t\"status\":\"\",\n\t\"index\":\"1\",\n\t\"pageSize\":\"10\"\n}"
-				},
-				"url": {
-					"raw": "localhost:9101/api/admin/getSignUp",
-					"host": [
-						"localhost"
-					],
-					"port": "9101",
-					"path": [
-						"api",
-						"admin",
-						"getSignUp"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "reloadAdminRoleResource",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYyOTQ0NzE5NCwiZXhwIjoxNjI5NTMzNTk0fQ.H1YpG7yl1ijUZw-uInhGBxEI9EsFNbEequNnUIHNkmHELxUanPOz11IepBDzTSavBletfz2JRjOvT_ZGsrAJYQ",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "localhost:9101/api/admin/reloadAdminRoleResource",
-					"host": [
-						"localhost"
-					],
-					"port": "9101",
-					"path": [
-						"api",
-						"admin",
-						"reloadAdminRoleResource"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "signUp",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"studentId\":\"114514\",\n\t\"name\":\"先辈\",\n\t\"gender\":\"男\",\n\t\"qq\":\"12233334\",\n\t\"major\":\"挖掘22机\",\n\t\"profile\":\"jfioaejfasjioheuifhgisahfoksjdkfhweuihfseifjdewjfopawijrf309wru[ojskdhuuerg\"\n}"
-				},
-				"url": {
-					"raw": "localhost:9101/api/common/signUp",
-					"host": [
-						"localhost"
-					],
-					"port": "9101",
-					"path": [
-						"api",
-						"common",
-						"signUp"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "querySignUp",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:9101/api/common/querySignUp?studentId=114514",
-					"host": [
-						"localhost"
-					],
-					"port": "9101",
-					"path": [
-						"api",
-						"common",
-						"querySignUp"
-					],
-					"query": [
+			"name": "管理员 admin",
+			"item": [
+				{
+					"name": "书籍",
+					"item": [
 						{
-							"key": "studentId",
-							"value": "114514"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "exportSignUp",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMTA4NDM5NSwiZXhwIjoxNjMyMzgwMzk1fQ.84MDKR-wZguG7O_jDTHAplWnQmKxqH9MGe4_H2wglDv4CPsfZJJkGsoMbO-j52T_V_8djjMiFlbrSo8mr7FafA",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "localhost:9101/api/admin/exportSignUp",
-					"host": [
-						"localhost"
-					],
-					"port": "9101",
-					"path": [
-						"api",
-						"admin",
-						"exportSignUp"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "modifySignUp",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMTA4NDM5NSwiZXhwIjoxNjMyMzgwMzk1fQ.84MDKR-wZguG7O_jDTHAplWnQmKxqH9MGe4_H2wglDv4CPsfZJJkGsoMbO-j52T_V_8djjMiFlbrSo8mr7FafA",
-						"type": "text"
-					},
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"studentId\":\"2\",\n\t\"name\":\"shit\",\n\t\"gender\":\"男\",\n\t\"qq\":\"12333434\",\n\t\"major\":\"挖掘机咕噜咕噜\",\n\t\"profile\":\"jfioaejfasjioheuifhgisahfoksjdkfhweuihfseifjdewjfopawijrf309wru[ojskdhuuerg\",\n\t\"status\":\"2\",\n\t\"commit\":\"jfduiehsfiusehfiohjesiojfioesjfioejifo\"\n}"
-				},
-				"url": {
-					"raw": "localhost:9101/api/admin/modifySignUp",
-					"host": [
-						"localhost"
-					],
-					"port": "9101",
-					"path": [
-						"api",
-						"admin",
-						"modifySignUp"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "modifyResourceStatus",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYyOTk0NDM3MiwiZXhwIjoxNjMwMTE3MTcyfQ.cTiRiEMU1k05IND_uwqgEK3PLhuXKehsXh8HBJgInjKXr7CSytpWlSWfruVT8HJ9u9hh-OPJW0SAjqKBosf-LA",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "localhost:9101/api/admin/modifyResourceStatus?resourceId=2006",
-					"host": [
-						"localhost"
-					],
-					"port": "9101",
-					"path": [
-						"api",
-						"admin",
-						"modifyResourceStatus"
-					],
-					"query": [
-						{
-							"key": "resourceId",
-							"value": "2006"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "getResourceByCond",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDk0MTg4MywiZXhwIjoxNjMyMjM3ODgzfQ.ZdJ-FOjM_hdLkb97lmkbFYJkmHKzi4MIFhizdBxXOEA4ZWh-B0Or8Hosi6YIddnBTmy4qvwYZ_tEgSsGd4Mfzg",
-						"type": "text"
-					},
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"index\":1,\n\t\"pageSize\":20\n}"
-				},
-				"url": {
-					"raw": "localhost:9101/api/admin/getResourceByCond",
-					"host": [
-						"localhost"
-					],
-					"port": "9101",
-					"path": [
-						"api",
-						"admin",
-						"getResourceByCond"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "addTag",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYyOTk1ODk0MCwiZXhwIjoxNjMwMjE4MTQwfQ.UHyK9bEmA8ulMLg3RPjgyiLwCVlbnzabcrl5jcd_u0k66SPmLm7dlvrnCGXviHxff2HJLoymXwaxcNJDC2nbdg",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "localhost:9101/api/admin/addTag?name=go&order=3",
-					"host": [
-						"localhost"
-					],
-					"port": "9101",
-					"path": [
-						"api",
-						"admin",
-						"addTag"
-					],
-					"query": [
-						{
-							"key": "name",
-							"value": "go"
+							"name": "添加书籍",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMTEwNDc1MywiZXhwIjoxNjMyNDAwNzUzfQ.NpzBPA9KPRkUEV4Uj3i9Rm4y2RyDKtfjIkSV8fN6Cv3wZF8-S9fkhZz2Tn3I6OWUlEasXSa03ASQgscTRahnaw",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"bookName\":\"Java入门到跑路\",\r\n    \"img\":\"as\",\r\n    \"publisher\":\"asdfd\",\r\n    \"price\":1200,\r\n    \"tagIdList\":[5,6,7,8]\r\n    \r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:9101/api/admin/saveBook",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"admin",
+										"saveBook"
+									]
+								}
+							},
+							"response": []
 						},
 						{
-							"key": "order",
-							"value": "3"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "modifyTag",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYyOTk1ODk0MCwiZXhwIjoxNjMwMjE4MTQwfQ.UHyK9bEmA8ulMLg3RPjgyiLwCVlbnzabcrl5jcd_u0k66SPmLm7dlvrnCGXviHxff2HJLoymXwaxcNJDC2nbdg",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "localhost:9101/api/admin/modifyTag?tagId=4&name=Java Web&order=2",
-					"host": [
-						"localhost"
-					],
-					"port": "9101",
-					"path": [
-						"api",
-						"admin",
-						"modifyTag"
-					],
-					"query": [
-						{
-							"key": "tagId",
-							"value": "4"
+							"name": "modifyBookImg",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDE2NDgxNCwiZXhwIjoxNjMwNDI0MDE0fQ.uCOFHQl7cJ3LMTQQZBREMfKuok2Dnd_3H0ZRW_Q8grp_dYLgBcvbac5wFo9TeZYRAKVxvs6s48Iq-9u5T-s-9g",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/D:/llz/MobileFile/images (1).jpg"
+										},
+										{
+											"key": "",
+											"value": "",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:9101/api/admin/modifyBookImg?bookId=1",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"admin",
+										"modifyBookImg"
+									],
+									"query": [
+										{
+											"key": "bookId",
+											"value": "1"
+										},
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
 						},
 						{
-							"key": "name",
-							"value": "Java Web"
+							"name": "modifyBook",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDIzOTQ2NSwiZXhwIjoxNjMxNTM1NDY1fQ.GZD01I9h4ck4UV9g7WxDO1S6X2hAM8LaMia72M5W3zTqWnX3rE0NQ2Y6Qqvv-Dacl0ZrPemRju7CYMJpu3iFRQ",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"bookId\":1,\r\n    \"bookName\":\"谢特\",\r\n    \"publisher\":\"jisdf\",\r\n    \"price\":114514,\r\n    \"statusName\":\"空闲\",\r\n    \"tagIdList\":[5,6,8]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:9101/api/admin/modifyBook",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"admin",
+										"modifyBook"
+									]
+								}
+							},
+							"response": []
 						},
 						{
-							"key": "order",
-							"value": "2"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "getTagList",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDE2NDgxNCwiZXhwIjoxNjMwNDI0MDE0fQ.uCOFHQl7cJ3LMTQQZBREMfKuok2Dnd_3H0ZRW_Q8grp_dYLgBcvbac5wFo9TeZYRAKVxvs6s48Iq-9u5T-s-9g",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "localhost:9101/api/user/public/getTagList",
-					"host": [
-						"localhost"
-					],
-					"port": "9101",
-					"path": [
-						"api",
-						"user",
-						"public",
-						"getTagList"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "removeTag",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDIzOTQ2NSwiZXhwIjoxNjMxNTM1NDY1fQ.GZD01I9h4ck4UV9g7WxDO1S6X2hAM8LaMia72M5W3zTqWnX3rE0NQ2Y6Qqvv-Dacl0ZrPemRju7CYMJpu3iFRQ",
-						"type": "text"
-					},
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "localhost:9101/api/admin/removeTag?tagId=8",
-					"host": [
-						"localhost"
-					],
-					"port": "9101",
-					"path": [
-						"api",
-						"admin",
-						"removeTag"
-					],
-					"query": [
-						{
-							"key": "tagId",
-							"value": "8"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "getTagByCond",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDI5NjM1MiwiZXhwIjoxNjMxNTkyMzUyfQ.Yqn6nISCJDGjoqpdFFf0qL-e532m1gxwR0GAs44zeq8WoxyeKr029tZbZDVyLR6jOOinV3L19-NzY-Hs5botCg",
-						"type": "text"
-					},
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"name\":\"\",\n\t\"Pattern\":\"DESC\"\n}"
-				},
-				"url": {
-					"raw": "localhost:9101/api/admin/getTagByCond",
-					"host": [
-						"localhost"
-					],
-					"port": "9101",
-					"path": [
-						"api",
-						"admin",
-						"getTagByCond"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "getBookByCond",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDMwMDAxNiwiZXhwIjoxNjMxNTk2MDE2fQ.Gnb89HDs4IH6LlC2G4WcaluEHQWAub5bD5z_nptY3Q2d8zfnjMyjSUUOl6xinA58xwOuvs8-mgsLh6l3QIKvAA",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"bookName\":\"\",\r\n    \"publisher\":\"\",\r\n    \"status\":\"\",\r\n    \"index\":\"\",\r\n    \"pageSize\":\"\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:9101/api/user/public/getBookByCond",
-					"host": [
-						"localhost"
-					],
-					"port": "9101",
-					"path": [
-						"api",
-						"user",
-						"public",
-						"getBookByCond"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "saveBook",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMTEwNDc1MywiZXhwIjoxNjMyNDAwNzUzfQ.NpzBPA9KPRkUEV4Uj3i9Rm4y2RyDKtfjIkSV8fN6Cv3wZF8-S9fkhZz2Tn3I6OWUlEasXSa03ASQgscTRahnaw",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"bookName\":\"Java入门到跑路\",\r\n    \"img\":\"as\",\r\n    \"publisher\":\"asdfd\",\r\n    \"price\":1200,\r\n    \"tagIdList\":[5,6,7,8]\r\n    \r\n    \r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:9101/api/admin/saveBook",
-					"host": [
-						"localhost"
-					],
-					"port": "9101",
-					"path": [
-						"api",
-						"admin",
-						"saveBook"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "modifyBookImg",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDE2NDgxNCwiZXhwIjoxNjMwNDI0MDE0fQ.uCOFHQl7cJ3LMTQQZBREMfKuok2Dnd_3H0ZRW_Q8grp_dYLgBcvbac5wFo9TeZYRAKVxvs6s48Iq-9u5T-s-9g",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "file",
-							"type": "file",
-							"src": "/D:/llz/MobileFile/images (1).jpg"
-						},
-						{
-							"key": "",
-							"value": "",
-							"type": "text"
+							"name": "removeBook",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDIzOTQ2NSwiZXhwIjoxNjMxNTM1NDY1fQ.GZD01I9h4ck4UV9g7WxDO1S6X2hAM8LaMia72M5W3zTqWnX3rE0NQ2Y6Qqvv-Dacl0ZrPemRju7CYMJpu3iFRQ",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:9101/api/admin/removeBook?bookId=9",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"admin",
+										"removeBook"
+									],
+									"query": [
+										{
+											"key": "bookId",
+											"value": "9"
+										}
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
-				"url": {
-					"raw": "localhost:9101/api/admin/modifyBookImg?bookId=1",
-					"host": [
-						"localhost"
-					],
-					"port": "9101",
-					"path": [
-						"api",
-						"admin",
-						"modifyBookImg"
-					],
-					"query": [
+				{
+					"name": "标签",
+					"item": [
 						{
-							"key": "bookId",
-							"value": "1"
+							"name": "addTag",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYyOTk1ODk0MCwiZXhwIjoxNjMwMjE4MTQwfQ.UHyK9bEmA8ulMLg3RPjgyiLwCVlbnzabcrl5jcd_u0k66SPmLm7dlvrnCGXviHxff2HJLoymXwaxcNJDC2nbdg",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:9101/api/admin/addTag?name=go&order=3",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"admin",
+										"addTag"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "go"
+										},
+										{
+											"key": "order",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
 						},
 						{
-							"key": "",
-							"value": null,
-							"disabled": true
+							"name": "modifyTag",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYyOTk1ODk0MCwiZXhwIjoxNjMwMjE4MTQwfQ.UHyK9bEmA8ulMLg3RPjgyiLwCVlbnzabcrl5jcd_u0k66SPmLm7dlvrnCGXviHxff2HJLoymXwaxcNJDC2nbdg",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:9101/api/admin/modifyTag?tagId=4&name=Java Web&order=2",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"admin",
+										"modifyTag"
+									],
+									"query": [
+										{
+											"key": "tagId",
+											"value": "4"
+										},
+										{
+											"key": "name",
+											"value": "Java Web"
+										},
+										{
+											"key": "order",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getTagList",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDE2NDgxNCwiZXhwIjoxNjMwNDI0MDE0fQ.uCOFHQl7cJ3LMTQQZBREMfKuok2Dnd_3H0ZRW_Q8grp_dYLgBcvbac5wFo9TeZYRAKVxvs6s48Iq-9u5T-s-9g",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:9101/api/user/public/getTagList",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"user",
+										"public",
+										"getTagList"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "removeTag",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDIzOTQ2NSwiZXhwIjoxNjMxNTM1NDY1fQ.GZD01I9h4ck4UV9g7WxDO1S6X2hAM8LaMia72M5W3zTqWnX3rE0NQ2Y6Qqvv-Dacl0ZrPemRju7CYMJpu3iFRQ",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "localhost:9101/api/admin/removeTag?tagId=8",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"admin",
+										"removeTag"
+									],
+									"query": [
+										{
+											"key": "tagId",
+											"value": "8"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getTagByCond",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDI5NjM1MiwiZXhwIjoxNjMxNTkyMzUyfQ.Yqn6nISCJDGjoqpdFFf0qL-e532m1gxwR0GAs44zeq8WoxyeKr029tZbZDVyLR6jOOinV3L19-NzY-Hs5botCg",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\":\"\",\n\t\"Pattern\":\"DESC\"\n}"
+								},
+								"url": {
+									"raw": "localhost:9101/api/admin/getTagByCond",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"admin",
+										"getTagByCond"
+									]
+								}
+							},
+							"response": []
 						}
 					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "modifyBook",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDIzOTQ2NSwiZXhwIjoxNjMxNTM1NDY1fQ.GZD01I9h4ck4UV9g7WxDO1S6X2hAM8LaMia72M5W3zTqWnX3rE0NQ2Y6Qqvv-Dacl0ZrPemRju7CYMJpu3iFRQ",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"bookId\":1,\r\n    \"bookName\":\"谢特\",\r\n    \"publisher\":\"jisdf\",\r\n    \"price\":114514,\r\n    \"statusName\":\"空闲\",\r\n    \"tagIdList\":[5,6,8]\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
 				},
-				"url": {
-					"raw": "localhost:9101/api/admin/modifyBook",
-					"host": [
-						"localhost"
-					],
-					"port": "9101",
-					"path": [
-						"api",
-						"admin",
-						"modifyBook"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "removeBook",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDIzOTQ2NSwiZXhwIjoxNjMxNTM1NDY1fQ.GZD01I9h4ck4UV9g7WxDO1S6X2hAM8LaMia72M5W3zTqWnX3rE0NQ2Y6Qqvv-Dacl0ZrPemRju7CYMJpu3iFRQ",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "localhost:9101/api/admin/removeBook?bookId=9",
-					"host": [
-						"localhost"
-					],
-					"port": "9101",
-					"path": [
-						"api",
-						"admin",
-						"removeBook"
-					],
-					"query": [
+				{
+					"name": "钥匙",
+					"item": [
 						{
-							"key": "bookId",
-							"value": "9"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "getKeyList",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDIzOTQ2NSwiZXhwIjoxNjMxNTM1NDY1fQ.GZD01I9h4ck4UV9g7WxDO1S6X2hAM8LaMia72M5W3zTqWnX3rE0NQ2Y6Qqvv-Dacl0ZrPemRju7CYMJpu3iFRQ",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "localhost:9101/api/user/public/getKeyList",
-					"host": [
-						"localhost"
-					],
-					"port": "9101",
-					"path": [
-						"api",
-						"user",
-						"public",
-						"getKeyList"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "saveKey",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDIzOTQ2NSwiZXhwIjoxNjMxNTM1NDY1fQ.GZD01I9h4ck4UV9g7WxDO1S6X2hAM8LaMia72M5W3zTqWnX3rE0NQ2Y6Qqvv-Dacl0ZrPemRju7CYMJpu3iFRQ",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "localhost:9101/api/admin/saveKey?keyName=四教111",
-					"host": [
-						"localhost"
-					],
-					"port": "9101",
-					"path": [
-						"api",
-						"admin",
-						"saveKey"
-					],
-					"query": [
-						{
-							"key": "keyName",
-							"value": "四教111"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "modifyKey",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDIzOTQ2NSwiZXhwIjoxNjMxNTM1NDY1fQ.GZD01I9h4ck4UV9g7WxDO1S6X2hAM8LaMia72M5W3zTqWnX3rE0NQ2Y6Qqvv-Dacl0ZrPemRju7CYMJpu3iFRQ",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "localhost:9101/api/admin/modifyKey?keyId=1&keyName=shit",
-					"host": [
-						"localhost"
-					],
-					"port": "9101",
-					"path": [
-						"api",
-						"admin",
-						"modifyKey"
-					],
-					"query": [
-						{
-							"key": "keyId",
-							"value": "1"
+							"name": "添加钥匙",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMzQ2NTIwMSwiZXhwIjoxNjY1MDAxMjAxfQ.rPGuSIQ1k9J08bHZFG5X9h_akMg5ecWfiGCEuZK508T3PdY-c-eeWRadpanUc6XJJ2iBMpxd8OsuL9S07rEqxg",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:9101/api/admin/key/add?keyName=四教112",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"admin",
+										"key",
+										"add"
+									],
+									"query": [
+										{
+											"key": "keyName",
+											"value": "四教112"
+										}
+									]
+								}
+							},
+							"response": []
 						},
 						{
-							"key": "keyName",
-							"value": "shit"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "removeKey",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDIzOTQ2NSwiZXhwIjoxNjMxNTM1NDY1fQ.GZD01I9h4ck4UV9g7WxDO1S6X2hAM8LaMia72M5W3zTqWnX3rE0NQ2Y6Qqvv-Dacl0ZrPemRju7CYMJpu3iFRQ",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "localhost:9101/api/admin/removeKey?keyId=1",
-					"host": [
-						"localhost"
-					],
-					"port": "9101",
-					"path": [
-						"api",
-						"admin",
-						"removeKey"
-					],
-					"query": [
-						{
-							"key": "keyId",
-							"value": "1"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "saveKeyUser",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDIzOTQ2NSwiZXhwIjoxNjMxNTM1NDY1fQ.GZD01I9h4ck4UV9g7WxDO1S6X2hAM8LaMia72M5W3zTqWnX3rE0NQ2Y6Qqvv-Dacl0ZrPemRju7CYMJpu3iFRQ",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "localhost:9101/api/admin/saveKeyUser?keyId=2&userId=1",
-					"host": [
-						"localhost"
-					],
-					"port": "9101",
-					"path": [
-						"api",
-						"admin",
-						"saveKeyUser"
-					],
-					"query": [
-						{
-							"key": "keyId",
-							"value": "2"
+							"name": "modifyKey",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDIzOTQ2NSwiZXhwIjoxNjMxNTM1NDY1fQ.GZD01I9h4ck4UV9g7WxDO1S6X2hAM8LaMia72M5W3zTqWnX3rE0NQ2Y6Qqvv-Dacl0ZrPemRju7CYMJpu3iFRQ",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:9101/api/admin/modifyKey?keyId=1&keyName=shit",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"admin",
+										"modifyKey"
+									],
+									"query": [
+										{
+											"key": "keyId",
+											"value": "1"
+										},
+										{
+											"key": "keyName",
+											"value": "shit"
+										}
+									]
+								}
+							},
+							"response": []
 						},
 						{
-							"key": "userId",
-							"value": "1"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "removeKeyUser",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDIzOTQ2NSwiZXhwIjoxNjMxNTM1NDY1fQ.GZD01I9h4ck4UV9g7WxDO1S6X2hAM8LaMia72M5W3zTqWnX3rE0NQ2Y6Qqvv-Dacl0ZrPemRju7CYMJpu3iFRQ",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "localhost:9101/api/admin/removeKeyUser?keyId=2&userid=1",
-					"host": [
-						"localhost"
-					],
-					"port": "9101",
-					"path": [
-						"api",
-						"admin",
-						"removeKeyUser"
-					],
-					"query": [
-						{
-							"key": "keyId",
-							"value": "2"
+							"name": "removeKey",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDIzOTQ2NSwiZXhwIjoxNjMxNTM1NDY1fQ.GZD01I9h4ck4UV9g7WxDO1S6X2hAM8LaMia72M5W3zTqWnX3rE0NQ2Y6Qqvv-Dacl0ZrPemRju7CYMJpu3iFRQ",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:9101/api/admin/removeKey?keyId=1",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"admin",
+										"removeKey"
+									],
+									"query": [
+										{
+											"key": "keyId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
 						},
 						{
-							"key": "userid",
-							"value": "1"
+							"name": "saveKeyUser",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDIzOTQ2NSwiZXhwIjoxNjMxNTM1NDY1fQ.GZD01I9h4ck4UV9g7WxDO1S6X2hAM8LaMia72M5W3zTqWnX3rE0NQ2Y6Qqvv-Dacl0ZrPemRju7CYMJpu3iFRQ",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:9101/api/admin/saveKeyUser?keyId=2&userId=1",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"admin",
+										"saveKeyUser"
+									],
+									"query": [
+										{
+											"key": "keyId",
+											"value": "2"
+										},
+										{
+											"key": "userId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
 						}
 					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "borrowBook",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDMwMDAxNiwiZXhwIjoxNjMxNTk2MDE2fQ.Gnb89HDs4IH6LlC2G4WcaluEHQWAub5bD5z_nptY3Q2d8zfnjMyjSUUOl6xinA58xwOuvs8-mgsLh6l3QIKvAA",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "localhost:9101/api/user/public/borrowBook?bookId=1",
-					"host": [
-						"localhost"
-					],
-					"port": "9101",
-					"path": [
-						"api",
-						"user",
-						"public",
-						"borrowBook"
-					],
-					"query": [
-						{
-							"key": "bookId",
-							"value": "1"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "getLoginLogByCond",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDMyMjg1MywiZXhwIjoxNjMxNjE4ODUzfQ.VLUCl_Kz6k26jyvLo6qMNDyqF1Mbdrf9uV1VuhTRurk51Cpb8cHQans4WIvI7u2nac3kJLE1fAyyzhkrEslzFQ",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"username\":\"\",\r\n    \"beginTime\":\"2021-09-09\",\r\n    \"endTime\":\"\",\r\n    \"index\":\"\",\r\n    \"pageSize\":\"\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
 				},
-				"url": {
-					"raw": "localhost:9101/api/admin/getLoginLogByCond",
-					"host": [
-						"localhost"
-					],
-					"port": "9101",
-					"path": [
-						"api",
-						"admin",
-						"getLoginLogByCond"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "csdnRecord",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:9101/api/common/csdnRecord",
-					"host": [
-						"localhost"
-					],
-					"port": "9101",
-					"path": [
-						"api",
-						"common",
-						"csdnRecord"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "returnBook",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMTExOTUwNywiZXhwIjoxNjMyNDE1NTA3fQ.lW4ApEGShFJRqfNFxo_qcc77yxH8gsTMD5KysWAzhI8MmtZ5Bm5TY4Xi_tY0_YfpzCflOlsHTFzTL21nwne_wQ",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "localhost:9101/api/user/public/returnBook?bookId=1",
-					"host": [
-						"localhost"
-					],
-					"port": "9101",
-					"path": [
-						"api",
-						"user",
-						"public",
-						"returnBook"
-					],
-					"query": [
+				{
+					"name": "钥匙记录",
+					"item": [
 						{
-							"key": "bookId",
-							"value": "1"
+							"name": "removeKeyUser",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDIzOTQ2NSwiZXhwIjoxNjMxNTM1NDY1fQ.GZD01I9h4ck4UV9g7WxDO1S6X2hAM8LaMia72M5W3zTqWnX3rE0NQ2Y6Qqvv-Dacl0ZrPemRju7CYMJpu3iFRQ",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:9101/api/admin/removeKeyUser?keyId=2&userid=1",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"admin",
+										"removeKeyUser"
+									],
+									"query": [
+										{
+											"key": "keyId",
+											"value": "2"
+										},
+										{
+											"key": "userid",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "操作记录",
+					"item": [
+						{
+							"name": "getLoginLogByCond",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDMyMjg1MywiZXhwIjoxNjMxNjE4ODUzfQ.VLUCl_Kz6k26jyvLo6qMNDyqF1Mbdrf9uV1VuhTRurk51Cpb8cHQans4WIvI7u2nac3kJLE1fAyyzhkrEslzFQ",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\":\"\",\r\n    \"beginTime\":\"2021-09-09\",\r\n    \"endTime\":\"\",\r\n    \"index\":\"\",\r\n    \"pageSize\":\"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:9101/api/admin/getLoginLogByCond",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"admin",
+										"getLoginLogByCond"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "资源",
+					"item": [
+						{
+							"name": "reloadUserRoleResource",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYyOTQ0NzE5NCwiZXhwIjoxNjI5NTMzNTk0fQ.H1YpG7yl1ijUZw-uInhGBxEI9EsFNbEequNnUIHNkmHELxUanPOz11IepBDzTSavBletfz2JRjOvT_ZGsrAJYQ"
+									}
+								],
+								"url": {
+									"raw": "localhost:9101/api/admin/reloadUserRoleResource",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"admin",
+										"reloadUserRoleResource"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "modifyResourceStatus",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMjE1OTg2NywiZXhwIjoxNjMzNDU1ODY3fQ.a1FBhHe83O_iyn3d7cUdzb_kyrHuco_VOVInKmfksEUC8orNXkX1c1rHa6iHhsiGWsM1Mqx3NcfS6l_JJbjPww",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:9101/api/admin/modifyResourceStatus?resourceId=1005",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"admin",
+										"modifyResourceStatus"
+									],
+									"query": [
+										{
+											"key": "resourceId",
+											"value": "1005"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getResourceByCond",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDk0MTg4MywiZXhwIjoxNjMyMjM3ODgzfQ.ZdJ-FOjM_hdLkb97lmkbFYJkmHKzi4MIFhizdBxXOEA4ZWh-B0Or8Hosi6YIddnBTmy4qvwYZ_tEgSsGd4Mfzg",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"index\":1,\n\t\"pageSize\":20\n}"
+								},
+								"url": {
+									"raw": "localhost:9101/api/admin/getResourceByCond",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"admin",
+										"getResourceByCond"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "报名",
+					"item": [
+						{
+							"name": "getSignUp",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMTA4NDM5NSwiZXhwIjoxNjMyMzgwMzk1fQ.84MDKR-wZguG7O_jDTHAplWnQmKxqH9MGe4_H2wglDv4CPsfZJJkGsoMbO-j52T_V_8djjMiFlbrSo8mr7FafA",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"id\":\"\",\n\t\"name\":\"\",\n\t\"gender\":\"\",\n\t\"qq\":\"\",\n\t\"major\":\"\",\n\t\"status\":\"\",\n\t\"index\":\"1\",\n\t\"pageSize\":\"10\"\n}"
+								},
+								"url": {
+									"raw": "localhost:9101/api/admin/getSignUp",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"admin",
+										"getSignUp"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "exportSignUp",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMTA4NDM5NSwiZXhwIjoxNjMyMzgwMzk1fQ.84MDKR-wZguG7O_jDTHAplWnQmKxqH9MGe4_H2wglDv4CPsfZJJkGsoMbO-j52T_V_8djjMiFlbrSo8mr7FafA",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:9101/api/admin/exportSignUp",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"admin",
+										"exportSignUp"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "modifySignUp",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMTA4NDM5NSwiZXhwIjoxNjMyMzgwMzk1fQ.84MDKR-wZguG7O_jDTHAplWnQmKxqH9MGe4_H2wglDv4CPsfZJJkGsoMbO-j52T_V_8djjMiFlbrSo8mr7FafA",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"studentId\":\"2\",\n\t\"name\":\"shit\",\n\t\"gender\":\"男\",\n\t\"qq\":\"12333434\",\n\t\"major\":\"挖掘机咕噜咕噜\",\n\t\"profile\":\"jfioaejfasjioheuifhgisahfoksjdkfhweuihfseifjdewjfopawijrf309wru[ojskdhuuerg\",\n\t\"status\":\"2\",\n\t\"commit\":\"jfduiehsfiusehfiohjesiojfioesjfioejifo\"\n}"
+								},
+								"url": {
+									"raw": "localhost:9101/api/admin/modifySignUp",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"admin",
+										"modifySignUp"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "用户",
+					"item": [
+						{
+							"name": "添加用户",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMTAzMjAyNCwiZXhwIjoxNjMyMzI4MDI0fQ.FxRm3gYbPyGCP-uBWhy881eCKoXRPge8AD4KQD6vqUXbgk_F20-BI6-lnrGcfnV4W0Bojb9PPSqUP5FzaKEGsw",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\":\"ass\",\r\n    \"name\":\"普通用户\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:9101/api/admin/user/add",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"admin",
+										"user",
+										"add"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				}
-			},
-			"response": []
+			]
+		},
+		{
+			"name": "用户 user",
+			"item": [
+				{
+					"name": "公共枚举",
+					"item": [
+						{
+							"name": "枚举类接口",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMzI4NTU5OSwiZXhwIjoxNjM4NDY5NTk5fQ.XfHqmTL9Y4h8rnCJRQDZklQRUrgSaI3lCygHNgXgfNDT_U-UrGAK1ig1vslvvLkC77NLDFXOcQVpBzeFh8eZxg",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:9101/api/user/enum/role?roleName=普通",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"user",
+										"enum",
+										"role"
+									],
+									"query": [
+										{
+											"key": "roleName",
+											"value": "普通"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "书籍",
+					"item": [
+						{
+							"name": "getBookByCond",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDMwMDAxNiwiZXhwIjoxNjMxNTk2MDE2fQ.Gnb89HDs4IH6LlC2G4WcaluEHQWAub5bD5z_nptY3Q2d8zfnjMyjSUUOl6xinA58xwOuvs8-mgsLh6l3QIKvAA",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"bookName\":\"\",\r\n    \"publisher\":\"\",\r\n    \"status\":\"\",\r\n    \"index\":\"\",\r\n    \"pageSize\":\"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:9101/api/user/public/getBookByCond",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"user",
+										"public",
+										"getBookByCond"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "borrowBook",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDMwMDAxNiwiZXhwIjoxNjMxNTk2MDE2fQ.Gnb89HDs4IH6LlC2G4WcaluEHQWAub5bD5z_nptY3Q2d8zfnjMyjSUUOl6xinA58xwOuvs8-mgsLh6l3QIKvAA",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:9101/api/user/public/borrowBook?bookId=1",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"user",
+										"public",
+										"borrowBook"
+									],
+									"query": [
+										{
+											"key": "bookId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "returnBook",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMTExOTUwNywiZXhwIjoxNjMyNDE1NTA3fQ.lW4ApEGShFJRqfNFxo_qcc77yxH8gsTMD5KysWAzhI8MmtZ5Bm5TY4Xi_tY0_YfpzCflOlsHTFzTL21nwne_wQ",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:9101/api/user/public/returnBook?bookId=1",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"user",
+										"public",
+										"returnBook"
+									],
+									"query": [
+										{
+											"key": "bookId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "钥匙",
+					"item": [
+						{
+							"name": "查询钥匙",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMzUwNzU4OSwiZXhwIjoxNjY1MDQzNTg5fQ.ziFsLus9xKF0-HLdMawkHQ8ur66d4ECz5ByQAtx8YXzq7RdGwXsuFQTiUxxtvVudWcaYqMMr8Slr9oqTccEkPw",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:9101/api/user/key/query",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"user",
+										"key",
+										"query"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "借钥匙",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMzUwNzU4OSwiZXhwIjoxNjY1MDQzNTg5fQ.ziFsLus9xKF0-HLdMawkHQ8ur66d4ECz5ByQAtx8YXzq7RdGwXsuFQTiUxxtvVudWcaYqMMr8Slr9oqTccEkPw",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:9101/api/user/key/borrow?keyId=5",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"user",
+										"key",
+										"borrow"
+									],
+									"query": [
+										{
+											"key": "keyId",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "还钥匙",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMzUwNzU4OSwiZXhwIjoxNjY1MDQzNTg5fQ.ziFsLus9xKF0-HLdMawkHQ8ur66d4ECz5ByQAtx8YXzq7RdGwXsuFQTiUxxtvVudWcaYqMMr8Slr9oqTccEkPw",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:9101/api/user/key/return?keyId=5",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"user",
+										"key",
+										"return"
+									],
+									"query": [
+										{
+											"key": "keyId",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "钥匙记录",
+					"item": [
+						{
+							"name": "查询钥匙记录",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMzUwNzU4OSwiZXhwIjoxNjY1MDQzNTg5fQ.ziFsLus9xKF0-HLdMawkHQ8ur66d4ECz5ByQAtx8YXzq7RdGwXsuFQTiUxxtvVudWcaYqMMr8Slr9oqTccEkPw",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:9101/api/user/keyUser/query",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"user",
+										"keyUser",
+										"query"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "通用 common",
+			"item": [
+				{
+					"name": "登录",
+					"item": [
+						{
+							"name": "登录",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"username\":\"admin\",\n\t\"password\":\"21232f297a57a5a743894a0e4a801fc3\"\n}"
+								},
+								"url": {
+									"raw": "localhost:9101/api/common/login",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"common",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "测试",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDMwMDAxNiwiZXhwIjoxNjMxNTk2MDE2fQ.Gnb89HDs4IH6LlC2G4WcaluEHQWAub5bD5z_nptY3Q2d8zfnjMyjSUUOl6xinA58xwOuvs8-mgsLh6l3QIKvAA",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:9101/api/common/test",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"common",
+										"test"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "登出",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTYzMDMwMDAxNiwiZXhwIjoxNjMxNTk2MDE2fQ.Gnb89HDs4IH6LlC2G4WcaluEHQWAub5bD5z_nptY3Q2d8zfnjMyjSUUOl6xinA58xwOuvs8-mgsLh6l3QIKvAA",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:9101/api/common/logout",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"common",
+										"logout"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "热榜",
+					"item": [
+						{
+							"name": "csdn展示",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:9101/api/common/csdnRecord",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"common",
+										"csdnRecord"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "报名",
+					"item": [
+						{
+							"name": "报名",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"studentId\":\"114514\",\n\t\"name\":\"先辈\",\n\t\"gender\":\"男\",\n\t\"qq\":\"12233334\",\n\t\"major\":\"挖掘22机\",\n\t\"profile\":\"jfioaejfasjioheuifhgisahfoksjdkfhweuihfseifjdewjfopawijrf309wru[ojskdhuuerg\"\n}"
+								},
+								"url": {
+									"raw": "localhost:9101/api/common/signUp",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"common",
+										"signUp"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "查询报名结果",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:9101/api/common/querySignUp?studentId=114514",
+									"host": [
+										"localhost"
+									],
+									"port": "9101",
+									"path": [
+										"api",
+										"common",
+										"querySignUp"
+									],
+									"query": [
+										{
+											"key": "studentId",
+											"value": "114514"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
 		}
 	]
 }

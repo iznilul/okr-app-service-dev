@@ -36,8 +36,12 @@ public class KeyServiceImpl extends ServiceImpl<KeyMapper, Key> implements IKeyS
 
   @Override
   public int saveKey(String keyName) {
-    Key key = new Key(null, keyName, 0);
-    return keyMapper.insert(key);
+    if (null != keyMapper.selectOne(new QueryWrapper<Key>().eq("key_name", keyName))) {
+      return 0;
+    } else {
+      Key key = new Key(null, keyName, 0);
+      return keyMapper.insert(key);
+    }
   }
 
   @Override
@@ -49,43 +53,67 @@ public class KeyServiceImpl extends ServiceImpl<KeyMapper, Key> implements IKeyS
   }
 
   @Override
-  public boolean removeById(int keyId) {
-    return (keyMapper.deleteById(keyId) == 1) && keyUserService
-        .remove(new QueryWrapper<KeyUser>().eq("key_id", keyId));
+  @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED,
+      rollbackFor = Exception.class)
+  public int removeById(int keyId) {
+    keyUserService.remove(new QueryWrapper<KeyUser>().eq("key_id", keyId));
+    return keyMapper.deleteById(keyId);
   }
 
   @Override
   public Result getKey(PageDTO dto) {
     Page<Key> page = new Page<>(dto.getIndex(), dto.getPageSize());
-    Page<KeyVO> voPage = keyMapper.getKey(page);
+    Page<KeyVO> voPage = keyMapper.selectKeyList(page);
     if (voPage.getSize() == 0) {
       page.setCurrent(1);
-      voPage = keyMapper.getKey(page);
+      voPage = keyMapper.selectKeyList(page);
     }
+    voPage.getRecords().forEach(vo -> {
+      vo.setStatusName(KeyStatus.getMessage(vo.getStatus()));
+    });
     return Result.success(voPage.getRecords(), voPage.getCurrent(), voPage.getTotal());
+  }
+
+  @Override
+  public KeyVO getKeyById(int keyId) {
+    Key key = keyMapper.selectById(keyId);
+    KeyVO vo = new KeyVO();
+    BeanUtils.copyProperties(key, vo);
+    vo.setStatusName(KeyStatus.getMessage(key.getStatus()));
+    return vo;
   }
 
   @Override
   @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED,
       rollbackFor = Exception.class)
   public int borrowKey(int keyId) {
-    if (keyMapper.update(null, new UpdateWrapper<Key>().eq("key_id", keyId).set("status", 1))
-        == 0) {
+    if (keyMapper.selectById(keyId).getStatus() == 1) {
       return 0;
+    } else {
+      if (keyMapper.update(null, new UpdateWrapper<Key>().eq("key_id", keyId).set("status", 1))
+          == 0) {
+        return 0;
+      } else {
+        Integer userId = authenticationService.getUserId();
+        return keyUserService.saveKeyUser(keyId, userId);
+      }
     }
-    Integer userId = authenticationService.getUserId();
-    return keyUserService.saveKeyUser(keyId, userId);
   }
 
   @Override
   @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED,
       rollbackFor = Exception.class)
   public int returnKey(int keyId) {
-    if (keyMapper.update(null, new UpdateWrapper<Key>().eq("key_id", keyId).set("status", 0))
-        == 0) {
+    if (keyMapper.selectById(keyId).getStatus() == 0) {
       return 0;
+    } else {
+      if (keyMapper.update(null, new UpdateWrapper<Key>().eq("key_id", keyId).set("status", 0))
+          == 0) {
+        return 0;
+      } else {
+        Integer userId = authenticationService.getUserId();
+        return keyUserService.modifyKeyUser(keyId, userId, 1);
+      }
     }
-    Integer userId = authenticationService.getUserId();
-    return keyUserService.modifyKeyUser(keyId, userId, 1);
   }
 }

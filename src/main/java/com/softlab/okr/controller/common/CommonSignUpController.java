@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @Api(tags = "通用 报名接口")
-@RequestMapping("/api/common/signup")
+@RequestMapping("/api/common/signUp")
 @Auth(id = 1200, name = "通用 报名接口")
 public class CommonSignUpController {
 

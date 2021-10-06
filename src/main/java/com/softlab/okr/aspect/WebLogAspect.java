@@ -43,7 +43,7 @@ public class WebLogAspect {
   /**
    * 定义切入点，以controller下所有包的请求为切入点
    */
-  @Pointcut("execution(* com.softlab.okr.controller.*.*(..))")
+  @Pointcut("execution(* com.softlab.okr.controller..*.*(..))")
   public void weblog() {
   }
 

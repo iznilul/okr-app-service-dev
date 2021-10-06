@@ -5,6 +5,7 @@ import com.softlab.okr.entity.Key;
 import com.softlab.okr.exception.ServiceException;
 import com.softlab.okr.model.dto.KeyDTO;
 import com.softlab.okr.model.dto.PageDTO;
+import com.softlab.okr.model.vo.KeyVO;
 import com.softlab.okr.utils.Result;
 
 public interface IKeyService extends IService<Key> {
@@ -13,9 +14,11 @@ public interface IKeyService extends IService<Key> {
 
   int modifyKey(KeyDTO dto) throws ServiceException;
 
-  boolean removeById(int keyId) throws ServiceException;
+  int removeById(int keyId) throws ServiceException;
 
   Result getKey(PageDTO dto) throws ServiceException;
+
+  KeyVO getKeyById(int keyId) throws ServiceException;
 
   int borrowKey(int keyId);
 

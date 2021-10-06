@@ -2,6 +2,7 @@ package com.softlab.okr.controller.admin;
 
 import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.model.dto.KeyDTO;
+import com.softlab.okr.model.vo.KeyVO;
 import com.softlab.okr.service.IKeyService;
 import com.softlab.okr.utils.Result;
 import io.swagger.annotations.Api;
@@ -10,6 +11,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,7 +41,7 @@ public class AdminKeyController {
         Result.success() : Result.failure();
   }
 
-  @GetMapping("change")
+  @PostMapping("change")
   @ApiOperation("修改钥匙")
   @Auth(id = 2, name = "修改钥匙")
   public Result changeKey(@RequestBody KeyDTO dto) {
@@ -51,7 +53,15 @@ public class AdminKeyController {
   @ApiOperation("删除钥匙")
   @Auth(id = 3, name = "删除钥匙")
   public Result cancelKey(@RequestParam("keyId") @NotNull int keyId) {
-    return keyService.removeById(keyId) ?
+    return keyService.removeById(keyId) == 1 ?
         Result.success() : Result.failure();
+  }
+
+  @GetMapping("queryById")
+  @ApiOperation("根据id查询钥匙")
+  @Auth(id = 4, name = "根据id查询钥匙")
+  public Result queryKeyById(@RequestParam("keyId") int keyId) {
+    KeyVO vo = keyService.getKeyById(keyId);
+    return null != vo ? Result.success(vo) : Result.failure();
   }
 }
