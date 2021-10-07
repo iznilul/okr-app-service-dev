@@ -12,12 +12,23 @@
     <id property="keyId" column="key_id"/>
     <result property="keyName" column="key_name"/>
     <result property="status" column="status"/>
-    <result property="userName" column="name"/>
+    <!--    <result property="statusName" column="statusName"/>-->
+    <result property="userId" column="user_id"/>
   </resultMap>
 
   <sql id="Base_Column_List">
         `key_id`,`key_name`,`status`
     </sql>
+
+  <select id="selectKeyList" resultMap="VOMap">
+    select
+    ky.key_id,
+    ky.key_name,
+    ky.status,
+    ku.user_id
+    from `key` ky
+    left join key_user ku on ky.key_id=ku.key_id and ky.status=1 and ku.status=0
+  </select>
 
 </mapper>
 

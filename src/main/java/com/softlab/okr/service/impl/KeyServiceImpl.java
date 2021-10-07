@@ -15,8 +15,6 @@ import com.softlab.okr.security.IAuthenticationService;
 import com.softlab.okr.service.IKeyService;
 import com.softlab.okr.service.IKeyUserService;
 import com.softlab.okr.utils.Result;
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,27 +53,34 @@ public class KeyServiceImpl extends ServiceImpl<KeyMapper, Key> implements IKeyS
   }
 
   @Override
-  public boolean removeById(int keyId) {
-    return (keyMapper.deleteById(keyId) == 1) && keyUserService
-        .remove(new QueryWrapper<KeyUser>().eq("key_id", keyId));
+  @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED,
+      rollbackFor = Exception.class)
+  public int removeById(int keyId) {
+    keyUserService.remove(new QueryWrapper<KeyUser>().eq("key_id", keyId));
+    return keyMapper.deleteById(keyId);
   }
 
   @Override
   public Result getKey(PageDTO dto) {
     Page<Key> page = new Page<>(dto.getIndex(), dto.getPageSize());
-    Page<Key> keyPage = keyMapper.selectPage(page, null);
-    if (keyPage.getSize() == 0) {
+    Page<KeyVO> voPage = keyMapper.selectKeyList(page);
+    if (voPage.getSize() == 0) {
       page.setCurrent(1);
-      keyPage = keyMapper.selectPage(page, null);
+      voPage = keyMapper.selectKeyList(page);
     }
-    List<KeyVO> list = new ArrayList<>();
-    keyPage.getRecords().forEach(key -> {
-      KeyVO vo = new KeyVO();
-      BeanUtils.copyProperties(key, vo);
+    voPage.getRecords().forEach(vo -> {
       vo.setStatusName(KeyStatus.getMessage(vo.getStatus()));
-      list.add(vo);
     });
-    return Result.success(list, keyPage.getCurrent(), keyPage.getTotal());
+    return Result.success(voPage.getRecords(), voPage.getCurrent(), voPage.getTotal());
+  }
+
+  @Override
+  public KeyVO getKeyById(int keyId) {
+    Key key = keyMapper.selectById(keyId);
+    KeyVO vo = new KeyVO();
+    BeanUtils.copyProperties(key, vo);
+    vo.setStatusName(KeyStatus.getMessage(key.getStatus()));
+    return vo;
   }
 
   @Override

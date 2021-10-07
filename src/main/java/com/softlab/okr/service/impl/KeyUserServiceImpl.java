@@ -38,7 +38,7 @@ public class KeyUserServiceImpl extends ServiceImpl<KeyUserMapper, KeyUser> impl
   public int modifyKeyUser(int keyId, int userId, int status) {
     return keyUserMapper
         .update(null, new UpdateWrapper<KeyUser>().eq("key_id", keyId).eq("user_id", userId)
-            .set("status", status));
+            .set("status", status).orderByDesc("id").last("limit 1"));
   }
 
   @Override

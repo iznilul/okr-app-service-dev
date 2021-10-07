@@ -1,6 +1,8 @@
 package com.softlab.okr.model.enums.statusCode;
 
 import com.softlab.okr.model.enums.BaseCode;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -51,6 +53,14 @@ public enum KeyStatus implements BaseCode {
   @Override
   public String toString() {
     return this.code().toString() + " " + this.message();
+  }
+
+  public static List<String> getList() {
+    List<String> list = new ArrayList<>();
+    for (KeyStatus status : KeyStatus.values()) {
+      list.add(status.message);
+    }
+    return list;
   }
 
 }

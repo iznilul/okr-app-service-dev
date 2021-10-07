@@ -11,7 +11,7 @@
  Target Server Version : 50722
  File Encoding         : 65001
 
- Date: 07/10/2021 03:20:27
+ Date: 08/10/2021 00:58:35
 */
 
 SET NAMES utf8mb4;
@@ -121,14 +121,13 @@ CREATE TABLE `key`  (
   `key_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '钥匙名称',
   `status` tinyint(1) NOT NULL COMMENT '状态 0未借走 1已借走 2已丢失',
   PRIMARY KEY (`key_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of key
 -- ----------------------------
-INSERT INTO `key` VALUES (3, '四教111', 0);
-INSERT INTO `key` VALUES (4, '四教110', 0);
-INSERT INTO `key` VALUES (5, '四教112', 0);
+INSERT INTO `key` VALUES (8, '四教111 撤硕', 1);
+INSERT INTO `key` VALUES (10, '四教112 大便', 1);
 
 -- ----------------------------
 -- Table structure for key_user
@@ -142,14 +141,19 @@ CREATE TABLE `key_user`  (
   `create_time` datetime(0) NULL DEFAULT NULL,
   `update_time` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of key_user
 -- ----------------------------
-INSERT INTO `key_user` VALUES (1, 3, 20, 1, '2021-10-06 17:40:04', '2021-10-06 17:40:04');
-INSERT INTO `key_user` VALUES (2, 4, 20, 1, '2021-10-06 17:51:11', '2021-10-06 17:51:11');
-INSERT INTO `key_user` VALUES (4, 5, 20, 1, '2021-10-06 22:41:04', '2021-10-06 22:41:04');
+INSERT INTO `key_user` VALUES (8, 8, 22, 1, '2021-10-08 00:45:17', '2021-10-08 00:45:17');
+INSERT INTO `key_user` VALUES (9, 10, 22, 1, '2021-10-08 00:46:02', '2021-10-08 00:46:02');
+INSERT INTO `key_user` VALUES (10, 8, 22, 1, '2021-10-08 00:48:28', '2021-10-08 00:48:28');
+INSERT INTO `key_user` VALUES (11, 10, 22, 1, '2021-10-08 00:49:19', '2021-10-08 00:49:19');
+INSERT INTO `key_user` VALUES (12, 10, 22, 1, '2021-10-08 00:56:12', '2021-10-08 00:56:12');
+INSERT INTO `key_user` VALUES (13, 8, 22, 1, '2021-10-08 00:56:21', '2021-10-08 00:56:21');
+INSERT INTO `key_user` VALUES (14, 8, 22, 0, '2021-10-08 00:56:43', '2021-10-08 00:56:43');
+INSERT INTO `key_user` VALUES (15, 10, 20, 0, '2021-10-08 00:57:22', '2021-10-08 00:57:22');
 
 -- ----------------------------
 -- Table structure for login_log
@@ -163,7 +167,7 @@ CREATE TABLE `login_log`  (
   `time` datetime(0) NULL DEFAULT NULL COMMENT '请求时间点',
   `duration` int(11) NULL DEFAULT NULL COMMENT '用时 单位ms',
   PRIMARY KEY (`login_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1467 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1712 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of login_log
@@ -1633,6 +1637,251 @@ INSERT INTO `login_log` VALUES (1463, '127.0.0.1', '/api/user/user/query', 'admi
 INSERT INTO `login_log` VALUES (1464, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 03:16:12', 7);
 INSERT INTO `login_log` VALUES (1465, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 03:17:46', 3);
 INSERT INTO `login_log` VALUES (1466, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 03:17:46', 2);
+INSERT INTO `login_log` VALUES (1467, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 15:12:17', 42);
+INSERT INTO `login_log` VALUES (1468, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-10-07 15:12:19', 2147);
+INSERT INTO `login_log` VALUES (1469, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 15:12:51', 117);
+INSERT INTO `login_log` VALUES (1470, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 16:32:03', 16);
+INSERT INTO `login_log` VALUES (1471, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 16:32:03', 11);
+INSERT INTO `login_log` VALUES (1472, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 16:33:01', 32);
+INSERT INTO `login_log` VALUES (1473, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 16:33:01', 34);
+INSERT INTO `login_log` VALUES (1474, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 16:36:39', 13);
+INSERT INTO `login_log` VALUES (1475, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 16:36:39', 17);
+INSERT INTO `login_log` VALUES (1476, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 16:38:34', 4);
+INSERT INTO `login_log` VALUES (1477, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 16:41:35', 4);
+INSERT INTO `login_log` VALUES (1478, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 16:42:15', 6);
+INSERT INTO `login_log` VALUES (1479, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 16:42:15', 5);
+INSERT INTO `login_log` VALUES (1480, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 16:46:50', 3);
+INSERT INTO `login_log` VALUES (1481, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 16:46:50', 3);
+INSERT INTO `login_log` VALUES (1482, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 16:47:44', 3);
+INSERT INTO `login_log` VALUES (1483, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 16:47:44', 4);
+INSERT INTO `login_log` VALUES (1484, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 16:51:31', 4);
+INSERT INTO `login_log` VALUES (1485, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 16:58:18', 5);
+INSERT INTO `login_log` VALUES (1486, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 17:01:59', 2);
+INSERT INTO `login_log` VALUES (1487, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 18:49:45', 4);
+INSERT INTO `login_log` VALUES (1488, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 18:49:45', 10);
+INSERT INTO `login_log` VALUES (1489, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 18:50:39', 14);
+INSERT INTO `login_log` VALUES (1490, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 18:50:39', 20);
+INSERT INTO `login_log` VALUES (1491, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 18:53:51', 3);
+INSERT INTO `login_log` VALUES (1492, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 18:53:51', 4);
+INSERT INTO `login_log` VALUES (1493, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 19:08:23', 4);
+INSERT INTO `login_log` VALUES (1494, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 19:08:23', 4);
+INSERT INTO `login_log` VALUES (1495, '127.0.0.1', '/api/admin/key/add', 'admin', '2021-10-07 19:16:27', 135);
+INSERT INTO `login_log` VALUES (1496, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 19:16:27', 2);
+INSERT INTO `login_log` VALUES (1497, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 19:20:29', 3);
+INSERT INTO `login_log` VALUES (1498, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 19:20:29', 21);
+INSERT INTO `login_log` VALUES (1499, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 19:21:18', 3);
+INSERT INTO `login_log` VALUES (1500, '127.0.0.1', '/api/admin/key/queryById', 'admin', '2021-10-07 19:21:20', 2);
+INSERT INTO `login_log` VALUES (1501, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 19:30:11', 3);
+INSERT INTO `login_log` VALUES (1502, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 19:30:11', 5);
+INSERT INTO `login_log` VALUES (1503, '127.0.0.1', '/api/admin/key/queryById', 'admin', '2021-10-07 19:30:14', 2);
+INSERT INTO `login_log` VALUES (1504, '127.0.0.1', '/api/admin/key/queryById', 'admin', '2021-10-07 19:32:04', 13);
+INSERT INTO `login_log` VALUES (1505, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 19:32:08', 10);
+INSERT INTO `login_log` VALUES (1506, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 19:32:08', 15);
+INSERT INTO `login_log` VALUES (1507, '127.0.0.1', '/api/admin/key/queryById', 'admin', '2021-10-07 19:32:12', 2);
+INSERT INTO `login_log` VALUES (1508, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 19:32:41', 3);
+INSERT INTO `login_log` VALUES (1509, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 19:32:41', 5);
+INSERT INTO `login_log` VALUES (1510, '127.0.0.1', '/api/admin/key/queryById', 'admin', '2021-10-07 19:32:42', 1);
+INSERT INTO `login_log` VALUES (1511, '127.0.0.1', '/api/admin/key/queryById', 'admin', '2021-10-07 19:34:18', 1);
+INSERT INTO `login_log` VALUES (1512, '127.0.0.1', '/api/admin/key/queryById', 'admin', '2021-10-07 19:34:19', 1);
+INSERT INTO `login_log` VALUES (1513, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 19:34:22', 2);
+INSERT INTO `login_log` VALUES (1514, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 19:34:22', 7);
+INSERT INTO `login_log` VALUES (1515, '127.0.0.1', '/api/admin/key/queryById', 'admin', '2021-10-07 19:34:23', 2);
+INSERT INTO `login_log` VALUES (1516, '127.0.0.1', '/api/admin/key/queryById', 'admin', '2021-10-07 19:34:27', 2);
+INSERT INTO `login_log` VALUES (1517, '127.0.0.1', '/api/admin/key/queryById', 'admin', '2021-10-07 19:34:29', 1);
+INSERT INTO `login_log` VALUES (1518, '127.0.0.1', '/api/admin/key/queryById', 'admin', '2021-10-07 19:34:33', 1);
+INSERT INTO `login_log` VALUES (1519, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 19:40:50', 5);
+INSERT INTO `login_log` VALUES (1520, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 19:40:50', 5);
+INSERT INTO `login_log` VALUES (1521, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 19:41:55', 3);
+INSERT INTO `login_log` VALUES (1522, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 19:41:55', 5);
+INSERT INTO `login_log` VALUES (1523, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 19:42:25', 3);
+INSERT INTO `login_log` VALUES (1524, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 19:42:25', 4);
+INSERT INTO `login_log` VALUES (1525, '127.0.0.1', '/api/admin/key/cancel', 'admin', '2021-10-07 19:42:28', 180);
+INSERT INTO `login_log` VALUES (1526, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 19:42:50', 2);
+INSERT INTO `login_log` VALUES (1527, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 19:42:50', 3);
+INSERT INTO `login_log` VALUES (1528, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 19:48:25', 14);
+INSERT INTO `login_log` VALUES (1529, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 19:48:25', 23);
+INSERT INTO `login_log` VALUES (1530, '127.0.0.1', '/api/admin/key/cancel', 'admin', '2021-10-07 19:49:08', 92);
+INSERT INTO `login_log` VALUES (1531, '127.0.0.1', '/api/admin/key/cancel', 'admin', '2021-10-07 20:16:00', 12);
+INSERT INTO `login_log` VALUES (1532, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 20:16:07', 15);
+INSERT INTO `login_log` VALUES (1533, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 20:16:07', 19);
+INSERT INTO `login_log` VALUES (1534, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 20:17:53', 14);
+INSERT INTO `login_log` VALUES (1535, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 20:17:53', 23);
+INSERT INTO `login_log` VALUES (1536, '127.0.0.1', '/api/admin/key/queryById', 'admin', '2021-10-07 20:18:18', 13);
+INSERT INTO `login_log` VALUES (1537, '127.0.0.1', '/api/admin/key/cancel', 'admin', '2021-10-07 20:18:30', 3667);
+INSERT INTO `login_log` VALUES (1538, '127.0.0.1', '/api/admin/key/cancel', 'admin', '2021-10-07 20:18:40', 1742);
+INSERT INTO `login_log` VALUES (1539, '127.0.0.1', '/api/admin/key/add', 'admin', '2021-10-07 20:18:47', 137);
+INSERT INTO `login_log` VALUES (1540, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 20:18:47', 58);
+INSERT INTO `login_log` VALUES (1541, '127.0.0.1', '/api/admin/key/cancel', 'admin', '2021-10-07 20:20:03', 3196);
+INSERT INTO `login_log` VALUES (1542, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 20:20:39', 4);
+INSERT INTO `login_log` VALUES (1543, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-10-07 20:20:39', 1718);
+INSERT INTO `login_log` VALUES (1544, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-10-07 20:20:48', 1186);
+INSERT INTO `login_log` VALUES (1545, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 20:20:49', 2);
+INSERT INTO `login_log` VALUES (1546, '127.0.0.1', '/api/admin/key/add', 'admin', '2021-10-07 20:20:55', 44);
+INSERT INTO `login_log` VALUES (1547, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 20:20:56', 3);
+INSERT INTO `login_log` VALUES (1548, '127.0.0.1', '/api/admin/key/queryById', 'admin', '2021-10-07 20:20:57', 1);
+INSERT INTO `login_log` VALUES (1549, '127.0.0.1', '/api/admin/key/change', 'admin', '2021-10-07 20:21:08', 72);
+INSERT INTO `login_log` VALUES (1550, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 20:21:08', 3);
+INSERT INTO `login_log` VALUES (1551, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 21:41:18', 3);
+INSERT INTO `login_log` VALUES (1552, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 21:41:18', 14);
+INSERT INTO `login_log` VALUES (1553, '127.0.0.1', '/api/admin/key/queryById', 'admin', '2021-10-07 21:41:26', 1);
+INSERT INTO `login_log` VALUES (1554, '127.0.0.1', '/api/admin/key/change', 'admin', '2021-10-07 21:41:28', 58);
+INSERT INTO `login_log` VALUES (1555, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 21:41:28', 2);
+INSERT INTO `login_log` VALUES (1556, '127.0.0.1', '/api/admin/key/queryById', 'admin', '2021-10-07 21:41:58', 1);
+INSERT INTO `login_log` VALUES (1557, '127.0.0.1', '/api/admin/key/queryById', 'admin', '2021-10-07 21:42:01', 1);
+INSERT INTO `login_log` VALUES (1558, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 21:42:10', 2);
+INSERT INTO `login_log` VALUES (1559, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 21:42:10', 3);
+INSERT INTO `login_log` VALUES (1560, '127.0.0.1', '/api/admin/key/queryById', 'admin', '2021-10-07 21:42:12', 1);
+INSERT INTO `login_log` VALUES (1561, '127.0.0.1', '/api/admin/key/change', 'admin', '2021-10-07 21:42:13', 57);
+INSERT INTO `login_log` VALUES (1562, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 21:42:13', 3);
+INSERT INTO `login_log` VALUES (1563, '127.0.0.1', '/api/admin/key/queryById', 'admin', '2021-10-07 22:03:22', 2);
+INSERT INTO `login_log` VALUES (1564, '127.0.0.1', '/api/admin/key/queryById', 'admin', '2021-10-07 22:03:35', 1);
+INSERT INTO `login_log` VALUES (1565, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 22:03:41', 4);
+INSERT INTO `login_log` VALUES (1566, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 22:03:41', 6);
+INSERT INTO `login_log` VALUES (1567, '127.0.0.1', '/api/admin/key/queryById', 'admin', '2021-10-07 22:03:44', 1);
+INSERT INTO `login_log` VALUES (1568, '127.0.0.1', '/api/admin/key/queryById', 'admin', '2021-10-07 22:03:47', 1);
+INSERT INTO `login_log` VALUES (1569, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 22:12:35', 10);
+INSERT INTO `login_log` VALUES (1570, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 22:12:35', 16);
+INSERT INTO `login_log` VALUES (1571, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 22:14:13', 4);
+INSERT INTO `login_log` VALUES (1572, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 22:14:13', 4);
+INSERT INTO `login_log` VALUES (1573, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 22:17:35', 3);
+INSERT INTO `login_log` VALUES (1574, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 22:17:35', 4);
+INSERT INTO `login_log` VALUES (1575, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 22:20:34', 4);
+INSERT INTO `login_log` VALUES (1576, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 22:20:35', 6);
+INSERT INTO `login_log` VALUES (1577, '127.0.0.1', '/api/admin/key/queryById', 'admin', '2021-10-07 22:20:36', 4);
+INSERT INTO `login_log` VALUES (1578, '127.0.0.1', '/api/admin/key/queryById', 'admin', '2021-10-07 22:20:44', 1);
+INSERT INTO `login_log` VALUES (1579, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 22:21:46', 4);
+INSERT INTO `login_log` VALUES (1580, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 22:21:46', 5);
+INSERT INTO `login_log` VALUES (1581, '127.0.0.1', '/api/admin/key/queryById', 'admin', '2021-10-07 22:21:50', 1);
+INSERT INTO `login_log` VALUES (1582, '127.0.0.1', '/api/user/enum/key', 'admin', '2021-10-07 22:21:50', 3);
+INSERT INTO `login_log` VALUES (1583, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 22:22:13', 5);
+INSERT INTO `login_log` VALUES (1584, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 22:22:13', 4);
+INSERT INTO `login_log` VALUES (1585, '127.0.0.1', '/api/admin/key/queryById', 'admin', '2021-10-07 22:22:15', 1);
+INSERT INTO `login_log` VALUES (1586, '127.0.0.1', '/api/user/enum/key', 'admin', '2021-10-07 22:22:15', 0);
+INSERT INTO `login_log` VALUES (1587, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 22:22:56', 3);
+INSERT INTO `login_log` VALUES (1588, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 22:22:56', 3);
+INSERT INTO `login_log` VALUES (1589, '127.0.0.1', '/api/admin/key/queryById', 'admin', '2021-10-07 22:22:59', 1);
+INSERT INTO `login_log` VALUES (1590, '127.0.0.1', '/api/user/enum/key', 'admin', '2021-10-07 22:22:59', 0);
+INSERT INTO `login_log` VALUES (1591, '127.0.0.1', '/api/admin/key/queryById', 'admin', '2021-10-07 22:29:19', 1);
+INSERT INTO `login_log` VALUES (1592, '127.0.0.1', '/api/user/enum/key', 'admin', '2021-10-07 22:30:48', 84114);
+INSERT INTO `login_log` VALUES (1593, '127.0.0.1', '/api/admin/key/queryById', 'admin', '2021-10-07 22:33:09', 14);
+INSERT INTO `login_log` VALUES (1594, '127.0.0.1', '/api/user/enum/key', 'admin', '2021-10-07 22:33:09', 2);
+INSERT INTO `login_log` VALUES (1595, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 22:38:53', 8);
+INSERT INTO `login_log` VALUES (1596, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 22:38:53', 13);
+INSERT INTO `login_log` VALUES (1597, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 22:40:31', 4);
+INSERT INTO `login_log` VALUES (1598, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 22:40:31', 4);
+INSERT INTO `login_log` VALUES (1599, '127.0.0.1', '/api/admin/key/add', 'admin', '2021-10-07 22:40:37', 136);
+INSERT INTO `login_log` VALUES (1600, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 22:40:37', 3);
+INSERT INTO `login_log` VALUES (1601, '127.0.0.1', '/api/admin/key/queryById', 'admin', '2021-10-07 22:41:03', 1);
+INSERT INTO `login_log` VALUES (1602, '127.0.0.1', '/api/user/enum/key', 'admin', '2021-10-07 22:41:03', 0);
+INSERT INTO `login_log` VALUES (1603, '127.0.0.1', '/api/user/enum/key', 'admin', '2021-10-07 22:41:08', 0);
+INSERT INTO `login_log` VALUES (1604, '127.0.0.1', '/api/admin/key/change', 'admin', '2021-10-07 22:41:09', 42);
+INSERT INTO `login_log` VALUES (1605, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 22:41:09', 2);
+INSERT INTO `login_log` VALUES (1606, '127.0.0.1', '/api/admin/key/cancel', 'admin', '2021-10-07 22:49:26', 2741);
+INSERT INTO `login_log` VALUES (1607, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 23:11:07', 2);
+INSERT INTO `login_log` VALUES (1608, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 23:11:07', 4);
+INSERT INTO `login_log` VALUES (1609, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 23:23:06', 3);
+INSERT INTO `login_log` VALUES (1610, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 23:23:33', 3);
+INSERT INTO `login_log` VALUES (1611, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 23:23:33', 4);
+INSERT INTO `login_log` VALUES (1612, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 23:24:04', 3);
+INSERT INTO `login_log` VALUES (1613, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 23:24:04', 4);
+INSERT INTO `login_log` VALUES (1614, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 23:24:37', 16);
+INSERT INTO `login_log` VALUES (1615, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 23:24:47', 4);
+INSERT INTO `login_log` VALUES (1616, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 23:28:40', 3);
+INSERT INTO `login_log` VALUES (1617, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 23:30:52', 5);
+INSERT INTO `login_log` VALUES (1618, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 23:31:14', 3);
+INSERT INTO `login_log` VALUES (1619, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-07 23:56:24', 13);
+INSERT INTO `login_log` VALUES (1620, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 23:56:24', 51);
+INSERT INTO `login_log` VALUES (1621, '127.0.0.1', '/api/admin/key/add', 'admin', '2021-10-07 23:57:00', 38);
+INSERT INTO `login_log` VALUES (1622, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-07 23:57:00', 3);
+INSERT INTO `login_log` VALUES (1623, '0:0:0:0:0:0:0:1', '/api/user/key/borrow', 'admin', '2021-10-07 23:57:07', 106);
+INSERT INTO `login_log` VALUES (1624, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-08 00:16:23', 16);
+INSERT INTO `login_log` VALUES (1625, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-08 00:16:23', 193);
+INSERT INTO `login_log` VALUES (1626, '0:0:0:0:0:0:0:1', '/api/user/key/return', 'admin', '2021-10-08 00:16:41', 395);
+INSERT INTO `login_log` VALUES (1627, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-08 00:16:49', 4);
+INSERT INTO `login_log` VALUES (1628, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-08 00:16:49', 6);
+INSERT INTO `login_log` VALUES (1629, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-08 00:18:54', 5);
+INSERT INTO `login_log` VALUES (1630, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-08 00:18:54', 6);
+INSERT INTO `login_log` VALUES (1631, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-08 00:22:02', 3);
+INSERT INTO `login_log` VALUES (1632, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-08 00:22:35', 5);
+INSERT INTO `login_log` VALUES (1633, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-08 00:22:35', 6);
+INSERT INTO `login_log` VALUES (1634, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-08 00:23:53', 4);
+INSERT INTO `login_log` VALUES (1635, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-08 00:27:03', 6);
+INSERT INTO `login_log` VALUES (1636, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-08 00:28:28', 9);
+INSERT INTO `login_log` VALUES (1637, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-08 00:31:32', 6);
+INSERT INTO `login_log` VALUES (1638, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-08 00:31:36', 19);
+INSERT INTO `login_log` VALUES (1639, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-08 00:31:36', 3);
+INSERT INTO `login_log` VALUES (1640, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-08 00:32:13', 3);
+INSERT INTO `login_log` VALUES (1641, '127.0.0.1', '/api/user/user/queryList', 'admin', '2021-10-08 00:34:52', 8);
+INSERT INTO `login_log` VALUES (1642, '127.0.0.1', '/api/user/user/queryByUsername', 'admin', '2021-10-08 00:34:56', 3);
+INSERT INTO `login_log` VALUES (1643, '127.0.0.1', '/api/user/user/change', 'admin', '2021-10-08 00:35:19', 95);
+INSERT INTO `login_log` VALUES (1644, '127.0.0.1', '/api/user/user/queryList', 'admin', '2021-10-08 00:35:19', 4);
+INSERT INTO `login_log` VALUES (1645, '127.0.0.1', '/api/common/login', 'anonymousUser', '2021-10-08 00:35:30', 44);
+INSERT INTO `login_log` VALUES (1646, '127.0.0.1', '/api/user/user/query', 'test', '2021-10-08 00:35:30', 7);
+INSERT INTO `login_log` VALUES (1647, '127.0.0.1', '/api/user/monitor/server', 'test', '2021-10-08 00:35:33', 2210);
+INSERT INTO `login_log` VALUES (1648, '127.0.0.1', '/api/user/user/queryList', 'test', '2021-10-08 00:35:39', 4);
+INSERT INTO `login_log` VALUES (1649, '127.0.0.1', '/api/user/user/query', 'test', '2021-10-08 00:40:33', 3);
+INSERT INTO `login_log` VALUES (1650, '127.0.0.1', '/api/user/user/queryList', 'test', '2021-10-08 00:40:33', 7);
+INSERT INTO `login_log` VALUES (1651, '127.0.0.1', '/api/user/key/query', 'test', '2021-10-08 00:40:36', 5);
+INSERT INTO `login_log` VALUES (1652, '127.0.0.1', '/api/user/user/changeImg', 'test', '2021-10-08 00:40:58', 133);
+INSERT INTO `login_log` VALUES (1653, '127.0.0.1', '/api/user/user/queryList', 'test', '2021-10-08 00:41:03', 6);
+INSERT INTO `login_log` VALUES (1654, '127.0.0.1', '/api/user/key/query', 'test', '2021-10-08 00:41:17', 3);
+INSERT INTO `login_log` VALUES (1655, '127.0.0.1', '/api/user/key/borrow', 'test', '2021-10-08 00:41:25', 37);
+INSERT INTO `login_log` VALUES (1656, '127.0.0.1', '/api/user/key/query', 'test', '2021-10-08 00:41:25', 4);
+INSERT INTO `login_log` VALUES (1657, '127.0.0.1', '/api/user/key/borrow', 'test', '2021-10-08 00:43:45', 116);
+INSERT INTO `login_log` VALUES (1658, '127.0.0.1', '/api/user/key/query', 'test', '2021-10-08 00:43:45', 2);
+INSERT INTO `login_log` VALUES (1659, '127.0.0.1', '/api/user/user/query', 'test', '2021-10-08 00:44:10', 3);
+INSERT INTO `login_log` VALUES (1660, '127.0.0.1', '/api/user/key/query', 'test', '2021-10-08 00:44:10', 5);
+INSERT INTO `login_log` VALUES (1661, '127.0.0.1', '/api/user/user/query', 'test', '2021-10-08 00:45:00', 4);
+INSERT INTO `login_log` VALUES (1662, '127.0.0.1', '/api/user/key/query', 'test', '2021-10-08 00:45:00', 5);
+INSERT INTO `login_log` VALUES (1663, '127.0.0.1', '/api/user/key/borrow', 'test', '2021-10-08 00:45:16', 188);
+INSERT INTO `login_log` VALUES (1664, '127.0.0.1', '/api/user/key/query', 'test', '2021-10-08 00:45:17', 4);
+INSERT INTO `login_log` VALUES (1665, '127.0.0.1', '/api/user/key/return', 'test', '2021-10-08 00:45:24', 53);
+INSERT INTO `login_log` VALUES (1666, '127.0.0.1', '/api/user/key/query', 'test', '2021-10-08 00:45:24', 2);
+INSERT INTO `login_log` VALUES (1667, '127.0.0.1', '/api/user/key/query', 'test', '2021-10-08 00:45:26', 3);
+INSERT INTO `login_log` VALUES (1668, '127.0.0.1', '/api/user/user/query', 'test', '2021-10-08 00:45:26', 2);
+INSERT INTO `login_log` VALUES (1669, '127.0.0.1', '/api/user/key/borrow', 'test', '2021-10-08 00:46:01', 50);
+INSERT INTO `login_log` VALUES (1670, '127.0.0.1', '/api/user/key/query', 'test', '2021-10-08 00:46:01', 4);
+INSERT INTO `login_log` VALUES (1671, '127.0.0.1', '/api/user/key/return', 'test', '2021-10-08 00:46:25', 137);
+INSERT INTO `login_log` VALUES (1672, '127.0.0.1', '/api/user/key/query', 'test', '2021-10-08 00:46:25', 3);
+INSERT INTO `login_log` VALUES (1673, '127.0.0.1', '/api/user/key/query', 'test', '2021-10-08 00:46:29', 3);
+INSERT INTO `login_log` VALUES (1674, '127.0.0.1', '/api/user/user/query', 'test', '2021-10-08 00:46:29', 2);
+INSERT INTO `login_log` VALUES (1675, '127.0.0.1', '/api/user/key/borrow', 'test', '2021-10-08 00:48:27', 94);
+INSERT INTO `login_log` VALUES (1676, '127.0.0.1', '/api/user/key/query', 'test', '2021-10-08 00:48:27', 3);
+INSERT INTO `login_log` VALUES (1677, '127.0.0.1', '/api/user/key/borrow', 'test', '2021-10-08 00:49:18', 88);
+INSERT INTO `login_log` VALUES (1678, '127.0.0.1', '/api/user/key/query', 'test', '2021-10-08 00:49:19', 2);
+INSERT INTO `login_log` VALUES (1679, '127.0.0.1', '/api/user/user/query', 'test', '2021-10-08 00:51:11', 11);
+INSERT INTO `login_log` VALUES (1680, '127.0.0.1', '/api/user/key/query', 'test', '2021-10-08 00:51:11', 16);
+INSERT INTO `login_log` VALUES (1681, '127.0.0.1', '/api/user/key/return', 'test', '2021-10-08 00:51:16', 58);
+INSERT INTO `login_log` VALUES (1682, '127.0.0.1', '/api/user/user/query', 'test', '2021-10-08 00:51:51', 4);
+INSERT INTO `login_log` VALUES (1683, '127.0.0.1', '/api/user/key/query', 'test', '2021-10-08 00:51:51', 5);
+INSERT INTO `login_log` VALUES (1684, '127.0.0.1', '/api/user/user/query', 'test', '2021-10-08 00:55:28', 15);
+INSERT INTO `login_log` VALUES (1685, '127.0.0.1', '/api/user/key/query', 'test', '2021-10-08 00:55:28', 18);
+INSERT INTO `login_log` VALUES (1686, '127.0.0.1', '/api/user/key/return', 'test', '2021-10-08 00:55:31', 97);
+INSERT INTO `login_log` VALUES (1687, '127.0.0.1', '/api/user/key/query', 'test', '2021-10-08 00:55:31', 4);
+INSERT INTO `login_log` VALUES (1688, '127.0.0.1', '/api/user/user/query', 'test', '2021-10-08 00:55:36', 2);
+INSERT INTO `login_log` VALUES (1689, '127.0.0.1', '/api/user/key/query', 'test', '2021-10-08 00:55:36', 3);
+INSERT INTO `login_log` VALUES (1690, '127.0.0.1', '/api/user/key/borrow', 'test', '2021-10-08 00:56:11', 116);
+INSERT INTO `login_log` VALUES (1691, '127.0.0.1', '/api/user/key/query', 'test', '2021-10-08 00:56:12', 3);
+INSERT INTO `login_log` VALUES (1692, '127.0.0.1', '/api/user/key/borrow', 'test', '2021-10-08 00:56:21', 61);
+INSERT INTO `login_log` VALUES (1693, '127.0.0.1', '/api/user/key/query', 'test', '2021-10-08 00:56:21', 3);
+INSERT INTO `login_log` VALUES (1694, '127.0.0.1', '/api/user/key/return', 'test', '2021-10-08 00:56:26', 55);
+INSERT INTO `login_log` VALUES (1695, '127.0.0.1', '/api/user/key/query', 'test', '2021-10-08 00:56:26', 3);
+INSERT INTO `login_log` VALUES (1696, '127.0.0.1', '/api/user/key/return', 'test', '2021-10-08 00:56:33', 58);
+INSERT INTO `login_log` VALUES (1697, '127.0.0.1', '/api/user/key/query', 'test', '2021-10-08 00:56:33', 4);
+INSERT INTO `login_log` VALUES (1698, '127.0.0.1', '/api/user/key/borrow', 'test', '2021-10-08 00:56:42', 99);
+INSERT INTO `login_log` VALUES (1699, '127.0.0.1', '/api/user/key/query', 'test', '2021-10-08 00:56:42', 4);
+INSERT INTO `login_log` VALUES (1700, '127.0.0.1', '/api/common/login', 'anonymousUser', '2021-10-08 00:56:48', 5);
+INSERT INTO `login_log` VALUES (1701, '127.0.0.1', '/api/user/user/query', 'admin', '2021-10-08 00:56:48', 3);
+INSERT INTO `login_log` VALUES (1702, '127.0.0.1', '/api/user/monitor/server', 'admin', '2021-10-08 00:56:49', 1237);
+INSERT INTO `login_log` VALUES (1703, '127.0.0.1', '/api/user/user/queryList', 'admin', '2021-10-08 00:56:55', 4);
+INSERT INTO `login_log` VALUES (1704, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-08 00:56:59', 3);
+INSERT INTO `login_log` VALUES (1705, '127.0.0.1', '/api/user/key/borrow', 'admin', '2021-10-08 00:57:22', 47);
+INSERT INTO `login_log` VALUES (1706, '127.0.0.1', '/api/user/key/query', 'admin', '2021-10-08 00:57:22', 3);
+INSERT INTO `login_log` VALUES (1707, '127.0.0.1', '/api/common/login', 'anonymousUser', '2021-10-08 00:57:35', 2);
+INSERT INTO `login_log` VALUES (1708, '127.0.0.1', '/api/user/user/query', 'test', '2021-10-08 00:57:35', 6);
+INSERT INTO `login_log` VALUES (1709, '127.0.0.1', '/api/user/monitor/server', 'test', '2021-10-08 00:57:36', 1190);
+INSERT INTO `login_log` VALUES (1710, '127.0.0.1', '/api/user/user/queryList', 'test', '2021-10-08 00:57:38', 3);
+INSERT INTO `login_log` VALUES (1711, '127.0.0.1', '/api/user/key/query', 'test', '2021-10-08 00:57:42', 2);
 
 -- ----------------------------
 -- Table structure for resource
@@ -1646,56 +1895,58 @@ CREATE TABLE `resource`  (
   `method` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '请求类型',
   `status` tinyint(1) NOT NULL COMMENT '接口状态 0关闭 1开启',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1529 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '资源' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2271 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '资源' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of resource
 -- ----------------------------
-INSERT INTO `resource` VALUES (1484, 2502, '/api/admin/book/changeImg', '上传书籍照片', 'GET', 1);
-INSERT INTO `resource` VALUES (1485, 2501, '/api/admin/book/add', '添加书籍', 'POST', 1);
-INSERT INTO `resource` VALUES (1486, 2504, '/api/admin/book/cancel', '删除书籍', 'GET', 1);
-INSERT INTO `resource` VALUES (1487, 2503, '/api/admin/book/change', '修改书籍', 'POST', 1);
-INSERT INTO `resource` VALUES (1488, 2601, '/api/admin/key/add', '增加钥匙', 'GET', 1);
-INSERT INTO `resource` VALUES (1489, 2602, '/api/admin/key/change', '修改钥匙', 'GET', 1);
-INSERT INTO `resource` VALUES (1490, 2603, '/api/admin/key/cancel', '删除钥匙', 'GET', 1);
-INSERT INTO `resource` VALUES (1491, 2802, '/api/admin/keyUser/cancel', '删除钥匙持有人', 'GET', 1);
-INSERT INTO `resource` VALUES (1492, 2801, '/api/admin/keyUser/add', '增加钥匙持有人', 'GET', 1);
-INSERT INTO `resource` VALUES (1493, 2701, '/api/admin/loginLog/query', '登录日志列表', 'POST', 1);
-INSERT INTO `resource` VALUES (1494, 2201, '/api/admin/resource/reload', '重载角色资源', 'GET', 1);
-INSERT INTO `resource` VALUES (1495, 2203, '/api/admin/resource/query', '获取资源接口', 'POST', 1);
-INSERT INTO `resource` VALUES (1496, 2202, '/api/admin/resource/change', '更改接口开放状态', 'GET', 1);
-INSERT INTO `resource` VALUES (1497, 2302, '/api/admin/signup/change', '更新报名记录', 'POST', 1);
-INSERT INTO `resource` VALUES (1498, 2303, '/api/admin/signup/export', '导出报名单', 'GET', 1);
-INSERT INTO `resource` VALUES (1499, 2301, '/api/admin/signup/query', '获取报名记录', 'POST', 1);
-INSERT INTO `resource` VALUES (1500, 2401, '/api/admin/tag/add', '增加标签', 'GET', 1);
-INSERT INTO `resource` VALUES (1501, 2402, '/api/admin/tag/change', '更新标签', 'GET', 1);
-INSERT INTO `resource` VALUES (1502, 2403, '/api/admin/tag/cancel', '删除标签', 'GET', 1);
-INSERT INTO `resource` VALUES (1503, 2404, '/api/admin/tag/query', '获取标签列表', 'POST', 1);
-INSERT INTO `resource` VALUES (1504, 2101, '/api/admin/user/add', '注册用户', 'POST', 1);
-INSERT INTO `resource` VALUES (1505, 2102, '/api/admin/user/cancel', '删除用户', 'GET', 1);
-INSERT INTO `resource` VALUES (1506, 1102, '/api/common/test', '认证测试', 'GET', 1);
-INSERT INTO `resource` VALUES (1507, 1103, '/api/common/logout', '用户退出', 'GET', 1);
-INSERT INTO `resource` VALUES (1508, 1101, '/api/common/login', '用户登录', 'POST', 1);
-INSERT INTO `resource` VALUES (1509, 1301, '/api/common/rank/csdn', 'csdn实时展示', 'GET', 1);
-INSERT INTO `resource` VALUES (1510, 1202, '/api/common/signUp/query', '报名结果查询', 'GET', 1);
-INSERT INTO `resource` VALUES (1511, 1201, '/api/common/signUp/add', '纳新报名', 'POST', 1);
-INSERT INTO `resource` VALUES (1512, 3301, '/api/user/enum/username', '模糊查询用户名列表', 'GET', 1);
-INSERT INTO `resource` VALUES (1513, 3302, '/api/user/enum/name', '模糊查询姓名列表', 'GET', 1);
-INSERT INTO `resource` VALUES (1514, 3303, '/api/user/enum/major', '模糊查询专业列表', 'GET', 1);
-INSERT INTO `resource` VALUES (1515, 3501, '/api/user/book/query', '书籍列表', 'POST', 1);
-INSERT INTO `resource` VALUES (1516, 3502, '/api/user/book/borrow', '借书', 'GET', 1);
-INSERT INTO `resource` VALUES (1517, 3503, '/api/user/book/return', '还书', 'GET', 1);
-INSERT INTO `resource` VALUES (1518, 3402, '/api/user/key/borrow', '借钥匙', 'GET', 1);
-INSERT INTO `resource` VALUES (1519, 3401, '/api/user/key/query', '钥匙列表', 'POST', 1);
-INSERT INTO `resource` VALUES (1520, 3403, '/api/user/key/return', '还钥匙', 'GET', 1);
-INSERT INTO `resource` VALUES (1521, 3601, '/api/user/keyUser/query', '钥匙记录列表', 'POST', 1);
-INSERT INTO `resource` VALUES (1522, 3201, '/api/user/monitor/server', '服务器监控', 'GET', 1);
-INSERT INTO `resource` VALUES (1523, 3106, '/api/user/user/queryByUsername', '根据用户名选择用户', 'GET', 1);
-INSERT INTO `resource` VALUES (1524, 3101, '/api/user/user/change', '更新用户信息', 'POST', 1);
-INSERT INTO `resource` VALUES (1525, 3102, '/api/user/user/query', '根据账号选择用户', 'GET', 1);
-INSERT INTO `resource` VALUES (1526, 3103, '/api/user/user/queryList', '根据情况选择用户', 'POST', 1);
-INSERT INTO `resource` VALUES (1527, 3104, '/api/user/user/changeImg', '上传头像文件', 'POST', 1);
-INSERT INTO `resource` VALUES (1528, 3105, '/api/user/user/changePassword', '修改密码', 'POST', 1);
+INSERT INTO `resource` VALUES (2224, 2502, '/api/admin/book/changeImg', '上传书籍照片', 'GET', 1);
+INSERT INTO `resource` VALUES (2225, 2503, '/api/admin/book/change', '修改书籍', 'POST', 1);
+INSERT INTO `resource` VALUES (2226, 2504, '/api/admin/book/cancel', '删除书籍', 'GET', 1);
+INSERT INTO `resource` VALUES (2227, 2501, '/api/admin/book/add', '添加书籍', 'POST', 1);
+INSERT INTO `resource` VALUES (2228, 2601, '/api/admin/key/add', '增加钥匙', 'GET', 1);
+INSERT INTO `resource` VALUES (2229, 2602, '/api/admin/key/change', '修改钥匙', 'POST', 1);
+INSERT INTO `resource` VALUES (2230, 2604, '/api/admin/key/queryById', '根据id查询钥匙', 'GET', 1);
+INSERT INTO `resource` VALUES (2231, 2603, '/api/admin/key/cancel', '删除钥匙', 'GET', 1);
+INSERT INTO `resource` VALUES (2232, 2801, '/api/admin/keyUser/add', '增加钥匙持有人', 'GET', 1);
+INSERT INTO `resource` VALUES (2233, 2802, '/api/admin/keyUser/cancel', '删除钥匙持有人', 'GET', 1);
+INSERT INTO `resource` VALUES (2234, 2701, '/api/admin/loginLog/query', '登录日志列表', 'POST', 1);
+INSERT INTO `resource` VALUES (2235, 2201, '/api/admin/resource/reload', '重载角色资源', 'GET', 1);
+INSERT INTO `resource` VALUES (2236, 2202, '/api/admin/resource/change', '更改接口开放状态', 'GET', 1);
+INSERT INTO `resource` VALUES (2237, 2203, '/api/admin/resource/query', '获取资源接口', 'POST', 1);
+INSERT INTO `resource` VALUES (2238, 2303, '/api/admin/signup/export', '导出报名单', 'GET', 1);
+INSERT INTO `resource` VALUES (2239, 2302, '/api/admin/signup/change', '更新报名记录', 'POST', 1);
+INSERT INTO `resource` VALUES (2240, 2301, '/api/admin/signup/query', '获取报名记录', 'POST', 1);
+INSERT INTO `resource` VALUES (2241, 2402, '/api/admin/tag/change', '更新标签', 'GET', 1);
+INSERT INTO `resource` VALUES (2242, 2401, '/api/admin/tag/add', '增加标签', 'GET', 1);
+INSERT INTO `resource` VALUES (2243, 2404, '/api/admin/tag/query', '获取标签列表', 'POST', 1);
+INSERT INTO `resource` VALUES (2244, 2403, '/api/admin/tag/cancel', '删除标签', 'GET', 1);
+INSERT INTO `resource` VALUES (2245, 2101, '/api/admin/user/add', '注册用户', 'POST', 1);
+INSERT INTO `resource` VALUES (2246, 2102, '/api/admin/user/cancel', '删除用户', 'GET', 1);
+INSERT INTO `resource` VALUES (2247, 1102, '/api/common/test', '认证测试', 'GET', 1);
+INSERT INTO `resource` VALUES (2248, 1103, '/api/common/logout', '用户退出', 'GET', 1);
+INSERT INTO `resource` VALUES (2249, 1101, '/api/common/login', '用户登录', 'POST', 1);
+INSERT INTO `resource` VALUES (2250, 1301, '/api/common/rank/csdn', 'csdn实时展示', 'GET', 1);
+INSERT INTO `resource` VALUES (2251, 1202, '/api/common/signUp/query', '报名结果查询', 'GET', 1);
+INSERT INTO `resource` VALUES (2252, 1201, '/api/common/signUp/add', '纳新报名', 'POST', 1);
+INSERT INTO `resource` VALUES (2253, 3310, '/api/user/enum/username', '模糊查询用户名列表', 'GET', 1);
+INSERT INTO `resource` VALUES (2254, 3301, '/api/user/enum/key', '模糊查询钥匙状态', 'GET', 1);
+INSERT INTO `resource` VALUES (2255, 3311, '/api/user/enum/name', '模糊查询姓名列表', 'GET', 1);
+INSERT INTO `resource` VALUES (2256, 3312, '/api/user/enum/major', '模糊查询专业列表', 'GET', 1);
+INSERT INTO `resource` VALUES (2257, 3502, '/api/user/book/borrow', '借书', 'GET', 1);
+INSERT INTO `resource` VALUES (2258, 3501, '/api/user/book/query', '书籍列表', 'POST', 1);
+INSERT INTO `resource` VALUES (2259, 3503, '/api/user/book/return', '还书', 'GET', 1);
+INSERT INTO `resource` VALUES (2260, 3402, '/api/user/key/borrow', '借钥匙', 'GET', 1);
+INSERT INTO `resource` VALUES (2261, 3403, '/api/user/key/return', '还钥匙', 'GET', 1);
+INSERT INTO `resource` VALUES (2262, 3401, '/api/user/key/query', '钥匙列表', 'POST', 1);
+INSERT INTO `resource` VALUES (2263, 3601, '/api/user/keyUser/query', '钥匙记录列表', 'POST', 1);
+INSERT INTO `resource` VALUES (2264, 3201, '/api/user/monitor/server', '服务器监控', 'GET', 1);
+INSERT INTO `resource` VALUES (2265, 3106, '/api/user/user/queryByUsername', '根据用户名选择用户', 'GET', 1);
+INSERT INTO `resource` VALUES (2266, 3102, '/api/user/user/query', '根据账号选择用户', 'GET', 1);
+INSERT INTO `resource` VALUES (2267, 3101, '/api/user/user/change', '更新用户信息', 'POST', 1);
+INSERT INTO `resource` VALUES (2268, 3103, '/api/user/user/queryList', '根据情况选择用户', 'POST', 1);
+INSERT INTO `resource` VALUES (2269, 3104, '/api/user/user/changeImg', '上传头像文件', 'POST', 1);
+INSERT INTO `resource` VALUES (2270, 3105, '/api/user/user/changePassword', '修改密码', 'POST', 1);
 
 -- ----------------------------
 -- Table structure for role
@@ -1724,67 +1975,70 @@ CREATE TABLE `role_resource`  (
   `resource_id` int(11) NOT NULL COMMENT '资源id',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `resource_id`(`resource_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 14726 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色-权限关系' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 15652 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色-权限关系' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of role_resource
 -- ----------------------------
-INSERT INTO `role_resource` VALUES (14670, 2, 3104);
-INSERT INTO `role_resource` VALUES (14671, 2, 3201);
-INSERT INTO `role_resource` VALUES (14672, 2, 3105);
-INSERT INTO `role_resource` VALUES (14673, 2, 3106);
-INSERT INTO `role_resource` VALUES (14674, 2, 3301);
-INSERT INTO `role_resource` VALUES (14675, 2, 3302);
-INSERT INTO `role_resource` VALUES (14676, 2, 3303);
-INSERT INTO `role_resource` VALUES (14677, 2, 3401);
-INSERT INTO `role_resource` VALUES (14678, 2, 3402);
-INSERT INTO `role_resource` VALUES (14679, 2, 3403);
-INSERT INTO `role_resource` VALUES (14680, 2, 3501);
-INSERT INTO `role_resource` VALUES (14681, 2, 3502);
-INSERT INTO `role_resource` VALUES (14682, 2, 3503);
-INSERT INTO `role_resource` VALUES (14683, 2, 3601);
-INSERT INTO `role_resource` VALUES (14684, 2, 3101);
-INSERT INTO `role_resource` VALUES (14685, 2, 3102);
-INSERT INTO `role_resource` VALUES (14686, 2, 3103);
-INSERT INTO `role_resource` VALUES (14687, 1, 3201);
-INSERT INTO `role_resource` VALUES (14688, 1, 2501);
-INSERT INTO `role_resource` VALUES (14689, 1, 2502);
-INSERT INTO `role_resource` VALUES (14690, 1, 2503);
-INSERT INTO `role_resource` VALUES (14691, 1, 2504);
-INSERT INTO `role_resource` VALUES (14692, 1, 3401);
-INSERT INTO `role_resource` VALUES (14693, 1, 3402);
-INSERT INTO `role_resource` VALUES (14694, 1, 3403);
-INSERT INTO `role_resource` VALUES (14695, 1, 2701);
-INSERT INTO `role_resource` VALUES (14696, 1, 3601);
-INSERT INTO `role_resource` VALUES (14697, 1, 2201);
-INSERT INTO `role_resource` VALUES (14698, 1, 2202);
-INSERT INTO `role_resource` VALUES (14699, 1, 2203);
-INSERT INTO `role_resource` VALUES (14700, 1, 3101);
-INSERT INTO `role_resource` VALUES (14701, 1, 3102);
-INSERT INTO `role_resource` VALUES (14702, 1, 3103);
-INSERT INTO `role_resource` VALUES (14703, 1, 3104);
-INSERT INTO `role_resource` VALUES (14704, 1, 3105);
-INSERT INTO `role_resource` VALUES (14705, 1, 2401);
-INSERT INTO `role_resource` VALUES (14706, 1, 2402);
-INSERT INTO `role_resource` VALUES (14707, 1, 3106);
-INSERT INTO `role_resource` VALUES (14708, 1, 2403);
-INSERT INTO `role_resource` VALUES (14709, 1, 2404);
-INSERT INTO `role_resource` VALUES (14710, 1, 3301);
-INSERT INTO `role_resource` VALUES (14711, 1, 3302);
-INSERT INTO `role_resource` VALUES (14712, 1, 3303);
-INSERT INTO `role_resource` VALUES (14713, 1, 2601);
-INSERT INTO `role_resource` VALUES (14714, 1, 2602);
-INSERT INTO `role_resource` VALUES (14715, 1, 2603);
-INSERT INTO `role_resource` VALUES (14716, 1, 3501);
-INSERT INTO `role_resource` VALUES (14717, 1, 3502);
-INSERT INTO `role_resource` VALUES (14718, 1, 3503);
-INSERT INTO `role_resource` VALUES (14719, 1, 2801);
-INSERT INTO `role_resource` VALUES (14720, 1, 2802);
-INSERT INTO `role_resource` VALUES (14721, 1, 2101);
-INSERT INTO `role_resource` VALUES (14722, 1, 2102);
-INSERT INTO `role_resource` VALUES (14723, 1, 2301);
-INSERT INTO `role_resource` VALUES (14724, 1, 2302);
-INSERT INTO `role_resource` VALUES (14725, 1, 2303);
+INSERT INTO `role_resource` VALUES (15593, 2, 3104);
+INSERT INTO `role_resource` VALUES (15594, 2, 3201);
+INSERT INTO `role_resource` VALUES (15595, 2, 3105);
+INSERT INTO `role_resource` VALUES (15596, 2, 3106);
+INSERT INTO `role_resource` VALUES (15597, 2, 3301);
+INSERT INTO `role_resource` VALUES (15598, 2, 3401);
+INSERT INTO `role_resource` VALUES (15599, 2, 3402);
+INSERT INTO `role_resource` VALUES (15600, 2, 3403);
+INSERT INTO `role_resource` VALUES (15601, 2, 3501);
+INSERT INTO `role_resource` VALUES (15602, 2, 3502);
+INSERT INTO `role_resource` VALUES (15603, 2, 3310);
+INSERT INTO `role_resource` VALUES (15604, 2, 3503);
+INSERT INTO `role_resource` VALUES (15605, 2, 3311);
+INSERT INTO `role_resource` VALUES (15606, 2, 3312);
+INSERT INTO `role_resource` VALUES (15607, 2, 3601);
+INSERT INTO `role_resource` VALUES (15608, 2, 3101);
+INSERT INTO `role_resource` VALUES (15609, 2, 3102);
+INSERT INTO `role_resource` VALUES (15610, 2, 3103);
+INSERT INTO `role_resource` VALUES (15611, 1, 3201);
+INSERT INTO `role_resource` VALUES (15612, 1, 2501);
+INSERT INTO `role_resource` VALUES (15613, 1, 2502);
+INSERT INTO `role_resource` VALUES (15614, 1, 2503);
+INSERT INTO `role_resource` VALUES (15615, 1, 2504);
+INSERT INTO `role_resource` VALUES (15616, 1, 3401);
+INSERT INTO `role_resource` VALUES (15617, 1, 3402);
+INSERT INTO `role_resource` VALUES (15618, 1, 3403);
+INSERT INTO `role_resource` VALUES (15619, 1, 2701);
+INSERT INTO `role_resource` VALUES (15620, 1, 3601);
+INSERT INTO `role_resource` VALUES (15621, 1, 2201);
+INSERT INTO `role_resource` VALUES (15622, 1, 2202);
+INSERT INTO `role_resource` VALUES (15623, 1, 2203);
+INSERT INTO `role_resource` VALUES (15624, 1, 3101);
+INSERT INTO `role_resource` VALUES (15625, 1, 3102);
+INSERT INTO `role_resource` VALUES (15626, 1, 3103);
+INSERT INTO `role_resource` VALUES (15627, 1, 3104);
+INSERT INTO `role_resource` VALUES (15628, 1, 2401);
+INSERT INTO `role_resource` VALUES (15629, 1, 3105);
+INSERT INTO `role_resource` VALUES (15630, 1, 2402);
+INSERT INTO `role_resource` VALUES (15631, 1, 3106);
+INSERT INTO `role_resource` VALUES (15632, 1, 2403);
+INSERT INTO `role_resource` VALUES (15633, 1, 2404);
+INSERT INTO `role_resource` VALUES (15634, 1, 3301);
+INSERT INTO `role_resource` VALUES (15635, 1, 2601);
+INSERT INTO `role_resource` VALUES (15636, 1, 2602);
+INSERT INTO `role_resource` VALUES (15637, 1, 2603);
+INSERT INTO `role_resource` VALUES (15638, 1, 2604);
+INSERT INTO `role_resource` VALUES (15639, 1, 3501);
+INSERT INTO `role_resource` VALUES (15640, 1, 3310);
+INSERT INTO `role_resource` VALUES (15641, 1, 3502);
+INSERT INTO `role_resource` VALUES (15642, 1, 3503);
+INSERT INTO `role_resource` VALUES (15643, 1, 3311);
+INSERT INTO `role_resource` VALUES (15644, 1, 3312);
+INSERT INTO `role_resource` VALUES (15645, 1, 2801);
+INSERT INTO `role_resource` VALUES (15646, 1, 2802);
+INSERT INTO `role_resource` VALUES (15647, 1, 2101);
+INSERT INTO `role_resource` VALUES (15648, 1, 2102);
+INSERT INTO `role_resource` VALUES (15649, 1, 2301);
+INSERT INTO `role_resource` VALUES (15650, 1, 2302);
+INSERT INTO `role_resource` VALUES (15651, 1, 2303);
 
 -- ----------------------------
 -- Table structure for route
@@ -1883,7 +2137,7 @@ CREATE TABLE `task`  (
   `class_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '任务类',
   `function` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '任务功能',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 103 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 151 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of task
@@ -1990,6 +2244,54 @@ INSERT INTO `task` VALUES (99, 'T3', '三号测试任务', 'com.softlab.okr.job.
 INSERT INTO `task` VALUES (100, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
 INSERT INTO `task` VALUES (101, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
 INSERT INTO `task` VALUES (102, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (103, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (104, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (105, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (106, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (107, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (108, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (109, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (110, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (111, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (112, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (113, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (114, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (115, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (116, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (117, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (118, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (119, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (120, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (121, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (122, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (123, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (124, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (125, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (126, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (127, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (128, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (129, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (130, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (131, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (132, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (133, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (134, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (135, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (136, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (137, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (138, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (139, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (140, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (141, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (142, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (143, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (144, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (145, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (146, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (147, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (148, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (149, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (150, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
 
 -- ----------------------------
 -- Table structure for task_trigger
@@ -2018,7 +2320,7 @@ CREATE TABLE `user_entity`  (
   `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户名(账户)',
   `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密码',
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_entity
@@ -2049,14 +2351,14 @@ CREATE TABLE `user_info`  (
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '成员表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '成员表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_info
 -- ----------------------------
 INSERT INTO `user_info` VALUES (20, 'admin', '你是基佬', 'data:image/png;base64,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', '我是蓝翔', '123456', '654312', 'shit12312', '一起搞基，先生！先谢谢你，哦是的先生', NULL, NULL);
 INSERT INTO `user_info` VALUES (21, 'test1', '大便', NULL, '阿斯蒂芬撒地方', '撒分色', '瑟夫', '费萨尔费', '你说的附属恶化覅色回复i色回复i规格和', NULL, NULL);
-INSERT INTO `user_info` VALUES (22, 'test', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `user_info` VALUES (22, 'test', '撤硕', 'data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxMSEhUSEhMWFRUWFRgVFRgVFRcVFRcVFRUXFhUVFRUYHSggGBolHRUVITEhJSkrLi4uFx8zODMsNygtLisBCgoKDg0OFxAQGi0eHyAtLS0tLS0tLS0tLS0rLS0tLS0rLS0tLS0rLS0tLS0tLS0tLS0tKy0tLSstKy0rNy0tN//AABEIANoA5wMBIgACEQEDEQH/xAAcAAABBQEBAQAAAAAAAAAAAAAFAAIDBAYBBwj/xABEEAACAgECAwcBBQUFBgUFAAABAgADEQQhBRIxBhMiQVFhcZEUIzKBsQdCcqHBM1JistEVJJKz4fBTc4Ki0hZDVWN0/8QAGQEAAwEBAQAAAAAAAAAAAAAAAAECAwQF/8QAJREAAwACAgEFAAIDAAAAAAAAAAECAxESITEEEyJBURSRMkJh/9oADAMBAAIRAxEAPwD3GKKKACiiigApwmcLRYz1gBwnM6q4ncREwAjvuVFLOQqgZJPQCeU9r/2ksSa9L4F6F/3mHtnoI/8Aaf2nDH7PW3hB8WD1b3nmNq5mfLZtOPrbH6jiLuSSSSepJyTIVvM4KDJa9LHstS2T0ag+sJ6e/mODB9OkMLaHQnIMSaD2y7p2YfHpClGRhqyUceanB/6yDTaU83tCNWmIlbE40HuB9tHXwapcgf8A3FG/yyj9RNtptQlih0YMp6ETyYrg+8JcC4o+nbIOVJ8SeR9x6GNGbk9NilfQ6tbUFiHKsMj/AEPvLEZmKKKKACiiigAooooAKKKKACiiigAsxoacU5G8dADuZGXz+H6+UZyFuuw9P9ZMBADipiOiigAjMf8AtC7SfZauRP7Rwcew9ZrrGwCfTf6T5/7b8VN+psYk4yQPgSKfejTHO+wBqry7FjvneRqYkEeVxIfR1IcksVrIEMu6dZLZcotaUY6wtpng+hRCGmqkmgd0XQQkQMQdohtLpfAjTJpFTUpKjqR5y5ZbKruJsq6MGjR9iuJYsNPk45h/GMZ+o/SbcGeSaTWCq6qweTjPxnf+WZ60JSZzZFpjooooyBRRRQAUUUUAFFFFABRRRQA4J0SNs5GMY848QAQnYooAcMD8R7TaTTki2+tSOo5skfIHSF2nz9xRwOKXlwGC3scEZBw22RJdaei4Wz0TtN+0HT/ZrBQXZmUqjCtgmSMZDHaeG6q9iSckz03th2lXUadawgUjyAGOnUDynnjP8Sd7ZtK0uitp9ZjrLZ1QMq6hFIO28GKWj4pj5NINfagJ3/aoHnI+HaNGGW3OATn3liwVr0UfSJykUqZ2jjPvNHwLiwZsMRAFOnRuqj6SLX8LCqXrJUgZ2OItIrdeT1SvAG0TscTzXst2luQFGbnXy5tyPgzZ6DtHU2z+E++4kvG14KnKn0y67SjZZviXNRchHMrAj23gux8mStipb8Db28S/xCe20fhXPoP0nimlTmuqX1sQf+4T21ZtJy5fI6KczFmWZHYpDbqUX8TKPkiDddx/TqpAtXmOwwcnJ6RNj0F4pmdfqrFrrKu2SzA79cYlMcVvA/Gfzmij4qt+TSMVXvX0bKdmMu49euBkZx6TS6PUs/MNhjl/mob+svLhrGk39mCrbaL0UhCt5mKYbL0c53zjl29cyYSH7QM43kwMNgzsUY7gdZ0NDYiPU2BVyfiYbjXC614nptQVXkvDUWAgYNh3U/OBjM2XFEJQYUt4gcD284D7W6ZTonL5rNZFtbA7q6nKEe+ZFeTSDz/9pC1VOUpQL8fnPN7UJxkwpxjidlrZfc5O/wAwNZafQxT2bOdC1JwJHptK5XOI6qtrCB5AzZcJ4fhckRu+PRURyMtprCOQ+qlT8oSJGyMW6wjxXSdzYdsox5hjqpxgyutyHzAPvtDe+x8WhlCMv7x/pJNVq3CMD0Ix9Yjcv94fWWKae+Kqo8IOWP8AQRBr6IOF6DwjGeYwzTwPUN+Ff5zQcH4UMgkTUVVcu0n3DWcBgf8AY2trGRU5H+Egj6ZkTa5kIFish/xAj9Z6M15UQTqLTYeVgGU7EMMjHn1h7qB4WvAG4NxBVsruYZVHDH8t5qNX+1JR+CsfnvM+ug0lWUYsVJwN8cufIEf1gfV8NFVnJ1BHMpx1U9ITSfgyy4KS2w/qf2l6ls8gx8CCtR2r1tn7zfXEgqogPVcZYEgADBI33l+THQSt1mpf8Tn6kzvD1fvayzk4cbH5mdPE7m88D2El4bcxtTLE+Jf1j4jPeuKH7tP42/mBBythTzbnO0L2KCtedwLMn4Ky/qOE1v1GMnORNl6rHjwxNreznSqclVLMZq7SxzNboLmVm8DEMqMCBt+AA7zP8Y0HdNjqOo+Js+HHNVf8C/oJ2esqcmKHPg58LpZK5EFms5MHkff03il+KeXwf6de1+HcTsUU1IOERRGD+I8aooOLXCnGce0T0AQmT/aa5GiIHmwz8AE/0ket/aJpU2HM3wMCZzj/AGsXXUWIqcvL4uuSR0P6yLpaNYl8keaPTkxDQ5l0pKPEtURsDvM5Otom0umXmwDuOsPd8laYd1GfUzH0XtzhvOXb2F2xHyYUVFaNBfw5XTmDBpnW0wJx/SFOGoak5F6H18pSccrYMSei3pjaNAM9JoOH6TptKWkEN6TbeQ60VMoLaPwCW11EF95JamkbNtIt3WZlDX3CmvnPrLWZHxUBqghXm5iAB7xD0CEupsDAPjnG2R0bylYEsic3UFl+hi0PAmW0mwbLkovqf3eks2Jyty+g3+ScmaSiM9pY9ESJMXrafE5/xGb4iYvXpvZ/Ef1nRJ5dAhTL3Bx96ufIj9ZSRf8AvMv8LXxjGTuOgJltoSR9F8P/ALPpndc/QS0+rKnDIQPUbyPgO9f5Kf5S+ZhkyJQk52ZVO7b2AuO6bmQ2dev6bQnwt27uscu3djfPngbYkmtr5qnHtGcKcClMkfh8zOtXzwL/AIzOZ1bLRc+h/lOyF+IVDrYg+WEUyNdP8JK9WjHCsCfaSFvYzwzsR21bT3E3lnRwFJ6lMZPMB5z1HTX6myqw9/XlgrUvWhwEY7Eg9TKYNGgLN6D8zPPv2oaV8125XGCvTzzmFON8H1X2c41j95sQxPKOu4wvliZqnR26rhoVnLWC+zdmznlOOvpiY3W1ouJ7MDc2+7fQQhwBvvQOoYFD8NC2o7D3Kpc4YAZblORD3ZXsYr0pfzkMcnGNtukT00arp9mC4kvISPQmAnqLHJml7SabltZT6nPzMzxDUlRhYoNqJaqsS1pExt5wfpNUdsjP9JfS1SpODnywZbSImgnWhjNVXneD9NxjkwGU8sLJarjmXpM2bJ7JNCsL1QbphvCKGZ0byS5luiUhLVBkF7LOZDp+IKX5SOh2PvJLOkl4TwiuzLO/d77e/rGhOtF7Q1Zc5IOR4fY+sq//AEoC3M1rEk56AQ/pdDVXstqk+pO8sNVts9ZP8UtUcuV83rQGTgVY65P5x+m7FaU5LVA5OTzEnP5Zhxa+WrvTufQdJTbjBHRYVk0TjwPIvih9XZvSp+HT1D/0D+suLpEUHlRRt5KB/SC3403kBK9vHXHpI903n0WT8NRwQ+E/l/WO1NnOwCkqQdjn+REo8L1QWrnc4BVd/wCIkSrqNSudm25/I74x6Tol/A4FMvK4ZorEzWQTuQRPP+1/hqXBbIp9cDAs/WasautqXAfkAP4ic++Zn+L6VNTUvI4bNLKpzgEh8/TwzV0va6M8e1m0ebG1uu+PM42+sUI36+zT6YVBuU2tzkYzhR03PqROzFHY2Yml/Yz6A7OnGko2OTRX8DB/6wNr+zGnrqYBQGwDnAhpNSqrUi/+EMD2BirM3PRnOHbCevfvEK9MiBuH8HFNa1qxI53ff/H1Eum9j+6cYjHuxOd1X9ms4tdE9ekzW65GCPSWuzwHcqAAMZGAMDYmRVX8i8zDY7fWXdFTyrge5+pzNppr62c+VeTyb9pehKapmAwrDmHyeswd2i5vme7duuDd/SXA8SAn3xPE9QCGMJp776NcbTkpjhze0n0vDmO231nQ7GWtKpB6zRs1SRPTwpf3sGXq9MAMAYjKiTLlSTJs1SQyqrEspFiItIZaWh4k9byi1sdXbvEPYXQZENaHQlqxgecDcP3mh0+s7qskLzb/AK7Q1sTtz2jg4Y06OGNKVnaVzsFUHO2c4j043aoy4G258touIv5VmkpoYacAYznz+YLu4Vk5B29IRo1RbSiwbEnP1Mzut4uynIJ/pLuE9HNiy3LbX6XDwjP70H38L38LZ+YP4p2guZeWvCsSMN1+RiUuE8WvLYdwTzYOwz1iWNI3fqcmn2bsaL/dWUgbou4JOcHPn0juF6RSihgGxnOw/LJl6986Yny5Af57wdoNagHK2evlF6lU5+J41XSzJlPtLwtO5auvw8zb79dugmNXiLaVK0VckI4yfLxHy89jN/xu0NV4SG39M7+W0807RFvBtk+PP1H/AHiZemdf40bxj0+ZldfxNHcli2fjYYGMD2igjWY5jsesU9BJFOmfQOosN/3aY3239QJNpeGN3iIceCoK3zmQcOrKENkDBJ67w3o7w9pYea4+k4cW3PyOrNSivh+F2rS4A9QMSnbwsk5yPpLIDczemDyySsNyEHridXtqkjjWSpfkg1eg50Cg4wQfoZcD42kFNZ5QGzkHPWdtnL6rLWGdwLbrpkltox0z6zxfttwA0XFlB7tySpx0yd1nsLH2zKt2nSwFXUFT5EZnD/OyNp0jbHqTwXupa01c9H452O0QUuzGn35tvjBnmmsuqDuKHZ1Q8vMwAz74HlPQw5XkXg6FU+QnWoElbUKJnRqW9Z0WsfOa8SuYdOtEgt1wg1EzJ008WiuWx/2gmEdCmZW0+mEL6SqTRSCmjGAIXq5WUo26sMH1/L3gmmW1swI5ZVLaMvxO+9FNyDvUqLV3qfxEKcLap/vYIzJdJ2jW1BRcrVjor7NgH+8fOUb+Kd3p7m/8Sx8D2Jx/SZVNafMzqUpo8/NXF6PcOEFhV3ecqp2I6FfIiDbaRYrIB4skp7kblfpPOeE9oLUPgfBxtndSPQiaThvahHID/duGznquZFY2KciHuuMEjzlfg9f3pP8Ai/rD/EkVvEpBBwTjyJ6zNVcVSi5lPiOdlHXqJFSzXmj1p6y+nITGWUD43wZQ0/BBUvjcl2JzvtjPkPiW+Ca4WUqcFfCckjEs6bVrYg3yw2OPIzfEtHN9mP4/rxpOZG5ipGQ3n6iYpreetX9XsO/uQZ6j2t0SW1b4IrBP5kYAzPM9bQKaK1PXnbOPUiFY15NE9oqcG4Gt7FSB5nf5inNLaRuoP5HBinNXLfQaNLrdfYocjHhcruMbCGuw+udjcXI8OAPzGYD4gB3d2N/vG/zCT9lrytlyDzIJ/wCGH+prEc60buvV5ZQTsTvLJqQMFB23J8R6/WAaFBOGOJytAW5c7EzPHSha1s1v06309BO+/ksKqcLseuesuNZkDfbA3+ZmLLiGwFyM4znyzgSDtN2o02jXGe8swfAG6HG3M3lvE557JyY5lT2amxlrBZ3AUb5JwPzmJ7RftCrrRloPMwyC/wC6D/h9TPLOPdrL9SxNjYXoEX8IH9fmZ/U6snA8hFh9Ck90c9UkzQcZ7Q2Wks7s2OmSTlj7e0qcMtyrHzLfpAd1ucfWXuF3/u+89DgpWkRFbYbrlisStUZarMwZ0k9YlygyiHxJqr95BpLC1AhDTiB6L4Q0+ombRsmF6zK3GtZ3dLt58pA+TsJxdSANzMR2r4+LD3SHYHc+p3lxDbIyZVKB3FddzBawdkGD7t5mDWskXNEu5nelo8u7dPZd01uJcS/MFM0clsCDS6DillX4W28wdxLyDTXvzsGqsPVlO38+ky1N8u02Q4orkz1LhXaCvSVhbe9sTGC/4lwfYdJe0PaLRWXm1L1HMMYOV6DHSeZaDiVlf4TkeYO4MJaRNJefHXyP7EgH4xI1rwXNnpJ1NXcWVhwTuVOc82TkTzztPquRQMqTzE9eg5fSSHs7g5RrFHkFfb+cE9oOGdw5Quz+APlsZ33xtE22a8kDhxUr+DDeuRiKBbLPPpFGpM2z1HiWjsqBAsLBslsAYEr9l7CbrMkkkDeTanRt6kj0h7hei01dHennFmMEE9T5bek5VS0ehfpqhpz3sroSdQFJOMdMy/x5lqFLdACS3wIE4jxyvTsLXALcuFUHc/Pp8zA8f7WWXtknbyA6CKMfPsnNTxPTe2aPtV20ewGur7qvGDjHeN8n90fE851mryTvItRqi0pO065hI4KyNj2eRkzmYsyzMcTO0WkNmMzOiDQJ6NDpNWDLX2mZqqwiWU1MxcHTOToOnVxi6vB6wWt8TWSeBXNGh0+vk78YCjrMr9oxInuzGsYPPoK8T409g5QcL7ecEc0YWiUTZTo5at0+yQSTMjWOMokRjS06ZE5iQE9dkt06iCw8lRowD1OoEuJYDM/VZLtF+IgNdwrjjphWOV9fMf6yftEe+sFq7oagMj+8M5B95maboQ0mqK9Oh6qehHv/AKxcSlRk7tz+Z/WKFuJcLAw1eSreXmh64J8xFGM9MruzYWyOU9IN7W9ol04C7Gw/hAOwBHUyfi+uqpTnyD6Y9cZnkPFeItdYzsdyf+8Thx4XT7PY9R66FK9vyTcQ4k1jFmYknzMHtYTGc04TO5Sl0jx6p09sTNGzpjTDRIjORRQ0I6YhORQAeDORRRi2PFhj+8MijliK2yURRoMfAQhETOExgMYEymOBjFjgYAOJkbiOzGtACKPUxo6xZgIsK8s1WQfzSettoDCVV0u0amB632k1dkANHptTjoZyCKb8RQHtjO0vEw9ndpslahcZ6sd3P1meaIuWYk9Sc/XeJopWh0+xCcM6JxusYhNOSRUJ2AyfYZMlt4faoy1TqMgbow3YFlGCPMAmAipFJKqyxCqCxPQAZJ+B5x40lh5SK2PPzcmATzcn48Dzx5xAQTonakLEBQWLdABkn4HnJU0th5SEY8/NyYGebk/HgeeMHPpACITuI/TUs5CopdicAKCSc+mJINM/Nycjc+eXl5Tzcx6DHrDYFeOBju6YsVCsWGcqFJIx1yB0nV0zksORsovMwwQVUY3IPQbj6wEJZJI0M6WgAnMaBOGTPQ45gUYFMc+R+Hmxjm9M5EBjQY4GMqUsQqKWYnACjJOfTEnq0lpziqw4ODhGOD6HA2PSADJxjO2AqSGBUjqGBDD5U7xWVsFVyDytnlbGxK7Ng+0AI0jTJKlJ2AJJOAB1JOwGIvs75YcjZQEvt+EA4Jb03jAjJktJ8MgJlhamFfOVIUkgN+6SuMge4yPrACShtpKrSnpXlkQAtI8UgR4oAC16x7xg6y5TpuYEk4Vccx9M9AB5k+kQFYQ/qKQD3fIgrKr3ZyOZvDzF89TvkYlOnW1KvL9nRgBuSW5j+Y6R9zVu6W8wSsADl6sCo/DgeXXeGytFvsTqgmqrGLeZ3RR3RUZHOM86lSSuwO3oZo20gPe1ivVC77ZTYuba+fx99Wr5weVB0OegMA9nrbNPZ3mbhSCHY0KCX5SGVST+FSCQcGP4NxuqtrcV3c2qFldzh8MiOxINK5wWGx5m9wItkvoh4NxZKdTbgBWsvr5bWFT90otbvnB5cZwQQQPKa7iGseqp3W5BhLO4J+yuLCWAZQqpnDb5mV0I7q219PUygpbVVzEFk5lCo5J2yMZ29faF9Pxy5fs5ta1lp7w3Ad395lwyDfbGAQfmTyRPJA/Ta5atRZbWq199ZV3bFayKED5dlB2XIYHYbTSa/WtXWzrcg8Fh07E6V1sJYBgFVM4OTmZHhXGCLGZFwStgUjB5GsBCsM7bbQye0tifZ+8ewpUX7xQK/vMvzIMttjoD0iVC2P7O3IOIh60C94chAOmPFgFdk2Un3zDNenY6rvksADt3hVQQ6d1uFz0fmGevTAnn3DuIim2y0oWbDd2A2Athbws3KdwASNoe03bJSKFesAJ3guKA85DMSgQ84/dwDnpmUikUey1z3Xauz7xmfTM/3bKlu99PRzsMDaFuJXpW+qazT85XQ05Ntjc/jFQ5HKMASeuRvtAfB7EQ3hKRYHQoFNhQLXziwZwMsfCgzn1hGzXrqK1rdOUOUFhqQf2NI+5RQTucnJLH90Q2kJsF8Q4RUdVdWttOmReQqLnfHiQMVVsEnGfOc/2BX/8AkNF/x2f/AAlftFd3mpsfHKGbIU7kDoAfcAASgVxGmmGw3wHhebtQilLgumt5XT8Bc8vIVLY3zNJruVr9aEo09xZK2StLcmzltXx2APuR6bbTDcOtRbA1nPhdx3YRjzDpkWbEe0Pt2lqIKk34IIONPoxsRjqIyiz2RQ06vVPYaksrr5xykioW5VhWOVwOu3Lk5xNIyFW1RStrFfS0vYVc7sbKyKq8u3iLEjrsAPSef8D4sula5052JQrUGWs7no9mcjK7kAdTDtnaWlntcXWr3gA5e4X7tcgsFKuo3xgnrjPSAEvENc6cS1iAVq1hr52dwgQKEZwrEE5I8OwzDevdhUjqzisBu9stuCLQx/CTWU5sN5DGTMcvHUGss1Ki3lcYAXu0bPKF6nm5F28vEPWELO1IFDVCvmFrKban/s+VQx2sJL2WsWBNh6cgx1MAIuBaxrtRqNUtdPepWLK+9wKhYpSsOebGCRk+2ZPxi86cX9zRSbHoptvB5bK+Rslu6QZzl/Exz5QLodbTWbx3LPXbXyKjWYYeJWwzr5bHcRmq11V9ys4tpqFK1MKzzvhFIIyxGQ3vAWiHtUirq7AihV8BCrsoLU1s2B5DJMI8W0RXhekf/wDbczjzVbiO6Yj0bu2x8SnqOI6e3VW3312FGOUqRlXmwAio7/uryqM43ir7RsbbLLq1eu1RXZT+FO6XHdqn9woRlT659YwA2nMu5wJWtNfenuefu8+HvMc4HoeXY/Mm1LQGcRopxOkUAKpXeabWclTDT7YqrHPt1ufBZj8AgD0mbB8S/wAS/wCYTUcQH+86z+Nf1EGPQjSG0+ysByFObkyCxsVsfQGDu4ONk8s+XrjpmXqDsP8A+k/8iPUbN/A3+ZpDNCtpE1IGUu5FUHH3mF2bHLjpkk7SzpG76oWoo7zm7uw+Q25g+PcZkFo/3b8x/wAwy52Q/sLf46v8rRV1OxxKqtMl0N5Ga3/ED8Z95X4vUTy45tzggb5HvLuqUc+fPlMhc7flOWXswz4lN9Alae7vwg8LCd4q6rguObyAzj5Ms6T8I+TIOLjZZp9mX2U0QMDy0k46+Inb5kWnarnAZcLnfckwhoWP2a/f95ILsHiWa8iuRc74ZIqTpsDv09Pzmm4XYgTCry+HJXpv+cqcJUBDgY3Mbcfvm/8AKMwtkUynbp6y5e19y34V/QyyunofKLUVblJBOc5HQjMf2bQdcDPrjf6yzqz/ALxX8H9Yptp6On2V7fLZi2B6ekUMaVB352H9oPL3je0aAW7AD4GPOdCoyVAeJRDPCKlOMgHfzAmjqrUdAB+Qj5D5GHUGWGtyuMAb59/eWOOj79/y/SeldkdOg0YYIoY9SFAP1jbKns8pUD1+fUe+If1PZK4JzIyOeQWd2D96Kj0fk8xN5250qfYufkXn8Pi5Rzf8XWCdTtfpHGzlNGCw2Ygvggt1xjaNFNHmli7SKnoYU4+Pv7v/ADX/AMxgyjqfiUQ/JHR1lvVHcSmvWWtR5fEAO5ijRFAZ/9k=', '奥里给', '123', '321', '1234567', '扒鸭屁股是块宝', NULL, '2021-10-08 00:35:19');
 INSERT INTO `user_info` VALUES (23, 'test2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `user_info` VALUES (24, 'test3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `user_info` VALUES (25, 'test5', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
@@ -2073,7 +2375,7 @@ CREATE TABLE `user_role`  (
   `role_id` int(11) NOT NULL COMMENT '角色id',
   PRIMARY KEY (`id`, `user_id`, `role_id`) USING BTREE,
   INDEX `role_id`(`role_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户-角色关系表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户-角色关系表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_role

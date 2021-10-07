@@ -18,6 +18,6 @@ public class KeyDTO {
 
   private Integer keyId;
   private String keyName;
-  @Pattern(regexp = "^(未借走|已借走|已丢失)$", message = "请输入正确的格式")
+  @Pattern(regexp = "^(空闲|有人保管|已丢失)$", message = "请输入正确的格式")
   private String statusName;
 }
