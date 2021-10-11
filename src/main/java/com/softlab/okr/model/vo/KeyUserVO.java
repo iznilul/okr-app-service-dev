@@ -1,6 +1,5 @@
 package com.softlab.okr.model.vo;
 
-import com.softlab.okr.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class KeyUserVO extends BaseEntity {
+public class KeyUserVO extends BaseVO {
 
   private Integer id;
   private String keyName;
