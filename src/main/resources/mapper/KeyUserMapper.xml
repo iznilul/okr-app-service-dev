@@ -39,6 +39,7 @@
         from key_user ku
         join `key` ky on ku.key_id=ky.key_id
         join `user_info` ui on ku.user_id=ui.user_id
+        order by ku.id desc
     </select>
 
 </mapper>
