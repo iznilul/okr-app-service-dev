@@ -17,8 +17,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel("LoginLogDto 登录日志传输类")
-public class LoginLogDTO extends PageDTO {
+@ApiModel("传输类")
+public class SysRecordDTO extends PageDTO {
 
   @ApiModelProperty(value = "用户名", required = true, example = "admin")
   private String username;

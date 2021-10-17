@@ -1910,7 +1910,7 @@ INSERT INTO `resource` VALUES (2230, 2604, '/api/admin/key/queryById', '根据id
 INSERT INTO `resource` VALUES (2231, 2603, '/api/admin/key/cancel', '删除钥匙', 'GET', 1);
 INSERT INTO `resource` VALUES (2232, 2801, '/api/admin/keyUser/add', '增加钥匙持有人', 'GET', 1);
 INSERT INTO `resource` VALUES (2233, 2802, '/api/admin/keyUser/cancel', '删除钥匙持有人', 'GET', 1);
-INSERT INTO `resource` VALUES (2234, 2701, '/api/admin/loginLog/query', '登录日志列表', 'POST', 1);
+INSERT INTO `resource` VALUES (2234, 2701, '/api/admin/sysRecord/query', '登录日志列表', 'POST', 1);
 INSERT INTO `resource` VALUES (2235, 2201, '/api/admin/resource/reload', '重载角色资源', 'GET', 1);
 INSERT INTO `resource` VALUES (2236, 2202, '/api/admin/resource/change', '更改接口开放状态', 'GET', 1);
 INSERT INTO `resource` VALUES (2237, 2203, '/api/admin/resource/query', '获取资源接口', 'POST', 1);
