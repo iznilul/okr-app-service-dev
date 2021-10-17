@@ -1,6 +1,6 @@
 package com.softlab.okr;
 
-import com.softlab.okr.service.ILoginLogService;
+import com.softlab.okr.service.ISysRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -14,11 +14,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class LoginLogTest {
 
   @Autowired
-  ILoginLogService loginLogService;
+  ISysRecordService sysRecordService;
 
   //@Test
   //public void saveLoginLog() {
-  //  System.out.println(loginLogService.saveLog("192.168.1.1", "/api/common/log", "admin", 12));
+  //  System.out.println(sysRecordService.saveLog("192.168.1.1", "/api/common/log", "admin", 12));
   //}
 
 }

@@ -7,8 +7,8 @@ package com.softlab.okr.aspect;
  * @Date: 2021-08-31 11:53
  **/
 
-import com.softlab.okr.entity.LoginLog;
-import com.softlab.okr.service.ILoginLogService;
+import com.softlab.okr.entity.SysRecord;
+import com.softlab.okr.service.ISysRecordService;
 import com.softlab.okr.utils.Constants;
 import com.softlab.okr.utils.FilterUtil;
 import java.util.Date;
@@ -29,13 +29,13 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @Aspect
 @Component
 @Order(2)
-public class WebLogAspect {
+public class SysRecordAspect {
 
 
   ThreadLocal<Long> startTime = new ThreadLocal<>();
 
   @Autowired
-  private ILoginLogService loginLogService;
+  private ISysRecordService sysRecordService;
 
   @Autowired
   private FilterUtil filterUtil;
@@ -75,9 +75,10 @@ public class WebLogAspect {
     String username = filterUtil.getRequestUsername();
     String ip = filterUtil.getRequestIp();
     long duration = System.currentTimeMillis() - startTime.get();
-    LoginLog loginLog = new LoginLog(null, ip, path, username, Constants.DateToString(new Date()),
+    SysRecord sysRecord = new SysRecord(null, ip, path, username,
+        Constants.DateToString(new Date()),
         duration);
-    loginLogService.saveLog(loginLog);
+    sysRecordService.saveLog(sysRecord);
     log.info("username:{}", username);
     log.info("ip:{}", ip);
     log.info("path:{}", path);
