@@ -15,12 +15,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginLog {
+public class SysRecord {
 
   private static final long serialVersionUID = 1L;
 
   @TableId(value = "id", type = IdType.AUTO)
-  private Integer loginId;
+  private Integer id;
   private String ip;
   private String path;
   private String username;
