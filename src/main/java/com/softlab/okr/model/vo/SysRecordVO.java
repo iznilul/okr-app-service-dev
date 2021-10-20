@@ -1,7 +1,5 @@
-package com.softlab.okr.entity;
+package com.softlab.okr.model.vo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,14 +13,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SysRecord {
+public class SysRecordVO {
 
-  private static final long serialVersionUID = 1L;
-
-  @TableId(value = "id", type = IdType.AUTO)
   private Integer id;
-  private Integer resourceId;
-  private Integer userId;
+  private String path;
+  private String username;
   private String ip;
   private String time;
   private long duration;

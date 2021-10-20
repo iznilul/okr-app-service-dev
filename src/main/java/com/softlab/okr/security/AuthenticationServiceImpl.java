@@ -31,8 +31,6 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
   @Override
   public Integer getUserId() {
     return getPrincipal().getUserId();
-    //String username = this.getPrincipal().getUsername();
-    //return userEntityService.getByUsername(username).getUserId();
   }
 
   @Override

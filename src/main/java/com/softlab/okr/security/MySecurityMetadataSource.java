@@ -59,6 +59,16 @@ public class MySecurityMetadataSource implements SecurityMetadataSource {
     return null;
   }
 
+  public static Integer getResourceId(String path) {
+    Set<Resource> set = getRESOURCES();
+    for (Resource resource : set) {
+      if (resource.getPath().equals(path)) {
+        return resource.getResourceId();
+      }
+    }
+    return null;
+  }
+
   @Override
   public Collection<ConfigAttribute> getAllConfigAttributes() {
     return null;

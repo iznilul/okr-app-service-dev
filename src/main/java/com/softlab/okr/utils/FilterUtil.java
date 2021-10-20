@@ -29,8 +29,11 @@ public class FilterUtil {
   }
 
   public String getRequestUsername() {
-    Authentication authentication = authenticationService.getAuthentication();
-    return authentication.getName();
+    return authenticationService.getUsername();
+  }
+
+  public Integer getRequestUserId() {
+    return authenticationService.getUserId();
   }
 
 }

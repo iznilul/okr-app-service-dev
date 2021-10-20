@@ -5,24 +5,30 @@
 
   <resultMap id="BaseResultMap" type="com.softlab.okr.entity.SysRecord">
     <id property="id" column="id"/>
+    <result property="resourceId" column="resource_id"/>
+    <result property="userId" column="user_id"/>
     <result property="ip" column="ip"/>
-    <result property="username" column="username"/>
-    <result property="path" column="path"/>
     <result property="time" column="time"/>
     <result property="duration" column="duration"/>
   </resultMap>
 
   <sql id="Base_Column_List">
-    `id`,`ip`,`path`,`username`,`time`,`duration`
+    `id`,`resource_id`,`user_id`,`ip`,`time`,`duration`
   </sql>
 
-  <select id="selectByCond" resultMap="BaseResultMap">
+  <select id="selectByCond" resultType="com.softlab.okr.model.vo.SysRecordVO">
     select
-    <include refid="Base_Column_List"></include>
-    from `sys_record`
+    id,
+    re.path,
+    ui.username,
+    ip,
+    `time`,
+    duration
+    from `sys_record` sr
+    join resource re on resource.resourceId=sr.resourceId
     where 1=1
     <if test="username!='' and username!=null">
-      and `username` like '%${username}%'
+      join user_info ui on ui.username like '%${username}%'
     </if>
     <if test="beginTime!='' and beginTime!=null">
       and date_format(`time` ,'%Y-%m-%d')&gt;=#{beginTime}

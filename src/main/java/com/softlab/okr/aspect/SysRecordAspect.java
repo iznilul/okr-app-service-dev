@@ -8,10 +8,12 @@ package com.softlab.okr.aspect;
  **/
 
 import com.softlab.okr.entity.SysRecord;
+import com.softlab.okr.security.MySecurityMetadataSource;
 import com.softlab.okr.service.ISysRecordService;
 import com.softlab.okr.utils.Constants;
 import com.softlab.okr.utils.FilterUtil;
 import java.util.Date;
+import java.util.concurrent.Future;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -71,18 +73,17 @@ public class SysRecordAspect {
     ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder
         .getRequestAttributes();
     HttpServletRequest request = servletRequestAttributes.getRequest();
-    String path = filterUtil.getRequestPath(request);
-    String username = filterUtil.getRequestUsername();
+    Integer resourceId = MySecurityMetadataSource.getResourceId(filterUtil.getRequestPath(request));
+    Integer userId = filterUtil.getRequestUserId();
     String ip = filterUtil.getRequestIp();
     long duration = System.currentTimeMillis() - startTime.get();
-    SysRecord sysRecord = new SysRecord(null, ip, path, username,
+    SysRecord sysRecord = new SysRecord(null, resourceId, userId, ip,
         Constants.DateToString(new Date()),
         duration);
-    sysRecordService.saveLog(sysRecord);
-    log.info("username:{}", username);
-    log.info("ip:{}", ip);
-    log.info("path:{}", path);
-    log.info(" 时间消耗: {} ms", duration);
+    //long start = System.currentTimeMillis();
+    Future<Integer> result = sysRecordService.saveLog(sysRecord);
+    //log.info("cost:{}", System.currentTimeMillis() - start);
+    log.info("resourceId:{},userId:{},ip:{},duration:{} ms", resourceId, userId, ip, duration);
   }
 }
 
