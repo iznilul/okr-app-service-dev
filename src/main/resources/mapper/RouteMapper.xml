@@ -5,14 +5,20 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.softlab.okr.entity.Route">
         <id column="route_id" property="routeId" />
+        <result column="parent_id" property="parentId" />
         <result column="path" property="path" />
         <result column="name" property="name" />
-        <result column="status" property="status" />
+        <result column="text" property="text" />
+        <result column="type" property="type" />
+        <result column="size" property="size" />
+        <result column="component" property="component" />
+        <result column="external" property="external" />
+        <result column="hidden" property="hidden" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        route_id, path, name, status
+        route_id, parent_id, path, name, text, type, size, component, external, hidden
     </sql>
 
 </mapper>

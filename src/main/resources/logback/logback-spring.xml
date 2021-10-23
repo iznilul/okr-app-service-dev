@@ -44,7 +44,7 @@
 
   <appender name="INFO_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>${LOG_HOME}/${APP_NAME}/info/info.%d{yyyy-MM-dd-HH_mm_ss}.log
+      <fileNamePattern>${LOG_HOME}/${APP_NAME}/info/%d{yyyy-MM-dd}/%d{HH}.log
       </fileNamePattern>
       <maxHistory>30</maxHistory>
     </rollingPolicy>
@@ -60,7 +60,7 @@
 
   <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>${LOG_HOME}/${APP_NAME}/error/error.%d{yyyy-MM-dd-HH_mm_ss}.log
+      <fileNamePattern>${LOG_HOME}/${APP_NAME}/error/%d{yyyy-MM-dd}/%d{HH_mm}.log
       </fileNamePattern>
       <maxHistory>30</maxHistory>
     </rollingPolicy>
@@ -76,7 +76,8 @@
 
   <appender name="FATAL_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>${LOG_HOME}/${APP_NAME}/fatal/fatal.%d{yyyy-MM-dd-HH_mm_ss}.log
+      <fileNamePattern>
+        ${LOG_HOME}/${APP_NAME}/fatal/%d{yyyy-MM-dd}/%d{HH_mm_ss}.log
       </fileNamePattern>
       <maxHistory>30</maxHistory>
     </rollingPolicy>
@@ -95,7 +96,7 @@
     <!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
     <discardingThreshold>0</discardingThreshold>
     <!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
-    <queueSize>1024</queueSize>
+    <queueSize>512</queueSize>
     <neverBlock>true</neverBlock>
     <!-- 添加附加的appender,最多只能添加一个 -->
     <appender-ref ref="INFO_FILE"/>

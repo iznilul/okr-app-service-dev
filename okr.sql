@@ -11,7 +11,7 @@
  Target Server Version : 50722
  File Encoding         : 65001
 
- Date: 21/10/2021 01:30:04
+ Date: 26/10/2021 01:55:04
 */
 
 SET NAMES utf8mb4;
@@ -171,58 +171,59 @@ CREATE TABLE `resource`  (
   `method` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '请求类型',
   `status` tinyint(1) NOT NULL COMMENT '接口状态 0关闭 1开启',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3774 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '资源' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5051 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '资源' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of resource
 -- ----------------------------
-INSERT INTO `resource` VALUES (3727, 2501, '/api/admin/book/add', '添加书籍', 'POST', 1);
-INSERT INTO `resource` VALUES (3728, 2502, '/api/admin/book/changeImg', '上传书籍照片', 'GET', 1);
-INSERT INTO `resource` VALUES (3729, 2504, '/api/admin/book/cancel', '删除书籍', 'GET', 1);
-INSERT INTO `resource` VALUES (3730, 2503, '/api/admin/book/change', '修改书籍', 'POST', 1);
-INSERT INTO `resource` VALUES (3731, 2603, '/api/admin/key/cancel', '删除钥匙', 'GET', 1);
-INSERT INTO `resource` VALUES (3732, 2601, '/api/admin/key/add', '增加钥匙', 'GET', 1);
-INSERT INTO `resource` VALUES (3733, 2602, '/api/admin/key/change', '修改钥匙', 'POST', 1);
-INSERT INTO `resource` VALUES (3734, 2604, '/api/admin/key/queryById', '根据id查询钥匙', 'GET', 1);
-INSERT INTO `resource` VALUES (3735, 2802, '/api/admin/keyUser/cancel', '删除钥匙持有人', 'GET', 1);
-INSERT INTO `resource` VALUES (3736, 2801, '/api/admin/keyUser/add', '增加钥匙持有人', 'GET', 1);
-INSERT INTO `resource` VALUES (3737, 2201, '/api/admin/resource/reload', '重载角色资源', 'GET', 1);
-INSERT INTO `resource` VALUES (3738, 2202, '/api/admin/resource/change', '更改接口开放状态', 'GET', 1);
-INSERT INTO `resource` VALUES (3739, 2203, '/api/admin/resource/query', '获取资源接口', 'POST', 1);
-INSERT INTO `resource` VALUES (3740, 2301, '/api/admin/signup/query', '获取报名记录', 'POST', 1);
-INSERT INTO `resource` VALUES (3741, 2303, '/api/admin/signup/export', '导出报名单', 'GET', 1);
-INSERT INTO `resource` VALUES (3742, 2302, '/api/admin/signup/change', '更新报名记录', 'POST', 1);
-INSERT INTO `resource` VALUES (3743, 2701, '/api/admin/loginLog/query', '登录日志列表', 'POST', 1);
-INSERT INTO `resource` VALUES (3744, 2403, '/api/admin/tag/cancel', '删除标签', 'GET', 1);
-INSERT INTO `resource` VALUES (3745, 2404, '/api/admin/tag/query', '获取标签列表', 'POST', 1);
-INSERT INTO `resource` VALUES (3746, 2401, '/api/admin/tag/add', '增加标签', 'GET', 1);
-INSERT INTO `resource` VALUES (3747, 2402, '/api/admin/tag/change', '更新标签', 'GET', 1);
-INSERT INTO `resource` VALUES (3748, 2101, '/api/admin/user/add', '注册用户', 'POST', 1);
-INSERT INTO `resource` VALUES (3749, 2102, '/api/admin/user/cancel', '删除用户', 'GET', 1);
-INSERT INTO `resource` VALUES (3750, 1102, '/api/common/test', '认证测试', 'GET', 1);
-INSERT INTO `resource` VALUES (3751, 1101, '/api/common/login', '用户登录', 'POST', 1);
-INSERT INTO `resource` VALUES (3752, 1103, '/api/common/logout', '用户退出', 'GET', 1);
-INSERT INTO `resource` VALUES (3753, 1301, '/api/common/rank/csdn', 'csdn实时展示', 'GET', 1);
-INSERT INTO `resource` VALUES (3754, 1202, '/api/common/signUp/query', '报名结果查询', 'GET', 1);
-INSERT INTO `resource` VALUES (3755, 1201, '/api/common/signUp/add', '纳新报名', 'POST', 1);
-INSERT INTO `resource` VALUES (3756, 3310, '/api/user/enum/username', '模糊查询用户名列表', 'GET', 1);
-INSERT INTO `resource` VALUES (3757, 3311, '/api/user/enum/name', '模糊查询姓名列表', 'GET', 1);
-INSERT INTO `resource` VALUES (3758, 3312, '/api/user/enum/major', '模糊查询专业列表', 'GET', 1);
-INSERT INTO `resource` VALUES (3759, 3301, '/api/user/enum/key', '模糊查询钥匙状态', 'GET', 1);
-INSERT INTO `resource` VALUES (3760, 3502, '/api/user/book/borrow', '借书', 'GET', 1);
-INSERT INTO `resource` VALUES (3761, 3501, '/api/user/book/query', '书籍列表', 'POST', 1);
-INSERT INTO `resource` VALUES (3762, 3503, '/api/user/book/return', '还书', 'GET', 1);
-INSERT INTO `resource` VALUES (3763, 3401, '/api/user/key/query', '钥匙列表', 'POST', 1);
-INSERT INTO `resource` VALUES (3764, 3402, '/api/user/key/borrow', '借钥匙', 'GET', 1);
-INSERT INTO `resource` VALUES (3765, 3403, '/api/user/key/return', '还钥匙', 'GET', 1);
-INSERT INTO `resource` VALUES (3766, 3601, '/api/user/keyUser/query', '钥匙记录列表', 'POST', 1);
-INSERT INTO `resource` VALUES (3767, 3201, '/api/user/monitor/server', '服务器监控', 'GET', 1);
-INSERT INTO `resource` VALUES (3768, 3106, '/api/user/user/queryByUsername', '根据用户名选择用户', 'GET', 1);
-INSERT INTO `resource` VALUES (3769, 3104, '/api/user/user/changeImg', '上传头像文件', 'POST', 1);
-INSERT INTO `resource` VALUES (3770, 3102, '/api/user/user/query', '根据账号选择用户', 'GET', 1);
-INSERT INTO `resource` VALUES (3771, 3105, '/api/user/user/changePassword', '修改密码', 'POST', 1);
-INSERT INTO `resource` VALUES (3772, 3103, '/api/user/user/queryList', '根据情况选择用户', 'POST', 1);
-INSERT INTO `resource` VALUES (3773, 3101, '/api/user/user/change', '更新用户信息', 'POST', 1);
+INSERT INTO `resource` VALUES (5003, 2503, '/api/admin/book/change', '修改书籍', 'POST', 1);
+INSERT INTO `resource` VALUES (5004, 2504, '/api/admin/book/cancel', '删除书籍', 'GET', 1);
+INSERT INTO `resource` VALUES (5005, 2502, '/api/admin/book/changeImg', '上传书籍照片', 'GET', 1);
+INSERT INTO `resource` VALUES (5006, 2501, '/api/admin/book/add', '添加书籍', 'POST', 1);
+INSERT INTO `resource` VALUES (5007, 2604, '/api/admin/key/queryById', '根据id查询钥匙', 'GET', 1);
+INSERT INTO `resource` VALUES (5008, 2601, '/api/admin/key/add', '增加钥匙', 'GET', 1);
+INSERT INTO `resource` VALUES (5009, 2602, '/api/admin/key/change', '修改钥匙', 'POST', 1);
+INSERT INTO `resource` VALUES (5010, 2603, '/api/admin/key/cancel', '删除钥匙', 'GET', 1);
+INSERT INTO `resource` VALUES (5011, 2801, '/api/admin/keyUser/add', '增加钥匙持有人', 'GET', 1);
+INSERT INTO `resource` VALUES (5012, 2802, '/api/admin/keyUser/cancel', '删除钥匙持有人', 'GET', 1);
+INSERT INTO `resource` VALUES (5013, 2201, '/api/admin/resource/reload', '重载角色资源', 'GET', 1);
+INSERT INTO `resource` VALUES (5014, 2203, '/api/admin/resource/query', '获取资源接口', 'POST', 1);
+INSERT INTO `resource` VALUES (5015, 2202, '/api/admin/resource/change', '更改接口开放状态', 'GET', 1);
+INSERT INTO `resource` VALUES (5016, 2303, '/api/admin/signup/export', '导出报名单', 'GET', 1);
+INSERT INTO `resource` VALUES (5017, 2301, '/api/admin/signup/query', '获取报名记录', 'POST', 1);
+INSERT INTO `resource` VALUES (5018, 2302, '/api/admin/signup/change', '更新报名记录', 'POST', 1);
+INSERT INTO `resource` VALUES (5019, 2701, '/api/admin/loginLog/query', '登录日志列表', 'POST', 1);
+INSERT INTO `resource` VALUES (5020, 2404, '/api/admin/tag/query', '获取标签列表', 'POST', 1);
+INSERT INTO `resource` VALUES (5021, 2403, '/api/admin/tag/cancel', '删除标签', 'GET', 1);
+INSERT INTO `resource` VALUES (5022, 2401, '/api/admin/tag/add', '增加标签', 'GET', 1);
+INSERT INTO `resource` VALUES (5023, 2402, '/api/admin/tag/change', '更新标签', 'GET', 1);
+INSERT INTO `resource` VALUES (5024, 2101, '/api/admin/user/add', '注册用户', 'POST', 1);
+INSERT INTO `resource` VALUES (5025, 2102, '/api/admin/user/cancel', '删除用户', 'GET', 1);
+INSERT INTO `resource` VALUES (5026, 1102, '/api/common/test', '认证测试', 'GET', 1);
+INSERT INTO `resource` VALUES (5027, 1103, '/api/common/logout', '用户退出', 'GET', 1);
+INSERT INTO `resource` VALUES (5028, 1101, '/api/common/login', '用户登录', 'POST', 1);
+INSERT INTO `resource` VALUES (5029, 1301, '/api/common/rank/csdn', 'csdn实时展示', 'GET', 1);
+INSERT INTO `resource` VALUES (5030, 1201, '/api/common/signUp/add', '纳新报名', 'POST', 1);
+INSERT INTO `resource` VALUES (5031, 1202, '/api/common/signUp/query', '报名结果查询', 'GET', 1);
+INSERT INTO `resource` VALUES (5032, 3310, '/api/user/enum/username', '模糊查询用户名列表', 'GET', 1);
+INSERT INTO `resource` VALUES (5033, 3312, '/api/user/enum/major', '模糊查询专业列表', 'GET', 1);
+INSERT INTO `resource` VALUES (5034, 3301, '/api/user/enum/key', '模糊查询钥匙状态', 'GET', 1);
+INSERT INTO `resource` VALUES (5035, 3311, '/api/user/enum/name', '模糊查询姓名列表', 'GET', 1);
+INSERT INTO `resource` VALUES (5036, 3502, '/api/user/book/borrow', '借书', 'GET', 1);
+INSERT INTO `resource` VALUES (5037, 3501, '/api/user/book/query', '书籍列表', 'POST', 1);
+INSERT INTO `resource` VALUES (5038, 3503, '/api/user/book/return', '还书', 'GET', 1);
+INSERT INTO `resource` VALUES (5039, 3403, '/api/user/key/return', '还钥匙', 'GET', 1);
+INSERT INTO `resource` VALUES (5040, 3402, '/api/user/key/borrow', '借钥匙', 'GET', 1);
+INSERT INTO `resource` VALUES (5041, 3401, '/api/user/key/query', '钥匙列表', 'POST', 1);
+INSERT INTO `resource` VALUES (5042, 3601, '/api/user/keyUser/query', '钥匙记录列表', 'POST', 1);
+INSERT INTO `resource` VALUES (5043, 3201, '/api/user/monitor/server', '服务器监控', 'GET', 1);
+INSERT INTO `resource` VALUES (5044, 3701, '/api/user/route/query', '获取路径', 'GET', 1);
+INSERT INTO `resource` VALUES (5045, 3106, '/api/user/user/queryByUsername', '根据用户名选择用户', 'GET', 1);
+INSERT INTO `resource` VALUES (5046, 3101, '/api/user/user/change', '更新用户信息', 'POST', 1);
+INSERT INTO `resource` VALUES (5047, 3104, '/api/user/user/changeImg', '上传头像文件', 'POST', 1);
+INSERT INTO `resource` VALUES (5048, 3105, '/api/user/user/changePassword', '修改密码', 'POST', 1);
+INSERT INTO `resource` VALUES (5049, 3103, '/api/user/user/queryList', '根据情况选择用户', 'POST', 1);
+INSERT INTO `resource` VALUES (5050, 3102, '/api/user/user/query', '根据账号选择用户', 'GET', 1);
 
 -- ----------------------------
 -- Table structure for role
@@ -251,70 +252,72 @@ CREATE TABLE `role_resource`  (
   `resource_id` int(11) NOT NULL COMMENT '资源id',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `resource_id`(`resource_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 17716 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色-权限关系' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 19325 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色-权限关系' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of role_resource
 -- ----------------------------
-INSERT INTO `role_resource` VALUES (17657, 2, 3104);
-INSERT INTO `role_resource` VALUES (17658, 2, 3201);
-INSERT INTO `role_resource` VALUES (17659, 2, 3105);
-INSERT INTO `role_resource` VALUES (17660, 2, 3106);
-INSERT INTO `role_resource` VALUES (17661, 2, 3301);
-INSERT INTO `role_resource` VALUES (17662, 2, 3401);
-INSERT INTO `role_resource` VALUES (17663, 2, 3402);
-INSERT INTO `role_resource` VALUES (17664, 2, 3403);
-INSERT INTO `role_resource` VALUES (17665, 2, 3501);
-INSERT INTO `role_resource` VALUES (17666, 2, 3502);
-INSERT INTO `role_resource` VALUES (17667, 2, 3310);
-INSERT INTO `role_resource` VALUES (17668, 2, 3503);
-INSERT INTO `role_resource` VALUES (17669, 2, 3311);
-INSERT INTO `role_resource` VALUES (17670, 2, 3312);
-INSERT INTO `role_resource` VALUES (17671, 2, 3601);
-INSERT INTO `role_resource` VALUES (17672, 2, 3101);
-INSERT INTO `role_resource` VALUES (17673, 2, 3102);
-INSERT INTO `role_resource` VALUES (17674, 2, 3103);
-INSERT INTO `role_resource` VALUES (17675, 1, 3201);
-INSERT INTO `role_resource` VALUES (17676, 1, 2501);
-INSERT INTO `role_resource` VALUES (17677, 1, 2502);
-INSERT INTO `role_resource` VALUES (17678, 1, 2503);
-INSERT INTO `role_resource` VALUES (17679, 1, 2504);
-INSERT INTO `role_resource` VALUES (17680, 1, 3401);
-INSERT INTO `role_resource` VALUES (17681, 1, 3402);
-INSERT INTO `role_resource` VALUES (17682, 1, 3403);
-INSERT INTO `role_resource` VALUES (17683, 1, 2701);
-INSERT INTO `role_resource` VALUES (17684, 1, 3601);
-INSERT INTO `role_resource` VALUES (17685, 1, 2201);
-INSERT INTO `role_resource` VALUES (17686, 1, 2202);
-INSERT INTO `role_resource` VALUES (17687, 1, 2203);
-INSERT INTO `role_resource` VALUES (17688, 1, 3101);
-INSERT INTO `role_resource` VALUES (17689, 1, 3102);
-INSERT INTO `role_resource` VALUES (17690, 1, 3103);
-INSERT INTO `role_resource` VALUES (17691, 1, 3104);
-INSERT INTO `role_resource` VALUES (17692, 1, 2401);
-INSERT INTO `role_resource` VALUES (17693, 1, 3105);
-INSERT INTO `role_resource` VALUES (17694, 1, 2402);
-INSERT INTO `role_resource` VALUES (17695, 1, 3106);
-INSERT INTO `role_resource` VALUES (17696, 1, 2403);
-INSERT INTO `role_resource` VALUES (17697, 1, 2404);
-INSERT INTO `role_resource` VALUES (17698, 1, 3301);
-INSERT INTO `role_resource` VALUES (17699, 1, 2601);
-INSERT INTO `role_resource` VALUES (17700, 1, 2602);
-INSERT INTO `role_resource` VALUES (17701, 1, 2603);
-INSERT INTO `role_resource` VALUES (17702, 1, 2604);
-INSERT INTO `role_resource` VALUES (17703, 1, 3501);
-INSERT INTO `role_resource` VALUES (17704, 1, 3310);
-INSERT INTO `role_resource` VALUES (17705, 1, 3502);
-INSERT INTO `role_resource` VALUES (17706, 1, 3311);
-INSERT INTO `role_resource` VALUES (17707, 1, 3503);
-INSERT INTO `role_resource` VALUES (17708, 1, 3312);
-INSERT INTO `role_resource` VALUES (17709, 1, 2801);
-INSERT INTO `role_resource` VALUES (17710, 1, 2802);
-INSERT INTO `role_resource` VALUES (17711, 1, 2101);
-INSERT INTO `role_resource` VALUES (17712, 1, 2102);
-INSERT INTO `role_resource` VALUES (17713, 1, 2301);
-INSERT INTO `role_resource` VALUES (17714, 1, 2302);
-INSERT INTO `role_resource` VALUES (17715, 1, 2303);
+INSERT INTO `role_resource` VALUES (19264, 2, 3104);
+INSERT INTO `role_resource` VALUES (19265, 2, 3201);
+INSERT INTO `role_resource` VALUES (19266, 2, 3105);
+INSERT INTO `role_resource` VALUES (19267, 2, 3106);
+INSERT INTO `role_resource` VALUES (19268, 2, 3301);
+INSERT INTO `role_resource` VALUES (19269, 2, 3401);
+INSERT INTO `role_resource` VALUES (19270, 2, 3402);
+INSERT INTO `role_resource` VALUES (19271, 2, 3403);
+INSERT INTO `role_resource` VALUES (19272, 2, 3501);
+INSERT INTO `role_resource` VALUES (19273, 2, 3502);
+INSERT INTO `role_resource` VALUES (19274, 2, 3310);
+INSERT INTO `role_resource` VALUES (19275, 2, 3503);
+INSERT INTO `role_resource` VALUES (19276, 2, 3311);
+INSERT INTO `role_resource` VALUES (19277, 2, 3312);
+INSERT INTO `role_resource` VALUES (19278, 2, 3601);
+INSERT INTO `role_resource` VALUES (19279, 2, 3701);
+INSERT INTO `role_resource` VALUES (19280, 2, 3101);
+INSERT INTO `role_resource` VALUES (19281, 2, 3102);
+INSERT INTO `role_resource` VALUES (19282, 2, 3103);
+INSERT INTO `role_resource` VALUES (19283, 1, 3201);
+INSERT INTO `role_resource` VALUES (19284, 1, 2501);
+INSERT INTO `role_resource` VALUES (19285, 1, 2502);
+INSERT INTO `role_resource` VALUES (19286, 1, 2503);
+INSERT INTO `role_resource` VALUES (19287, 1, 2504);
+INSERT INTO `role_resource` VALUES (19288, 1, 3401);
+INSERT INTO `role_resource` VALUES (19289, 1, 3402);
+INSERT INTO `role_resource` VALUES (19290, 1, 3403);
+INSERT INTO `role_resource` VALUES (19291, 1, 2701);
+INSERT INTO `role_resource` VALUES (19292, 1, 3601);
+INSERT INTO `role_resource` VALUES (19293, 1, 2201);
+INSERT INTO `role_resource` VALUES (19294, 1, 2202);
+INSERT INTO `role_resource` VALUES (19295, 1, 2203);
+INSERT INTO `role_resource` VALUES (19296, 1, 3101);
+INSERT INTO `role_resource` VALUES (19297, 1, 3102);
+INSERT INTO `role_resource` VALUES (19298, 1, 3103);
+INSERT INTO `role_resource` VALUES (19299, 1, 3104);
+INSERT INTO `role_resource` VALUES (19300, 1, 2401);
+INSERT INTO `role_resource` VALUES (19301, 1, 3105);
+INSERT INTO `role_resource` VALUES (19302, 1, 2402);
+INSERT INTO `role_resource` VALUES (19303, 1, 3106);
+INSERT INTO `role_resource` VALUES (19304, 1, 2403);
+INSERT INTO `role_resource` VALUES (19305, 1, 2404);
+INSERT INTO `role_resource` VALUES (19306, 1, 3301);
+INSERT INTO `role_resource` VALUES (19307, 1, 2601);
+INSERT INTO `role_resource` VALUES (19308, 1, 2602);
+INSERT INTO `role_resource` VALUES (19309, 1, 2603);
+INSERT INTO `role_resource` VALUES (19310, 1, 2604);
+INSERT INTO `role_resource` VALUES (19311, 1, 3501);
+INSERT INTO `role_resource` VALUES (19312, 1, 3502);
+INSERT INTO `role_resource` VALUES (19313, 1, 3310);
+INSERT INTO `role_resource` VALUES (19314, 1, 3311);
+INSERT INTO `role_resource` VALUES (19315, 1, 3503);
+INSERT INTO `role_resource` VALUES (19316, 1, 3312);
+INSERT INTO `role_resource` VALUES (19317, 1, 2801);
+INSERT INTO `role_resource` VALUES (19318, 1, 2802);
+INSERT INTO `role_resource` VALUES (19319, 1, 2101);
+INSERT INTO `role_resource` VALUES (19320, 1, 3701);
+INSERT INTO `role_resource` VALUES (19321, 1, 2102);
+INSERT INTO `role_resource` VALUES (19322, 1, 2301);
+INSERT INTO `role_resource` VALUES (19323, 1, 2302);
+INSERT INTO `role_resource` VALUES (19324, 1, 2303);
 
 -- ----------------------------
 -- Table structure for route
@@ -322,11 +325,50 @@ INSERT INTO `role_resource` VALUES (17715, 1, 2303);
 DROP TABLE IF EXISTS `route`;
 CREATE TABLE `route`  (
   `route_id` int(11) NOT NULL COMMENT '主键',
-  `path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '路径',
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '名称',
-  `status` tinyint(1) NOT NULL COMMENT '路径状态 0关闭 1开启',
+  `parent_id` int(11) NOT NULL COMMENT '父路径id，id为0代表为父路径',
+  `path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '路径',
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '名称',
+  `text` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文本内容',
+  `type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'icon类型',
+  `size` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'icon大小',
+  `component` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '组件路径',
+  `external` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '外链',
+  `hidden` tinyint(2) NULL DEFAULT NULL COMMENT '隐藏0 不隐藏1',
   PRIMARY KEY (`route_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of route
+-- ----------------------------
+INSERT INTO `route` VALUES (1000, 0, '/', '', '根目录', NULL, NULL, '@/components/Layout/Layout.vue', NULL, NULL);
+INSERT INTO `route` VALUES (1001, 1000, 'home', 'home', '主页', 'md-home', '18', '@/views/user/Home', NULL, NULL);
+INSERT INTO `route` VALUES (1002, 1000, 'userinfo', 'userinfo', '用户信息', 'ios-time', '18', '@/views/user/UserInfo', NULL, NULL);
+INSERT INTO `route` VALUES (1003, 1000, 'member', 'member', '成员管理', 'md-person', '18', '@/views/user/member', NULL, NULL);
+INSERT INTO `route` VALUES (2000, 1000, 'book', 'book', '书籍管理', 'ios-book-outline', '18', '', NULL, NULL);
+INSERT INTO `route` VALUES (2001, 2000, 'booklist', 'booklist', '书籍列表', 'ios-book', '18', '@/views/user/Book', NULL, NULL);
+INSERT INTO `route` VALUES (2002, 2000, 'bookuser', 'bookuser', '借阅记录', 'md-book', '18', '@/views/user/BookUser', NULL, NULL);
+INSERT INTO `route` VALUES (3000, 1000, 'key', 'key', '钥匙管理', 'ios-key-outline', '18', '', NULL, NULL);
+INSERT INTO `route` VALUES (3001, 3000, 'keylist', 'keylist', '钥匙列表', 'ios-key', '18', '@/views/user/Key', NULL, NULL);
+INSERT INTO `route` VALUES (3002, 3000, 'keyuser', 'keyuser', '借阅记录', 'md-key', '18', '@/views/user/KeyUser', NULL, NULL);
+INSERT INTO `route` VALUES (4000, 1000, 'okr', 'okr', 'okr管理', 'ios-egg-outline', '18', NULL, NULL, NULL);
+INSERT INTO `route` VALUES (4001, 4000, 'okrlist', 'okrlist', 'okr列表', 'ios-egg', '18', '@/views/user/Okr', NULL, NULL);
+INSERT INTO `route` VALUES (5000, 1000, 'admin', 'admin', '管理员菜单', 'ios-lock', '18', '', NULL, NULL);
+INSERT INTO `route` VALUES (5001, 5000, 'sysrecord', 'sysrecord', '操作记录', 'ios-time', '18', '@/views/admin/SysRecord', NULL, NULL);
+INSERT INTO `route` VALUES (5002, 5000, 'syslog', 'syslog', '系统日志', 'md-list-box', '18', '@/views/admin/Syslog', NULL, NULL);
+INSERT INTO `route` VALUES (5003, 5000, 'signup', 'signup', '报名管理', 'md-bookmark', '18', '@/views/admin/Signup', NULL, NULL);
+INSERT INTO `route` VALUES (5004, 5000, 'resource', 'resource', '接口管理', 'logo-buffer', '18', '@/views/admin/Resource', NULL, NULL);
+INSERT INTO `route` VALUES (5005, 5000, 'tag', 'tag', '标签管理', 'md-card', '18', '@/views/admin/Tag', NULL, NULL);
+
+-- ----------------------------
+-- Table structure for route_role
+-- ----------------------------
+DROP TABLE IF EXISTS `route_role`;
+CREATE TABLE `route_role`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `route_id` int(11) NOT NULL COMMENT '路径id',
+  `role_id` int(11) NOT NULL COMMENT '角色id',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for signup
@@ -397,7 +439,7 @@ CREATE TABLE `sys_record`  (
   `time` datetime(0) NULL DEFAULT NULL COMMENT '请求时间点',
   `duration` int(11) NULL DEFAULT NULL COMMENT '用时 单位ms',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2874 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2956 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_record
@@ -442,6 +484,88 @@ INSERT INTO `sys_record` VALUES (2870, 3102, 20, '127.0.0.1', '2021-10-21 01:19:
 INSERT INTO `sys_record` VALUES (2871, 3401, 20, '127.0.0.1', '2021-10-21 01:19:17', 4);
 INSERT INTO `sys_record` VALUES (2872, 3401, 20, '127.0.0.1', '2021-10-21 01:20:10', 59);
 INSERT INTO `sys_record` VALUES (2873, 3102, 20, '127.0.0.1', '2021-10-21 01:20:10', 56);
+INSERT INTO `sys_record` VALUES (2874, NULL, NULL, '127.0.0.1', '2021-10-23 23:54:49', 3923);
+INSERT INTO `sys_record` VALUES (2875, NULL, NULL, '127.0.0.1', '2021-10-23 23:56:32', 21833);
+INSERT INTO `sys_record` VALUES (2876, NULL, NULL, '127.0.0.1', '2021-10-23 23:57:01', 23477);
+INSERT INTO `sys_record` VALUES (2877, NULL, NULL, '127.0.0.1', '2021-10-23 23:57:30', 4);
+INSERT INTO `sys_record` VALUES (2878, 3102, 20, '127.0.0.1', '2021-10-24 00:39:17', 55);
+INSERT INTO `sys_record` VALUES (2879, 3201, 20, '127.0.0.1', '2021-10-24 00:39:19', 2121);
+INSERT INTO `sys_record` VALUES (2880, 3201, 20, '127.0.0.1', '2021-10-24 00:40:38', 1185);
+INSERT INTO `sys_record` VALUES (2881, 3201, 20, '127.0.0.1', '2021-10-24 00:43:58', 1221);
+INSERT INTO `sys_record` VALUES (2882, 3201, 20, '127.0.0.1', '2021-10-24 00:47:18', 1253);
+INSERT INTO `sys_record` VALUES (2883, 3201, 20, '127.0.0.1', '2021-10-24 00:50:38', 1195);
+INSERT INTO `sys_record` VALUES (2884, 3201, 20, '127.0.0.1', '2021-10-24 00:53:58', 1212);
+INSERT INTO `sys_record` VALUES (2885, 3201, 20, '127.0.0.1', '2021-10-24 00:57:52', 1200);
+INSERT INTO `sys_record` VALUES (2886, 3201, 20, '127.0.0.1', '2021-10-24 01:00:52', 1194);
+INSERT INTO `sys_record` VALUES (2887, 3201, 20, '127.0.0.1', '2021-10-24 01:04:52', 1185);
+INSERT INTO `sys_record` VALUES (2888, 3201, 20, '127.0.0.1', '2021-10-24 01:07:52', 1193);
+INSERT INTO `sys_record` VALUES (2889, 3201, 20, '127.0.0.1', '2021-10-24 01:10:52', 1190);
+INSERT INTO `sys_record` VALUES (2890, 3201, 20, '127.0.0.1', '2021-10-24 01:14:52', 1227);
+INSERT INTO `sys_record` VALUES (2891, 3201, 20, '127.0.0.1', '2021-10-24 01:17:52', 1196);
+INSERT INTO `sys_record` VALUES (2892, 3201, 20, '127.0.0.1', '2021-10-24 01:20:52', 1205);
+INSERT INTO `sys_record` VALUES (2893, 3102, 20, '127.0.0.1', '2021-10-24 01:22:31', 8);
+INSERT INTO `sys_record` VALUES (2894, 3201, 20, '127.0.0.1', '2021-10-24 01:22:33', 1213);
+INSERT INTO `sys_record` VALUES (2895, 3201, 20, '127.0.0.1', '2021-10-24 01:25:53', 1217);
+INSERT INTO `sys_record` VALUES (2896, 3102, 20, '127.0.0.1', '2021-10-24 01:25:58', 13);
+INSERT INTO `sys_record` VALUES (2897, 3201, 20, '127.0.0.1', '2021-10-24 01:25:59', 1188);
+INSERT INTO `sys_record` VALUES (2898, 3102, 20, '127.0.0.1', '2021-10-24 01:26:20', 4);
+INSERT INTO `sys_record` VALUES (2899, 3201, 20, '127.0.0.1', '2021-10-24 01:26:21', 1172);
+INSERT INTO `sys_record` VALUES (2900, NULL, NULL, '127.0.0.1', '2021-10-24 02:05:53', 11);
+INSERT INTO `sys_record` VALUES (2901, 3102, 20, '127.0.0.1', '2021-10-24 02:05:53', 4);
+INSERT INTO `sys_record` VALUES (2902, 3201, 20, '127.0.0.1', '2021-10-24 02:06:01', 1227);
+INSERT INTO `sys_record` VALUES (2903, 3102, 20, '127.0.0.1', '2021-10-24 02:06:14', 5);
+INSERT INTO `sys_record` VALUES (2904, 3201, 20, '127.0.0.1', '2021-10-24 02:06:15', 1197);
+INSERT INTO `sys_record` VALUES (2905, NULL, NULL, '127.0.0.1', '2021-10-24 02:07:06', 4);
+INSERT INTO `sys_record` VALUES (2906, 3102, 20, '127.0.0.1', '2021-10-24 02:07:06', 5);
+INSERT INTO `sys_record` VALUES (2907, 3201, 20, '127.0.0.1', '2021-10-24 02:07:07', 1206);
+INSERT INTO `sys_record` VALUES (2908, 3201, 20, '127.0.0.1', '2021-10-24 02:10:28', 1171);
+INSERT INTO `sys_record` VALUES (2909, 3201, 20, '127.0.0.1', '2021-10-24 02:13:48', 1161);
+INSERT INTO `sys_record` VALUES (2910, 3201, 20, '127.0.0.1', '2021-10-24 02:17:08', 1172);
+INSERT INTO `sys_record` VALUES (2911, 3102, 20, '127.0.0.1', '2021-10-24 02:17:18', 4);
+INSERT INTO `sys_record` VALUES (2912, 3201, 20, '127.0.0.1', '2021-10-24 02:17:19', 1204);
+INSERT INTO `sys_record` VALUES (2913, 3103, 20, '127.0.0.1', '2021-10-24 02:17:21', 81);
+INSERT INTO `sys_record` VALUES (2914, 3102, 20, '127.0.0.1', '2021-10-24 02:19:04', 3);
+INSERT INTO `sys_record` VALUES (2915, 3103, 20, '127.0.0.1', '2021-10-24 02:19:07', 5);
+INSERT INTO `sys_record` VALUES (2916, 3201, 20, '127.0.0.1', '2021-10-24 02:19:07', 1184);
+INSERT INTO `sys_record` VALUES (2917, 3102, 20, '127.0.0.1', '2021-10-24 02:22:15', 2);
+INSERT INTO `sys_record` VALUES (2918, 3103, 20, '127.0.0.1', '2021-10-24 02:22:15', 6);
+INSERT INTO `sys_record` VALUES (2919, 3201, 20, '127.0.0.1', '2021-10-24 02:22:20', 1203);
+INSERT INTO `sys_record` VALUES (2920, 3103, 20, '127.0.0.1', '2021-10-24 02:22:21', 6);
+INSERT INTO `sys_record` VALUES (2921, 3201, 20, '127.0.0.1', '2021-10-24 02:22:25', 1174);
+INSERT INTO `sys_record` VALUES (2922, 3201, 20, '127.0.0.1', '2021-10-24 02:25:46', 1167);
+INSERT INTO `sys_record` VALUES (2923, 3201, 20, '127.0.0.1', '2021-10-24 02:29:06', 1227);
+INSERT INTO `sys_record` VALUES (2924, 3102, 20, '127.0.0.1', '2021-10-24 02:29:38', 3);
+INSERT INTO `sys_record` VALUES (2925, 3201, 20, '127.0.0.1', '2021-10-24 02:29:40', 1196);
+INSERT INTO `sys_record` VALUES (2926, 3201, 20, '127.0.0.1', '2021-10-24 02:33:00', 1198);
+INSERT INTO `sys_record` VALUES (2927, 3201, 20, '127.0.0.1', '2021-10-24 02:36:20', 1219);
+INSERT INTO `sys_record` VALUES (2928, 3201, 20, '127.0.0.1', '2021-10-24 02:39:40', 1137);
+INSERT INTO `sys_record` VALUES (2929, 3102, 20, '127.0.0.1', '2021-10-24 13:46:31', 42);
+INSERT INTO `sys_record` VALUES (2930, 3201, 20, '127.0.0.1', '2021-10-24 13:46:33', 2198);
+INSERT INTO `sys_record` VALUES (2931, 3102, 20, '127.0.0.1', '2021-10-24 14:29:32', 5);
+INSERT INTO `sys_record` VALUES (2932, 3103, 20, '127.0.0.1', '2021-10-24 14:29:39', 92);
+INSERT INTO `sys_record` VALUES (2933, 3102, 20, '127.0.0.1', '2021-10-24 14:29:52', 6);
+INSERT INTO `sys_record` VALUES (2934, 3103, 20, '127.0.0.1', '2021-10-24 14:29:52', 11);
+INSERT INTO `sys_record` VALUES (2935, 3102, 20, '127.0.0.1', '2021-10-24 19:57:49', 5);
+INSERT INTO `sys_record` VALUES (2936, 3103, 20, '127.0.0.1', '2021-10-24 19:57:49', 25);
+INSERT INTO `sys_record` VALUES (2937, 3102, 20, '127.0.0.1', '2021-10-24 19:59:05', 5);
+INSERT INTO `sys_record` VALUES (2938, 3102, 20, '127.0.0.1', '2021-10-24 20:08:21', 23);
+INSERT INTO `sys_record` VALUES (2939, 3102, 20, '127.0.0.1', '2021-10-25 01:13:19', 5);
+INSERT INTO `sys_record` VALUES (2940, 3102, 20, '127.0.0.1', '2021-10-25 01:31:48', 5);
+INSERT INTO `sys_record` VALUES (2941, 3103, 20, '127.0.0.1', '2021-10-25 01:31:51', 7);
+INSERT INTO `sys_record` VALUES (2942, NULL, NULL, '127.0.0.1', '2021-10-26 01:34:33', 728);
+INSERT INTO `sys_record` VALUES (2943, 3701, 20, '127.0.0.1', '2021-10-26 01:35:15', 21);
+INSERT INTO `sys_record` VALUES (2944, 3701, 20, '127.0.0.1', '2021-10-26 01:37:47', 17);
+INSERT INTO `sys_record` VALUES (2945, 3701, 20, '127.0.0.1', '2021-10-26 01:37:55', 2);
+INSERT INTO `sys_record` VALUES (2946, 3701, 20, '127.0.0.1', '2021-10-26 01:38:56', 26448);
+INSERT INTO `sys_record` VALUES (2947, 3701, 20, '127.0.0.1', '2021-10-26 01:39:30', 31928);
+INSERT INTO `sys_record` VALUES (2948, 3701, 20, '127.0.0.1', '2021-10-26 01:44:06', 16);
+INSERT INTO `sys_record` VALUES (2949, 3701, 20, '127.0.0.1', '2021-10-26 01:44:31', 5861);
+INSERT INTO `sys_record` VALUES (2950, 3701, 20, '127.0.0.1', '2021-10-26 01:44:58', 18487);
+INSERT INTO `sys_record` VALUES (2951, 3701, 20, '127.0.0.1', '2021-10-26 01:45:26', 24934);
+INSERT INTO `sys_record` VALUES (2952, 3701, 20, '127.0.0.1', '2021-10-26 01:46:20', 28437);
+INSERT INTO `sys_record` VALUES (2953, 3701, 20, '127.0.0.1', '2021-10-26 01:49:35', 2021);
+INSERT INTO `sys_record` VALUES (2954, 3701, 20, '127.0.0.1', '2021-10-26 01:52:59', 1552);
+INSERT INTO `sys_record` VALUES (2955, 3701, 20, '127.0.0.1', '2021-10-26 01:54:13', 6604);
 
 -- ----------------------------
 -- Table structure for tag
@@ -471,7 +595,7 @@ CREATE TABLE `task`  (
   `class_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '任务类',
   `function` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '任务功能',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 247 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 328 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of task
@@ -722,6 +846,87 @@ INSERT INTO `task` VALUES (243, 'T3', '三号测试任务', 'com.softlab.okr.job
 INSERT INTO `task` VALUES (244, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
 INSERT INTO `task` VALUES (245, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
 INSERT INTO `task` VALUES (246, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (247, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (248, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (249, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (250, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (251, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (252, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (253, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (254, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (255, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (256, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (257, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (258, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (259, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (260, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (261, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (262, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (263, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (264, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (265, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (266, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (267, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (268, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (269, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (270, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (271, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (272, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (273, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (274, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (275, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (276, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (277, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (278, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (279, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (280, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (281, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (282, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (283, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (284, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (285, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (286, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (287, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (288, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (289, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (290, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (291, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (292, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (293, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (294, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (295, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (296, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (297, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (298, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (299, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (300, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (301, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (302, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (303, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (304, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (305, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (306, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (307, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (308, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (309, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (310, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (311, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (312, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (313, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (314, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (315, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (316, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (317, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (318, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (319, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (320, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (321, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (322, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (323, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (324, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (325, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (326, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (327, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
 
 -- ----------------------------
 -- Table structure for task_trigger
