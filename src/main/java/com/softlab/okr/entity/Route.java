@@ -1,41 +1,72 @@
 package com.softlab.okr.entity;
 
+import com.softlab.okr.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- *
+ * 
  * </p>
  *
  * @author Mybatis-plus自动生成
- * @since 2021-09-27
+ * @since 2021-10-24
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Route extends BaseEntity {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  /**
-   * 主键
-   */
-  private Integer routeId;
+    /**
+     * 主键
+     */
+    private Integer routeId;
 
-  /**
-   * 路径
-   */
-  private String path;
+    /**
+     * 父路径id，id为0代表为父路径
+     */
+    private Integer parentId;
 
-  /**
-   * 名称
-   */
-  private String name;
+    /**
+     * 路径
+     */
+    private String path;
 
-  /**
-   * 路径状态 0关闭 1开启
-   */
-  private Boolean status;
+    /**
+     * 名称
+     */
+    private String name;
+
+    /**
+     * 文本内容
+     */
+    private String text;
+
+    /**
+     * icon类型
+     */
+    private String type;
+
+    /**
+     * icon大小
+     */
+    private Integer size;
+
+    /**
+     * 组件路径
+     */
+    private String component;
+
+    /**
+     * 外链
+     */
+    private String external;
+
+    /**
+     * 隐藏
+     */
+    private Integer hidden;
 
 
 }

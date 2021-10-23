@@ -1,6 +1,6 @@
 package com.softlab.okr.service;
 
-import com.softlab.okr.entity.Route;
+import com.softlab.okr.entity.RouteRole;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author Mybatis-plus自动生成
  * @since 2021-10-24
  */
-public interface IRouteService extends IService<Route> {
+public interface IRouteRoleService extends IService<RouteRole> {
 
 }

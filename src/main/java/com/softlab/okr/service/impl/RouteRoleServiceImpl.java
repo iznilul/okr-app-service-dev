@@ -1,8 +1,8 @@
 package com.softlab.okr.service.impl;
 
-import com.softlab.okr.entity.Route;
-import com.softlab.okr.mapper.RouteMapper;
-import com.softlab.okr.service.IRouteService;
+import com.softlab.okr.entity.RouteRole;
+import com.softlab.okr.mapper.RouteRoleMapper;
+import com.softlab.okr.service.IRouteRoleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2021-10-24
  */
 @Service
-public class RouteServiceImpl extends ServiceImpl<RouteMapper, Route> implements IRouteService {
+public class RouteRoleServiceImpl extends ServiceImpl<RouteRoleMapper, RouteRole> implements IRouteRoleService {
 
 }

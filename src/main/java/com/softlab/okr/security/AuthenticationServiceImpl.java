@@ -20,17 +20,23 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
 
   @Override
   public Authentication getAuthentication() {
-    return SecurityContextHolder.getContext().getAuthentication();
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    return authentication;
   }
 
   @Override
   public UserDetail getPrincipal() {
-    return (UserDetail) this.getAuthentication().getPrincipal();
+    Object object = this.getAuthentication().getPrincipal();
+    if (object instanceof String) {
+      return null;
+    }
+    return (UserDetail) object;
   }
 
   @Override
   public Integer getUserId() {
-    return getPrincipal().getUserId();
+    UserDetail userDetail = getPrincipal();
+    return userDetail == null ? null : userDetail.getUserId();
   }
 
   @Override
