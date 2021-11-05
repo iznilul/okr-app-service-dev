@@ -1,8 +1,8 @@
 package com.softlab.okr.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.softlab.okr.entity.Route;
-import com.softlab.okr.model.vo.RouteVO;
+import com.softlab.okr.entity.Menu;
+import com.softlab.okr.model.vo.MenuVO;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
  * @author Mybatis-plus自动生成
  * @since 2021-10-24
  */
-public interface IRouteService extends IService<Route> {
+public interface IMenuService extends IService<Menu> {
 
-  List<RouteVO> getRoutes();
+  List<MenuVO> getMenu();
 }

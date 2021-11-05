@@ -2,9 +2,7 @@ package com.softlab.okr.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.softlab.okr.entity.BaseEntity;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * <p>
@@ -15,8 +13,7 @@ import lombok.EqualsAndHashCode;
  * @since 2021-10-24
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class RouteRole extends BaseEntity {
+public class RoleMenu {
 
     private static final long serialVersionUID = 1L;
 
@@ -27,14 +24,14 @@ public class RouteRole extends BaseEntity {
     private Integer id;
 
     /**
-     * 路径id
-     */
-    private Integer routeId;
-
-    /**
      * 角色id
      */
     private Integer roleId;
+
+    /**
+     * 路径id
+     */
+    private Integer menuId;
 
 
 }

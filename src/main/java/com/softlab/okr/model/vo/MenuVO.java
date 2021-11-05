@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,18 +14,14 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RouteVO {
+public class MenuVO {
 
-    private Integer routeId;
+    private Integer menuId;
     private String name;
     private String path;
     private String component;
     private Map<String, String> meta;
     private Integer hidden;
     private String external;
-    private List<RouteVO> children;
-
-    public void addChildren(RouteVO vo) {
-        children.add(vo);
-    }
+    private List<MenuVO> children = new ArrayList<>();
 }
