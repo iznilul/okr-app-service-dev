@@ -1,8 +1,7 @@
 package com.softlab.okr.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.softlab.okr.entity.Route;
-import org.springframework.stereotype.Repository;
+import com.softlab.okr.entity.RoleMenu;
 
 /**
  * <p>
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Repository;
  * @author Mybatis-plus自动生成
  * @since 2021-10-24
  */
-@Repository
-public interface RouteMapper extends BaseMapper<Route> {
+public interface RoleMenuMapper extends BaseMapper<RoleMenu> {
 
 }

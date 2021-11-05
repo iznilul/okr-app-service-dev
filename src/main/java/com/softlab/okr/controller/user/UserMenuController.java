@@ -1,8 +1,8 @@
 package com.softlab.okr.controller.user;
 
 import com.softlab.okr.annotation.Auth;
-import com.softlab.okr.model.vo.RouteVO;
-import com.softlab.okr.service.IRouteService;
+import com.softlab.okr.model.vo.MenuVO;
+import com.softlab.okr.service.IMenuService;
 import com.softlab.okr.utils.Result;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,19 +19,19 @@ import java.util.List;
  * @create: 2021-10-25 01:51
  **/
 @RestController
-@RequestMapping("/api/user/route")
+@RequestMapping("/api/common/menu")
 @Api(tags = "用户 性能接口")
 @Auth(id = 3700, name = "用户 路径接口")
-public class UserRouteController {
+public class UserMenuController {
 
     @Autowired
-    private IRouteService routeService;
+    private IMenuService menuService;
 
     @Auth(id = 1, name = "获取路径")
-    @GetMapping("query")
+    @GetMapping("fetch")
     public Result queryRoute() {
-        List<RouteVO> list = routeService.getRoutes();
-        return list.size() > 0 ? Result.success(list) : Result.failure();
+        List<MenuVO> list = menuService.getMenu();
+        return Result.success(list);
     }
 
 }

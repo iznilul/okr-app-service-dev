@@ -217,7 +217,7 @@ INSERT INTO `resource` VALUES (5040, 3402, '/api/user/key/borrow', '借钥匙', 
 INSERT INTO `resource` VALUES (5041, 3401, '/api/user/key/query', '钥匙列表', 'POST', 1);
 INSERT INTO `resource` VALUES (5042, 3601, '/api/user/keyUser/query', '钥匙记录列表', 'POST', 1);
 INSERT INTO `resource` VALUES (5043, 3201, '/api/user/monitor/server', '服务器监控', 'GET', 1);
-INSERT INTO `resource` VALUES (5044, 3701, '/api/user/route/query', '获取路径', 'GET', 1);
+INSERT INTO `resource` VALUES (5044, 3701, '/api/user/menu/query', '获取路径', 'GET', 1);
 INSERT INTO `resource` VALUES (5045, 3106, '/api/user/user/queryByUsername', '根据用户名选择用户', 'GET', 1);
 INSERT INTO `resource` VALUES (5046, 3101, '/api/user/user/change', '更新用户信息', 'POST', 1);
 INSERT INTO `resource` VALUES (5047, 3104, '/api/user/user/changeImg', '上传头像文件', 'POST', 1);
@@ -320,11 +320,11 @@ INSERT INTO `role_resource` VALUES (19323, 1, 2302);
 INSERT INTO `role_resource` VALUES (19324, 1, 2303);
 
 -- ----------------------------
--- Table structure for route
+-- Table structure for menu
 -- ----------------------------
-DROP TABLE IF EXISTS `route`;
-CREATE TABLE `route`  (
-  `route_id` int(11) NOT NULL COMMENT '主键',
+DROP TABLE IF EXISTS `menu`;
+CREATE TABLE `menu`  (
+  `menu_id` int(11) NOT NULL COMMENT '主键',
   `parent_id` int(11) NOT NULL COMMENT '父路径id，id为0代表为父路径',
   `path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '路径',
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '名称',
@@ -334,30 +334,30 @@ CREATE TABLE `route`  (
   `component` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '组件路径',
   `external` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '外链',
   `hidden` tinyint(2) NULL DEFAULT NULL COMMENT '隐藏0 不隐藏1',
-  PRIMARY KEY (`route_id`) USING BTREE
+  PRIMARY KEY (`menu_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of route
+-- Records of menu
 -- ----------------------------
-INSERT INTO `route` VALUES (1000, 0, '/', '', '根目录', NULL, NULL, '@/components/Layout/Layout.vue', NULL, NULL);
-INSERT INTO `route` VALUES (1001, 1000, 'home', 'home', '主页', 'md-home', '18', '@/views/user/Home', NULL, NULL);
-INSERT INTO `route` VALUES (1002, 1000, 'userinfo', 'userinfo', '用户信息', 'ios-time', '18', '@/views/user/UserInfo', NULL, NULL);
-INSERT INTO `route` VALUES (1003, 1000, 'member', 'member', '成员管理', 'md-person', '18', '@/views/user/member', NULL, NULL);
-INSERT INTO `route` VALUES (2000, 1000, 'book', 'book', '书籍管理', 'ios-book-outline', '18', '', NULL, NULL);
-INSERT INTO `route` VALUES (2001, 2000, 'booklist', 'booklist', '书籍列表', 'ios-book', '18', '@/views/user/Book', NULL, NULL);
-INSERT INTO `route` VALUES (2002, 2000, 'bookuser', 'bookuser', '借阅记录', 'md-book', '18', '@/views/user/BookUser', NULL, NULL);
-INSERT INTO `route` VALUES (3000, 1000, 'key', 'key', '钥匙管理', 'ios-key-outline', '18', '', NULL, NULL);
-INSERT INTO `route` VALUES (3001, 3000, 'keylist', 'keylist', '钥匙列表', 'ios-key', '18', '@/views/user/Key', NULL, NULL);
-INSERT INTO `route` VALUES (3002, 3000, 'keyuser', 'keyuser', '借阅记录', 'md-key', '18', '@/views/user/KeyUser', NULL, NULL);
-INSERT INTO `route` VALUES (4000, 1000, 'okr', 'okr', 'okr管理', 'ios-egg-outline', '18', NULL, NULL, NULL);
-INSERT INTO `route` VALUES (4001, 4000, 'okrlist', 'okrlist', 'okr列表', 'ios-egg', '18', '@/views/user/Okr', NULL, NULL);
-INSERT INTO `route` VALUES (5000, 1000, 'admin', 'admin', '管理员菜单', 'ios-lock', '18', '', NULL, NULL);
-INSERT INTO `route` VALUES (5001, 5000, 'sysrecord', 'sysrecord', '操作记录', 'ios-time', '18', '@/views/admin/SysRecord', NULL, NULL);
-INSERT INTO `route` VALUES (5002, 5000, 'syslog', 'syslog', '系统日志', 'md-list-box', '18', '@/views/admin/Syslog', NULL, NULL);
-INSERT INTO `route` VALUES (5003, 5000, 'signup', 'signup', '报名管理', 'md-bookmark', '18', '@/views/admin/Signup', NULL, NULL);
-INSERT INTO `route` VALUES (5004, 5000, 'resource', 'resource', '接口管理', 'logo-buffer', '18', '@/views/admin/Resource', NULL, NULL);
-INSERT INTO `route` VALUES (5005, 5000, 'tag', 'tag', '标签管理', 'md-card', '18', '@/views/admin/Tag', NULL, NULL);
+INSERT INTO `menu` VALUES (1000, 0, '/', '', '根目录', NULL, NULL, '@/components/Layout/Layout.vue', NULL, NULL);
+INSERT INTO `menu` VALUES (1001, 1000, 'home', 'home', '主页', 'md-home', '18', '@/views/user/Home', NULL, NULL);
+INSERT INTO `menu` VALUES (1002, 1000, 'userinfo', 'userinfo', '用户信息', 'ios-time', '18', '@/views/user/UserInfo', NULL, NULL);
+INSERT INTO `menu` VALUES (1003, 1000, 'member', 'member', '成员管理', 'md-person', '18', '@/views/user/member', NULL, NULL);
+INSERT INTO `menu` VALUES (2000, 1000, 'book', 'book', '书籍管理', 'ios-book-outline', '18', '', NULL, NULL);
+INSERT INTO `menu` VALUES (2001, 2000, 'booklist', 'booklist', '书籍列表', 'ios-book', '18', '@/views/user/Book', NULL, NULL);
+INSERT INTO `menu` VALUES (2002, 2000, 'bookuser', 'bookuser', '借阅记录', 'md-book', '18', '@/views/user/BookUser', NULL, NULL);
+INSERT INTO `menu` VALUES (3000, 1000, 'key', 'key', '钥匙管理', 'ios-key-outline', '18', '', NULL, NULL);
+INSERT INTO `menu` VALUES (3001, 3000, 'keylist', 'keylist', '钥匙列表', 'ios-key', '18', '@/views/user/Key', NULL, NULL);
+INSERT INTO `menu` VALUES (3002, 3000, 'keyuser', 'keyuser', '借阅记录', 'md-key', '18', '@/views/user/KeyUser', NULL, NULL);
+INSERT INTO `menu` VALUES (4000, 1000, 'okr', 'okr', 'okr管理', 'ios-egg-outline', '18', NULL, NULL, NULL);
+INSERT INTO `menu` VALUES (4001, 4000, 'okrlist', 'okrlist', 'okr列表', 'ios-egg', '18', '@/views/user/Okr', NULL, NULL);
+INSERT INTO `menu` VALUES (5000, 1000, 'admin', 'admin', '管理员菜单', 'ios-lock', '18', '', NULL, NULL);
+INSERT INTO `menu` VALUES (5001, 5000, 'sysrecord', 'sysrecord', '操作记录', 'ios-time', '18', '@/views/admin/SysRecord', NULL, NULL);
+INSERT INTO `menu` VALUES (5002, 5000, 'syslog', 'syslog', '系统日志', 'md-list-box', '18', '@/views/admin/Syslog', NULL, NULL);
+INSERT INTO `menu` VALUES (5003, 5000, 'signup', 'signup', '报名管理', 'md-bookmark', '18', '@/views/admin/Signup', NULL, NULL);
+INSERT INTO `menu` VALUES (5004, 5000, 'resource', 'resource', '接口管理', 'logo-buffer', '18', '@/views/admin/Resource', NULL, NULL);
+INSERT INTO `menu` VALUES (5005, 5000, 'tag', 'tag', '标签管理', 'md-card', '18', '@/views/admin/Tag', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for route_role
@@ -365,7 +365,7 @@ INSERT INTO `route` VALUES (5005, 5000, 'tag', 'tag', '标签管理', 'md-card',
 DROP TABLE IF EXISTS `route_role`;
 CREATE TABLE `route_role`  (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `route_id` int(11) NOT NULL COMMENT '路径id',
+  `menu_id` int(11) NOT NULL COMMENT '路径id',
   `role_id` int(11) NOT NULL COMMENT '角色id',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;

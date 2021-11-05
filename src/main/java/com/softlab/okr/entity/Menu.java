@@ -11,14 +11,14 @@ import lombok.Data;
  * @since 2021-10-24
  */
 @Data
-public class Route {
+public class Menu {
 
     private static final long serialVersionUID = 1L;
 
     /**
      * 主键
      */
-    private Integer routeId;
+    private Integer menuId;
 
     /**
      * 父路径id，id为0代表为父路径
