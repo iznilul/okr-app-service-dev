@@ -1,6 +1,5 @@
 package com.softlab.okr.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.softlab.okr.entity.Menu;
 import com.softlab.okr.mapper.MenuMapper;
@@ -35,9 +34,14 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 
     @Override
     public List<MenuVO> getMenu() {
-        Integer userId = authenticationService.getUserId();
-        List<Menu> menuList = menuMapper.selectList(null);
-        List<Menu> fatherList = menuMapper.selectList(new QueryWrapper<Menu>().eq("parent_id", 0));
+        int userId = authenticationService.getUserId();
+        List<Menu> menuList = menuMapper.selectMenuByUserId(userId);
+        List<Menu> fatherList = new ArrayList<>();
+        menuList.forEach(menu -> {
+            if (menu.getParentId().equals(0)) {
+                fatherList.add(menu);
+            }
+        });
         return getChildren(fatherList, menuList);
 
     }

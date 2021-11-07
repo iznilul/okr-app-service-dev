@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.softlab.okr.mapper.MenuMapper">
 
     <!-- 通用查询映射结果 -->
@@ -20,5 +21,23 @@
     <sql id="Base_Column_List">
         menu_id, parent_id, path, name, text, type, size, component, external, hidden
     </sql>
+
+    <select id="selectMenuByUserId" resultType="com.softlab.okr.entity.Menu">
+        select
+        menu.menu_id,
+        menu.parent_id,
+        menu.path,
+        menu.name,
+        menu.text,
+        menu.type,
+        menu.size,
+        menu.component,
+        menu.external,
+        menu.hidden
+        from user_role ur
+        join role_menu rm on ur.role_id=rm.role_id
+        join menu on rm.menu_id=menu.menu_id
+        where ur.user_id=#{userId}
+    </select>
 
 </mapper>
