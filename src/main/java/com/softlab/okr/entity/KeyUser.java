@@ -1,11 +1,15 @@
 package com.softlab.okr.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+
+import java.util.Date;
 
 /**
  * <p>
@@ -19,7 +23,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-public class KeyUser extends BaseEntity {
+public class KeyUser {
 
     private static final long serialVersionUID = 1L;
 
@@ -40,5 +44,7 @@ public class KeyUser extends BaseEntity {
 
     private Integer status;
 
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    public Date updateTime;
 
 }
