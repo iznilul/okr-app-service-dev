@@ -13,13 +13,14 @@ import com.softlab.okr.security.IAuthenticationService;
 import com.softlab.okr.service.IUserEntityService;
 import com.softlab.okr.service.IUserInfoService;
 import com.softlab.okr.utils.Result;
-import java.io.IOException;
-import java.util.Base64;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.Base64;
 
 /**
  * @Author: Devhui
@@ -68,13 +69,6 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         .eq(StringUtils.isNotBlank(dto.getUsername()), "username", dto.getUsername())
         .like(StringUtils.isNotBlank(dto.getName()), "name", dto.getName())
         .like(StringUtils.isNotBlank(dto.getMajor()), "major", dto.getMajor()));
-    if (userInfoPage.getSize() == 0) {
-      page.setCurrent(1);
-      userInfoPage = userInfoMapper.selectPage(page, new QueryWrapper<UserInfo>()
-          .eq(StringUtils.isNotBlank(dto.getUsername()), "username", dto.getUsername())
-          .like(StringUtils.isNotBlank(dto.getName()), "name", dto.getName())
-          .like(StringUtils.isNotBlank(dto.getMajor()), "major", dto.getMajor()));
-    }
     return Result
         .success(userInfoPage.getRecords(), userInfoPage.getCurrent(), userInfoPage.getTotal());
   }

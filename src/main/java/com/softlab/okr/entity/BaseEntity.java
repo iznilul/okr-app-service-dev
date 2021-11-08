@@ -2,9 +2,11 @@ package com.softlab.okr.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
-import java.util.Date;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 import lombok.experimental.Accessors;
+
+import java.util.Date;
 
 /**
  * 基础实体类，所有实体对象集成此类
@@ -21,4 +23,7 @@ public abstract class BaseEntity {
 
   @TableField(fill = FieldFill.INSERT_UPDATE)
   public Date updateTime;
+
+  @TableLogic
+  public Integer deleteFlag;
 }

@@ -30,7 +30,7 @@ public class KeyUserServiceImpl extends ServiceImpl<KeyUserMapper, KeyUser> impl
 
   @Override
   public int saveKeyUser(int keyId, int userId) {
-    KeyUser keyUser = new KeyUser(null, keyId, userId, 0);
+    KeyUser keyUser = new KeyUser(null, keyId, userId, 0, null);
     return keyUserMapper.insert(keyUser);
   }
 

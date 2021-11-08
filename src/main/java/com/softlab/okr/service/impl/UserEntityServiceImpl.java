@@ -13,24 +13,20 @@ import com.softlab.okr.model.vo.UserVO;
 import com.softlab.okr.security.IAuthenticationService;
 import com.softlab.okr.security.JwtManager;
 import com.softlab.okr.security.UserDetail;
-import com.softlab.okr.service.IResourceService;
-import com.softlab.okr.service.IRoleService;
-import com.softlab.okr.service.IUserEntityService;
-import com.softlab.okr.service.IUserInfoService;
-import com.softlab.okr.service.IUserRoleService;
+import com.softlab.okr.service.*;
 import com.softlab.okr.utils.MD5Util;
-import java.util.Set;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author RudeCrab
@@ -62,9 +58,6 @@ public class UserEntityServiceImpl extends ServiceImpl<UserEntityMapper, UserEnt
   private IUserEntityService userEntityService;
 
   @Autowired
-  private PasswordEncoder passwordEncoder;
-
-  @Autowired
   private IAuthenticationService authenticationService;
 
   //登录操作
@@ -72,9 +65,7 @@ public class UserEntityServiceImpl extends ServiceImpl<UserEntityMapper, UserEnt
   public UserVO login(LoginDTO dto) {
     // 根据用户名查询出用户实体对象
     UserEntity userEntity = userEntityService.getByUsername(dto.getUsername());
-    //if (!loginCheck(userEntity, dto.getPassword())) {
-    //  return null;
-    if (false) {
+    if (!loginCheck(userEntity, dto.getPassword())) {
       return null;
     } else {
       //VO是返回给前端用户展示的实体类，不过可以统一包装返回类

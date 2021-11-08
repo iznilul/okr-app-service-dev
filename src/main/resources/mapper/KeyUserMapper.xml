@@ -9,35 +9,23 @@
         <result column="key_id" property="keyId"/>
         <result column="user_id" property="userId" />
         <result column="status" property="status"/>
-        <result property="createTime" column="create_time"/>
-        <result property="updateTime" column="update_time"/>
-    </resultMap>
-
-    <resultMap id="voMap" type="com.softlab.okr.model.vo.KeyUserVO">
-        <id column="id" property="id"/>
-        <result column="key_name" property="keyName"/>
-        <result column="name" property="name"/>
-        <result column="status" property="status"/>
-        <result column="status_name" property="statusName"/>
-        <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        `id`,key_id, user_id,`create_time`,`update_time`
+        `id`,key_id, user_id,`update_time`
     </sql>
 
-    <select id="selectKeyUserVO" resultMap="voMap">
+    <select id="selectKeyUserVO" resultType="com.softlab.okr.model.vo.KeyUserVO">
         select
         ku.id,
         ky.key_name,
         ui.name,
         ku.status,
-        ku.create_time,
         ku.update_time
         from key_user ku
-        join `key` ky on ku.key_id=ky.key_id
+        join `key` ky on ku.key_id=ky.key_id and ky.delete_flag=0
         join `user_info` ui on ku.user_id=ui.user_id
         order by ku.id desc
     </select>
