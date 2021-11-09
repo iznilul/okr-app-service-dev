@@ -64,10 +64,6 @@ public class KeyServiceImpl extends ServiceImpl<KeyMapper, Key> implements IKeyS
   public Result getKey(PageDTO dto) {
     Page<Key> page = new Page<>(dto.getIndex(), dto.getPageSize());
     Page<KeyVO> voPage = keyMapper.selectKeyList(page);
-    if (voPage.getSize() == 0) {
-      page.setCurrent(1);
-      voPage = keyMapper.selectKeyList(page);
-    }
     voPage.getRecords().forEach(vo -> {
       vo.setStatusName(KeyStatus.getMessage(vo.getStatus()));
     });

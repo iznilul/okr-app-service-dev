@@ -18,16 +18,17 @@ import com.softlab.okr.service.IBookService;
 import com.softlab.okr.service.IBookTagService;
 import com.softlab.okr.service.ITagService;
 import com.softlab.okr.utils.Result;
-import java.io.IOException;
-import java.util.Base64;
-import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.Base64;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements
@@ -125,11 +126,6 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements
     Page<Book> page = new Page<>(dto.getIndex(), dto.getPageSize());
     Page<BookVO> voPage = bookMapper.selectByCond(page, dto.getBookName(), dto.getPublisher(),
         BookStatus.getCode(dto.getStatusName()));
-    if (voPage.getSize() == 0) {
-      page.setCurrent(1);
-      voPage = bookMapper.selectByCond(page, dto.getBookName(), dto.getPublisher(),
-          BookStatus.getCode(dto.getStatusName()));
-    }
     voPage.getRecords().forEach(vo -> {
       vo.setStatusName(BookStatus.getMessage(vo.getStatus()));
       vo.setTagList(tagService.list(new QueryWrapper<Tag>()

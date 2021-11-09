@@ -1,5 +1,6 @@
 package com.softlab.okr.utils;
 
+import com.softlab.okr.constant.PasswordEncode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.codec.Hex;
 
@@ -43,7 +44,7 @@ public class PasswordUtils {
                 digest.update(salt.getBytes());
             }
             byte[] hashed = digest.digest(password.getBytes());
-            int iterations = Constants.HASH_ITERATIONS;
+            int iterations = PasswordEncode.HASH_ITERATIONS;
             for (int i = 0; i < iterations; ++i) {
                 digest.reset();
                 hashed = digest.digest(hashed);

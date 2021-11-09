@@ -21,12 +21,12 @@ import lombok.NoArgsConstructor;
 @TableName("`key`")
 public class Key extends BaseEntity {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  @TableId(value = "key_id", type = IdType.AUTO)
-  private Integer keyId;
+    @TableId(value = "key_id", type = IdType.AUTO)
+    private Integer keyId;
 
-  private String keyName;
+    private String keyName;
 
-  private Integer status;
+    private Integer status;
 }

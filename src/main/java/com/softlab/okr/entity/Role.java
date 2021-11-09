@@ -1,7 +1,5 @@
 package com.softlab.okr.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +17,18 @@ public class Role {
 
   private static final long serialVersionUID = 1L;
 
-  @TableId(value = "role_id", type = IdType.AUTO)
+  /**
+   * 主键
+   */
   private Integer roleId;
+
+  /**
+   * 角色
+   */
+  private String role;
+
+  /**
+   * 角色名
+   */
   private String name;
 }

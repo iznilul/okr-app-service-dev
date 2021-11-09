@@ -7,14 +7,11 @@ package com.softlab.okr.aspect;
  * @Date: 2021-08-31 11:53
  **/
 
+import com.softlab.okr.constant.TimeFormat;
 import com.softlab.okr.entity.SysRecord;
 import com.softlab.okr.security.MySecurityMetadataSource;
 import com.softlab.okr.service.ISysRecordService;
-import com.softlab.okr.utils.Constants;
 import com.softlab.okr.utils.FilterUtil;
-import java.util.Date;
-import java.util.concurrent.Future;
-import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -26,6 +23,10 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+import java.util.concurrent.Future;
 
 @Slf4j
 @Aspect
@@ -70,16 +71,18 @@ public class SysRecordAspect {
   @After("weblog()")
   public void doAfter() throws Exception {
     log.info("请求结束");
-    ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder
-        .getRequestAttributes();
+    ServletRequestAttributes servletRequestAttributes =
+            (ServletRequestAttributes) RequestContextHolder
+                    .getRequestAttributes();
     HttpServletRequest request = servletRequestAttributes.getRequest();
-    Integer resourceId = MySecurityMetadataSource.getResourceId(filterUtil.getRequestPath(request));
+    Integer resourceId =
+            MySecurityMetadataSource.getResourceId(filterUtil.getRequestPath(request));
     Integer userId = filterUtil.getRequestUserId();
     String ip = filterUtil.getRequestIp();
     long duration = System.currentTimeMillis() - startTime.get();
     SysRecord sysRecord = new SysRecord(null, resourceId, userId, ip,
-        Constants.DateToString(new Date()),
-        duration);
+            TimeFormat.DateToString(new Date()),
+            duration);
     //long start = System.currentTimeMillis();
     Future<Integer> result = sysRecordService.saveLog(sysRecord);
     //log.info("cost:{}", System.currentTimeMillis() - start);
