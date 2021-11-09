@@ -18,102 +18,93 @@ import com.softlab.okr.utils.Result;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class KeyServiceImpl extends ServiceImpl<KeyMapper, Key> implements IKeyService {
 
-  @Autowired
-  private KeyMapper keyMapper;
+    @Autowired
+    private KeyMapper keyMapper;
 
-  @Autowired
-  private IKeyUserService keyUserService;
+    @Autowired
+    private IKeyUserService keyUserService;
 
-  @Autowired
-  private IAuthenticationService authenticationService;
+    @Autowired
+    private IAuthenticationService authenticationService;
 
-  @Override
-  public int saveKey(String keyName) {
-    if (null != keyMapper.selectOne(new QueryWrapper<Key>().eq("key_name", keyName))) {
-      return 0;
-    } else {
-      Key key = new Key(null, keyName, 0);
-      return keyMapper.insert(key);
+    @Override
+    public int saveKey(String keyName) {
+        if (null != keyMapper.selectOne(new QueryWrapper<Key>().eq("key_name", keyName))) {
+            return 0;
+        } else {
+            Key key = new Key(null, keyName, 0);
+            return keyMapper.insert(key);
+        }
     }
-  }
 
-  @Override
-  public int modifyKey(KeyDTO dto) {
-    Key key = new Key();
-    BeanUtils.copyProperties(dto, key);
-    key.setStatus(KeyStatus.getCode(dto.getStatusName()));
-    return keyMapper.updateById(key);
-  }
-
-  @Override
-  @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED,
-      rollbackFor = Exception.class)
-  public int removeById(int keyId) {
-    keyUserService.remove(new QueryWrapper<KeyUser>().eq("key_id", keyId));
-    return keyMapper.deleteById(keyId);
-  }
-
-  @Override
-  public Result getKey(PageDTO dto) {
-    Page<Key> page = new Page<>(dto.getIndex(), dto.getPageSize());
-    Page<KeyVO> voPage = keyMapper.selectKeyList(page);
-    if (voPage.getSize() == 0) {
-      page.setCurrent(1);
-      voPage = keyMapper.selectKeyList(page);
+    @Override
+    public int modifyKey(KeyDTO dto) {
+        Key key = new Key();
+        BeanUtils.copyProperties(dto, key);
+        key.setStatus(KeyStatus.getCode(dto.getStatusName()));
+        return keyMapper.updateById(key);
     }
-    voPage.getRecords().forEach(vo -> {
-      vo.setStatusName(KeyStatus.getMessage(vo.getStatus()));
-    });
-    return Result.success(voPage.getRecords(), voPage.getCurrent(), voPage.getTotal());
-  }
 
-  @Override
-  public KeyVO getKeyById(int keyId) {
-    Key key = keyMapper.selectById(keyId);
-    KeyVO vo = new KeyVO();
-    BeanUtils.copyProperties(key, vo);
-    vo.setStatusName(KeyStatus.getMessage(key.getStatus()));
-    return vo;
-  }
-
-  @Override
-  @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED,
-      rollbackFor = Exception.class)
-  public int borrowKey(int keyId) {
-    if (keyMapper.selectById(keyId).getStatus() == 1) {
-      return 0;
-    } else {
-      if (keyMapper.update(null, new UpdateWrapper<Key>().eq("key_id", keyId).set("status", 1))
-          == 0) {
-        return 0;
-      } else {
-        Integer userId = authenticationService.getUserId();
-        return keyUserService.saveKeyUser(keyId, userId);
-      }
+    @Override
+    @Transactional
+    public int removeById(int keyId) {
+        keyUserService.remove(new QueryWrapper<KeyUser>().eq("key_id", keyId));
+        return keyMapper.deleteById(keyId);
     }
-  }
 
-  @Override
-  @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED,
-      rollbackFor = Exception.class)
-  public int returnKey(int keyId) {
-    if (keyMapper.selectById(keyId).getStatus() == 0) {
-      return 0;
-    } else {
-      if (keyMapper.update(null, new UpdateWrapper<Key>().eq("key_id", keyId).set("status", 0))
-          == 0) {
-        return 0;
-      } else {
-        Integer userId = authenticationService.getUserId();
-        return keyUserService.modifyKeyUser(keyId, userId, 1);
-      }
+    @Override
+    public Result getKey(PageDTO dto) {
+        Page<Key> page = new Page<>(dto.getIndex(), dto.getPageSize());
+        Page<KeyVO> voPage = keyMapper.selectKeyList(page);
+        voPage.getRecords().forEach(vo -> {
+            vo.setStatusName(KeyStatus.getMessage(vo.getStatus()));
+        });
+        return Result.success(voPage.getRecords(), voPage.getCurrent(), voPage.getTotal());
     }
-  }
+
+    @Override
+    public KeyVO getKeyById(int keyId) {
+        Key key = keyMapper.selectById(keyId);
+        KeyVO vo = new KeyVO();
+        BeanUtils.copyProperties(key, vo);
+        vo.setStatusName(KeyStatus.getMessage(key.getStatus()));
+        return vo;
+    }
+
+    @Override
+    @Transactional
+    public int borrowKey(int keyId) {
+        if (keyMapper.selectById(keyId).getStatus() == 1) {
+            return 0;
+        } else {
+            if (keyMapper.update(null, new UpdateWrapper<Key>().eq("key_id", keyId).set("status", 1))
+                    == 0) {
+                return 0;
+            } else {
+                Integer userId = authenticationService.getUserId();
+                return keyUserService.saveKeyUser(keyId, userId);
+            }
+        }
+    }
+
+    @Override
+    @Transactional
+    public int returnKey(int keyId) {
+        if (keyMapper.selectById(keyId).getStatus() == 0) {
+            return 0;
+        } else {
+            if (keyMapper.update(null, new UpdateWrapper<Key>().eq("key_id", keyId).set("status", 0))
+                    == 0) {
+                return 0;
+            } else {
+                Integer userId = authenticationService.getUserId();
+                return keyUserService.modifyKeyUser(keyId, userId, 1);
+            }
+        }
+    }
 }

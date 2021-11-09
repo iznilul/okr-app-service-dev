@@ -18,123 +18,108 @@ import com.softlab.okr.service.IBookService;
 import com.softlab.okr.service.IBookTagService;
 import com.softlab.okr.service.ITagService;
 import com.softlab.okr.utils.Result;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements
-    IBookService {
+        IBookService {
 
-  @Autowired
-  private BookMapper bookMapper;
+    @Autowired
+    private BookMapper bookMapper;
 
-  @Autowired
-  private IAuthenticationService authenticationService;
+    @Autowired
+    private IAuthenticationService authenticationService;
 
-  @Autowired
-  private IBookTagService bookTagService;
+    @Autowired
+    private IBookTagService bookTagService;
 
-  @Autowired
-  private ITagService tagService;
+    @Autowired
+    private ITagService tagService;
 
-  @Override
-  @Transactional(
-      propagation = Propagation.REQUIRED,
-      isolation = Isolation.READ_COMMITTED,
-      rollbackFor = Exception.class)
-  public boolean saveBook(BookDTO dto) {
-    Book book = dto.getBook();
-    book.setStatus(0);
-    int bookId = bookMapper.insert(book);
-    if (bookId == 0) {
-      return false;
-    } else {
-      List<Tag> tagList = dto.getTagList();
-      List<Integer> tagIdList = tagList.stream().map(Tag::getTagId)
-          .collect(Collectors.toList());
-      return bookTagService.saveBookTag(bookId, tagIdList);
+    @Override
+    @Transactional
+    public boolean saveBook(BookDTO dto) {
+        Book book = dto.getBook();
+        book.setStatus(0);
+        int bookId = bookMapper.insert(book);
+        if (bookId == 0) {
+            return false;
+        } else {
+            List<Tag> tagList = dto.getTagList();
+            List<Integer> tagIdList = tagList.stream().map(Tag::getTagId)
+                    .collect(Collectors.toList());
+            return bookTagService.saveBookTag(bookId, tagIdList);
+        }
     }
-  }
 
-  @Override
-  @Transactional(
-      propagation = Propagation.REQUIRED,
-      isolation = Isolation.READ_COMMITTED,
-      rollbackFor = Exception.class)
-  public boolean removeBook(int bookId) {
-    return bookTagService.remove(new QueryWrapper<BookTag>().eq("book_id", bookId)) &&
-        bookMapper.deleteById(bookId) == 1;
-  }
-
-  @Override
-  public int borrowBook(int bookId) {
-    int userId = authenticationService.getUserId();
-    return bookMapper
-        .update(null, new UpdateWrapper<Book>().eq("book_id", bookId).set("user_id", userId));
-  }
-
-  @Override
-  public int returnBook(int bookId) {
-    if (!authenticationService.getUserId().equals(bookMapper.selectById(bookId).getUserId())) {
-      return 0;
+    @Override
+    @Transactional
+    public boolean removeBook(int bookId) {
+        return bookTagService.remove(new QueryWrapper<BookTag>().eq("book_id", bookId)) &&
+                bookMapper.deleteById(bookId) == 1;
     }
-    return bookMapper
-        .update(null, new UpdateWrapper<Book>().eq("book_id", bookId).set("user_id", null));
-  }
 
-  @Override
-  @Transactional(
-      propagation = Propagation.REQUIRED,
-      isolation = Isolation.READ_COMMITTED,
-      rollbackFor = Exception.class)
-  public boolean modifyBook(BookDTO dto) {
-    Book book = dto.getBook();
-    List<Integer> tagIdList = dto.getTagList().stream().map(Tag::getTagId)
-        .collect(Collectors.toList());
-    return bookTagService
-        .remove(new QueryWrapper<BookTag>().eq("book_id", book.getBookId()))
-        && bookTagService.saveBookTag(book.getBookId(), tagIdList)
-        && (bookMapper.updateById(book) == 1);
-  }
-
-  @Override
-  public int modifyBookImg(int bookId, MultipartFile file) throws IOException {
-    // 通过base64来转化图片
-    byte[] data = file.getBytes();
-    if (data.length > 1024000) {
-      throw new ApiException();
+    @Override
+    public int borrowBook(int bookId) {
+        int userId = authenticationService.getUserId();
+        return bookMapper
+                .update(null, new UpdateWrapper<Book>().eq("book_id", bookId).set("user_id", userId));
     }
-    // 将字节流转成字符串
-    Base64.Encoder encoder = Base64.getEncoder();
-    String img = "data:image/png;base64," + encoder.encodeToString(file.getBytes());
-    return bookMapper.update(null, new UpdateWrapper<Book>().
-        eq("book_id", bookId)
-        .set("img", img));
-  }
 
-  @Override
-  public Result getByCond(BookQueryDTO dto) {
-    Page<Book> page = new Page<>(dto.getIndex(), dto.getPageSize());
-    Page<BookVO> voPage = bookMapper.selectByCond(page, dto.getBookName(), dto.getPublisher(),
-        BookStatus.getCode(dto.getStatusName()));
-    if (voPage.getSize() == 0) {
-      page.setCurrent(1);
-      voPage = bookMapper.selectByCond(page, dto.getBookName(), dto.getPublisher(),
-          BookStatus.getCode(dto.getStatusName()));
+    @Override
+    public int returnBook(int bookId) {
+        if (!authenticationService.getUserId().equals(bookMapper.selectById(bookId).getUserId())) {
+            return 0;
+        }
+        return bookMapper
+                .update(null, new UpdateWrapper<Book>().eq("book_id", bookId).set("user_id", null));
     }
-    voPage.getRecords().forEach(vo -> {
-      vo.setStatusName(BookStatus.getMessage(vo.getStatus()));
-      vo.setTagList(tagService.list(new QueryWrapper<Tag>()
-          .select("tag_id").eq("book_id", vo.getBookId())));
-    });
-    return Result.success(voPage.getRecords(), voPage.getCurrent(), voPage.getTotal());
-  }
+
+    @Override
+    @Transactional
+    public boolean modifyBook(BookDTO dto) {
+        Book book = dto.getBook();
+        List<Integer> tagIdList = dto.getTagList().stream().map(Tag::getTagId)
+                .collect(Collectors.toList());
+        return bookTagService
+                .remove(new QueryWrapper<BookTag>().eq("book_id", book.getBookId()))
+                && bookTagService.saveBookTag(book.getBookId(), tagIdList)
+                && (bookMapper.updateById(book) == 1);
+    }
+
+    @Override
+    public int modifyBookImg(int bookId, MultipartFile file) throws IOException {
+        // 通过base64来转化图片
+        byte[] data = file.getBytes();
+        if (data.length > 1024000) {
+            throw new ApiException();
+        }
+        // 将字节流转成字符串
+        Base64.Encoder encoder = Base64.getEncoder();
+        String img = "data:image/png;base64," + encoder.encodeToString(file.getBytes());
+        return bookMapper.update(null, new UpdateWrapper<Book>().
+                eq("book_id", bookId)
+                .set("img", img));
+    }
+
+    @Override
+    public Result getByCond(BookQueryDTO dto) {
+        Page<Book> page = new Page<>(dto.getIndex(), dto.getPageSize());
+        Page<BookVO> voPage = bookMapper.selectByCond(page, dto.getBookName(), dto.getPublisher(),
+                BookStatus.getCode(dto.getStatusName()));
+        voPage.getRecords().forEach(vo -> {
+            vo.setStatusName(BookStatus.getMessage(vo.getStatus()));
+            vo.setTagList(tagService.list(new QueryWrapper<Tag>()
+                    .select("tag_id").eq("book_id", vo.getBookId())));
+        });
+        return Result.success(voPage.getRecords(), voPage.getCurrent(), voPage.getTotal());
+    }
 }

@@ -15,14 +15,15 @@ import com.softlab.okr.model.enums.statusCode.SignUpStatus;
 import com.softlab.okr.model.vo.SignUpVO;
 import com.softlab.okr.service.ISignUpService;
 import com.softlab.okr.utils.Result;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Author: Devhui
@@ -61,10 +62,6 @@ public class SignUpServiceImpl extends ServiceImpl<SignUpMapper, SignUp> impleme
     dto.setStatus(dto.getStatueName() == null ? null : SignUpStatus.getCode(dto.getStatueName()));
     Page<SignUp> page = new Page<>(dto.getIndex(), dto.getPageSize());
     Page<SignUpVO> voPage = signUpMapper.selectSignUpByCond(page, dto);
-    if (voPage.getSize() == 0) {
-      page.setCurrent(1);
-      voPage = signUpMapper.selectSignUpByCond(page, dto);
-    }
     List<SignUpVO> list = voPage.getRecords();
     list.forEach(vo -> {
       vo.setStatusName(SignUpStatus.getMessage(vo.getStatus()));

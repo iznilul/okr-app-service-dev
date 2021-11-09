@@ -1,7 +1,8 @@
-package com.softlab.okr.controller.admin;
+package com.softlab.okr.controller;
 
 import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.annotation.LimitedAccess;
+import com.softlab.okr.constant.RoleConstants;
 import com.softlab.okr.model.dto.SysRecordDTO;
 import com.softlab.okr.service.ISysRecordService;
 import com.softlab.okr.utils.Result;
@@ -21,21 +22,19 @@ import org.springframework.web.bind.annotation.RestController;
  * @create: 2021-10-05 22:05
  **/
 @RestController
-@RequestMapping("/api/admin/loginLog")
+@RequestMapping("/api/okr/sysRecord")
 @Api(tags = "管理员 操作日志接口")
-@Auth(id = 2700, name = "管理员 操作日志接口")
-public class AdminSysRecordController {
+public class SysRecordController {
 
-  @Autowired
-  private ISysRecordService sysRecordService;
+    @Autowired
+    private ISysRecordService sysRecordService;
 
+    @LimitedAccess(frequency = 2, second = 30)
+    @PostMapping("query")
+    @ApiOperation("登录日志列表")
+    @Auth(resourceId = 61, role = RoleConstants.ADMIN, name = "登录日志列表")
+    public Result queryLoginLogList(@RequestBody @Validated SysRecordDTO dto) {
 
-  @LimitedAccess(frequency = 2, second = 30)
-  @PostMapping("query")
-  @ApiOperation("登录日志列表")
-  @Auth(id = 1, name = "登录日志列表")
-  public Result queryLoginLogList(@RequestBody @Validated SysRecordDTO dto) {
-
-    return sysRecordService.getByCond(dto);
-  }
+        return sysRecordService.getByCond(dto);
+    }
 }

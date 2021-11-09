@@ -16,7 +16,6 @@ import com.softlab.okr.utils.Result;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -30,76 +29,75 @@ import java.util.Base64;
  */
 
 @Service
-@Transactional
 public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> implements
-    IUserInfoService {
+        IUserInfoService {
 
-  @Autowired
-  private UserInfoMapper userInfoMapper;
+    @Autowired
+    private UserInfoMapper userInfoMapper;
 
-  @Autowired
-  private IUserEntityService userEntityService;
+    @Autowired
+    private IUserEntityService userEntityService;
 
-  @Autowired
-  private IAuthenticationService authenticationService;
+    @Autowired
+    private IAuthenticationService authenticationService;
 
-  @Override
-  public int saveUserInfo(int userId, String username) {
-    UserInfo userInfo = new UserInfo(userId, username, null, null, null, null, null, null, null);
-    return userInfoMapper.insert(userInfo);
-  }
-
-  @Override
-  public UserInfo getUserInfo() {
-    String username = authenticationService.getUsername();
-    return userInfoMapper.selectOne(new QueryWrapper<UserInfo>()
-        .eq("username", username));
-  }
-
-  @Override
-  public UserInfo getUserInfoByUsername(String username) {
-    return userInfoMapper.selectOne(new QueryWrapper<UserInfo>()
-        .eq("username", username));
-  }
-
-  @Override
-  public Result getUserInfoByCond(SelectUserDTO dto) {
-    Page<UserInfo> page = new Page<>(dto.getIndex(), dto.getPageSize());
-    Page<UserInfo> userInfoPage = userInfoMapper.selectPage(page, new QueryWrapper<UserInfo>()
-        .eq(StringUtils.isNotBlank(dto.getUsername()), "username", dto.getUsername())
-        .like(StringUtils.isNotBlank(dto.getName()), "name", dto.getName())
-        .like(StringUtils.isNotBlank(dto.getMajor()), "major", dto.getMajor()));
-    return Result
-        .success(userInfoPage.getRecords(), userInfoPage.getCurrent(), userInfoPage.getTotal());
-  }
-
-  @Override
-  public int modifyUserInfo(UpdateUserDTO dto) {
-    String username =
-        dto.getUsername() != null ? dto.getUsername() : authenticationService.getUsername();
-    Integer userId = userEntityService.getByUsername(username).getUserId();
-    if (null == userId) {
-      return 0;
-    } else {
-      UserInfo userInfo = new UserInfo();
-      BeanUtils.copyProperties(dto, userInfo);
-      userInfo.setUserId(userId);
-      return userInfoMapper.updateById(userInfo);
+    @Override
+    public int saveUserInfo(int userId, String username) {
+        UserInfo userInfo = new UserInfo(userId, username, null, null, null, null, null, null, null);
+        return userInfoMapper.insert(userInfo);
     }
-  }
 
-  @Override
-  public int uploadAvatar(MultipartFile file) throws IOException {
-    byte[] data = file.getBytes();
-    if (data.length > 1024000) {
-      return 0;
+    @Override
+    public UserInfo getUserInfo() {
+        String username = authenticationService.getUsername();
+        return userInfoMapper.selectOne(new QueryWrapper<UserInfo>()
+                .eq("username", username));
     }
-    // 将字节流转成字符串
-    Base64.Encoder encoder = Base64.getEncoder();
-    String avatar = "data:image/png;base64," + encoder.encodeToString(file.getBytes());
-    String username = authenticationService.getUsername();
-    return userInfoMapper.update(null, new UpdateWrapper<UserInfo>()
-        .eq("username", username)
-        .set("avatar", avatar));
-  }
+
+    @Override
+    public UserInfo getUserInfoByUsername(String username) {
+        return userInfoMapper.selectOne(new QueryWrapper<UserInfo>()
+                .eq("username", username));
+    }
+
+    @Override
+    public Result getUserInfoByCond(SelectUserDTO dto) {
+        Page<UserInfo> page = new Page<>(dto.getIndex(), dto.getPageSize());
+        Page<UserInfo> userInfoPage = userInfoMapper.selectPage(page, new QueryWrapper<UserInfo>()
+                .eq(StringUtils.isNotBlank(dto.getUsername()), "username", dto.getUsername())
+                .like(StringUtils.isNotBlank(dto.getName()), "name", dto.getName())
+                .like(StringUtils.isNotBlank(dto.getMajor()), "major", dto.getMajor()));
+        return Result
+                .success(userInfoPage.getRecords(), userInfoPage.getCurrent(), userInfoPage.getTotal());
+    }
+
+    @Override
+    public int modifyUserInfo(UpdateUserDTO dto) {
+        String username =
+                dto.getUsername() != null ? dto.getUsername() : authenticationService.getUsername();
+        Integer userId = userEntityService.getByUsername(username).getUserId();
+        if (null == userId) {
+            return 0;
+        } else {
+            UserInfo userInfo = new UserInfo();
+            BeanUtils.copyProperties(dto, userInfo);
+            userInfo.setUserId(userId);
+            return userInfoMapper.updateById(userInfo);
+        }
+    }
+
+    @Override
+    public int uploadAvatar(MultipartFile file) throws IOException {
+        byte[] data = file.getBytes();
+        if (data.length > 1024000) {
+            return 0;
+        }
+        // 将字节流转成字符串
+        Base64.Encoder encoder = Base64.getEncoder();
+        String avatar = "data:image/png;base64," + encoder.encodeToString(file.getBytes());
+        String username = authenticationService.getUsername();
+        return userInfoMapper.update(null, new UpdateWrapper<UserInfo>()
+                .eq("username", username)
+                .set("avatar", avatar));
+    }
 }

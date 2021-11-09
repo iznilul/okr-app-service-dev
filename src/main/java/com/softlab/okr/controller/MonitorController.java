@@ -1,6 +1,7 @@
-package com.softlab.okr.controller.user;
+package com.softlab.okr.controller;
 
 import com.softlab.okr.annotation.Auth;
+import com.softlab.okr.constant.RoleConstants;
 import com.softlab.okr.model.monitor.Server;
 import com.softlab.okr.utils.Result;
 import io.swagger.annotations.Api;
@@ -16,18 +17,17 @@ import org.springframework.web.bind.annotation.RestController;
  * @create: 2021-08-05 13:47
  **/
 @RestController
-@RequestMapping("/api/user/monitor")
+@RequestMapping("/api/okr/monitor")
 @Api(tags = "用户 性能接口")
-@Auth(id = 3200, name = "用户 性能接口")
-public class UserMonitorController {
+public class MonitorController {
 
-  @GetMapping("server")
-  @ApiOperation("服务器监控")
-  @Auth(id = 1, name = "服务器监控")
-  public Result server() throws Exception {
-    Server server = new Server();
-    server.copyTo();
-    return Result.success(server);
-  }
+    @GetMapping("server")
+    @ApiOperation("服务器监控")
+    @Auth(resourceId = 101, role = RoleConstants.USER, name = "服务器监控")
+    public Result server() throws Exception {
+        Server server = new Server();
+        server.copyTo();
+        return Result.success(server);
+    }
 
 }

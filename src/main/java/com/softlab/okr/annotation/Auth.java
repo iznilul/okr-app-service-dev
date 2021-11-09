@@ -14,12 +14,17 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD, ElementType.TYPE})
 public @interface Auth {
     /**
-     * 权限id，模块id + 方法id需要唯一
+     * 权限id
      */
-    int id();
+    int resourceId();
 
     /**
-     * 权限名称
+     * 角色权限
+     */
+    String role();
+
+    /**
+     * 接口名
      */
     String name();
 }

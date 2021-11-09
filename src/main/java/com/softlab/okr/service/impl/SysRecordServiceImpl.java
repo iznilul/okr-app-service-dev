@@ -8,10 +8,11 @@ import com.softlab.okr.model.dto.SysRecordDTO;
 import com.softlab.okr.model.vo.SysRecordVO;
 import com.softlab.okr.service.ISysRecordService;
 import com.softlab.okr.utils.Result;
-import java.util.concurrent.Future;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
+
+import java.util.concurrent.Future;
 
 @Service
 public class SysRecordServiceImpl extends ServiceImpl<SysRecordMapper, SysRecord> implements
@@ -28,14 +29,9 @@ public class SysRecordServiceImpl extends ServiceImpl<SysRecordMapper, SysRecord
   @Override
   public Result getByCond(SysRecordDTO dto) {
     Page<SysRecord> page = new Page<>(dto.getIndex(), dto.getPageSize());
-    Page<SysRecordVO> loginLogPage = sysRecordMapper
+    Page<SysRecordVO> recordPage = sysRecordMapper
         .selectByCond(page, dto.getUsername(), dto.getBeginTime(), dto.getEndTime());
-    if (loginLogPage.getSize() == 0) {
-      page.setSize(0);
-      loginLogPage = sysRecordMapper
-          .selectByCond(page, dto.getUsername(), dto.getBeginTime(), dto.getEndTime());
-    }
     return Result
-        .success(loginLogPage.getRecords(), loginLogPage.getCurrent(), loginLogPage.getTotal());
+            .success(recordPage.getRecords(), recordPage.getCurrent(), recordPage.getTotal());
   }
 }

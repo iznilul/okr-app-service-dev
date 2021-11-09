@@ -45,10 +45,6 @@ public class KeyUserServiceImpl extends ServiceImpl<KeyUserMapper, KeyUser> impl
   public Result getKeyUser(PageDTO dto) {
     Page<KeyUser> page = new Page<>(dto.getIndex(), dto.getPageSize());
     Page<KeyUserVO> voPage = keyUserMapper.selectKeyUserVO(page);
-    if (voPage.getSize() == 0) {
-      page.setCurrent(1);
-      voPage = keyUserMapper.selectKeyUserVO(page);
-    }
     voPage.getRecords().forEach(vo -> {
       vo.setStatusName(KeyUserStatus.getMessage(vo.getStatus()));
     });

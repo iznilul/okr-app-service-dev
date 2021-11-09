@@ -1,6 +1,7 @@
-package com.softlab.okr.controller.common;
+package com.softlab.okr.controller;
 
 import com.softlab.okr.annotation.Auth;
+import com.softlab.okr.constant.RoleConstants;
 import com.softlab.okr.service.ICsdnSpiderService;
 import com.softlab.okr.utils.Result;
 import io.swagger.annotations.Api;
@@ -18,17 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @Api(tags = "通用 热榜接口")
-@RequestMapping("/api/common/rank")
-@Auth(id = 1300, name = "通用 热榜接口")
-public class CommonRankController {
+@RequestMapping("/api/okr/rank")
+public class RankController {
 
-  @Autowired
-  private ICsdnSpiderService csdnSpiderService;
+    @Autowired
+    private ICsdnSpiderService csdnSpiderService;
 
-  @ApiOperation("csdn实时展示")
-  @GetMapping("csdn")
-  @Auth(id = 1, name = "csdn实时展示")
-  public Result queryCsdn() {
-    return csdnSpiderService.getAll();
-  }
+    @ApiOperation("csdn实时展示")
+    @GetMapping("csdn")
+    @Auth(resourceId = 71, role = RoleConstants.COMMON, name = "csdn实时展示")
+    public Result queryCsdn() {
+        return csdnSpiderService.getAll();
+    }
 }

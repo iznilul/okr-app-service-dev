@@ -1,6 +1,7 @@
-package com.softlab.okr.controller.user;
+package com.softlab.okr.controller;
 
 import com.softlab.okr.annotation.Auth;
+import com.softlab.okr.constant.RoleConstants;
 import com.softlab.okr.model.vo.MenuVO;
 import com.softlab.okr.service.IMenuService;
 import com.softlab.okr.utils.Result;
@@ -19,15 +20,14 @@ import java.util.List;
  * @create: 2021-10-25 01:51
  **/
 @RestController
-@RequestMapping("/api/user/menu")
+@RequestMapping("/api/okr/menu")
 @Api(tags = "用户 性能接口")
-@Auth(id = 3700, name = "用户 路径接口")
 public class UserMenuController {
 
     @Autowired
     private IMenuService menuService;
 
-    @Auth(id = 1, name = "获取路径")
+    @Auth(resourceId = 131, role = RoleConstants.USER, name = "获取路径")
     @GetMapping("fetch")
     public Result queryRoute() {
         List<MenuVO> list = menuService.getMenu();
