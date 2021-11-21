@@ -12,14 +12,13 @@ import lombok.NoArgsConstructor;
  **/
 @AllArgsConstructor
 @NoArgsConstructor
-public enum RoleStatus implements BaseCode {
-    SUPER_ADMIN(1, "超级管理员", "superAdmin"),
-    ADMIN(2, "管理员", "admin"),
-    MEMBER(3, "普通用户", "user");
+public enum UserInfoStatus implements BaseCode {
+    EXAMINE(0, "考核中"),
+    SUCCESS(1, "考核完成"),
+    FAIL(2, "考核未过");
 
     private Integer code;
     private String message;
-    private String role;
 
     public Integer code() {
         return this.code;
@@ -29,13 +28,9 @@ public enum RoleStatus implements BaseCode {
         return this.message;
     }
 
-    public String role() {
-        return this.role;
-    }
-
 
     public static String getMessage(Integer code) {
-        for (RoleStatus status : RoleStatus.values()) {
+        for (UserInfoStatus status : UserInfoStatus.values()) {
             if (status.code.equals(code)) {
                 return status.message;
             }
@@ -44,18 +39,9 @@ public enum RoleStatus implements BaseCode {
     }
 
     public static Integer getCode(String message) {
-        for (RoleStatus status : RoleStatus.values()) {
+        for (UserInfoStatus status : UserInfoStatus.values()) {
             if (status.message.equals(message)) {
                 return status.code;
-            }
-        }
-        return null;
-    }
-
-    public static String getRole(String message) {
-        for (RoleStatus status : RoleStatus.values()) {
-            if (status.message.equals(message)) {
-                return status.role;
             }
         }
         return null;

@@ -9,17 +9,20 @@ import com.softlab.okr.entity.UserInfo;
 import com.softlab.okr.mapper.UserInfoMapper;
 import com.softlab.okr.model.dto.SelectUserDTO;
 import com.softlab.okr.model.dto.UpdateUserDTO;
+import com.softlab.okr.model.enums.statusCode.UserInfoStatus;
+import com.softlab.okr.model.vo.UserInfoVO;
 import com.softlab.okr.security.IAuthenticationService;
 import com.softlab.okr.service.IUserEntityService;
 import com.softlab.okr.service.IUserInfoService;
+import com.softlab.okr.utils.CopyUtil;
 import com.softlab.okr.utils.Result;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Base64;
+import java.util.List;
 
 /**
  * @Author: Devhui
@@ -43,7 +46,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
 
     @Override
     public int saveUserInfo(int userId, String username) {
-        UserInfo userInfo = new UserInfo(userId, username, null, null, null, null, null, null, null);
+        UserInfo userInfo = new UserInfo(userId, username, null, null, null, null, null, null, null, 0);
         return userInfoMapper.insert(userInfo);
     }
 
@@ -55,9 +58,12 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
     }
 
     @Override
-    public UserInfo getUserInfoByUsername(String username) {
-        return userInfoMapper.selectOne(new QueryWrapper<UserInfo>()
+    public UserInfoVO getUserInfoByUsername(String username) {
+        UserInfo userInfo = userInfoMapper.selectOne(new QueryWrapper<UserInfo>()
                 .eq("username", username));
+        UserInfoVO vo = CopyUtil.copy(userInfo, UserInfoVO.class);
+        vo.setStatusName(UserInfoStatus.getMessage(vo.getStatus()));
+        return vo;
     }
 
     @Override
@@ -67,8 +73,12 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
                 .eq(StringUtils.isNotBlank(dto.getUsername()), "username", dto.getUsername())
                 .like(StringUtils.isNotBlank(dto.getName()), "name", dto.getName())
                 .like(StringUtils.isNotBlank(dto.getMajor()), "major", dto.getMajor()));
+        List<UserInfoVO> list = CopyUtil.copyList(userInfoPage.getRecords(), UserInfoVO.class);
+        list.forEach(vo -> {
+            vo.setStatusName(UserInfoStatus.getMessage(vo.getStatus()));
+        });
         return Result
-                .success(userInfoPage.getRecords(), userInfoPage.getCurrent(), userInfoPage.getTotal());
+                .success(list, userInfoPage.getCurrent(), userInfoPage.getTotal());
     }
 
     @Override
@@ -79,8 +89,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         if (null == userId) {
             return 0;
         } else {
-            UserInfo userInfo = new UserInfo();
-            BeanUtils.copyProperties(dto, userInfo);
+            UserInfo userInfo = CopyUtil.copy(dto, UserInfo.class);
             userInfo.setUserId(userId);
             return userInfoMapper.updateById(userInfo);
         }

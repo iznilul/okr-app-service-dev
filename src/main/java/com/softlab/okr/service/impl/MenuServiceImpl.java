@@ -6,7 +6,7 @@ import com.softlab.okr.mapper.MenuMapper;
 import com.softlab.okr.model.vo.MenuVO;
 import com.softlab.okr.security.IAuthenticationService;
 import com.softlab.okr.service.IMenuService;
-import org.springframework.beans.BeanUtils;
+import com.softlab.okr.utils.CopyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -62,8 +62,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
     }
 
     private MenuVO menuToVO(Menu menu) {
-        MenuVO vo = new MenuVO();
-        BeanUtils.copyProperties(menu, vo);
+        MenuVO vo = CopyUtil.copy(menu, MenuVO.class);
         Map<String, String> meta = new HashMap<>();
         meta.put("type", menu.getType());
         meta.put("text", menu.getText());

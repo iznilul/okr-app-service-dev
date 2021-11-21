@@ -7,6 +7,7 @@ import com.softlab.okr.model.dto.ModifyPwdDTO;
 import com.softlab.okr.model.dto.RegisterDTO;
 import com.softlab.okr.model.dto.SelectUserDTO;
 import com.softlab.okr.model.dto.UpdateUserDTO;
+import com.softlab.okr.model.vo.UserInfoVO;
 import com.softlab.okr.service.IUserEntityService;
 import com.softlab.okr.service.IUserInfoService;
 import com.softlab.okr.utils.Result;
@@ -52,7 +53,7 @@ public class UserController {
     public Result cancelUser(
             @NotBlank(message = "username不能为空") @RequestParam("username") String username) {
 
-        return userEntityService.removeByUsername(username) > 0 ?
+        return userEntityService.removeByUsername(username) ?
                 Result.success() : Result.failure();
     }
 
@@ -109,7 +110,7 @@ public class UserController {
     @Auth(resourceId = 128, role = RoleConstants.USER, name = "根据用户名选择用户")
     public Result queryUserByUsername(@RequestParam("username") String username) {
 
-        UserInfo userInfo = userInfoService.getUserInfoByUsername(username);
-        return userInfo != null ? Result.success(userInfo) : Result.failure();
+        UserInfoVO vo = userInfoService.getUserInfoByUsername(username);
+        return vo != null ? Result.success(vo) : Result.failure();
     }
 }

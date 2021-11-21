@@ -2,7 +2,6 @@ package com.softlab.okr.constant;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * @program: okr
@@ -12,13 +11,10 @@ import java.util.Date;
  **/
 public class TimeFormat {
 
-
     /**
      * 时间戳格式
      */
     public static DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    public static String DateToString(Date date) {
-        return format.format(new Date());
-    }
+    public static String neverExpire = "2100-01-01 00:00:00";
 }

@@ -14,8 +14,8 @@ import com.softlab.okr.model.vo.KeyVO;
 import com.softlab.okr.security.IAuthenticationService;
 import com.softlab.okr.service.IKeyService;
 import com.softlab.okr.service.IKeyUserService;
+import com.softlab.okr.utils.CopyUtil;
 import com.softlab.okr.utils.Result;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,8 +44,7 @@ public class KeyServiceImpl extends ServiceImpl<KeyMapper, Key> implements IKeyS
 
     @Override
     public int modifyKey(KeyDTO dto) {
-        Key key = new Key();
-        BeanUtils.copyProperties(dto, key);
+        Key key = CopyUtil.copy(dto, Key.class);
         key.setStatus(KeyStatus.getCode(dto.getStatusName()));
         return keyMapper.updateById(key);
     }
@@ -70,8 +69,7 @@ public class KeyServiceImpl extends ServiceImpl<KeyMapper, Key> implements IKeyS
     @Override
     public KeyVO getKeyById(int keyId) {
         Key key = keyMapper.selectById(keyId);
-        KeyVO vo = new KeyVO();
-        BeanUtils.copyProperties(key, vo);
+        KeyVO vo = CopyUtil.copy(key, KeyVO.class);
         vo.setStatusName(KeyStatus.getMessage(key.getStatus()));
         return vo;
     }

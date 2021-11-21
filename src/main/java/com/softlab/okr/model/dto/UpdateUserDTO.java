@@ -37,5 +37,5 @@ public class UpdateUserDTO {
     private String weixin;
 
     @ApiModelProperty(value = "学习/研究方向", required = false, example = "只会crud的臭乐色")
-    private String research;
+    private String profile;
 }

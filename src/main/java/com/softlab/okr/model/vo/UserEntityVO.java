@@ -10,7 +10,7 @@ import java.util.Set;
  */
 @Data
 @Accessors(chain = true)
-public class UserVO {
+public class UserEntityVO {
     /**
      * 主键
      */

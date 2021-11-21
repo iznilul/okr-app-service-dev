@@ -1,7 +1,9 @@
 package com.softlab.okr.service.impl;
 
+import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.softlab.okr.constant.TimeFormat;
 import com.softlab.okr.entity.Role;
 import com.softlab.okr.entity.UserEntity;
 import com.softlab.okr.entity.UserRole;
@@ -9,7 +11,7 @@ import com.softlab.okr.mapper.UserEntityMapper;
 import com.softlab.okr.model.dto.LoginDTO;
 import com.softlab.okr.model.dto.ModifyPwdDTO;
 import com.softlab.okr.model.dto.RegisterDTO;
-import com.softlab.okr.model.vo.UserVO;
+import com.softlab.okr.model.vo.UserEntityVO;
 import com.softlab.okr.security.IAuthenticationService;
 import com.softlab.okr.security.JwtManager;
 import com.softlab.okr.security.UserDetail;
@@ -60,19 +62,19 @@ public class UserEntityServiceImpl extends ServiceImpl<UserEntityMapper, UserEnt
 
     //登录操作
     @Override
-    public UserVO login(LoginDTO dto) {
+    public UserEntityVO login(LoginDTO dto) {
         // 根据用户名查询出用户实体对象
         UserEntity userEntity = userEntityService.getByUsername(dto.getUsername());
         if (!loginCheck(userEntity, dto.getPassword())) {
             return null;
         } else {
             //VO是返回给前端用户展示的实体类，不过可以统一包装返回类
-            UserVO userVO = new UserVO();
-            userVO.setUserId(userEntity.getUserId())
+            UserEntityVO userEntityVO = new UserEntityVO();
+            userEntityVO.setUserId(userEntity.getUserId())
                     .setUsername(userEntity.getUsername())
                     .setToken(jwtManager.generate(userEntity.getUsername()))//用jwt生成token
                     .setResourceIds(resourceService.getResourceByUserId(userEntity.getUserId()));
-            return userVO;
+            return userEntityVO;
         }
     }
 
@@ -115,7 +117,7 @@ public class UserEntityServiceImpl extends ServiceImpl<UserEntityMapper, UserEnt
                 int roleId = roleService.getOne(new QueryWrapper<Role>().eq("name", dto.getName()))
                         .getRoleId();
                 int userId = userEntity.getUserId();
-                UserRole userRole = new UserRole(null, userId, roleId);
+                UserRole userRole = new UserRole(null, userId, roleId, DateUtil.parse(TimeFormat.neverExpire), null);
                 return userInfoService.saveUserInfo(userId, dto.getUsername()) == 1 && userRoleService
                         .save(userRole);
             }
@@ -123,11 +125,16 @@ public class UserEntityServiceImpl extends ServiceImpl<UserEntityMapper, UserEnt
     }
 
     @Override
-    public int removeByUsername(String username) {
-        if (null == this.getByUsername(username)) {
-            return 0;
+    @Transactional
+    public boolean removeByUsername(String username) {
+        UserEntity entity = this.getByUsername(username);
+        if (null == entity) {
+            return false;
         } else {
-            return userEntityMapper.deleteByUsername(username);
+            Integer userId = entity.getUserId();
+            return userEntityMapper.deleteByUsername(username) == 1
+                    && userInfoService.removeById(userId)
+                    && userRoleService.remove(new QueryWrapper<UserRole>().eq("user_id", userId));
         }
     }
 

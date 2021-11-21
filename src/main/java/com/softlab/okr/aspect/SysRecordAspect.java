@@ -7,6 +7,7 @@ package com.softlab.okr.aspect;
  * @Date: 2021-08-31 11:53
  **/
 
+import cn.hutool.core.date.DateUtil;
 import com.softlab.okr.constant.TimeFormat;
 import com.softlab.okr.entity.SysRecord;
 import com.softlab.okr.security.MySecurityMetadataSource;
@@ -35,58 +36,58 @@ import java.util.concurrent.Future;
 public class SysRecordAspect {
 
 
-  ThreadLocal<Long> startTime = new ThreadLocal<>();
+    ThreadLocal<Long> startTime = new ThreadLocal<>();
 
-  @Autowired
-  private ISysRecordService sysRecordService;
+    @Autowired
+    private ISysRecordService sysRecordService;
 
-  @Autowired
-  private FilterUtil filterUtil;
+    @Autowired
+    private FilterUtil filterUtil;
 
-  /**
-   * 定义切入点，以controller下所有包的请求为切入点
-   */
-  @Pointcut("execution(* com.softlab.okr.controller..*.*(..))")
-  public void weblog() {
-  }
+    /**
+     * 定义切入点，以controller下所有包的请求为切入点
+     */
+    @Pointcut("execution(* com.softlab.okr.controller..*.*(..))")
+    public void weblog() {
+    }
 
-  /**
-   * 前置通知：在切入点之前执行的通知
-   *
-   * @param joinPoint
-   * @throws Exception
-   */
-  @Before("weblog()")
-  public void doBefore(JoinPoint joinPoint) throws Exception {
+    /**
+     * 前置通知：在切入点之前执行的通知
+     *
+     * @param joinPoint
+     * @throws Exception
+     */
+    @Before("weblog()")
+    public void doBefore(JoinPoint joinPoint) throws Exception {
 
-    log.info("请求开始");
-    startTime.set(System.currentTimeMillis());
-  }
+        log.info("请求开始");
+        startTime.set(System.currentTimeMillis());
+    }
 
-  /**
-   * 后置最终通知,计算请求时间和记录
-   *
-   * @throws Exception
-   */
-  @After("weblog()")
-  public void doAfter() throws Exception {
-    log.info("请求结束");
-    ServletRequestAttributes servletRequestAttributes =
-            (ServletRequestAttributes) RequestContextHolder
-                    .getRequestAttributes();
-    HttpServletRequest request = servletRequestAttributes.getRequest();
-    Integer resourceId =
-            MySecurityMetadataSource.getResourceId(filterUtil.getRequestPath(request));
-    Integer userId = filterUtil.getRequestUserId();
-    String ip = filterUtil.getRequestIp();
-    long duration = System.currentTimeMillis() - startTime.get();
-    SysRecord sysRecord = new SysRecord(null, resourceId, userId, ip,
-            TimeFormat.DateToString(new Date()),
-            duration);
-    //long start = System.currentTimeMillis();
-    Future<Integer> result = sysRecordService.saveLog(sysRecord);
-    //log.info("cost:{}", System.currentTimeMillis() - start);
-    log.info("resourceId:{},userId:{},ip:{},duration:{} ms", resourceId, userId, ip, duration);
-  }
+    /**
+     * 后置最终通知,计算请求时间和记录
+     *
+     * @throws Exception
+     */
+    @After("weblog()")
+    public void doAfter() throws Exception {
+        log.info("请求结束");
+        ServletRequestAttributes servletRequestAttributes =
+                (ServletRequestAttributes) RequestContextHolder
+                        .getRequestAttributes();
+        HttpServletRequest request = servletRequestAttributes.getRequest();
+        Integer resourceId =
+                MySecurityMetadataSource.getResourceId(filterUtil.getRequestPath(request));
+        Integer userId = filterUtil.getRequestUserId();
+        String ip = filterUtil.getRequestIp();
+        long duration = System.currentTimeMillis() - startTime.get();
+        SysRecord sysRecord = new SysRecord(null, resourceId, userId, ip,
+                DateUtil.format(new Date(), TimeFormat.format),
+                duration);
+        //long start = System.currentTimeMillis();
+        Future<Integer> result = sysRecordService.saveLog(sysRecord);
+        //log.info("cost:{}", System.currentTimeMillis() - start);
+        log.info("resourceId:{},userId:{},ip:{},duration:{} ms", resourceId, userId, ip, duration);
+    }
 }
 

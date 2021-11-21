@@ -8,7 +8,7 @@ package com.softlab.okr.constant;
  **/
 public class RoleConstants {
 
-    public static final String SUPER_ADMIN = "superadmin";
+    public static final String SUPER_ADMIN = "superAdmin";
 
     public static final String ADMIN = "admin";
 

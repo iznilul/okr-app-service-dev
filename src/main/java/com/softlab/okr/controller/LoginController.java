@@ -3,7 +3,7 @@ package com.softlab.okr.controller;
 import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.constant.RoleConstants;
 import com.softlab.okr.model.dto.LoginDTO;
-import com.softlab.okr.model.vo.UserVO;
+import com.softlab.okr.model.vo.UserEntityVO;
 import com.softlab.okr.security.IAuthenticationService;
 import com.softlab.okr.security.UserDetail;
 import com.softlab.okr.service.IUserEntityService;
@@ -38,8 +38,8 @@ public class LoginController {
     @PostMapping("login")
     @Auth(resourceId = 111, role = RoleConstants.COMMON, name = "用户登录")
     public Result login(@RequestBody LoginDTO dto) throws Exception {
-        UserVO userVO = userEntityService.login(dto);
-        return userVO != null ? Result.success(userVO) : Result.failure();
+        UserEntityVO userEntityVO = userEntityService.login(dto);
+        return userEntityVO != null ? Result.success(userEntityVO) : Result.failure();
     }
 
     @ApiOperation("测试")
