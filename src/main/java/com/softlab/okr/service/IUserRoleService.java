@@ -2,6 +2,7 @@ package com.softlab.okr.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.softlab.okr.entity.UserRole;
+import com.softlab.okr.model.dto.GrantRoleDTO;
 
 /**
  * <p>
@@ -12,5 +13,6 @@ import com.softlab.okr.entity.UserRole;
  * @since 2021-09-27
  */
 public interface IUserRoleService extends IService<UserRole> {
-    
+
+    Boolean grantRole(GrantRoleDTO dto);
 }

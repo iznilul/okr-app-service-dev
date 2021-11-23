@@ -22,7 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/okr/menu")
 @Api(tags = "用户 性能接口")
-public class UserMenuController {
+public class MenuController {
 
     @Autowired
     private IMenuService menuService;

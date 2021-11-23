@@ -7,11 +7,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.softlab.okr.entity.Book;
 import com.softlab.okr.entity.BookTag;
 import com.softlab.okr.entity.Tag;
-import com.softlab.okr.exception.ApiException;
 import com.softlab.okr.mapper.BookMapper;
 import com.softlab.okr.model.dto.BookDTO;
 import com.softlab.okr.model.dto.BookQueryDTO;
 import com.softlab.okr.model.enums.statusCode.BookStatus;
+import com.softlab.okr.model.exception.BusinessException;
 import com.softlab.okr.model.vo.BookVO;
 import com.softlab.okr.security.IAuthenticationService;
 import com.softlab.okr.service.IBookService;
@@ -100,7 +100,7 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements
         // 通过base64来转化图片
         byte[] data = file.getBytes();
         if (data.length > 1024000) {
-            throw new ApiException();
+            throw new BusinessException();
         }
         // 将字节流转成字符串
         Base64.Encoder encoder = Base64.getEncoder();

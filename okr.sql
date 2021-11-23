@@ -11,7 +11,7 @@
  Target Server Version : 50722
  File Encoding         : 65001
 
- Date: 09/11/2021 01:43:42
+ Date: 24/11/2021 01:30:54
 */
 
 SET NAMES utf8mb4;
@@ -49,7 +49,7 @@ CREATE TABLE `book_tag`  (
   `book_id` int(11) NOT NULL COMMENT '书id',
   `tag_id` int(11) NOT NULL COMMENT '标签id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of book_tag
@@ -207,66 +207,65 @@ INSERT INTO `menu` VALUES (5005, 5000, '/tag', 'tag', '标签管理', 'md-card',
 -- ----------------------------
 DROP TABLE IF EXISTS `resource`;
 CREATE TABLE `resource`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `resource_id` int(11) NOT NULL COMMENT '资源id',
-  `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '路径',
+  `resource_id` int(11) NOT NULL COMMENT '主键',
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '名称',
   `method` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '请求类型',
+  `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '路径',
+  `role` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '角色',
   `status` tinyint(1) NOT NULL COMMENT '接口状态 0关闭 1开启',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7307 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '资源' ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`resource_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '资源' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of resource
 -- ----------------------------
-INSERT INTO `resource` VALUES (7259, 2504, '/api/admin/book/cancel', '删除书籍', 'GET', 1);
-INSERT INTO `resource` VALUES (7260, 2502, '/api/admin/book/changeImg', '上传书籍照片', 'GET', 1);
-INSERT INTO `resource` VALUES (7261, 2503, '/api/admin/book/change', '修改书籍', 'POST', 1);
-INSERT INTO `resource` VALUES (7262, 2501, '/api/admin/book/add', '添加书籍', 'POST', 1);
-INSERT INTO `resource` VALUES (7263, 2603, '/api/admin/key/cancel', '删除钥匙', 'GET', 1);
-INSERT INTO `resource` VALUES (7264, 2604, '/api/admin/key/queryById', '根据id查询钥匙', 'GET', 1);
-INSERT INTO `resource` VALUES (7265, 2602, '/api/admin/key/change', '修改钥匙', 'POST', 1);
-INSERT INTO `resource` VALUES (7266, 2601, '/api/admin/key/add', '增加钥匙', 'GET', 1);
-INSERT INTO `resource` VALUES (7267, 2802, '/api/admin/keyUser/cancel', '删除钥匙持有人', 'GET', 1);
-INSERT INTO `resource` VALUES (7268, 2801, '/api/admin/keyUser/add', '增加钥匙持有人', 'GET', 1);
-INSERT INTO `resource` VALUES (7269, 2201, '/api/admin/resource/reload', '重载角色资源', 'GET', 1);
-INSERT INTO `resource` VALUES (7270, 2202, '/api/admin/resource/change', '更改接口开放状态', 'GET', 1);
-INSERT INTO `resource` VALUES (7271, 2203, '/api/admin/resource/query', '获取资源接口', 'POST', 1);
-INSERT INTO `resource` VALUES (7272, 2303, '/api/admin/signup/export', '导出报名单', 'GET', 1);
-INSERT INTO `resource` VALUES (7273, 2301, '/api/admin/signup/query', '获取报名记录', 'POST', 1);
-INSERT INTO `resource` VALUES (7274, 2302, '/api/admin/signup/change', '更新报名记录', 'POST', 1);
-INSERT INTO `resource` VALUES (7275, 2701, '/api/admin/loginLog/query', '登录日志列表', 'POST', 1);
-INSERT INTO `resource` VALUES (7276, 2401, '/api/admin/tag/add', '增加标签', 'GET', 1);
-INSERT INTO `resource` VALUES (7277, 2402, '/api/admin/tag/change', '更新标签', 'GET', 1);
-INSERT INTO `resource` VALUES (7278, 2403, '/api/admin/tag/cancel', '删除标签', 'GET', 1);
-INSERT INTO `resource` VALUES (7279, 2404, '/api/admin/tag/query', '获取标签列表', 'POST', 1);
-INSERT INTO `resource` VALUES (7280, 2102, '/api/admin/user/cancel', '删除用户', 'GET', 1);
-INSERT INTO `resource` VALUES (7281, 2101, '/api/admin/user/add', '注册用户', 'POST', 1);
-INSERT INTO `resource` VALUES (7282, 1102, '/api/common/test', '认证测试', 'GET', 1);
-INSERT INTO `resource` VALUES (7283, 1103, '/api/common/logout', '用户退出', 'GET', 1);
-INSERT INTO `resource` VALUES (7284, 1101, '/api/common/login', '用户登录', 'POST', 1);
-INSERT INTO `resource` VALUES (7285, 1301, '/api/common/rank/csdn', 'csdn实时展示', 'GET', 1);
-INSERT INTO `resource` VALUES (7286, 1202, '/api/common/signUp/query', '报名结果查询', 'GET', 1);
-INSERT INTO `resource` VALUES (7287, 1201, '/api/common/signUp/add', '纳新报名', 'POST', 1);
-INSERT INTO `resource` VALUES (7288, 3310, '/api/user/enum/username', '模糊查询用户名列表', 'GET', 1);
-INSERT INTO `resource` VALUES (7289, 3311, '/api/user/enum/name', '模糊查询姓名列表', 'GET', 1);
-INSERT INTO `resource` VALUES (7290, 3312, '/api/user/enum/major', '模糊查询专业列表', 'GET', 1);
-INSERT INTO `resource` VALUES (7291, 3301, '/api/user/enum/key', '模糊查询钥匙状态', 'GET', 1);
-INSERT INTO `resource` VALUES (7292, 3501, '/api/user/book/query', '书籍列表', 'POST', 1);
-INSERT INTO `resource` VALUES (7293, 3503, '/api/user/book/return', '还书', 'GET', 1);
-INSERT INTO `resource` VALUES (7294, 3502, '/api/user/book/borrow', '借书', 'GET', 1);
-INSERT INTO `resource` VALUES (7295, 3402, '/api/user/key/borrow', '借钥匙', 'GET', 1);
-INSERT INTO `resource` VALUES (7296, 3401, '/api/user/key/query', '钥匙列表', 'POST', 1);
-INSERT INTO `resource` VALUES (7297, 3403, '/api/user/key/return', '还钥匙', 'GET', 1);
-INSERT INTO `resource` VALUES (7298, 3601, '/api/user/keyUser/query', '钥匙记录列表', 'POST', 1);
-INSERT INTO `resource` VALUES (7299, 3701, '/api/user/menu/fetch', '获取路径', 'GET', 1);
-INSERT INTO `resource` VALUES (7300, 3201, '/api/user/monitor/server', '服务器监控', 'GET', 1);
-INSERT INTO `resource` VALUES (7301, 3106, '/api/user/user/queryByUsername', '根据用户名选择用户', 'GET', 1);
-INSERT INTO `resource` VALUES (7302, 3101, '/api/user/user/change', '更新用户信息', 'POST', 1);
-INSERT INTO `resource` VALUES (7303, 3103, '/api/user/user/queryList', '根据情况选择用户', 'POST', 1);
-INSERT INTO `resource` VALUES (7304, 3102, '/api/user/user/query', '根据账号选择用户', 'GET', 1);
-INSERT INTO `resource` VALUES (7305, 3105, '/api/user/user/changePassword', '修改密码', 'POST', 1);
-INSERT INTO `resource` VALUES (7306, 3104, '/api/user/user/changeImg', '上传头像文件', 'POST', 1);
+INSERT INTO `resource` VALUES (11, '添加书籍', 'POST', '/api/okr/book/add', 'admin', 1);
+INSERT INTO `resource` VALUES (12, '上传书籍照片', 'GET', '/api/okr/book/changeImg', 'admin', 1);
+INSERT INTO `resource` VALUES (13, '修改书籍', 'POST', '/api/okr/book/change', 'admin', 1);
+INSERT INTO `resource` VALUES (14, '删除书籍', 'GET', '/api/okr/book/cancel', 'admin', 1);
+INSERT INTO `resource` VALUES (15, '书籍列表', 'POST', '/api/okr/book/query', 'user', 1);
+INSERT INTO `resource` VALUES (16, '借书', 'GET', '/api/okr/book/borrow', 'admin', 1);
+INSERT INTO `resource` VALUES (17, '还书', 'GET', '/api/okr/book/return', 'admin', 1);
+INSERT INTO `resource` VALUES (21, '增加钥匙', 'GET', '/api/okr/key/add', 'admin', 1);
+INSERT INTO `resource` VALUES (22, '修改钥匙', 'POST', '/api/okr/key/change', 'admin', 1);
+INSERT INTO `resource` VALUES (23, '删除钥匙', 'GET', '/api/okr/key/cancel', 'admin', 1);
+INSERT INTO `resource` VALUES (24, '根据id查询钥匙', 'GET', '/api/okr/key/queryById', 'admin', 1);
+INSERT INTO `resource` VALUES (25, '钥匙列表', 'POST', '/api/okr/key/query', 'user', 1);
+INSERT INTO `resource` VALUES (26, '借钥匙', 'GET', '/api/okr/key/borrow', 'user', 1);
+INSERT INTO `resource` VALUES (27, '还钥匙', 'GET', '/api/okr/key/return', 'user', 1);
+INSERT INTO `resource` VALUES (31, '增加钥匙持有人', 'GET', '/api/okr/keyUser/add', 'admin', 1);
+INSERT INTO `resource` VALUES (32, '删除钥匙持有人', 'GET', '/api/okr/keyUser/cancel', 'admin', 1);
+INSERT INTO `resource` VALUES (33, '钥匙记录列表', 'POST', '/api/okr/keyUser/query', 'user', 1);
+INSERT INTO `resource` VALUES (41, '更改接口开放状态', 'GET', '/api/okr/resource/change', 'admin', 1);
+INSERT INTO `resource` VALUES (43, '获取资源接口', 'POST', '/api/okr/resource/query', 'admin', 1);
+INSERT INTO `resource` VALUES (51, '获取报名记录', 'POST', '/api/okr/signup/query', 'admin', 1);
+INSERT INTO `resource` VALUES (52, '更新报名记录', 'POST', '/api/okr/signup/change', 'admin', 1);
+INSERT INTO `resource` VALUES (53, '导出报名单', 'GET', '/api/okr/signup/export', 'admin', 1);
+INSERT INTO `resource` VALUES (54, '纳新报名', 'POST', '/api/okr/signup/add', 'common', 1);
+INSERT INTO `resource` VALUES (55, '报名结果查询', 'GET', '/api/okr/signup/query', 'common', 1);
+INSERT INTO `resource` VALUES (61, '登录日志列表', 'POST', '/api/okr/sysRecord/query', 'admin', 1);
+INSERT INTO `resource` VALUES (71, 'csdn实时展示', 'GET', '/api/okr/rank/csdn', 'common', 1);
+INSERT INTO `resource` VALUES (81, '增加标签', 'GET', '/api/okr/tag/add', 'admin', 1);
+INSERT INTO `resource` VALUES (82, '更新标签', 'GET', '/api/okr/tag/change', 'admin', 1);
+INSERT INTO `resource` VALUES (83, '删除标签', 'GET', '/api/okr/tag/cancel', 'admin', 1);
+INSERT INTO `resource` VALUES (84, '获取标签列表', 'POST', '/api/okr/tag/query', 'admin', 1);
+INSERT INTO `resource` VALUES (91, '模糊查询钥匙状态', 'GET', '/api/okr/enum/key', 'user', 1);
+INSERT INTO `resource` VALUES (92, '模糊查询用户名列表', 'GET', '/api/okr/enum/username', 'user', 1);
+INSERT INTO `resource` VALUES (93, '模糊查询姓名列表', 'GET', '/api/okr/enum/name', 'user', 1);
+INSERT INTO `resource` VALUES (94, '模糊查询专业列表', 'GET', '/api/okr/enum/major', 'user', 1);
+INSERT INTO `resource` VALUES (101, '服务器监控', 'GET', '/api/okr/monitor/server', 'user', 1);
+INSERT INTO `resource` VALUES (111, '用户登录', 'POST', '/api/okr/login', 'common', 1);
+INSERT INTO `resource` VALUES (112, '认证测试', 'GET', '/api/okr/test', 'common', 1);
+INSERT INTO `resource` VALUES (113, '用户退出', 'GET', '/api/okr/logout', 'common', 1);
+INSERT INTO `resource` VALUES (121, '注册用户', 'POST', '/api/okr/user/add', 'admin', 1);
+INSERT INTO `resource` VALUES (122, '删除用户', 'GET', '/api/okr/user/cancel', 'admin', 1);
+INSERT INTO `resource` VALUES (123, '更新用户信息', 'POST', '/api/okr/user/change', 'user', 1);
+INSERT INTO `resource` VALUES (124, '根据账号选择用户', 'GET', '/api/okr/user/query', 'user', 1);
+INSERT INTO `resource` VALUES (125, '根据情况选择用户', 'POST', '/api/okr/user/queryList', 'user', 1);
+INSERT INTO `resource` VALUES (126, '上传头像文件', 'POST', '/api/okr/user/changeImg', 'user', 1);
+INSERT INTO `resource` VALUES (127, '修改密码', 'POST', '/api/okr/user/changePassword', 'user', 1);
+INSERT INTO `resource` VALUES (128, '根据用户名选择用户', 'GET', '/api/okr/user/queryByUsername', 'user', 1);
+INSERT INTO `resource` VALUES (131, '获取路径', 'GET', '/api/okr/menu/fetch', 'user', 1);
 
 -- ----------------------------
 -- Table structure for role
@@ -274,6 +273,7 @@ INSERT INTO `resource` VALUES (7306, 3104, '/api/user/user/changeImg', '上传�
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role`  (
   `role_id` int(11) NOT NULL COMMENT '角色id，主键',
+  `role` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '角色码',
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '名称',
   PRIMARY KEY (`role_id`) USING BTREE,
   UNIQUE INDEX `name`(`name`) USING BTREE
@@ -282,8 +282,9 @@ CREATE TABLE `role`  (
 -- ----------------------------
 -- Records of role
 -- ----------------------------
-INSERT INTO `role` VALUES (2, '普通用户');
-INSERT INTO `role` VALUES (1, '管理员');
+INSERT INTO `role` VALUES (1, 'superAdmin', '超级管理员');
+INSERT INTO `role` VALUES (2, 'admin', '管理员');
+INSERT INTO `role` VALUES (3, 'user', '普通用户');
 
 -- ----------------------------
 -- Table structure for role_menu
@@ -338,72 +339,110 @@ CREATE TABLE `role_resource`  (
   `resource_id` int(11) NOT NULL COMMENT '资源id',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `resource_id`(`resource_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 22148 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色-权限关系' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 22430 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色-权限关系' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of role_resource
 -- ----------------------------
-INSERT INTO `role_resource` VALUES (22087, 2, 3104);
-INSERT INTO `role_resource` VALUES (22088, 2, 3201);
-INSERT INTO `role_resource` VALUES (22089, 2, 3105);
-INSERT INTO `role_resource` VALUES (22090, 2, 3106);
-INSERT INTO `role_resource` VALUES (22091, 2, 3301);
-INSERT INTO `role_resource` VALUES (22092, 2, 3401);
-INSERT INTO `role_resource` VALUES (22093, 2, 3402);
-INSERT INTO `role_resource` VALUES (22094, 2, 3403);
-INSERT INTO `role_resource` VALUES (22095, 2, 3501);
-INSERT INTO `role_resource` VALUES (22096, 2, 3502);
-INSERT INTO `role_resource` VALUES (22097, 2, 3310);
-INSERT INTO `role_resource` VALUES (22098, 2, 3503);
-INSERT INTO `role_resource` VALUES (22099, 2, 3311);
-INSERT INTO `role_resource` VALUES (22100, 2, 3312);
-INSERT INTO `role_resource` VALUES (22101, 2, 3601);
-INSERT INTO `role_resource` VALUES (22102, 2, 3701);
-INSERT INTO `role_resource` VALUES (22103, 2, 3101);
-INSERT INTO `role_resource` VALUES (22104, 2, 3102);
-INSERT INTO `role_resource` VALUES (22105, 2, 3103);
-INSERT INTO `role_resource` VALUES (22106, 1, 3201);
-INSERT INTO `role_resource` VALUES (22107, 1, 2501);
-INSERT INTO `role_resource` VALUES (22108, 1, 2502);
-INSERT INTO `role_resource` VALUES (22109, 1, 2503);
-INSERT INTO `role_resource` VALUES (22110, 1, 2504);
-INSERT INTO `role_resource` VALUES (22111, 1, 3401);
-INSERT INTO `role_resource` VALUES (22112, 1, 3402);
-INSERT INTO `role_resource` VALUES (22113, 1, 3403);
-INSERT INTO `role_resource` VALUES (22114, 1, 2701);
-INSERT INTO `role_resource` VALUES (22115, 1, 3601);
-INSERT INTO `role_resource` VALUES (22116, 1, 2201);
-INSERT INTO `role_resource` VALUES (22117, 1, 2202);
-INSERT INTO `role_resource` VALUES (22118, 1, 2203);
-INSERT INTO `role_resource` VALUES (22119, 1, 3101);
-INSERT INTO `role_resource` VALUES (22120, 1, 3102);
-INSERT INTO `role_resource` VALUES (22121, 1, 3103);
-INSERT INTO `role_resource` VALUES (22122, 1, 3104);
-INSERT INTO `role_resource` VALUES (22123, 1, 3105);
-INSERT INTO `role_resource` VALUES (22124, 1, 2401);
-INSERT INTO `role_resource` VALUES (22125, 1, 2402);
-INSERT INTO `role_resource` VALUES (22126, 1, 3106);
-INSERT INTO `role_resource` VALUES (22127, 1, 2403);
-INSERT INTO `role_resource` VALUES (22128, 1, 2404);
-INSERT INTO `role_resource` VALUES (22129, 1, 3301);
-INSERT INTO `role_resource` VALUES (22130, 1, 2601);
-INSERT INTO `role_resource` VALUES (22131, 1, 2602);
-INSERT INTO `role_resource` VALUES (22132, 1, 2603);
-INSERT INTO `role_resource` VALUES (22133, 1, 2604);
-INSERT INTO `role_resource` VALUES (22134, 1, 3501);
-INSERT INTO `role_resource` VALUES (22135, 1, 3310);
-INSERT INTO `role_resource` VALUES (22136, 1, 3502);
-INSERT INTO `role_resource` VALUES (22137, 1, 3311);
-INSERT INTO `role_resource` VALUES (22138, 1, 3503);
-INSERT INTO `role_resource` VALUES (22139, 1, 3312);
-INSERT INTO `role_resource` VALUES (22140, 1, 2801);
-INSERT INTO `role_resource` VALUES (22141, 1, 2802);
-INSERT INTO `role_resource` VALUES (22142, 1, 2101);
-INSERT INTO `role_resource` VALUES (22143, 1, 3701);
-INSERT INTO `role_resource` VALUES (22144, 1, 2102);
-INSERT INTO `role_resource` VALUES (22145, 1, 2301);
-INSERT INTO `role_resource` VALUES (22146, 1, 2302);
-INSERT INTO `role_resource` VALUES (22147, 1, 2303);
+INSERT INTO `role_resource` VALUES (22331, 3, 128);
+INSERT INTO `role_resource` VALUES (22332, 3, 33);
+INSERT INTO `role_resource` VALUES (22333, 3, 131);
+INSERT INTO `role_resource` VALUES (22334, 3, 101);
+INSERT INTO `role_resource` VALUES (22335, 3, 15);
+INSERT INTO `role_resource` VALUES (22336, 3, 25);
+INSERT INTO `role_resource` VALUES (22337, 3, 26);
+INSERT INTO `role_resource` VALUES (22338, 3, 91);
+INSERT INTO `role_resource` VALUES (22339, 3, 27);
+INSERT INTO `role_resource` VALUES (22340, 3, 123);
+INSERT INTO `role_resource` VALUES (22341, 3, 92);
+INSERT INTO `role_resource` VALUES (22342, 3, 124);
+INSERT INTO `role_resource` VALUES (22343, 3, 93);
+INSERT INTO `role_resource` VALUES (22344, 3, 125);
+INSERT INTO `role_resource` VALUES (22345, 3, 94);
+INSERT INTO `role_resource` VALUES (22346, 3, 126);
+INSERT INTO `role_resource` VALUES (22347, 3, 127);
+INSERT INTO `role_resource` VALUES (22348, 2, 128);
+INSERT INTO `role_resource` VALUES (22349, 2, 131);
+INSERT INTO `role_resource` VALUES (22350, 2, 11);
+INSERT INTO `role_resource` VALUES (22351, 2, 12);
+INSERT INTO `role_resource` VALUES (22352, 2, 13);
+INSERT INTO `role_resource` VALUES (22353, 2, 14);
+INSERT INTO `role_resource` VALUES (22354, 2, 15);
+INSERT INTO `role_resource` VALUES (22355, 2, 16);
+INSERT INTO `role_resource` VALUES (22356, 2, 17);
+INSERT INTO `role_resource` VALUES (22357, 2, 81);
+INSERT INTO `role_resource` VALUES (22358, 2, 82);
+INSERT INTO `role_resource` VALUES (22359, 2, 83);
+INSERT INTO `role_resource` VALUES (22360, 2, 84);
+INSERT INTO `role_resource` VALUES (22361, 2, 21);
+INSERT INTO `role_resource` VALUES (22362, 2, 22);
+INSERT INTO `role_resource` VALUES (22363, 2, 23);
+INSERT INTO `role_resource` VALUES (22364, 2, 24);
+INSERT INTO `role_resource` VALUES (22365, 2, 25);
+INSERT INTO `role_resource` VALUES (22366, 2, 26);
+INSERT INTO `role_resource` VALUES (22367, 2, 91);
+INSERT INTO `role_resource` VALUES (22368, 2, 27);
+INSERT INTO `role_resource` VALUES (22369, 2, 92);
+INSERT INTO `role_resource` VALUES (22370, 2, 93);
+INSERT INTO `role_resource` VALUES (22371, 2, 94);
+INSERT INTO `role_resource` VALUES (22372, 2, 31);
+INSERT INTO `role_resource` VALUES (22373, 2, 32);
+INSERT INTO `role_resource` VALUES (22374, 2, 33);
+INSERT INTO `role_resource` VALUES (22375, 2, 101);
+INSERT INTO `role_resource` VALUES (22376, 2, 41);
+INSERT INTO `role_resource` VALUES (22377, 2, 43);
+INSERT INTO `role_resource` VALUES (22378, 2, 51);
+INSERT INTO `role_resource` VALUES (22379, 2, 52);
+INSERT INTO `role_resource` VALUES (22380, 2, 53);
+INSERT INTO `role_resource` VALUES (22381, 2, 121);
+INSERT INTO `role_resource` VALUES (22382, 2, 122);
+INSERT INTO `role_resource` VALUES (22383, 2, 123);
+INSERT INTO `role_resource` VALUES (22384, 2, 124);
+INSERT INTO `role_resource` VALUES (22385, 2, 125);
+INSERT INTO `role_resource` VALUES (22386, 2, 61);
+INSERT INTO `role_resource` VALUES (22387, 2, 126);
+INSERT INTO `role_resource` VALUES (22388, 2, 127);
+INSERT INTO `role_resource` VALUES (22389, 1, 128);
+INSERT INTO `role_resource` VALUES (22390, 1, 131);
+INSERT INTO `role_resource` VALUES (22391, 1, 11);
+INSERT INTO `role_resource` VALUES (22392, 1, 12);
+INSERT INTO `role_resource` VALUES (22393, 1, 13);
+INSERT INTO `role_resource` VALUES (22394, 1, 14);
+INSERT INTO `role_resource` VALUES (22395, 1, 15);
+INSERT INTO `role_resource` VALUES (22396, 1, 16);
+INSERT INTO `role_resource` VALUES (22397, 1, 17);
+INSERT INTO `role_resource` VALUES (22398, 1, 81);
+INSERT INTO `role_resource` VALUES (22399, 1, 82);
+INSERT INTO `role_resource` VALUES (22400, 1, 83);
+INSERT INTO `role_resource` VALUES (22401, 1, 84);
+INSERT INTO `role_resource` VALUES (22402, 1, 21);
+INSERT INTO `role_resource` VALUES (22403, 1, 22);
+INSERT INTO `role_resource` VALUES (22404, 1, 23);
+INSERT INTO `role_resource` VALUES (22405, 1, 24);
+INSERT INTO `role_resource` VALUES (22406, 1, 25);
+INSERT INTO `role_resource` VALUES (22407, 1, 26);
+INSERT INTO `role_resource` VALUES (22408, 1, 91);
+INSERT INTO `role_resource` VALUES (22409, 1, 27);
+INSERT INTO `role_resource` VALUES (22410, 1, 92);
+INSERT INTO `role_resource` VALUES (22411, 1, 93);
+INSERT INTO `role_resource` VALUES (22412, 1, 94);
+INSERT INTO `role_resource` VALUES (22413, 1, 31);
+INSERT INTO `role_resource` VALUES (22414, 1, 32);
+INSERT INTO `role_resource` VALUES (22415, 1, 33);
+INSERT INTO `role_resource` VALUES (22416, 1, 101);
+INSERT INTO `role_resource` VALUES (22417, 1, 41);
+INSERT INTO `role_resource` VALUES (22418, 1, 43);
+INSERT INTO `role_resource` VALUES (22419, 1, 51);
+INSERT INTO `role_resource` VALUES (22420, 1, 52);
+INSERT INTO `role_resource` VALUES (22421, 1, 53);
+INSERT INTO `role_resource` VALUES (22422, 1, 121);
+INSERT INTO `role_resource` VALUES (22423, 1, 122);
+INSERT INTO `role_resource` VALUES (22424, 1, 123);
+INSERT INTO `role_resource` VALUES (22425, 1, 124);
+INSERT INTO `role_resource` VALUES (22426, 1, 125);
+INSERT INTO `role_resource` VALUES (22427, 1, 61);
+INSERT INTO `role_resource` VALUES (22428, 1, 126);
+INSERT INTO `role_resource` VALUES (22429, 1, 127);
 
 -- ----------------------------
 -- Table structure for signup
@@ -474,7 +513,7 @@ CREATE TABLE `sys_record`  (
   `time` datetime(0) NULL DEFAULT NULL COMMENT '请求时间点',
   `duration` int(11) NULL DEFAULT NULL COMMENT '用时 单位ms',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3791 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3805 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_record
@@ -1436,6 +1475,20 @@ INSERT INTO `sys_record` VALUES (3787, 3103, 20, '127.0.0.1', '2021-11-09 01:42:
 INSERT INTO `sys_record` VALUES (3788, 3310, 20, '127.0.0.1', '2021-11-09 01:42:14', 4);
 INSERT INTO `sys_record` VALUES (3789, 3103, 20, '127.0.0.1', '2021-11-09 01:42:16', 4);
 INSERT INTO `sys_record` VALUES (3790, 3103, 20, '127.0.0.1', '2021-11-09 01:42:18', 4);
+INSERT INTO `sys_record` VALUES (3791, 3201, 20, '127.0.0.1', '2021-11-09 22:44:42', 1852);
+INSERT INTO `sys_record` VALUES (3792, 3201, 20, '127.0.0.1', '2021-11-09 22:48:00', 1222);
+INSERT INTO `sys_record` VALUES (3793, 3103, 20, '127.0.0.1', '2021-11-09 22:50:41', 223);
+INSERT INTO `sys_record` VALUES (3794, 3102, 20, '127.0.0.1', '2021-11-09 22:50:45', 7);
+INSERT INTO `sys_record` VALUES (3795, 3103, 20, '127.0.0.1', '2021-11-09 22:50:45', 15);
+INSERT INTO `sys_record` VALUES (3796, 3103, 20, '127.0.0.1', '2021-11-09 22:50:49', 5);
+INSERT INTO `sys_record` VALUES (3797, 3401, 20, '127.0.0.1', '2021-11-09 23:37:19', 161);
+INSERT INTO `sys_record` VALUES (3798, 3601, 20, '127.0.0.1', '2021-11-09 23:37:20', 17);
+INSERT INTO `sys_record` VALUES (3799, 3601, 20, '127.0.0.1', '2021-11-09 23:37:22', 8);
+INSERT INTO `sys_record` VALUES (3800, 3601, 20, '127.0.0.1', '2021-11-09 23:37:23', 8);
+INSERT INTO `sys_record` VALUES (3801, 3401, 20, '127.0.0.1', '2021-11-09 23:37:24', 6);
+INSERT INTO `sys_record` VALUES (3802, 3103, 20, '127.0.0.1', '2021-11-09 23:41:54', 9);
+INSERT INTO `sys_record` VALUES (3803, 3201, 20, '127.0.0.1', '2021-11-09 23:42:01', 1191);
+INSERT INTO `sys_record` VALUES (3804, 3601, 20, '127.0.0.1', '2021-11-09 23:42:08', 6);
 
 -- ----------------------------
 -- Table structure for tag
@@ -1465,7 +1518,7 @@ CREATE TABLE `task`  (
   `class_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '任务类',
   `function` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '任务功能',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 469 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 490 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of task
@@ -1938,6 +1991,27 @@ INSERT INTO `task` VALUES (465, 'T3', '三号测试任务', 'com.softlab.okr.job
 INSERT INTO `task` VALUES (466, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
 INSERT INTO `task` VALUES (467, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
 INSERT INTO `task` VALUES (468, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (469, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (470, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (471, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (472, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (473, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (474, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (475, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (476, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (477, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (478, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (479, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (480, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (481, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (482, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (483, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (484, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (485, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (486, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (487, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (488, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (489, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
 
 -- ----------------------------
 -- Table structure for task_trigger
@@ -1969,29 +2043,20 @@ CREATE TABLE `user_entity`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `delete_flag` tinyint(2) NOT NULL DEFAULT 0 COMMENT '删除标志 ',
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 37 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_entity
 -- ----------------------------
 INSERT INTO `user_entity` VALUES (20, 'admin', '21232f297a57a5a743894a0e4a801fc3', NULL, NULL, 0);
 INSERT INTO `user_entity` VALUES (21, 'test1', '5a105e8b9d40e1329780d62ea2265d8a', NULL, NULL, 0);
-INSERT INTO `user_entity` VALUES (22, 'test', '098f6bcd4621d373cade4e832627b4f6', NULL, NULL, 0);
-INSERT INTO `user_entity` VALUES (23, 'test2', 'ad0234829205b9033196ba818f7a872b', NULL, NULL, 0);
-INSERT INTO `user_entity` VALUES (24, 'test3', '8ad8757baa8564dc136c1e07507f4a98', NULL, NULL, 0);
-INSERT INTO `user_entity` VALUES (25, 'test4', '86985e105f79b95d6bc918fb45ec7727', NULL, NULL, 0);
-INSERT INTO `user_entity` VALUES (26, 'test5', 'e3d704f3542b44a621ebed70dc0efe13', NULL, NULL, 0);
-INSERT INTO `user_entity` VALUES (32, 'test12', '60474c9c10d7142b7508ce7a50acf414', NULL, NULL, 0);
-INSERT INTO `user_entity` VALUES (33, 'test6', '4cfad7076129962ee70c36839a1e3e15', NULL, NULL, 0);
-INSERT INTO `user_entity` VALUES (35, 'test7', 'b04083e53e242626595e2b8ea327e525', NULL, NULL, 0);
-INSERT INTO `user_entity` VALUES (36, 'test11', 'f696282aa4cd4f614aa995190cf442fe', NULL, NULL, 0);
 
 -- ----------------------------
 -- Table structure for user_info
 -- ----------------------------
 DROP TABLE IF EXISTS `user_info`;
 CREATE TABLE `user_info`  (
-  `user_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `user_id` int(11) NOT NULL COMMENT '主键id',
   `username` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户名(学号)',
   `name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '姓名',
   `avatar` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '头像',
@@ -1999,27 +2064,19 @@ CREATE TABLE `user_info`  (
   `qq` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'QQ号',
   `phone` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '手机号',
   `weixin` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '微信号',
-  `profile` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '学习/研究方向\r\n',
+  `profile` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '自我简介\r\n',
+  `status` tinyint(2) NULL DEFAULT NULL COMMENT '用户状态',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `delete_flag` tinyint(2) NOT NULL DEFAULT 0 COMMENT '删除标志 ',
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 37 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '成员表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '成员表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_info
 -- ----------------------------
-INSERT INTO `user_info` VALUES (20, 'admin', '你是基佬', 'data:image/png;base64,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', '我是蓝翔', '123456', '654312', 'shit12312', '一起搞基，先生！是的，先生', NULL, '2021-10-17 01:59:59', 0);
-INSERT INTO `user_info` VALUES (21, 'test1', '大便', NULL, '阿斯蒂芬撒地方', '撒分色', '瑟夫', '费萨尔费', '你说的附属恶化覅色回复i色回复i规格和', NULL, NULL, 0);
-INSERT INTO `user_info` VALUES (22, 'test', '撤硕', 'data:image/png;base64,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', '奥里给', '123', '321', '1234567', '扒鸭屁股是块宝，干了兄弟们', NULL, '2021-10-10 17:17:34', 0);
-INSERT INTO `user_info` VALUES (23, 'test2', '祭祀附件二', NULL, '色法色法', '给顾客与', '如图风格恢复', '劈腿有人给', '发涩发分发给教育', NULL, '2021-10-12 23:27:42', 0);
-INSERT INTO `user_info` VALUES (24, 'test3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0);
-INSERT INTO `user_info` VALUES (25, 'test4', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-10-12 00:31:12', '2021-10-12 00:31:12', 0);
-INSERT INTO `user_info` VALUES (26, 'test5', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-10-12 00:31:49', '2021-10-12 00:31:49', 0);
-INSERT INTO `user_info` VALUES (32, 'test12', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-10-12 00:51:09', '2021-10-12 00:51:09', 0);
-INSERT INTO `user_info` VALUES (33, 'test6', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-10-12 23:32:47', '2021-10-12 23:32:47', 0);
-INSERT INTO `user_info` VALUES (35, 'test7', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-10-12 23:43:32', '2021-10-12 23:43:32', 0);
-INSERT INTO `user_info` VALUES (36, 'test11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2021-10-15 00:48:33', '2021-10-15 00:48:33', 0);
+INSERT INTO `user_info` VALUES (20, 'admin', '你是基佬', 'data:image/png;base64,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', '我是蓝翔', '123456', '654312', 'shit12312', '一起搞基，先生！是的，先生', 0, NULL, '2021-10-17 01:59:59', 0);
+INSERT INTO `user_info` VALUES (21, 'test1', '大便', NULL, '阿斯蒂芬撒地方', '撒分色', '瑟夫', '费萨尔费', '你说的附属恶化覅色回复i色回复i规格和', 0, NULL, NULL, 0);
 
 -- ----------------------------
 -- Table structure for user_role
@@ -2029,23 +2086,16 @@ CREATE TABLE `user_role`  (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `user_id` int(11) NOT NULL COMMENT '用户id',
   `role_id` int(11) NOT NULL COMMENT '角色id',
+  `expire_time` datetime(0) NULL DEFAULT NULL COMMENT '过期时间',
+  `delete_flag` tinyint(2) NULL DEFAULT 0,
   PRIMARY KEY (`id`, `user_id`, `role_id`) USING BTREE,
   INDEX `role_id`(`role_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户-角色关系表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户-角色关系表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_role
 -- ----------------------------
-INSERT INTO `user_role` VALUES (14, 20, 1);
-INSERT INTO `user_role` VALUES (15, 21, 2);
-INSERT INTO `user_role` VALUES (16, 22, 2);
-INSERT INTO `user_role` VALUES (17, 23, 2);
-INSERT INTO `user_role` VALUES (18, 24, 2);
-INSERT INTO `user_role` VALUES (19, 25, 2);
-INSERT INTO `user_role` VALUES (20, 26, 2);
-INSERT INTO `user_role` VALUES (26, 32, 2);
-INSERT INTO `user_role` VALUES (27, 33, 2);
-INSERT INTO `user_role` VALUES (29, 35, 2);
-INSERT INTO `user_role` VALUES (30, 36, 2);
+INSERT INTO `user_role` VALUES (14, 20, 1, NULL, 0);
+INSERT INTO `user_role` VALUES (15, 21, 2, NULL, 0);
 
 SET FOREIGN_KEY_CHECKS = 1;

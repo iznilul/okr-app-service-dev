@@ -1,4 +1,4 @@
-package com.softlab.okr.exception;
+package com.softlab.okr.model.exception;
 
 /**
  * @program: okr

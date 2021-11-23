@@ -3,6 +3,7 @@ package com.softlab.okr.controller;
 import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.constant.RoleConstants;
 import com.softlab.okr.model.enums.statusCode.KeyStatus;
+import com.softlab.okr.model.enums.statusCode.RoleStatus;
 import com.softlab.okr.service.IEnumService;
 import com.softlab.okr.utils.Result;
 import io.swagger.annotations.Api;
@@ -31,13 +32,14 @@ public class EnumController {
 
     static {
         DICT_MAP.put("keyStatus", KeyStatus.getList());
+        DICT_MAP.put("RoleStatus", RoleStatus.getList());
     }
 
     @Autowired
     private IEnumService enumService;
 
     @GetMapping("key")
-    @Auth(resourceId = 91, role = RoleConstants.USER, name = "模糊查询钥匙状态")
+    @Auth(resourceId = 91, role = RoleConstants.USER, name = "模糊查询钥匙")
     public Result queryLikeKey() {
         List<String> list = DICT_MAP.get("keyStatus");
         return Result.success(list);
@@ -63,4 +65,12 @@ public class EnumController {
         List<String> list = enumService.getLikeMajor(major);
         return Result.success(list);
     }
+
+    @GetMapping("role")
+    @Auth(resourceId = 95, role = RoleConstants.USER, name = "模糊查询角色")
+    public Result queryLikeRole() {
+        List<String> list = DICT_MAP.get("roleStatus");
+        return Result.success(list);
+    }
+
 }

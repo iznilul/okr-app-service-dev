@@ -4,6 +4,9 @@ import com.softlab.okr.model.enums.BaseCode;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @Program: okr
  * @Description:
@@ -59,6 +62,14 @@ public enum RoleStatus implements BaseCode {
             }
         }
         return null;
+    }
+
+    public static List<String> getList() {
+        List<String> list = new ArrayList<>();
+        for (RoleStatus status : RoleStatus.values()) {
+            list.add(status.message);
+        }
+        return list;
     }
 
     @Override
