@@ -13,5 +13,5 @@ public interface IResourceService extends IService<Resource> {
 
     int modifyResourceStatus(int id);
 
-    Set<Integer> getResourceByUserId(int userId);
+    Set<String> getResourceByUserId(int userId);
 }

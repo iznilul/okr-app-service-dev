@@ -72,8 +72,7 @@ public class UserEntityServiceImpl extends ServiceImpl<UserEntityMapper, UserEnt
             UserEntityVO userEntityVO = new UserEntityVO();
             userEntityVO.setUserId(userEntity.getUserId())
                     .setUsername(userEntity.getUsername())
-                    .setToken(jwtManager.generate(userEntity.getUsername()))//用jwt生成token
-                    .setResourceIds(resourceService.getResourceByUserId(userEntity.getUserId()));
+                    .setToken(jwtManager.generate(userEntity.getUsername()));//用jwt生成token
             return userEntityVO;
         }
     }
@@ -90,7 +89,7 @@ public class UserEntityServiceImpl extends ServiceImpl<UserEntityMapper, UserEnt
         // 查询权限id
         Set<SimpleGrantedAuthority> authorities = resourceService.getResourceByUserId(user.getUserId())
                 .stream()
-                .map(String::valueOf)
+//                .map(String::valueOf)
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toSet());
         return new UserDetail(user, authorities);

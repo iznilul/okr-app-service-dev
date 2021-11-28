@@ -21,78 +21,78 @@ import org.springframework.web.cors.CorsUtils;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-  @Autowired
-  private UserEntityServiceImpl userDetailsService;
+    @Autowired
+    private UserEntityServiceImpl userDetailsService;
 
-  @Autowired
-  private LoginFilter loginFilter;
+    @Autowired
+    private LoginFilter loginFilter;
 
-  @Autowired
-  private AuthFilter authFilter;
+    @Autowired
+    private AuthFilter authFilter;
 
-  @Value("${spring.security.switch}")
-  private boolean securitySwitch;
+    @Value("${spring.security.switch}")
+    private boolean securitySwitch;
 
-  //@Autowired
-  //private MyLogoutSuccessHandler myLogoutSuccessHandler;
+    //@Autowired
+    //private MyLogoutSuccessHandler myLogoutSuccessHandler;
 
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-    // 关闭csrf和frameOptions，如果不关闭会影响前端请求接口（这里不展开细讲了，感兴趣的自行搜索，不难）
-    http.csrf().disable();
-    http.headers().frameOptions().disable();
-    // 开启跨域以便前端调用接口
-    http.cors();
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        // 关闭csrf和frameOptions，如果不关闭会影响前端请求接口（这里不展开细讲了，感兴趣的自行搜索，不难）
+        http.csrf().disable();
+        http.headers().frameOptions().disable();
+        // 开启跨域以便前端调用接口
+        http.cors();
 
-    // 这是配置的关键，决定哪些接口开启防护，哪些接口绕过防护
-    http.authorizeRequests()
-        // 注意这里，是允许前端跨域联调的一个必要配置
-        .requestMatchers(CorsUtils::isPreFlightRequest)
-        .permitAll()
-        // 指定某些接口不需要通过验证即可访问。像登陆、测试接口肯定是不需要认证的
-        .antMatchers(securitySwitch ? "/api/common/**" : "/api/**")
-        .permitAll()
-        // 这里意思是其它所有接口需要认证才能访问
-        .anyRequest()
-        .authenticated()
-        // 关于登录认证的错误处理器
-        .and()
-        //.logout()
-        //.logoutUrl("/api/common/logout")
-        //.logoutSuccessHandler(myLogoutSuccessHandler)
-        //.and()
-        .exceptionHandling()
-        .authenticationEntryPoint(new MyEntryPoint())
-        // 指定认证错误，权限不足处理器
-        .accessDeniedHandler(new MyDeniedHandler());
+        // 这是配置的关键，决定哪些接口开启防护，哪些接口绕过防护
+        http.authorizeRequests()
+                // 注意这里，是允许前端跨域联调的一个必要配置
+                .requestMatchers(CorsUtils::isPreFlightRequest)
+                .permitAll()
+                // 指定某些接口不需要通过验证即可访问。像登陆、测试接口肯定是不需要认证的
+                .antMatchers(securitySwitch ? "/api/okr/common/**" : "/api/**")
+                .permitAll()
+                // 这里意思是其它所有接口需要认证才能访问
+                .anyRequest()
+                .authenticated()
+                // 关于登录认证的错误处理器
+                .and()
+                //.logout()
+                //.logoutUrl("/api/common/logout")
+                //.logoutSuccessHandler(myLogoutSuccessHandler)
+                //.and()
+                .exceptionHandling()
+                .authenticationEntryPoint(new MyEntryPoint())
+                // 指定认证错误，权限不足处理器
+                .accessDeniedHandler(new MyDeniedHandler());
 
-    // 禁用session，因为要用JWT
-    http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-    // 将我们自定义的认证过滤器替换掉默认的认证过滤器,两个过滤器分别是登录过滤和权限过滤
-    http.addFilterBefore(new ApiFilter(), UsernamePasswordAuthenticationFilter.class);
-    //http.addFilterBefore(loginFilter, UsernamePasswordAuthenticationFilter.class);
-    //http.addFilterBefore(authFilter, FilterSecurityInterceptor.class);
-    http.addFilterAt(loginFilter, UsernamePasswordAuthenticationFilter.class);
-    http.addFilterAt(authFilter, FilterSecurityInterceptor.class);
-  }
+        // 禁用session，因为要用JWT
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        // 将我们自定义的认证过滤器替换掉默认的认证过滤器,两个过滤器分别是登录过滤和权限过滤
+        http.addFilterBefore(new ApiFilter(), UsernamePasswordAuthenticationFilter.class);
+        //http.addFilterBefore(loginFilter, UsernamePasswordAuthenticationFilter.class);
+        //http.addFilterBefore(authFilter, FilterSecurityInterceptor.class);
+        http.addFilterAt(loginFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterAt(authFilter, FilterSecurityInterceptor.class);
+    }
 
-  // 登录认证三大组件，业务对象UserDetailsService，用户对象UserDetail，加密工具passwordEncoder需要自定义重写
-  @Override
-  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    // 指定UserDetailService和加密器
-    auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-  }
+    // 登录认证三大组件，业务对象UserDetailsService，用户对象UserDetail，加密工具passwordEncoder需要自定义重写
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        // 指定UserDetailService和加密器
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    }
 
-  @Bean
-  @Override
-  // AuthenticationManager 就是Spring Security用于执行身份验证的组件，只需要调用它的authenticate方法即可完成认证
-  protected AuthenticationManager authenticationManager() throws Exception {
-    return super.authenticationManager();
-  }
+    @Bean
+    @Override
+    // AuthenticationManager 就是Spring Security用于执行身份验证的组件，只需要调用它的authenticate方法即可完成认证
+    protected AuthenticationManager authenticationManager() throws Exception {
+        return super.authenticationManager();
+    }
 
-  @Bean
-  // 将密码加密类注入容器内部
-  public PasswordEncoder passwordEncoder() {
-    return new MyPasswordEncoder();
-  }
+    @Bean
+    // 将密码加密类注入容器内部
+    public PasswordEncoder passwordEncoder() {
+        return new MyPasswordEncoder();
+    }
 }

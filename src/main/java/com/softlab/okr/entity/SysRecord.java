@@ -17,13 +17,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SysRecord {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  @TableId(value = "id", type = IdType.AUTO)
-  private Integer id;
-  private Integer resourceId;
-  private Integer userId;
-  private String ip;
-  private String time;
-  private long duration;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
+    private Long resourceId;
+    private Integer userId;
+    private String ip;
+    private String time;
+    private long duration;
 }

@@ -35,11 +35,11 @@ public class RoleResourceServiceImpl extends
     @Override
     @Transactional
     public boolean reloadRoleResource(List<Resource> list) {
-        Set<Integer> resourceSet = new HashSet<>();
+        Set<Long> resourceSet = new HashSet<>();
         List<Role> roleList = roleService.list(new QueryWrapper<Role>().orderByDesc("role_id"));
         this.remove(null);
         for (Role role : roleList) {
-            Set<Integer> set = list.stream().filter(resource -> resource.getRole().equals(role.getRole()))
+            Set<Long> set = list.stream().filter(resource -> resource.getRole().equals(role.getRole()))
                     .map(Resource::getResourceId).collect(Collectors.toSet());
             resourceSet.addAll(set);
             List<RoleResource> result = this.buildRoleResourceList(role.getRoleId(), resourceSet);
@@ -50,7 +50,7 @@ public class RoleResourceServiceImpl extends
         return true;
     }
 
-    private List<RoleResource> buildRoleResourceList(Integer roleId, Set<Integer> set) {
+    private List<RoleResource> buildRoleResourceList(Integer roleId, Set<Long> set) {
         return set.stream().map(resource ->
         {
             RoleResource roleResource = new RoleResource();

@@ -41,7 +41,7 @@ public class UserController {
 
     @ApiOperation("注册用户")
     @PostMapping("add")
-    @Auth(resourceId = 121, role = RoleConstants.ADMIN, name = "注册用户")
+    @Auth(role = RoleConstants.ADMIN, name = "注册用户")
     public Result addUser(@Validated @RequestBody RegisterDTO dto) {
 
         return userEntityService.register(dto) ? Result.success() : Result.failure();
@@ -49,7 +49,7 @@ public class UserController {
 
     @ApiOperation("删除用户")
     @GetMapping("cancel")
-    @Auth(resourceId = 122, role = RoleConstants.ADMIN, name = "删除用户")
+    @Auth(role = RoleConstants.ADMIN, name = "删除用户")
     public Result cancelUser(
             @NotBlank(message = "username不能为空") @RequestParam("username") String username) {
 
@@ -59,7 +59,7 @@ public class UserController {
 
     @ApiOperation("更新用户信息")
     @PostMapping("change")
-    @Auth(resourceId = 123, role = RoleConstants.USER, name = "更新用户信息")
+    @Auth(role = RoleConstants.USER, name = "更新用户信息")
     public Result changeUser(@RequestBody UpdateUserDTO dto) {
 
         return userInfoService.modifyUserInfo(dto) == 1 ?
@@ -68,7 +68,7 @@ public class UserController {
 
     @ApiOperation("获取用户信息")
     @GetMapping("query")
-    @Auth(resourceId = 124, role = RoleConstants.USER, name = "根据账号选择用户")
+    @Auth(role = RoleConstants.USER, name = "根据账号选择用户")
     public Result queryUser() {
 
         UserInfo userInfo = userInfoService.getUserInfo();
@@ -77,7 +77,7 @@ public class UserController {
 
     @ApiOperation("根据条件选择用户")
     @PostMapping("queryList")
-    @Auth(resourceId = 125, role = RoleConstants.USER, name = "根据情况选择用户")
+    @Auth(role = RoleConstants.USER, name = "根据情况选择用户")
     public Result queryUserList(
             @RequestBody SelectUserDTO dto) throws Exception {
 
@@ -87,7 +87,7 @@ public class UserController {
     @ApiOperation("上传头像文件")
 
     @PostMapping("changeImg")
-    @Auth(resourceId = 126, role = RoleConstants.USER, name = "上传头像文件")
+    @Auth(role = RoleConstants.USER, name = "上传头像文件")
     public Result changeUserImg(
             @RequestParam("file") MultipartFile file)
             throws IOException {
@@ -99,7 +99,7 @@ public class UserController {
 
     @ApiOperation("修改密码")
     @PostMapping("changePassword")
-    @Auth(resourceId = 127, role = RoleConstants.USER, name = "修改密码")
+    @Auth(role = RoleConstants.USER, name = "修改密码")
     public Result changePassword(@RequestBody ModifyPwdDTO dto) {
         return userEntityService.modifyPassword(dto) ?
                 Result.success() : Result.failure();
@@ -107,7 +107,7 @@ public class UserController {
 
     @ApiOperation("根据用户名获取用户信息")
     @GetMapping("queryByUsername")
-    @Auth(resourceId = 128, role = RoleConstants.USER, name = "根据用户名选择用户")
+    @Auth(role = RoleConstants.USER, name = "根据用户名选择用户")
     public Result queryUserByUsername(@RequestParam("username") String username) {
 
         UserInfoVO vo = userInfoService.getUserInfoByUsername(username);

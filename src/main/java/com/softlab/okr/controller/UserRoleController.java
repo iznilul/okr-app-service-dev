@@ -26,7 +26,7 @@ public class UserRoleController {
     @Autowired
     private IUserRoleService userRoleService;
 
-    @Auth(resourceId = 141, role = RoleConstants.SUPER_ADMIN, name = "修改成员的角色权限")
+    @Auth(role = RoleConstants.SUPER_ADMIN, name = "修改成员的角色权限")
     @PostMapping("grant")
     public Result grantRole(@RequestBody GrantRoleDTO dto) {
         Boolean result = userRoleService.grantRole(dto);

@@ -27,7 +27,7 @@ public class RankController {
 
     @ApiOperation("csdn实时展示")
     @GetMapping("csdn")
-    @Auth(resourceId = 71, role = RoleConstants.COMMON, name = "csdn实时展示")
+    @Auth(role = RoleConstants.COMMON, name = "csdn实时展示")
     public Result queryCsdn() {
         return csdnSpiderService.getAll();
     }

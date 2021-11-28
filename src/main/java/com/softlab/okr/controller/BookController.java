@@ -31,7 +31,7 @@ public class BookController {
 
     @PostMapping("add")
     @ApiOperation("添加书籍")
-    @Auth(resourceId = 11, role = RoleConstants.ADMIN, name = "添加书籍")
+    @Auth(role = RoleConstants.ADMIN, name = "添加书籍")
     public Result addBook(@RequestBody BookDTO dto) {
 
         return bookService.saveBook(dto) ?
@@ -40,7 +40,7 @@ public class BookController {
 
     @GetMapping("changeImg")
     @ApiOperation("上传书籍照片")
-    @Auth(resourceId = 12, role = RoleConstants.ADMIN, name = "上传书籍照片")
+    @Auth(role = RoleConstants.ADMIN, name = "上传书籍照片")
     public Result changeBookImg(
             @RequestParam("bookId") int bookId, @RequestParam("file") MultipartFile file)
             throws Exception {
@@ -51,7 +51,7 @@ public class BookController {
 
     @PostMapping("change")
     @ApiOperation("修改书籍")
-    @Auth(resourceId = 13, role = RoleConstants.ADMIN, name = "修改书籍")
+    @Auth(role = RoleConstants.ADMIN, name = "修改书籍")
     public Result changeBook(@RequestBody BookDTO dto) {
 
         return bookService.modifyBook(dto) ?
@@ -60,7 +60,7 @@ public class BookController {
 
     @GetMapping("cancel")
     @ApiOperation("删除书籍")
-    @Auth(resourceId = 14, role = RoleConstants.ADMIN, name = "删除书籍")
+    @Auth(role = RoleConstants.ADMIN, name = "删除书籍")
     public Result cancelBook(@RequestParam("bookId") @NotNull int bookId) {
 
         return bookService.removeBook(bookId) ?
@@ -69,14 +69,14 @@ public class BookController {
 
     @PostMapping("query")
     @ApiOperation("书籍列表")
-    @Auth(resourceId = 15, role = RoleConstants.USER, name = "书籍列表")
+    @Auth(role = RoleConstants.USER, name = "书籍列表")
     public Result queryBook(@RequestBody @Validated BookQueryDTO dto) {
         return bookService.getByCond(dto);
     }
 
     @GetMapping("borrow")
     @ApiOperation("借书")
-    @Auth(resourceId = 16, role = RoleConstants.ADMIN, name = "借书")
+    @Auth(role = RoleConstants.ADMIN, name = "借书")
     public Result borrowBook(@RequestParam("bookId") @NotNull int bookId) {
         return bookService.borrowBook(bookId) == 1 ?
                 Result.success() : Result.failure();
@@ -84,7 +84,7 @@ public class BookController {
 
     @GetMapping("return")
     @ApiOperation("还书")
-    @Auth(resourceId = 17, role = RoleConstants.ADMIN, name = "还书")
+    @Auth(role = RoleConstants.ADMIN, name = "还书")
     public Result returnBook(@RequestParam("bookId") @NotNull int bookId) {
         return bookService.returnBook(bookId) == 1 ?
                 Result.success() : Result.failure();

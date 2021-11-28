@@ -28,7 +28,7 @@ public class ResourceController {
 
     @ApiOperation("更改接口开放状态")
     @GetMapping("change")
-    @Auth(resourceId = 41, role = RoleConstants.ADMIN, name = "更改接口开放状态")
+    @Auth(role = RoleConstants.ADMIN, name = "更改接口开放状态")
     public Result changeResource(
             @NotNull(message = "resourceId不能为空") @RequestParam("resourceId") int resourceId) {
         return resourceService.modifyResourceStatus(resourceId) == 1 ?
@@ -37,7 +37,7 @@ public class ResourceController {
 
     @ApiOperation("获取资源接口")
     @PostMapping("query")
-    @Auth(resourceId = 43, role = RoleConstants.ADMIN, name = "获取资源接口")
+    @Auth(role = RoleConstants.ADMIN, name = "获取资源接口")
     public Result queryResource(@RequestBody PageDTO dto) {
         return resourceService.getResourceList(dto);
     }

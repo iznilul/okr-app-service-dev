@@ -14,11 +14,6 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD, ElementType.TYPE})
 public @interface Auth {
     /**
-     * 权限id
-     */
-    int resourceId();
-
-    /**
      * 角色权限
      */
     String role();

@@ -15,23 +15,23 @@ import lombok.Data;
 @Data
 public class RoleResource {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  /**
-   * 主键
-   */
-  @TableId(value = "id", type = IdType.AUTO)
-  private Integer id;
+    /**
+     * 主键
+     */
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
 
-  /**
-   * 角色id
-   */
-  private Integer roleId;
+    /**
+     * 角色id
+     */
+    private Integer roleId;
 
-  /**
-   * 资源id
-   */
-  private Integer resourceId;
+    /**
+     * 资源id
+     */
+    private Long resourceId;
 
 
 }

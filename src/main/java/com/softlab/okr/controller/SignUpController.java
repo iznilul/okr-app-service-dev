@@ -36,14 +36,14 @@ public class SignUpController {
 
     @ApiOperation("获取报名记录")
     @PostMapping("query")
-    @Auth(resourceId = 51, role = RoleConstants.ADMIN, name = "获取报名记录")
+    @Auth(role = RoleConstants.ADMIN, name = "获取报名记录")
     public Result querySignUp(@RequestBody SignUpDTO dto) {
         return signUpService.getSignUpByCond(dto);
     }
 
     @ApiOperation("更新报名记录")
     @PostMapping("change")
-    @Auth(resourceId = 52, role = RoleConstants.ADMIN, name = "更新报名记录")
+    @Auth(role = RoleConstants.ADMIN, name = "更新报名记录")
     public Result changeSignUp(@RequestBody SignUp signUP) {
 
         return signUpService.modifySignUp(signUP) == 1 ?
@@ -52,14 +52,14 @@ public class SignUpController {
 
     @ApiOperation("导出报名单")
     @GetMapping("export")
-    @Auth(resourceId = 53, role = RoleConstants.ADMIN, name = "导出报名单")
+    @Auth(role = RoleConstants.ADMIN, name = "导出报名单")
     public void exportSignUp(HttpServletResponse response) throws IOException {
         signUpService.exportSignUp(response);
     }
 
     @ApiOperation("报名")
     @PostMapping("add")
-    @Auth(resourceId = 54, role = RoleConstants.COMMON, name = "纳新报名")
+    @Auth(role = RoleConstants.COMMON, name = "纳新报名")
     public Result addSignUp(@RequestBody UserSignUpDTO dto) {
         return signUpService.saveSignUp(dto) == 1
                 ? Result.success("报名成功，请加入纳新群: " + commonConfig.getQqGroupNumber())
@@ -68,7 +68,7 @@ public class SignUpController {
 
     @ApiOperation("查询报名")
     @GetMapping("query")
-    @Auth(resourceId = 55, role = RoleConstants.COMMON, name = "报名结果查询")
+    @Auth(role = RoleConstants.COMMON, name = "报名结果查询")
     public Result querySignUp(@RequestParam String studentId) {
         SignUpVO signUpVO = signUpService.getSignUpById(studentId);
         return signUpVO != null ? Result.success(signUpVO) : Result.failure();

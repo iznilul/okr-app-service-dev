@@ -8,6 +8,8 @@ import com.softlab.okr.model.vo.UserInfoVO;
 import com.softlab.okr.utils.Result;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 /**
  * @Author: Devhui
  * @Date: 2019/12/23 18:30
@@ -28,6 +30,6 @@ public interface IUserInfoService extends IService<UserInfo> {
 
     int modifyUserInfo(UpdateUserDTO dto);
 
-    int uploadAvatar(MultipartFile file) ,IOException;
+    int uploadAvatar(MultipartFile file) throws IOException;
 
 }

@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @Api(tags = "通用 登陆部分接口")
-@RequestMapping("/api/okr")
+@RequestMapping("/api/okr/common")
 public class LoginController {
 
     @Autowired
@@ -36,7 +36,7 @@ public class LoginController {
     //将登录后的用户信息包括token返回给前端页面
     @ApiOperation("登录")
     @PostMapping("login")
-    @Auth(resourceId = 111, role = RoleConstants.COMMON, name = "用户登录")
+    @Auth(role = RoleConstants.COMMON, name = "用户登录")
     public Result login(@RequestBody LoginDTO dto) throws Exception {
         UserEntityVO userEntityVO = userEntityService.login(dto);
         return userEntityVO != null ? Result.success(userEntityVO) : Result.failure();
@@ -44,7 +44,7 @@ public class LoginController {
 
     @ApiOperation("测试")
     @GetMapping("test")
-    @Auth(resourceId = 112, role = RoleConstants.COMMON, name = "认证测试")
+    @Auth(role = RoleConstants.COMMON, name = "认证测试")
     public Result test() {
         log.info("---test---");
         Authentication authentication = authenticationService.getAuthentication();
@@ -57,7 +57,7 @@ public class LoginController {
 
     @ApiOperation("注销")
     @GetMapping("logout")
-    @Auth(resourceId = 113, role = RoleConstants.COMMON, name = "用户退出")
+    @Auth(role = RoleConstants.COMMON, name = "用户退出")
     public Result logout() {
         SecurityContext context = SecurityContextHolder.getContext();
         //SecurityContextHolder.clearContext();

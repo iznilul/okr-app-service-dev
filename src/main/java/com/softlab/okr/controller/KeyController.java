@@ -31,7 +31,7 @@ public class KeyController {
 
     @GetMapping("add")
     @ApiOperation("增加钥匙")
-    @Auth(resourceId = 21, role = RoleConstants.ADMIN, name = "增加钥匙")
+    @Auth(role = RoleConstants.ADMIN, name = "增加钥匙")
     public Result addKey(@RequestParam("keyName") @NotBlank String keyName) {
         return keyService.saveKey(keyName) == 1 ?
                 Result.success() : Result.failure();
@@ -39,7 +39,7 @@ public class KeyController {
 
     @PostMapping("change")
     @ApiOperation("修改钥匙")
-    @Auth(resourceId = 22, role = RoleConstants.ADMIN, name = "修改钥匙")
+    @Auth(role = RoleConstants.ADMIN, name = "修改钥匙")
     public Result changeKey(@RequestBody KeyDTO dto) {
         return keyService.modifyKey(dto) == 1 ?
                 Result.success() : Result.failure();
@@ -47,7 +47,7 @@ public class KeyController {
 
     @GetMapping("cancel")
     @ApiOperation("删除钥匙")
-    @Auth(resourceId = 23, role = RoleConstants.ADMIN, name = "删除钥匙")
+    @Auth(role = RoleConstants.ADMIN, name = "删除钥匙")
     public Result cancelKey(@RequestParam("keyId") @NotNull int keyId) {
         return keyService.removeById(keyId) == 1 ?
                 Result.success() : Result.failure();
@@ -55,7 +55,7 @@ public class KeyController {
 
     @GetMapping("queryById")
     @ApiOperation("根据id查询钥匙")
-    @Auth(resourceId = 24, role = RoleConstants.ADMIN, name = "根据id查询钥匙")
+    @Auth(role = RoleConstants.ADMIN, name = "根据id查询钥匙")
     public Result queryKeyById(@RequestParam("keyId") int keyId) {
         KeyVO vo = keyService.getKeyById(keyId);
         return null != vo ? Result.success(vo) : Result.failure();
@@ -63,21 +63,21 @@ public class KeyController {
 
     @PostMapping("query")
     @ApiOperation("钥匙列表")
-    @Auth(resourceId = 25, role = RoleConstants.USER, name = "钥匙列表")
+    @Auth(role = RoleConstants.USER, name = "钥匙列表")
     public Result queryKey(@RequestBody PageDTO dto) {
         return keyService.getKey(dto);
     }
 
     @GetMapping("borrow")
     @ApiOperation("借钥匙")
-    @Auth(resourceId = 26, role = RoleConstants.USER, name = "借钥匙")
+    @Auth(role = RoleConstants.USER, name = "借钥匙")
     public Result borrowKey(@RequestParam("keyId") int keyId) {
         return keyService.borrowKey(keyId) == 1 ? Result.success() : Result.failure();
     }
 
     @GetMapping("return")
     @ApiOperation("还钥匙")
-    @Auth(resourceId = 27, role = RoleConstants.USER, name = "还钥匙")
+    @Auth(role = RoleConstants.USER, name = "还钥匙")
     public Result returnKey(@RequestParam("keyId") int keyId) {
         return keyService.returnKey(keyId) == 1 ? Result.success() : Result.failure();
     }

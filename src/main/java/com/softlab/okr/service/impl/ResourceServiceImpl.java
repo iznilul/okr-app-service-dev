@@ -57,7 +57,7 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
 
     @Override
     @Transactional
-    public Set<Integer> getResourceByUserId(int userId) {
+    public Set<String> getResourceByUserId(int userId) {
         UserRole userRole = userRoleService.getOne(new QueryWrapper<UserRole>()
                 .eq("user_id", userId));
         long time = System.currentTimeMillis();
