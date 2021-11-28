@@ -23,7 +23,7 @@ public class MonitorController {
 
     @GetMapping("server")
     @ApiOperation("服务器监控")
-    @Auth(resourceId = 101, role = RoleConstants.USER, name = "服务器监控")
+    @Auth(role = RoleConstants.USER, name = "服务器监控")
     public Result server() throws Exception {
         Server server = new Server();
         server.copyTo();

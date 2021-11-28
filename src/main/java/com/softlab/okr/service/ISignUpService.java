@@ -8,6 +8,7 @@ import com.softlab.okr.model.vo.SignUpVO;
 import com.softlab.okr.utils.Result;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * @Author: Devhui
@@ -29,5 +30,5 @@ public interface ISignUpService extends IService<SignUp> {
     SignUpVO getSignUpById(String studentId);
 
     //导出报名列表
-    void exportSignUp(HttpServletResponse response) ,IOException;
+    void exportSignUp(HttpServletResponse response) throws IOException;
 }

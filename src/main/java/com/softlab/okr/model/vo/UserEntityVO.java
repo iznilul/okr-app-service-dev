@@ -3,8 +3,6 @@ package com.softlab.okr.model.vo;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import java.util.Set;
-
 /**
  * @author RudeCrab
  */
@@ -24,7 +22,7 @@ public class UserEntityVO {
      */
     private String token;
     /**
-     * 当前用户的权限资源id集合
+     * 当前用户的权限路径集合
      */
-    private Set<Integer> resourceIds;
+//    private Set<String> paths;
 }

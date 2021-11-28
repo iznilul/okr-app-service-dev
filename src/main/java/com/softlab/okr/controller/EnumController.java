@@ -39,35 +39,35 @@ public class EnumController {
     private IEnumService enumService;
 
     @GetMapping("key")
-    @Auth(resourceId = 91, role = RoleConstants.USER, name = "模糊查询钥匙")
+    @Auth(role = RoleConstants.USER, name = "模糊查询钥匙")
     public Result queryLikeKey() {
         List<String> list = DICT_MAP.get("keyStatus");
         return Result.success(list);
     }
 
     @GetMapping("username")
-    @Auth(resourceId = 92, role = RoleConstants.USER, name = "模糊查询用户名列表")
+    @Auth(role = RoleConstants.USER, name = "模糊查询用户名列表")
     public Result queryLikeUsername(@RequestParam(value = "param") String username) {
         List<String> list = enumService.getLikeUsername(username);
         return Result.success(list);
     }
 
     @GetMapping("name")
-    @Auth(resourceId = 93, role = RoleConstants.USER, name = "模糊查询姓名列表")
+    @Auth(role = RoleConstants.USER, name = "模糊查询姓名列表")
     public Result queryLikeName(@RequestParam(value = "param") String name) {
         List<String> list = enumService.getLikeName(name);
         return Result.success(list);
     }
 
     @GetMapping("major")
-    @Auth(resourceId = 94, role = RoleConstants.USER, name = "模糊查询专业列表")
+    @Auth(role = RoleConstants.USER, name = "模糊查询专业列表")
     public Result queryLikeMajor(@RequestParam(value = "param") String major) {
         List<String> list = enumService.getLikeMajor(major);
         return Result.success(list);
     }
 
     @GetMapping("role")
-    @Auth(resourceId = 95, role = RoleConstants.USER, name = "模糊查询角色")
+    @Auth(role = RoleConstants.USER, name = "模糊查询角色")
     public Result queryLikeRole() {
         List<String> list = DICT_MAP.get("roleStatus");
         return Result.success(list);

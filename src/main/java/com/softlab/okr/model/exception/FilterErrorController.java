@@ -1,10 +1,11 @@
-package com.softlab.okr.security;
+package com.softlab.okr.model.exception;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @program: okr
@@ -17,9 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class FilterErrorController {
 
-  @RequestMapping("/error/throw")
-  @ApiOperation("抛出异常")
-  public void rethrow(HttpServletRequest request) throws Exception {
-    throw ((Exception) request.getAttribute("filter.error"));
-  }
+    @RequestMapping("/error/throw")
+    @ApiOperation("抛出异常")
+    public void rethrow(HttpServletRequest request) throws Exception {
+        throw ((Exception) request.getAttribute("filter.error"));
+    }
 }

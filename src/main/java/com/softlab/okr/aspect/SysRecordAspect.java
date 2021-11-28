@@ -76,7 +76,7 @@ public class SysRecordAspect {
                 (ServletRequestAttributes) RequestContextHolder
                         .getRequestAttributes();
         HttpServletRequest request = servletRequestAttributes.getRequest();
-        Integer resourceId =
+        Long resourceId =
                 MySecurityMetadataSource.getResourceId(filterUtil.getRequestPath(request));
         Integer userId = filterUtil.getRequestUserId();
         String ip = filterUtil.getRequestIp();

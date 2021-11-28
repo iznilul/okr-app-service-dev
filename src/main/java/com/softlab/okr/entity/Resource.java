@@ -23,7 +23,7 @@ public class Resource {
      * 主键
      */
     @TableId(value = "resource_id")
-    private Integer resourceId;
+    private Long resourceId;
     /**
      * 名称
      */

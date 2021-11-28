@@ -7,6 +7,7 @@ import com.softlab.okr.utils.Result;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ import java.util.Set;
  * @create: 2021-08-21 00:20
  */
 @Slf4j
+@Component
 public class ApiFilter implements Filter {
 
     @Getter
@@ -29,7 +31,7 @@ public class ApiFilter implements Filter {
     private static Set<Resource> resources = new HashSet<>();
 
     @Override
-    public void init(FilterConfig arg0) throws ServletException {
+    public void init(FilterConfig arg0) {
         // System.out.println("----Filter初始化----");
     }
 
@@ -56,6 +58,7 @@ public class ApiFilter implements Filter {
             }
         }
         if (flag == 0) {
+            log.info("----ApiFilter 没有找到对应接口----");
             //若没有找到请求接口，返回错误
             response.setContentType("application/json;charset=utf-8");
             PrintWriter out = response.getWriter();
@@ -70,7 +73,7 @@ public class ApiFilter implements Filter {
         // System.out.println("----Filter销毁----");
     }
 
-    public static void updateResources(int resourceId) {
+    public static void updateResources(long resourceId) {
         for (Resource resource : resources) {
             if (resource.getResourceId() == resourceId) {
                 resources.remove(resource);

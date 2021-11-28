@@ -28,7 +28,7 @@ public class KeyUserController {
 
     @GetMapping("add")
     @ApiOperation("增加钥匙持有人")
-    @Auth(resourceId = 31, role = RoleConstants.ADMIN, name = "增加钥匙持有人")
+    @Auth(role = RoleConstants.ADMIN, name = "增加钥匙持有人")
     public Result addKeyUser(@RequestParam("keyId") @NotNull int keyId,
                              @RequestParam("userId") @NotNull int userId) {
         return keyUserService.saveKeyUser(keyId, userId) == 1 ?
@@ -37,7 +37,7 @@ public class KeyUserController {
 
     @GetMapping("cancel")
     @ApiOperation("删除钥匙持有人")
-    @Auth(resourceId = 32, role = RoleConstants.ADMIN, name = "删除钥匙持有人")
+    @Auth(role = RoleConstants.ADMIN, name = "删除钥匙持有人")
     public Result cancelKeyUser(@RequestParam("id") @NotNull int id) {
         return keyUserService.removeByUserId(id) == 1 ?
                 Result.success() : Result.failure();
@@ -45,7 +45,7 @@ public class KeyUserController {
 
     @PostMapping("query")
     @ApiOperation("钥匙记录列表")
-    @Auth(resourceId = 33, role = RoleConstants.USER, name = "钥匙记录列表")
+    @Auth(role = RoleConstants.USER, name = "钥匙记录列表")
     public Result queryKeyUser(@RequestBody PageDTO dto) {
         return keyUserService.getKeyUser(dto);
     }

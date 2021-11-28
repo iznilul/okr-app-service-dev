@@ -27,7 +27,7 @@ public class MenuController {
     @Autowired
     private IMenuService menuService;
 
-    @Auth(resourceId = 131, role = RoleConstants.USER, name = "获取路径")
+    @Auth(role = RoleConstants.USER, name = "获取路径")
     @GetMapping("fetch")
     public Result queryRoute() {
         List<MenuVO> list = menuService.getMenu();

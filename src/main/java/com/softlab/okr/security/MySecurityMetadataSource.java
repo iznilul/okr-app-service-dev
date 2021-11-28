@@ -53,14 +53,14 @@ public class MySecurityMetadataSource implements SecurityMetadataSource {
             // 如果请求方法和请求路径都匹配上了，则代表找到了这个请求所需的授权规则
             if (request.getMethod().equals(method) && ant.matches(request)) {
                 // 将我们权限资源id返回
-                return Collections.singletonList(new SecurityConfig(resource.getResourceId().toString()));
+                return Collections.singletonList(new SecurityConfig(resource.getPath()));
             }
         }
         // 走到这里就代表该请求无需授权即可访问，返回空
         return null;
     }
 
-    public static Integer getResourceId(String path) {
+    public static Long getResourceId(String path) {
         Set<Resource> set = getResources();
         for (Resource resource : set) {
             if (resource.getPath().equals(path)) {

@@ -113,7 +113,7 @@ public class ApplicationStartup implements ApplicationRunner {
                     // 将权限名、资源路径、资源类型组装成资源对象，并添加集合中
                     Resource resource = new Resource();
                     resource
-                            .setResourceId(methodAuth.resourceId())
+                            .setResourceId(null)
                             .setName(methodAuth.name())
                             .setMethod(method)
                             .setPath(path)

@@ -11,8 +11,8 @@ import com.softlab.okr.mapper.ResourceMapper;
 import com.softlab.okr.model.dto.PageDTO;
 import com.softlab.okr.model.enums.statusCode.ResourceStatus;
 import com.softlab.okr.model.enums.statusCode.RoleStatus;
+import com.softlab.okr.model.exception.BusinessException;
 import com.softlab.okr.model.vo.ResourceVO;
-import com.softlab.okr.security.ApiFilter;
 import com.softlab.okr.service.IResourceService;
 import com.softlab.okr.service.IUserRoleService;
 import com.softlab.okr.utils.CopyUtil;
@@ -51,13 +51,12 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
     @Override
     @Transactional
     public int modifyResourceStatus(int resourceId) {
-        ApiFilter.updateResources(resourceId);
+//        ApiFilter.updateResources(resourceId);
         return resourceMapper.updateResourceStatus(resourceId);
     }
 
     @Override
-    @Transactional
-    public Set<Integer> getResourceByUserId(int userId) {
+    public Set<String> getResourceByUserId(int userId) {
         UserRole userRole = userRoleService.getOne(new QueryWrapper<UserRole>()
                 .eq("user_id", userId));
         long time = System.currentTimeMillis();
@@ -65,6 +64,7 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
             userRole.setRoleId(RoleStatus.MEMBER.code());
             userRole.setExpireTime(DateUtil.parse(TimeFormat.neverExpire));
             userRoleService.updateById(userRole);
+            throw new BusinessException("权限已到期 请重新登录");
         }
         return resourceMapper.selectByUserId(userId);
     }
