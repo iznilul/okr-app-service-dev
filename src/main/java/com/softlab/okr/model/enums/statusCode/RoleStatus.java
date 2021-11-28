@@ -18,7 +18,7 @@ import java.util.List;
 public enum RoleStatus implements BaseCode {
     SUPER_ADMIN(1, "超级管理员", "superAdmin"),
     ADMIN(2, "管理员", "admin"),
-    MEMBER(3, "普通用户", "user");
+    USER(3, "普通用户", "user");
 
     private Integer code;
     private String message;

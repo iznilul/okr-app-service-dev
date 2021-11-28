@@ -40,35 +40,35 @@ public class EnumController {
 
     @GetMapping("key")
     @Auth(role = RoleConstants.USER, name = "模糊查询钥匙")
-    public Result queryLikeKey() {
+    public Result enumKey() {
         List<String> list = DICT_MAP.get("keyStatus");
         return Result.success(list);
     }
 
     @GetMapping("username")
     @Auth(role = RoleConstants.USER, name = "模糊查询用户名列表")
-    public Result queryLikeUsername(@RequestParam(value = "param") String username) {
+    public Result enumUsername(@RequestParam(value = "param") String username) {
         List<String> list = enumService.getLikeUsername(username);
         return Result.success(list);
     }
 
     @GetMapping("name")
     @Auth(role = RoleConstants.USER, name = "模糊查询姓名列表")
-    public Result queryLikeName(@RequestParam(value = "param") String name) {
+    public Result enumName(@RequestParam(value = "param") String name) {
         List<String> list = enumService.getLikeName(name);
         return Result.success(list);
     }
 
     @GetMapping("major")
     @Auth(role = RoleConstants.USER, name = "模糊查询专业列表")
-    public Result queryLikeMajor(@RequestParam(value = "param") String major) {
+    public Result enumMajor(@RequestParam(value = "param") String major) {
         List<String> list = enumService.getLikeMajor(major);
         return Result.success(list);
     }
 
     @GetMapping("role")
     @Auth(role = RoleConstants.USER, name = "模糊查询角色")
-    public Result queryLikeRole() {
+    public Result enumRole() {
         List<String> list = DICT_MAP.get("roleStatus");
         return Result.success(list);
     }

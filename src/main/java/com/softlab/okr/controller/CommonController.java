@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Api(tags = "通用 登陆部分接口")
 @RequestMapping("/api/okr/common")
-public class LoginController {
+public class CommonController {
 
     @Autowired
     private IUserEntityService userEntityService;

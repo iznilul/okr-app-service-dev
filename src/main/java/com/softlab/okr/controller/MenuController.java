@@ -29,7 +29,7 @@ public class MenuController {
 
     @Auth(role = RoleConstants.USER, name = "获取路径")
     @GetMapping("fetch")
-    public Result queryRoute() {
+    public Result fetchMenu() {
         List<MenuVO> list = menuService.getMenu();
         return Result.success(list);
     }
