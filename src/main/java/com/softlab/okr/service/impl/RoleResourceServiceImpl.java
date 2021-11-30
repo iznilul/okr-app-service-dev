@@ -1,17 +1,17 @@
 package com.softlab.okr.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.softlab.okr.entity.Resource;
-import com.softlab.okr.entity.Role;
 import com.softlab.okr.entity.RoleResource;
 import com.softlab.okr.mapper.RoleResourceMapper;
+import com.softlab.okr.model.enums.statusCode.RoleStatus;
 import com.softlab.okr.service.IRoleResourceService;
 import com.softlab.okr.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -36,18 +36,17 @@ public class RoleResourceServiceImpl extends
     @Transactional
     public boolean reloadRoleResource(List<Resource> list) {
         Set<Long> resourceSet = new HashSet<>();
-        List<Role> roleList = roleService.list(new QueryWrapper<Role>().orderByDesc("role_id"));
+//        List<Role> roleList = roleService.list(new QueryWrapper<Role>().orderByDesc("role_id"));
+        List<RoleStatus> roleStatusList = RoleStatus.getListOrderByDesc();
+        List<RoleResource> result = new ArrayList<>();
         this.remove(null);
-        for (Role role : roleList) {
-            Set<Long> set = list.stream().filter(resource -> resource.getRole().equals(role.getRole()))
+        for (RoleStatus status : roleStatusList) {
+            Set<Long> set = list.stream().filter(resource -> resource.getRole().equals(status.role()))
                     .map(Resource::getResourceId).collect(Collectors.toSet());
             resourceSet.addAll(set);
-            List<RoleResource> result = this.buildRoleResourceList(role.getRoleId(), resourceSet);
-            if (!this.saveBatch(result)) {
-                return false;
-            }
+            result.addAll(this.buildRoleResourceList(status.code(), resourceSet));
         }
-        return true;
+        return this.saveBatch(result);
     }
 
     private List<RoleResource> buildRoleResourceList(Integer roleId, Set<Long> set) {

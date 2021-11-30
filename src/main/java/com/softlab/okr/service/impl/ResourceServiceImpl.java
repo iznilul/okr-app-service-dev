@@ -13,6 +13,7 @@ import com.softlab.okr.model.enums.statusCode.ResourceStatus;
 import com.softlab.okr.model.enums.statusCode.RoleStatus;
 import com.softlab.okr.model.exception.BusinessException;
 import com.softlab.okr.model.vo.ResourceVO;
+import com.softlab.okr.security.ApiFilter;
 import com.softlab.okr.service.IResourceService;
 import com.softlab.okr.service.IUserRoleService;
 import com.softlab.okr.utils.CopyUtil;
@@ -51,7 +52,7 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
     @Override
     @Transactional
     public int modifyResourceStatus(int resourceId) {
-//        ApiFilter.updateResources(resourceId);
+        ApiFilter.updateResources(resourceId);
         return resourceMapper.updateResourceStatus(resourceId);
     }
 
@@ -61,7 +62,7 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
                 .eq("user_id", userId));
         long time = System.currentTimeMillis();
         if (userRole.getExpireTime().getTime() < time) {
-            userRole.setRoleId(RoleStatus.MEMBER.code());
+            userRole.setRoleId(RoleStatus.USER.code());
             userRole.setExpireTime(DateUtil.parse(TimeFormat.neverExpire));
             userRoleService.updateById(userRole);
             throw new BusinessException("权限已到期 请重新登录");

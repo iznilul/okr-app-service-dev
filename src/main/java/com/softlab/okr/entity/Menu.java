@@ -4,7 +4,7 @@ import lombok.Data;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author Mybatis-plus自动生成
@@ -65,5 +65,8 @@ public class Menu {
      */
     private Integer hidden;
 
-
+    /**
+     * 角色id
+     */
+    private Integer roleId;
 }

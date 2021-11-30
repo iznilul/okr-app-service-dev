@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -69,6 +71,20 @@ public enum RoleStatus implements BaseCode {
         for (RoleStatus status : RoleStatus.values()) {
             list.add(status.message);
         }
+        return list;
+    }
+
+    public static List<RoleStatus> getListOrderByAsc() {
+        List<RoleStatus> list = Arrays.asList(RoleStatus.values());
+        list.sort(Comparator.comparingInt(s -> s.code));
+        return list;
+    }
+
+    public static List<RoleStatus> getListOrderByDesc() {
+        List<RoleStatus> list = Arrays.asList(RoleStatus.values());
+        list.sort((s1, s2) -> -(s1.code - s2.code));
+//        List<RoleStatus> list = RoleStatus.getListOrderByAsc();
+//        list.sort(Comparator.reverseOrder());
         return list;
     }
 

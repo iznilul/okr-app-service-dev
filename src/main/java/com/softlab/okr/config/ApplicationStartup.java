@@ -3,13 +3,11 @@ package com.softlab.okr.config;
 import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.annotation.TaskInfo;
 import com.softlab.okr.constant.RoleConstants;
-import com.softlab.okr.entity.Resource;
-import com.softlab.okr.entity.Task;
+import com.softlab.okr.entity.*;
+import com.softlab.okr.model.enums.statusCode.RoleStatus;
 import com.softlab.okr.security.ApiFilter;
 import com.softlab.okr.security.MySecurityMetadataSource;
-import com.softlab.okr.service.IResourceService;
-import com.softlab.okr.service.IRoleResourceService;
-import com.softlab.okr.service.ITaskService;
+import com.softlab.okr.service.*;
 import io.jsonwebtoken.lang.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -28,10 +26,7 @@ import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping;
 
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -52,6 +47,15 @@ public class ApplicationStartup implements ApplicationRunner {
     @Autowired
     private ITaskService taskService;
 
+    @Autowired
+    private IMenuService menuService;
+
+    @Autowired
+    private IRoleMenuService roleMenuService;
+
+    @Autowired
+    private IRoleService roleService;
+
 
     private static final String jobPackage = "com.softlab.okr.job";
 
@@ -59,8 +63,19 @@ public class ApplicationStartup implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        loadRole();
         loadResource();
+        loadMenu();
         loadTask();
+    }
+
+    @Transactional
+    void loadRole() {
+        List<RoleStatus> roleStatusList = Arrays.asList(RoleStatus.values());
+        List<Role> list = roleStatusList.stream().map(roleStatus ->
+                new Role(roleStatus.code(), roleStatus.role(), roleStatus.message())).collect(Collectors.toList());
+        roleService.remove(null);
+        roleService.saveBatch(list);
     }
 
     @Transactional
@@ -122,6 +137,29 @@ public class ApplicationStartup implements ApplicationRunner {
                     list.add(resource);
                 });
         return list;
+    }
+
+    @Transactional
+    void loadMenu() {
+        roleMenuService.remove(null);
+        List<Menu> menuList = menuService.list();
+        List<RoleMenu> roleMenuList = new ArrayList<>();
+        List<RoleStatus> roleStatusList = RoleStatus.getListOrderByDesc();
+        for (RoleStatus roleStatus : roleStatusList) {
+            List<RoleMenu> list = new ArrayList<>();
+            for (RoleMenu roleMenu : roleMenuList) {
+                RoleMenu roleMenu1 = (RoleMenu) roleMenu.clone();
+                roleMenu1.setRoleId(roleStatus.code());
+                list.add(roleMenu1);
+            }
+            for (Menu menu : menuList) {
+                if (roleStatus.code().equals(menu.getRoleId())) {
+                    list.add(new RoleMenu(null, roleStatus.code(), menu.getMenuId()));
+                }
+            }
+            roleMenuList.addAll(list);
+        }
+        roleMenuService.saveBatch(roleMenuList);
     }
 
     /**

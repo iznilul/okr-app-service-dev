@@ -11,7 +11,7 @@
  Target Server Version : 50722
  File Encoding         : 65001
 
- Date: 30/11/2021 01:41:02
+ Date: 01/12/2021 02:10:08
 */
 
 SET NAMES utf8mb4;
@@ -215,60 +215,60 @@ CREATE TABLE `resource`  (
   `role` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '角色',
   `status` tinyint(1) NOT NULL COMMENT '接口状态 0关闭 1开启',
   PRIMARY KEY (`resource_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1465367418376925186 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '资源' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1465744187340124163 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '资源' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of resource
 -- ----------------------------
-INSERT INTO `resource` VALUES (1465367418267873281, '修改书籍', 'POST', '/api/okr/book/change', 'admin', 1);
-INSERT INTO `resource` VALUES (1465367418280456193, '添加书籍', 'POST', '/api/okr/book/add', 'admin', 1);
-INSERT INTO `resource` VALUES (1465367418280456194, '上传书籍照片', 'GET', '/api/okr/book/changeImg', 'admin', 1);
-INSERT INTO `resource` VALUES (1465367418280456195, '借书', 'GET', '/api/okr/book/borrow', 'admin', 1);
-INSERT INTO `resource` VALUES (1465367418280456196, '还书', 'GET', '/api/okr/book/return', 'admin', 1);
-INSERT INTO `resource` VALUES (1465367418288844801, '删除书籍', 'GET', '/api/okr/book/cancel', 'admin', 1);
-INSERT INTO `resource` VALUES (1465367418288844802, '书籍列表', 'POST', '/api/okr/book/query', 'user', 1);
-INSERT INTO `resource` VALUES (1465367418288844803, '认证测试', 'GET', '/api/okr/common/test', 'common', 1);
-INSERT INTO `resource` VALUES (1465367418288844804, '用户登录', 'POST', '/api/okr/common/login', 'common', 1);
-INSERT INTO `resource` VALUES (1465367418301427713, '用户退出', 'GET', '/api/okr/common/logout', 'common', 1);
-INSERT INTO `resource` VALUES (1465367418301427714, '模糊查询专业列表', 'GET', '/api/okr/enum/major', 'user', 1);
-INSERT INTO `resource` VALUES (1465367418309816322, '模糊查询姓名列表', 'GET', '/api/okr/enum/name', 'user', 1);
-INSERT INTO `resource` VALUES (1465367418309816323, '模糊查询钥匙', 'GET', '/api/okr/enum/key', 'user', 1);
-INSERT INTO `resource` VALUES (1465367418318204929, '模糊查询角色', 'GET', '/api/okr/enum/role', 'user', 1);
-INSERT INTO `resource` VALUES (1465367418318204930, '模糊查询用户名列表', 'GET', '/api/okr/enum/username', 'user', 1);
-INSERT INTO `resource` VALUES (1465367418326593537, '删除钥匙', 'GET', '/api/okr/key/cancel', 'admin', 1);
-INSERT INTO `resource` VALUES (1465367418334982145, '根据id查询钥匙', 'GET', '/api/okr/key/queryById', 'admin', 1);
-INSERT INTO `resource` VALUES (1465367418334982146, '还钥匙', 'GET', '/api/okr/key/return', 'user', 1);
-INSERT INTO `resource` VALUES (1465367418334982147, '修改钥匙', 'POST', '/api/okr/key/change', 'admin', 1);
-INSERT INTO `resource` VALUES (1465367418334982148, '钥匙列表', 'POST', '/api/okr/key/query', 'user', 1);
-INSERT INTO `resource` VALUES (1465367418334982149, '借钥匙', 'GET', '/api/okr/key/borrow', 'user', 1);
-INSERT INTO `resource` VALUES (1465367418343370753, '增加钥匙', 'GET', '/api/okr/key/add', 'admin', 1);
-INSERT INTO `resource` VALUES (1465367418343370754, '钥匙记录列表', 'POST', '/api/okr/keyUser/query', 'user', 1);
-INSERT INTO `resource` VALUES (1465367418343370755, '增加钥匙持有人', 'GET', '/api/okr/keyUser/add', 'admin', 1);
-INSERT INTO `resource` VALUES (1465367418343370756, '删除钥匙持有人', 'GET', '/api/okr/keyUser/cancel', 'admin', 1);
-INSERT INTO `resource` VALUES (1465367418343370757, '获取路径', 'GET', '/api/okr/menu/fetch', 'user', 1);
-INSERT INTO `resource` VALUES (1465367418343370758, '服务器监控', 'GET', '/api/okr/monitor/server', 'user', 1);
-INSERT INTO `resource` VALUES (1465367418343370759, 'csdn实时展示', 'GET', '/api/okr/rank/csdn', 'common', 1);
-INSERT INTO `resource` VALUES (1465367418351759362, '获取资源接口', 'POST', '/api/okr/resource/query', 'admin', 1);
-INSERT INTO `resource` VALUES (1465367418351759363, '更改接口开放状态', 'GET', '/api/okr/resource/change', 'admin', 1);
-INSERT INTO `resource` VALUES (1465367418351759364, '报名结果查询', 'GET', '/api/okr/signup/query', 'common', 1);
-INSERT INTO `resource` VALUES (1465367418351759365, '获取报名记录', 'POST', '/api/okr/signup/query', 'admin', 1);
-INSERT INTO `resource` VALUES (1465367418351759366, '纳新报名', 'POST', '/api/okr/signup/add', 'common', 1);
-INSERT INTO `resource` VALUES (1465367418351759367, '导出报名单', 'GET', '/api/okr/signup/export', 'admin', 1);
-INSERT INTO `resource` VALUES (1465367418360147970, '更新报名记录', 'POST', '/api/okr/signup/change', 'admin', 1);
-INSERT INTO `resource` VALUES (1465367418360147971, '登录日志列表', 'POST', '/api/okr/sysRecord/query', 'admin', 1);
-INSERT INTO `resource` VALUES (1465367418360147972, '增加标签', 'GET', '/api/okr/tag/add', 'admin', 1);
-INSERT INTO `resource` VALUES (1465367418360147973, '删除标签', 'GET', '/api/okr/tag/cancel', 'admin', 1);
-INSERT INTO `resource` VALUES (1465367418360147974, '更新标签', 'GET', '/api/okr/tag/change', 'admin', 1);
-INSERT INTO `resource` VALUES (1465367418360147975, '获取标签列表', 'POST', '/api/okr/tag/query', 'admin', 1);
-INSERT INTO `resource` VALUES (1465367418360147976, '删除用户', 'GET', '/api/okr/user/cancel', 'admin', 1);
-INSERT INTO `resource` VALUES (1465367418368536578, '更新用户信息', 'POST', '/api/okr/user/change', 'user', 1);
-INSERT INTO `resource` VALUES (1465367418368536579, '根据账号选择用户', 'GET', '/api/okr/user/query', 'user', 1);
-INSERT INTO `resource` VALUES (1465367418368536580, '根据情况选择用户', 'POST', '/api/okr/user/queryList', 'user', 1);
-INSERT INTO `resource` VALUES (1465367418368536581, '上传头像文件', 'POST', '/api/okr/user/changeImg', 'user', 1);
-INSERT INTO `resource` VALUES (1465367418368536582, '修改密码', 'POST', '/api/okr/user/changePassword', 'user', 1);
-INSERT INTO `resource` VALUES (1465367418368536583, '注册用户', 'POST', '/api/okr/user/add', 'admin', 1);
-INSERT INTO `resource` VALUES (1465367418368536584, '根据用户名选择用户', 'GET', '/api/okr/user/queryByUsername', 'user', 1);
-INSERT INTO `resource` VALUES (1465367418376925185, '修改成员的角色权限', 'POST', '/api/okr/userRole/grant', 'superAdmin', 1);
+INSERT INTO `resource` VALUES (1465744187264626690, '删除书籍', 'GET', '/api/okr/book/cancel', 'admin', 1);
+INSERT INTO `resource` VALUES (1465744187264626691, '借书', 'GET', '/api/okr/book/borrow', 'admin', 1);
+INSERT INTO `resource` VALUES (1465744187273015297, '添加书籍', 'POST', '/api/okr/book/add', 'admin', 1);
+INSERT INTO `resource` VALUES (1465744187273015298, '还书', 'GET', '/api/okr/book/return', 'admin', 1);
+INSERT INTO `resource` VALUES (1465744187273015299, '上传书籍照片', 'GET', '/api/okr/book/changeImg', 'admin', 1);
+INSERT INTO `resource` VALUES (1465744187281403906, '修改书籍', 'POST', '/api/okr/book/change', 'admin', 1);
+INSERT INTO `resource` VALUES (1465744187281403907, '书籍列表', 'POST', '/api/okr/book/query', 'user', 1);
+INSERT INTO `resource` VALUES (1465744187281403908, '认证测试', 'GET', '/api/okr/common/test', 'common', 1);
+INSERT INTO `resource` VALUES (1465744187281403909, '用户退出', 'GET', '/api/okr/common/logout', 'common', 1);
+INSERT INTO `resource` VALUES (1465744187289792513, '用户登录', 'POST', '/api/okr/common/login', 'common', 1);
+INSERT INTO `resource` VALUES (1465744187289792514, '模糊查询角色', 'GET', '/api/okr/enum/role', 'user', 1);
+INSERT INTO `resource` VALUES (1465744187289792515, '模糊查询姓名列表', 'GET', '/api/okr/enum/name', 'user', 1);
+INSERT INTO `resource` VALUES (1465744187289792516, '模糊查询钥匙', 'GET', '/api/okr/enum/key', 'user', 1);
+INSERT INTO `resource` VALUES (1465744187298181121, '模糊查询用户名列表', 'GET', '/api/okr/enum/username', 'user', 1);
+INSERT INTO `resource` VALUES (1465744187298181122, '模糊查询专业列表', 'GET', '/api/okr/enum/major', 'user', 1);
+INSERT INTO `resource` VALUES (1465744187298181123, '增加钥匙', 'GET', '/api/okr/key/add', 'admin', 1);
+INSERT INTO `resource` VALUES (1465744187298181124, '修改钥匙', 'POST', '/api/okr/key/change', 'admin', 1);
+INSERT INTO `resource` VALUES (1465744187306569730, '删除钥匙', 'GET', '/api/okr/key/cancel', 'admin', 1);
+INSERT INTO `resource` VALUES (1465744187306569731, '钥匙列表', 'POST', '/api/okr/key/query', 'user', 1);
+INSERT INTO `resource` VALUES (1465744187306569732, '根据id查询钥匙', 'GET', '/api/okr/key/queryById', 'admin', 1);
+INSERT INTO `resource` VALUES (1465744187306569733, '借钥匙', 'GET', '/api/okr/key/borrow', 'user', 1);
+INSERT INTO `resource` VALUES (1465744187306569734, '还钥匙', 'GET', '/api/okr/key/return', 'user', 1);
+INSERT INTO `resource` VALUES (1465744187306569735, '删除钥匙持有人', 'GET', '/api/okr/keyUser/cancel', 'admin', 1);
+INSERT INTO `resource` VALUES (1465744187314958337, '增加钥匙持有人', 'GET', '/api/okr/keyUser/add', 'admin', 1);
+INSERT INTO `resource` VALUES (1465744187314958338, '钥匙记录列表', 'POST', '/api/okr/keyUser/query', 'user', 1);
+INSERT INTO `resource` VALUES (1465744187314958339, '获取路径', 'GET', '/api/okr/menu/fetch', 'user', 1);
+INSERT INTO `resource` VALUES (1465744187314958340, '服务器监控', 'GET', '/api/okr/monitor/server', 'user', 1);
+INSERT INTO `resource` VALUES (1465744187314958341, 'csdn实时展示', 'GET', '/api/okr/rank/csdn', 'common', 1);
+INSERT INTO `resource` VALUES (1465744187314958342, '获取资源接口', 'POST', '/api/okr/resource/query', 'admin', 1);
+INSERT INTO `resource` VALUES (1465744187314958343, '更改接口开放状态', 'GET', '/api/okr/resource/change', 'admin', 1);
+INSERT INTO `resource` VALUES (1465744187314958344, '报名结果查询', 'GET', '/api/okr/signup/query', 'common', 1);
+INSERT INTO `resource` VALUES (1465744187323346945, '获取报名记录', 'POST', '/api/okr/signup/query', 'admin', 1);
+INSERT INTO `resource` VALUES (1465744187323346946, '纳新报名', 'POST', '/api/okr/signup/add', 'common', 1);
+INSERT INTO `resource` VALUES (1465744187323346947, '更新报名记录', 'POST', '/api/okr/signup/change', 'admin', 1);
+INSERT INTO `resource` VALUES (1465744187323346948, '导出报名单', 'GET', '/api/okr/signup/export', 'admin', 1);
+INSERT INTO `resource` VALUES (1465744187323346949, '登录日志列表', 'POST', '/api/okr/sysRecord/query', 'admin', 1);
+INSERT INTO `resource` VALUES (1465744187323346950, '更新标签', 'GET', '/api/okr/tag/change', 'admin', 1);
+INSERT INTO `resource` VALUES (1465744187323346951, '增加标签', 'GET', '/api/okr/tag/add', 'admin', 1);
+INSERT INTO `resource` VALUES (1465744187323346952, '删除标签', 'GET', '/api/okr/tag/cancel', 'admin', 1);
+INSERT INTO `resource` VALUES (1465744187331735554, '获取标签列表', 'POST', '/api/okr/tag/query', 'admin', 1);
+INSERT INTO `resource` VALUES (1465744187331735555, '注册用户', 'POST', '/api/okr/user/add', 'admin', 1);
+INSERT INTO `resource` VALUES (1465744187331735556, '根据用户名选择用户', 'GET', '/api/okr/user/queryByUsername', 'user', 1);
+INSERT INTO `resource` VALUES (1465744187331735557, '删除用户', 'GET', '/api/okr/user/cancel', 'admin', 1);
+INSERT INTO `resource` VALUES (1465744187331735558, '根据情况选择用户', 'POST', '/api/okr/user/queryList', 'user', 1);
+INSERT INTO `resource` VALUES (1465744187331735559, '更新用户信息', 'POST', '/api/okr/user/change', 'user', 1);
+INSERT INTO `resource` VALUES (1465744187331735560, '上传头像文件', 'POST', '/api/okr/user/changeImg', 'user', 1);
+INSERT INTO `resource` VALUES (1465744187331735561, '根据账号选择用户', 'GET', '/api/okr/user/query', 'user', 1);
+INSERT INTO `resource` VALUES (1465744187340124161, '修改密码', 'POST', '/api/okr/user/changePassword', 'user', 1);
+INSERT INTO `resource` VALUES (1465744187340124162, '修改成员的角色权限', 'POST', '/api/okr/userRole/grant', 'superAdmin', 1);
 
 -- ----------------------------
 -- Table structure for role
@@ -294,60 +294,71 @@ INSERT INTO `role` VALUES (3, 'user', '普通用户');
 -- ----------------------------
 DROP TABLE IF EXISTS `role_menu`;
 CREATE TABLE `role_menu`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `role_id` int(11) NOT NULL COMMENT '角色id',
   `menu_id` int(11) NOT NULL COMMENT '菜单id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 48 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 334 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of role_menu
 -- ----------------------------
-INSERT INTO `role_menu` VALUES (1, 1, 1001);
-INSERT INTO `role_menu` VALUES (2, 1, 1002);
-INSERT INTO `role_menu` VALUES (3, 1, 1003);
-INSERT INTO `role_menu` VALUES (4, 1, 2000);
-INSERT INTO `role_menu` VALUES (5, 1, 2001);
-INSERT INTO `role_menu` VALUES (6, 1, 2002);
-INSERT INTO `role_menu` VALUES (7, 1, 3000);
-INSERT INTO `role_menu` VALUES (8, 1, 3001);
-INSERT INTO `role_menu` VALUES (9, 1, 3002);
-INSERT INTO `role_menu` VALUES (10, 1, 4000);
-INSERT INTO `role_menu` VALUES (11, 1, 4001);
-INSERT INTO `role_menu` VALUES (12, 1, 5000);
-INSERT INTO `role_menu` VALUES (13, 1, 5001);
-INSERT INTO `role_menu` VALUES (14, 1, 5002);
-INSERT INTO `role_menu` VALUES (15, 1, 5003);
-INSERT INTO `role_menu` VALUES (16, 1, 5004);
-INSERT INTO `role_menu` VALUES (17, 1, 5005);
-INSERT INTO `role_menu` VALUES (18, 3, 1001);
-INSERT INTO `role_menu` VALUES (19, 3, 1002);
-INSERT INTO `role_menu` VALUES (20, 3, 1003);
-INSERT INTO `role_menu` VALUES (21, 3, 2000);
-INSERT INTO `role_menu` VALUES (22, 3, 2001);
-INSERT INTO `role_menu` VALUES (23, 3, 2002);
-INSERT INTO `role_menu` VALUES (24, 3, 3000);
-INSERT INTO `role_menu` VALUES (25, 3, 3001);
-INSERT INTO `role_menu` VALUES (26, 3, 3002);
-INSERT INTO `role_menu` VALUES (27, 3, 4000);
-INSERT INTO `role_menu` VALUES (28, 3, 4001);
-INSERT INTO `role_menu` VALUES (30, 2, 1001);
-INSERT INTO `role_menu` VALUES (31, 2, 1002);
-INSERT INTO `role_menu` VALUES (32, 2, 1003);
-INSERT INTO `role_menu` VALUES (33, 2, 2000);
-INSERT INTO `role_menu` VALUES (34, 2, 2001);
-INSERT INTO `role_menu` VALUES (35, 2, 2002);
-INSERT INTO `role_menu` VALUES (36, 2, 3000);
-INSERT INTO `role_menu` VALUES (37, 2, 3001);
-INSERT INTO `role_menu` VALUES (38, 2, 3002);
-INSERT INTO `role_menu` VALUES (39, 2, 4000);
-INSERT INTO `role_menu` VALUES (40, 2, 4001);
-INSERT INTO `role_menu` VALUES (41, 2, 5000);
-INSERT INTO `role_menu` VALUES (42, 2, 5001);
-INSERT INTO `role_menu` VALUES (43, 2, 5002);
-INSERT INTO `role_menu` VALUES (44, 2, 5003);
-INSERT INTO `role_menu` VALUES (45, 2, 5004);
-INSERT INTO `role_menu` VALUES (46, 2, 5005);
+INSERT INTO `role_menu` VALUES (278, 3, 1001);
+INSERT INTO `role_menu` VALUES (279, 3, 1002);
+INSERT INTO `role_menu` VALUES (280, 3, 1003);
+INSERT INTO `role_menu` VALUES (281, 3, 2000);
+INSERT INTO `role_menu` VALUES (282, 3, 2001);
+INSERT INTO `role_menu` VALUES (283, 3, 2002);
+INSERT INTO `role_menu` VALUES (284, 3, 3000);
+INSERT INTO `role_menu` VALUES (285, 3, 3001);
+INSERT INTO `role_menu` VALUES (286, 3, 3002);
+INSERT INTO `role_menu` VALUES (287, 3, 4000);
+INSERT INTO `role_menu` VALUES (288, 3, 4001);
+INSERT INTO `role_menu` VALUES (289, 2, 1001);
+INSERT INTO `role_menu` VALUES (290, 2, 1002);
+INSERT INTO `role_menu` VALUES (291, 2, 1003);
+INSERT INTO `role_menu` VALUES (292, 2, 2000);
+INSERT INTO `role_menu` VALUES (293, 2, 2001);
+INSERT INTO `role_menu` VALUES (294, 2, 2002);
+INSERT INTO `role_menu` VALUES (295, 2, 3000);
+INSERT INTO `role_menu` VALUES (296, 2, 3001);
+INSERT INTO `role_menu` VALUES (297, 2, 3002);
+INSERT INTO `role_menu` VALUES (298, 2, 4000);
+INSERT INTO `role_menu` VALUES (299, 2, 4001);
+INSERT INTO `role_menu` VALUES (300, 2, 5000);
+INSERT INTO `role_menu` VALUES (301, 2, 5001);
+INSERT INTO `role_menu` VALUES (302, 2, 5002);
+INSERT INTO `role_menu` VALUES (303, 2, 5003);
+INSERT INTO `role_menu` VALUES (304, 2, 5004);
+INSERT INTO `role_menu` VALUES (305, 2, 5005);
+INSERT INTO `role_menu` VALUES (306, 1, 1001);
+INSERT INTO `role_menu` VALUES (307, 1, 1002);
+INSERT INTO `role_menu` VALUES (308, 1, 1003);
+INSERT INTO `role_menu` VALUES (309, 1, 2000);
+INSERT INTO `role_menu` VALUES (310, 1, 2001);
+INSERT INTO `role_menu` VALUES (311, 1, 2002);
+INSERT INTO `role_menu` VALUES (312, 1, 3000);
+INSERT INTO `role_menu` VALUES (313, 1, 3001);
+INSERT INTO `role_menu` VALUES (314, 1, 3002);
+INSERT INTO `role_menu` VALUES (315, 1, 4000);
+INSERT INTO `role_menu` VALUES (316, 1, 4001);
+INSERT INTO `role_menu` VALUES (317, 1, 1001);
+INSERT INTO `role_menu` VALUES (318, 1, 1002);
+INSERT INTO `role_menu` VALUES (319, 1, 1003);
+INSERT INTO `role_menu` VALUES (320, 1, 2000);
+INSERT INTO `role_menu` VALUES (321, 1, 2001);
+INSERT INTO `role_menu` VALUES (322, 1, 2002);
+INSERT INTO `role_menu` VALUES (323, 1, 3000);
+INSERT INTO `role_menu` VALUES (324, 1, 3001);
+INSERT INTO `role_menu` VALUES (325, 1, 3002);
+INSERT INTO `role_menu` VALUES (326, 1, 4000);
+INSERT INTO `role_menu` VALUES (327, 1, 4001);
+INSERT INTO `role_menu` VALUES (328, 1, 5000);
+INSERT INTO `role_menu` VALUES (329, 1, 5001);
+INSERT INTO `role_menu` VALUES (330, 1, 5002);
+INSERT INTO `role_menu` VALUES (331, 1, 5003);
+INSERT INTO `role_menu` VALUES (332, 1, 5004);
+INSERT INTO `role_menu` VALUES (333, 1, 5005);
 
 -- ----------------------------
 -- Table structure for role_resource
@@ -359,114 +370,114 @@ CREATE TABLE `role_resource`  (
   `resource_id` bigint(11) NOT NULL COMMENT '资源id',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `resource_id`(`resource_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 25211 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色-权限关系' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 25829 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色-权限关系' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of role_resource
 -- ----------------------------
-INSERT INTO `role_resource` VALUES (25108, 3, 1465367418368536584);
-INSERT INTO `role_resource` VALUES (25109, 3, 1465367418318204929);
-INSERT INTO `role_resource` VALUES (25110, 3, 1465367418288844802);
-INSERT INTO `role_resource` VALUES (25111, 3, 1465367418301427714);
-INSERT INTO `role_resource` VALUES (25112, 3, 1465367418309816322);
-INSERT INTO `role_resource` VALUES (25113, 3, 1465367418318204930);
-INSERT INTO `role_resource` VALUES (25114, 3, 1465367418334982146);
-INSERT INTO `role_resource` VALUES (25115, 3, 1465367418343370754);
-INSERT INTO `role_resource` VALUES (25116, 3, 1465367418368536578);
-INSERT INTO `role_resource` VALUES (25117, 3, 1465367418309816323);
-INSERT INTO `role_resource` VALUES (25118, 3, 1465367418368536579);
-INSERT INTO `role_resource` VALUES (25119, 3, 1465367418334982148);
-INSERT INTO `role_resource` VALUES (25120, 3, 1465367418368536580);
-INSERT INTO `role_resource` VALUES (25121, 3, 1465367418334982149);
-INSERT INTO `role_resource` VALUES (25122, 3, 1465367418343370757);
-INSERT INTO `role_resource` VALUES (25123, 3, 1465367418368536581);
-INSERT INTO `role_resource` VALUES (25124, 3, 1465367418343370758);
-INSERT INTO `role_resource` VALUES (25125, 3, 1465367418368536582);
-INSERT INTO `role_resource` VALUES (25126, 2, 1465367418368536584);
-INSERT INTO `role_resource` VALUES (25127, 2, 1465367418360147976);
-INSERT INTO `role_resource` VALUES (25128, 2, 1465367418318204929);
-INSERT INTO `role_resource` VALUES (25129, 2, 1465367418267873281);
-INSERT INTO `role_resource` VALUES (25130, 2, 1465367418280456193);
-INSERT INTO `role_resource` VALUES (25131, 2, 1465367418288844801);
-INSERT INTO `role_resource` VALUES (25132, 2, 1465367418326593537);
-INSERT INTO `role_resource` VALUES (25133, 2, 1465367418334982145);
-INSERT INTO `role_resource` VALUES (25134, 2, 1465367418343370753);
-INSERT INTO `role_resource` VALUES (25135, 2, 1465367418301427714);
-INSERT INTO `role_resource` VALUES (25136, 2, 1465367418288844802);
-INSERT INTO `role_resource` VALUES (25137, 2, 1465367418309816322);
-INSERT INTO `role_resource` VALUES (25138, 2, 1465367418318204930);
-INSERT INTO `role_resource` VALUES (25139, 2, 1465367418334982146);
-INSERT INTO `role_resource` VALUES (25140, 2, 1465367418343370754);
-INSERT INTO `role_resource` VALUES (25141, 2, 1465367418368536578);
-INSERT INTO `role_resource` VALUES (25142, 2, 1465367418280456194);
-INSERT INTO `role_resource` VALUES (25143, 2, 1465367418351759362);
-INSERT INTO `role_resource` VALUES (25144, 2, 1465367418360147970);
-INSERT INTO `role_resource` VALUES (25145, 2, 1465367418309816323);
-INSERT INTO `role_resource` VALUES (25146, 2, 1465367418368536579);
-INSERT INTO `role_resource` VALUES (25147, 2, 1465367418280456195);
-INSERT INTO `role_resource` VALUES (25148, 2, 1465367418334982147);
-INSERT INTO `role_resource` VALUES (25149, 2, 1465367418343370755);
-INSERT INTO `role_resource` VALUES (25150, 2, 1465367418351759363);
-INSERT INTO `role_resource` VALUES (25151, 2, 1465367418360147971);
-INSERT INTO `role_resource` VALUES (25152, 2, 1465367418334982148);
-INSERT INTO `role_resource` VALUES (25153, 2, 1465367418368536580);
-INSERT INTO `role_resource` VALUES (25154, 2, 1465367418280456196);
-INSERT INTO `role_resource` VALUES (25155, 2, 1465367418343370756);
-INSERT INTO `role_resource` VALUES (25156, 2, 1465367418360147972);
-INSERT INTO `role_resource` VALUES (25157, 2, 1465367418334982149);
-INSERT INTO `role_resource` VALUES (25158, 2, 1465367418343370757);
-INSERT INTO `role_resource` VALUES (25159, 2, 1465367418368536581);
-INSERT INTO `role_resource` VALUES (25160, 2, 1465367418351759365);
-INSERT INTO `role_resource` VALUES (25161, 2, 1465367418360147973);
-INSERT INTO `role_resource` VALUES (25162, 2, 1465367418343370758);
-INSERT INTO `role_resource` VALUES (25163, 2, 1465367418368536582);
-INSERT INTO `role_resource` VALUES (25164, 2, 1465367418360147974);
-INSERT INTO `role_resource` VALUES (25165, 2, 1465367418351759367);
-INSERT INTO `role_resource` VALUES (25166, 2, 1465367418360147975);
-INSERT INTO `role_resource` VALUES (25167, 2, 1465367418368536583);
-INSERT INTO `role_resource` VALUES (25168, 1, 1465367418368536584);
-INSERT INTO `role_resource` VALUES (25169, 1, 1465367418360147976);
-INSERT INTO `role_resource` VALUES (25170, 1, 1465367418318204929);
-INSERT INTO `role_resource` VALUES (25171, 1, 1465367418267873281);
-INSERT INTO `role_resource` VALUES (25172, 1, 1465367418280456193);
-INSERT INTO `role_resource` VALUES (25173, 1, 1465367418288844801);
-INSERT INTO `role_resource` VALUES (25174, 1, 1465367418326593537);
-INSERT INTO `role_resource` VALUES (25175, 1, 1465367418334982145);
-INSERT INTO `role_resource` VALUES (25176, 1, 1465367418343370753);
-INSERT INTO `role_resource` VALUES (25177, 1, 1465367418376925185);
-INSERT INTO `role_resource` VALUES (25178, 1, 1465367418301427714);
-INSERT INTO `role_resource` VALUES (25179, 1, 1465367418288844802);
-INSERT INTO `role_resource` VALUES (25180, 1, 1465367418309816322);
-INSERT INTO `role_resource` VALUES (25181, 1, 1465367418318204930);
-INSERT INTO `role_resource` VALUES (25182, 1, 1465367418334982146);
-INSERT INTO `role_resource` VALUES (25183, 1, 1465367418343370754);
-INSERT INTO `role_resource` VALUES (25184, 1, 1465367418368536578);
-INSERT INTO `role_resource` VALUES (25185, 1, 1465367418280456194);
-INSERT INTO `role_resource` VALUES (25186, 1, 1465367418351759362);
-INSERT INTO `role_resource` VALUES (25187, 1, 1465367418360147970);
-INSERT INTO `role_resource` VALUES (25188, 1, 1465367418309816323);
-INSERT INTO `role_resource` VALUES (25189, 1, 1465367418368536579);
-INSERT INTO `role_resource` VALUES (25190, 1, 1465367418280456195);
-INSERT INTO `role_resource` VALUES (25191, 1, 1465367418334982147);
-INSERT INTO `role_resource` VALUES (25192, 1, 1465367418343370755);
-INSERT INTO `role_resource` VALUES (25193, 1, 1465367418351759363);
-INSERT INTO `role_resource` VALUES (25194, 1, 1465367418360147971);
-INSERT INTO `role_resource` VALUES (25195, 1, 1465367418334982148);
-INSERT INTO `role_resource` VALUES (25196, 1, 1465367418368536580);
-INSERT INTO `role_resource` VALUES (25197, 1, 1465367418280456196);
-INSERT INTO `role_resource` VALUES (25198, 1, 1465367418343370756);
-INSERT INTO `role_resource` VALUES (25199, 1, 1465367418360147972);
-INSERT INTO `role_resource` VALUES (25200, 1, 1465367418334982149);
-INSERT INTO `role_resource` VALUES (25201, 1, 1465367418343370757);
-INSERT INTO `role_resource` VALUES (25202, 1, 1465367418368536581);
-INSERT INTO `role_resource` VALUES (25203, 1, 1465367418351759365);
-INSERT INTO `role_resource` VALUES (25204, 1, 1465367418360147973);
-INSERT INTO `role_resource` VALUES (25205, 1, 1465367418343370758);
-INSERT INTO `role_resource` VALUES (25206, 1, 1465367418368536582);
-INSERT INTO `role_resource` VALUES (25207, 1, 1465367418360147974);
-INSERT INTO `role_resource` VALUES (25208, 1, 1465367418351759367);
-INSERT INTO `role_resource` VALUES (25209, 1, 1465367418360147975);
-INSERT INTO `role_resource` VALUES (25210, 1, 1465367418368536583);
+INSERT INTO `role_resource` VALUES (25726, 3, 1465744187306569733);
+INSERT INTO `role_resource` VALUES (25727, 3, 1465744187289792516);
+INSERT INTO `role_resource` VALUES (25728, 3, 1465744187314958340);
+INSERT INTO `role_resource` VALUES (25729, 3, 1465744187331735556);
+INSERT INTO `role_resource` VALUES (25730, 3, 1465744187331735559);
+INSERT INTO `role_resource` VALUES (25731, 3, 1465744187306569734);
+INSERT INTO `role_resource` VALUES (25732, 3, 1465744187331735558);
+INSERT INTO `role_resource` VALUES (25733, 3, 1465744187298181121);
+INSERT INTO `role_resource` VALUES (25734, 3, 1465744187340124161);
+INSERT INTO `role_resource` VALUES (25735, 3, 1465744187281403907);
+INSERT INTO `role_resource` VALUES (25736, 3, 1465744187289792515);
+INSERT INTO `role_resource` VALUES (25737, 3, 1465744187306569731);
+INSERT INTO `role_resource` VALUES (25738, 3, 1465744187314958339);
+INSERT INTO `role_resource` VALUES (25739, 3, 1465744187289792514);
+INSERT INTO `role_resource` VALUES (25740, 3, 1465744187298181122);
+INSERT INTO `role_resource` VALUES (25741, 3, 1465744187314958338);
+INSERT INTO `role_resource` VALUES (25742, 3, 1465744187331735561);
+INSERT INTO `role_resource` VALUES (25743, 3, 1465744187331735560);
+INSERT INTO `role_resource` VALUES (25744, 2, 1465744187306569733);
+INSERT INTO `role_resource` VALUES (25745, 2, 1465744187323346949);
+INSERT INTO `role_resource` VALUES (25746, 2, 1465744187331735557);
+INSERT INTO `role_resource` VALUES (25747, 2, 1465744187289792516);
+INSERT INTO `role_resource` VALUES (25748, 2, 1465744187314958340);
+INSERT INTO `role_resource` VALUES (25749, 2, 1465744187331735556);
+INSERT INTO `role_resource` VALUES (25750, 2, 1465744187298181124);
+INSERT INTO `role_resource` VALUES (25751, 2, 1465744187306569732);
+INSERT INTO `role_resource` VALUES (25752, 2, 1465744187323346948);
+INSERT INTO `role_resource` VALUES (25753, 2, 1465744187331735559);
+INSERT INTO `role_resource` VALUES (25754, 2, 1465744187306569735);
+INSERT INTO `role_resource` VALUES (25755, 2, 1465744187314958343);
+INSERT INTO `role_resource` VALUES (25756, 2, 1465744187323346951);
+INSERT INTO `role_resource` VALUES (25757, 2, 1465744187306569734);
+INSERT INTO `role_resource` VALUES (25758, 2, 1465744187331735558);
+INSERT INTO `role_resource` VALUES (25759, 2, 1465744187314958342);
+INSERT INTO `role_resource` VALUES (25760, 2, 1465744187323346950);
+INSERT INTO `role_resource` VALUES (25761, 2, 1465744187298181121);
+INSERT INTO `role_resource` VALUES (25762, 2, 1465744187340124161);
+INSERT INTO `role_resource` VALUES (25763, 2, 1465744187273015297);
+INSERT INTO `role_resource` VALUES (25764, 2, 1465744187314958337);
+INSERT INTO `role_resource` VALUES (25765, 2, 1465744187323346945);
+INSERT INTO `role_resource` VALUES (25766, 2, 1465744187264626691);
+INSERT INTO `role_resource` VALUES (25767, 2, 1465744187281403907);
+INSERT INTO `role_resource` VALUES (25768, 2, 1465744187289792515);
+INSERT INTO `role_resource` VALUES (25769, 2, 1465744187306569731);
+INSERT INTO `role_resource` VALUES (25770, 2, 1465744187314958339);
+INSERT INTO `role_resource` VALUES (25771, 2, 1465744187273015299);
+INSERT INTO `role_resource` VALUES (25772, 2, 1465744187298181123);
+INSERT INTO `role_resource` VALUES (25773, 2, 1465744187323346947);
+INSERT INTO `role_resource` VALUES (25774, 2, 1465744187331735555);
+INSERT INTO `role_resource` VALUES (25775, 2, 1465744187289792514);
+INSERT INTO `role_resource` VALUES (25776, 2, 1465744187298181122);
+INSERT INTO `role_resource` VALUES (25777, 2, 1465744187314958338);
+INSERT INTO `role_resource` VALUES (25778, 2, 1465744187264626690);
+INSERT INTO `role_resource` VALUES (25779, 2, 1465744187273015298);
+INSERT INTO `role_resource` VALUES (25780, 2, 1465744187281403906);
+INSERT INTO `role_resource` VALUES (25781, 2, 1465744187306569730);
+INSERT INTO `role_resource` VALUES (25782, 2, 1465744187331735554);
+INSERT INTO `role_resource` VALUES (25783, 2, 1465744187331735561);
+INSERT INTO `role_resource` VALUES (25784, 2, 1465744187331735560);
+INSERT INTO `role_resource` VALUES (25785, 2, 1465744187323346952);
+INSERT INTO `role_resource` VALUES (25786, 1, 1465744187306569733);
+INSERT INTO `role_resource` VALUES (25787, 1, 1465744187323346949);
+INSERT INTO `role_resource` VALUES (25788, 1, 1465744187331735557);
+INSERT INTO `role_resource` VALUES (25789, 1, 1465744187289792516);
+INSERT INTO `role_resource` VALUES (25790, 1, 1465744187314958340);
+INSERT INTO `role_resource` VALUES (25791, 1, 1465744187331735556);
+INSERT INTO `role_resource` VALUES (25792, 1, 1465744187298181124);
+INSERT INTO `role_resource` VALUES (25793, 1, 1465744187306569732);
+INSERT INTO `role_resource` VALUES (25794, 1, 1465744187323346948);
+INSERT INTO `role_resource` VALUES (25795, 1, 1465744187331735559);
+INSERT INTO `role_resource` VALUES (25796, 1, 1465744187306569735);
+INSERT INTO `role_resource` VALUES (25797, 1, 1465744187314958343);
+INSERT INTO `role_resource` VALUES (25798, 1, 1465744187323346951);
+INSERT INTO `role_resource` VALUES (25799, 1, 1465744187306569734);
+INSERT INTO `role_resource` VALUES (25800, 1, 1465744187331735558);
+INSERT INTO `role_resource` VALUES (25801, 1, 1465744187314958342);
+INSERT INTO `role_resource` VALUES (25802, 1, 1465744187323346950);
+INSERT INTO `role_resource` VALUES (25803, 1, 1465744187298181121);
+INSERT INTO `role_resource` VALUES (25804, 1, 1465744187340124161);
+INSERT INTO `role_resource` VALUES (25805, 1, 1465744187273015297);
+INSERT INTO `role_resource` VALUES (25806, 1, 1465744187314958337);
+INSERT INTO `role_resource` VALUES (25807, 1, 1465744187323346945);
+INSERT INTO `role_resource` VALUES (25808, 1, 1465744187264626691);
+INSERT INTO `role_resource` VALUES (25809, 1, 1465744187281403907);
+INSERT INTO `role_resource` VALUES (25810, 1, 1465744187289792515);
+INSERT INTO `role_resource` VALUES (25811, 1, 1465744187306569731);
+INSERT INTO `role_resource` VALUES (25812, 1, 1465744187314958339);
+INSERT INTO `role_resource` VALUES (25813, 1, 1465744187273015299);
+INSERT INTO `role_resource` VALUES (25814, 1, 1465744187298181123);
+INSERT INTO `role_resource` VALUES (25815, 1, 1465744187323346947);
+INSERT INTO `role_resource` VALUES (25816, 1, 1465744187331735555);
+INSERT INTO `role_resource` VALUES (25817, 1, 1465744187264626690);
+INSERT INTO `role_resource` VALUES (25818, 1, 1465744187289792514);
+INSERT INTO `role_resource` VALUES (25819, 1, 1465744187298181122);
+INSERT INTO `role_resource` VALUES (25820, 1, 1465744187314958338);
+INSERT INTO `role_resource` VALUES (25821, 1, 1465744187273015298);
+INSERT INTO `role_resource` VALUES (25822, 1, 1465744187281403906);
+INSERT INTO `role_resource` VALUES (25823, 1, 1465744187306569730);
+INSERT INTO `role_resource` VALUES (25824, 1, 1465744187331735554);
+INSERT INTO `role_resource` VALUES (25825, 1, 1465744187340124162);
+INSERT INTO `role_resource` VALUES (25826, 1, 1465744187331735561);
+INSERT INTO `role_resource` VALUES (25827, 1, 1465744187331735560);
+INSERT INTO `role_resource` VALUES (25828, 1, 1465744187323346952);
 
 -- ----------------------------
 -- Table structure for signup
@@ -1578,7 +1589,7 @@ CREATE TABLE `task`  (
   `class_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '任务类',
   `function` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '任务功能',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 571 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 586 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of task
@@ -2153,6 +2164,21 @@ INSERT INTO `task` VALUES (567, 'T3', '三号测试任务', 'com.softlab.okr.job
 INSERT INTO `task` VALUES (568, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
 INSERT INTO `task` VALUES (569, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
 INSERT INTO `task` VALUES (570, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (571, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (572, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (573, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (574, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (575, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (576, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (577, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (578, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (579, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (580, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (581, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (582, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (583, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (584, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (585, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
 
 -- ----------------------------
 -- Table structure for task_trigger
