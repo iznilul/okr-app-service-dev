@@ -2,8 +2,8 @@ package com.softlab.okr.controller;
 
 import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.constant.RoleConstants;
-import com.softlab.okr.model.enums.statusCode.KeyStatus;
-import com.softlab.okr.model.enums.statusCode.RoleStatus;
+import com.softlab.okr.model.enums.KeyEnum;
+import com.softlab.okr.model.enums.RoleEnum;
 import com.softlab.okr.service.IEnumService;
 import com.softlab.okr.utils.Result;
 import io.swagger.annotations.Api;
@@ -31,8 +31,8 @@ public class EnumController {
     private static Map<String, List<String>> DICT_MAP = new HashMap<>();
 
     static {
-        DICT_MAP.put("keyStatus", KeyStatus.getList());
-        DICT_MAP.put("RoleStatus", RoleStatus.getList());
+        DICT_MAP.put("keyStatus", KeyEnum.getList());
+        DICT_MAP.put("RoleStatus", RoleEnum.getList());
     }
 
     @Autowired

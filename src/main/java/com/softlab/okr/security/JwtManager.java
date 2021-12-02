@@ -1,5 +1,7 @@
 package com.softlab.okr.security;
 
+import com.softlab.okr.model.enums.ReturnEnum;
+import com.softlab.okr.model.exception.BusinessException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -71,9 +73,9 @@ public class JwtManager {
                     .parseClaimsJws(token)
                     .getBody();
         } catch (ExpiredJwtException e) {
-            log.error("token过期或者不合法:{}", e
-                    .toString());
-            request.setAttribute("filter.error", e);
+            log.error("token过期或者不合法");
+            BusinessException exception = new BusinessException(ReturnEnum.TOKEN_EXPIRED);
+            request.setAttribute("filter.error", exception);
             request.getRequestDispatcher("/error/throw").forward(request, response);
         }
         return claims;

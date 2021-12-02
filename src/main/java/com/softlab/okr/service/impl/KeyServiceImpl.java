@@ -9,7 +9,7 @@ import com.softlab.okr.entity.KeyUser;
 import com.softlab.okr.mapper.KeyMapper;
 import com.softlab.okr.model.dto.KeyDTO;
 import com.softlab.okr.model.dto.PageDTO;
-import com.softlab.okr.model.enums.statusCode.KeyStatus;
+import com.softlab.okr.model.enums.KeyEnum;
 import com.softlab.okr.model.vo.KeyVO;
 import com.softlab.okr.security.IAuthenticationService;
 import com.softlab.okr.service.IKeyService;
@@ -45,7 +45,7 @@ public class KeyServiceImpl extends ServiceImpl<KeyMapper, Key> implements IKeyS
     @Override
     public int modifyKey(KeyDTO dto) {
         Key key = CopyUtil.copy(dto, Key.class);
-        key.setStatus(KeyStatus.getCode(dto.getStatusName()));
+        key.setStatus(KeyEnum.getCode(dto.getStatusName()));
         return keyMapper.updateById(key);
     }
 
@@ -61,7 +61,7 @@ public class KeyServiceImpl extends ServiceImpl<KeyMapper, Key> implements IKeyS
         Page<Key> page = new Page<>(dto.getIndex(), dto.getPageSize());
         Page<KeyVO> voPage = keyMapper.selectKeyList(page);
         voPage.getRecords().forEach(vo -> {
-            vo.setStatusName(KeyStatus.getMessage(vo.getStatus()));
+            vo.setStatusName(KeyEnum.getMessage(vo.getStatus()));
         });
         return Result.success(voPage.getRecords(), voPage.getCurrent(), voPage.getTotal());
     }
@@ -70,7 +70,7 @@ public class KeyServiceImpl extends ServiceImpl<KeyMapper, Key> implements IKeyS
     public KeyVO getKeyById(int keyId) {
         Key key = keyMapper.selectById(keyId);
         KeyVO vo = CopyUtil.copy(key, KeyVO.class);
-        vo.setStatusName(KeyStatus.getMessage(key.getStatus()));
+        vo.setStatusName(KeyEnum.getMessage(key.getStatus()));
         return vo;
     }
 

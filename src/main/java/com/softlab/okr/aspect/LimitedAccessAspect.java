@@ -1,7 +1,6 @@
 package com.softlab.okr.aspect;
 
 import com.softlab.okr.annotation.LimitedAccess;
-import com.softlab.okr.model.enums.returnCode.IPReturn;
 import com.softlab.okr.model.exception.BusinessException;
 import com.softlab.okr.utils.FilterUtil;
 import com.softlab.okr.utils.RedisUtil;
@@ -65,7 +64,7 @@ public class LimitedAccessAspect {
                 // 时间段内超过访问频次上限 - 阻断,并加入黑名单
                 if (limit >= limitedAccess.frequency()) {
                     redisUtil.set(BLACKLIST + "#" + ip, 1, limitedAccess.second());
-                    throw new BusinessException(IPReturn.TOO_FAST);
+                    throw new BusinessException("请求频率过快");
                 }
                 redisUtil.incr(ipLimitKey, 1);
             } else {
@@ -78,7 +77,7 @@ public class LimitedAccessAspect {
         String blackListKey = BLACKLIST + "#" + ip;
         Object flag = redisUtil.get(blackListKey);
         if (null != flag) {
-            throw new BusinessException(IPReturn.BLACK_LIST);
+            throw new BusinessException("由于您的主机ip进了黑名单，暂时无法访问");
         }
     }
 }

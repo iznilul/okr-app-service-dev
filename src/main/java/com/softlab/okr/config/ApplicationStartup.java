@@ -4,7 +4,7 @@ import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.annotation.TaskInfo;
 import com.softlab.okr.constant.RoleConstants;
 import com.softlab.okr.entity.*;
-import com.softlab.okr.model.enums.statusCode.RoleStatus;
+import com.softlab.okr.model.enums.RoleEnum;
 import com.softlab.okr.security.ApiFilter;
 import com.softlab.okr.security.MySecurityMetadataSource;
 import com.softlab.okr.service.*;
@@ -71,8 +71,8 @@ public class ApplicationStartup implements ApplicationRunner {
 
     @Transactional
     void loadRole() {
-        List<RoleStatus> roleStatusList = Arrays.asList(RoleStatus.values());
-        List<Role> list = roleStatusList.stream().map(roleStatus ->
+        List<RoleEnum> roleEnumList = Arrays.asList(RoleEnum.values());
+        List<Role> list = roleEnumList.stream().map(roleStatus ->
                 new Role(roleStatus.code(), roleStatus.role(), roleStatus.message())).collect(Collectors.toList());
         roleService.remove(null);
         roleService.saveBatch(list);
@@ -110,7 +110,6 @@ public class ApplicationStartup implements ApplicationRunner {
                 requestMappingInfoHandlerMapping.getHandlerMethods();
         handlerMethods.forEach(
                 (info, handlerMethod) -> {
-                    //Auth moduleAuth = handlerMethod.getBeanType().getAnnotation(Auth.class);
                     // 拿到接口方法上的权限注解
                     Auth methodAuth = handlerMethod.getMethod().getAnnotation(Auth.class);
                     // 模块注解和方法注解缺一个都代表不进行权限处理
@@ -143,18 +142,18 @@ public class ApplicationStartup implements ApplicationRunner {
     void loadMenu() {
         roleMenuService.remove(null);
         List<Menu> menuList = menuService.list();
+        List<RoleMenu> list = new ArrayList<>();
         List<RoleMenu> roleMenuList = new ArrayList<>();
-        List<RoleStatus> roleStatusList = RoleStatus.getListOrderByDesc();
-        for (RoleStatus roleStatus : roleStatusList) {
-            List<RoleMenu> list = new ArrayList<>();
-            for (RoleMenu roleMenu : roleMenuList) {
+        for (RoleEnum roleEnum : RoleEnum.getListOrderByDesc()) {
+            for (int i = 0; i < list.size(); i++) {
+                RoleMenu roleMenu = list.get(i);
                 RoleMenu roleMenu1 = (RoleMenu) roleMenu.clone();
-                roleMenu1.setRoleId(roleStatus.code());
-                list.add(roleMenu1);
+                roleMenu1.setRoleId(roleEnum.code());
+                list.set(i, roleMenu1);
             }
             for (Menu menu : menuList) {
-                if (roleStatus.code().equals(menu.getRoleId())) {
-                    list.add(new RoleMenu(null, roleStatus.code(), menu.getMenuId()));
+                if (roleEnum.code().equals(menu.getRoleId())) {
+                    list.add(new RoleMenu(null, roleEnum.code(), menu.getMenuId()));
                 }
             }
             roleMenuList.addAll(list);

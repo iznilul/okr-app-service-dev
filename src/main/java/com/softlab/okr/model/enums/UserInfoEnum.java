@@ -1,6 +1,5 @@
-package com.softlab.okr.model.enums.statusCode;
+package com.softlab.okr.model.enums;
 
-import com.softlab.okr.model.enums.BaseCode;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -12,7 +11,7 @@ import lombok.NoArgsConstructor;
  **/
 @AllArgsConstructor
 @NoArgsConstructor
-public enum UserInfoStatus implements BaseCode {
+public enum UserInfoEnum implements BaseEnum {
     EXAMINE(0, "考核中"),
     SUCCESS(1, "考核完成"),
     FAIL(2, "考核未过");
@@ -30,7 +29,7 @@ public enum UserInfoStatus implements BaseCode {
 
 
     public static String getMessage(Integer code) {
-        for (UserInfoStatus status : UserInfoStatus.values()) {
+        for (UserInfoEnum status : UserInfoEnum.values()) {
             if (status.code.equals(code)) {
                 return status.message;
             }
@@ -39,7 +38,7 @@ public enum UserInfoStatus implements BaseCode {
     }
 
     public static Integer getCode(String message) {
-        for (UserInfoStatus status : UserInfoStatus.values()) {
+        for (UserInfoEnum status : UserInfoEnum.values()) {
             if (status.message.equals(message)) {
                 return status.code;
             }

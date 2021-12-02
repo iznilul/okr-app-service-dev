@@ -20,7 +20,7 @@ public class FilterErrorController {
 
     @RequestMapping("/error/throw")
     @ApiOperation("抛出异常")
-    public void rethrow(HttpServletRequest request) throws Exception {
-        throw ((Exception) request.getAttribute("filter.error"));
+    public void rethrow(HttpServletRequest request) {
+        throw ((BusinessException) request.getAttribute("filter.error"));
     }
 }

@@ -1,6 +1,5 @@
-package com.softlab.okr.model.enums.statusCode;
+package com.softlab.okr.model.enums;
 
-import com.softlab.okr.model.enums.BaseCode;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -17,7 +16,7 @@ import java.util.List;
  **/
 @AllArgsConstructor
 @NoArgsConstructor
-public enum RoleStatus implements BaseCode {
+public enum RoleEnum implements BaseEnum {
     SUPER_ADMIN(1, "超级管理员", "superAdmin"),
     ADMIN(2, "管理员", "admin"),
     USER(3, "普通用户", "user");
@@ -40,7 +39,7 @@ public enum RoleStatus implements BaseCode {
 
 
     public static String getMessage(Integer code) {
-        for (RoleStatus status : RoleStatus.values()) {
+        for (RoleEnum status : RoleEnum.values()) {
             if (status.code.equals(code)) {
                 return status.message;
             }
@@ -49,7 +48,7 @@ public enum RoleStatus implements BaseCode {
     }
 
     public static Integer getCode(String message) {
-        for (RoleStatus status : RoleStatus.values()) {
+        for (RoleEnum status : RoleEnum.values()) {
             if (status.message.equals(message)) {
                 return status.code;
             }
@@ -58,7 +57,7 @@ public enum RoleStatus implements BaseCode {
     }
 
     public static String getRole(String message) {
-        for (RoleStatus status : RoleStatus.values()) {
+        for (RoleEnum status : RoleEnum.values()) {
             if (status.message.equals(message)) {
                 return status.role;
             }
@@ -68,20 +67,20 @@ public enum RoleStatus implements BaseCode {
 
     public static List<String> getList() {
         List<String> list = new ArrayList<>();
-        for (RoleStatus status : RoleStatus.values()) {
+        for (RoleEnum status : RoleEnum.values()) {
             list.add(status.message);
         }
         return list;
     }
 
-    public static List<RoleStatus> getListOrderByAsc() {
-        List<RoleStatus> list = Arrays.asList(RoleStatus.values());
+    public static List<RoleEnum> getListOrderByAsc() {
+        List<RoleEnum> list = Arrays.asList(RoleEnum.values());
         list.sort(Comparator.comparingInt(s -> s.code));
         return list;
     }
 
-    public static List<RoleStatus> getListOrderByDesc() {
-        List<RoleStatus> list = Arrays.asList(RoleStatus.values());
+    public static List<RoleEnum> getListOrderByDesc() {
+        List<RoleEnum> list = Arrays.asList(RoleEnum.values());
         list.sort((s1, s2) -> -(s1.code - s2.code));
 //        List<RoleStatus> list = RoleStatus.getListOrderByAsc();
 //        list.sort(Comparator.reverseOrder());

@@ -10,7 +10,7 @@ import com.softlab.okr.entity.Tag;
 import com.softlab.okr.mapper.BookMapper;
 import com.softlab.okr.model.dto.BookDTO;
 import com.softlab.okr.model.dto.BookQueryDTO;
-import com.softlab.okr.model.enums.statusCode.BookStatus;
+import com.softlab.okr.model.enums.BookEnum;
 import com.softlab.okr.model.exception.BusinessException;
 import com.softlab.okr.model.vo.BookVO;
 import com.softlab.okr.security.IAuthenticationService;
@@ -114,9 +114,9 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements
     public Result getByCond(BookQueryDTO dto) {
         Page<Book> page = new Page<>(dto.getIndex(), dto.getPageSize());
         Page<BookVO> voPage = bookMapper.selectByCond(page, dto.getBookName(), dto.getPublisher(),
-                BookStatus.getCode(dto.getStatusName()));
+                BookEnum.getCode(dto.getStatusName()));
         voPage.getRecords().forEach(vo -> {
-            vo.setStatusName(BookStatus.getMessage(vo.getStatus()));
+            vo.setStatusName(BookEnum.getMessage(vo.getStatus()));
             vo.setTagList(tagService.list(new QueryWrapper<Tag>()
                     .select("tag_id").eq("book_id", vo.getBookId())));
         });

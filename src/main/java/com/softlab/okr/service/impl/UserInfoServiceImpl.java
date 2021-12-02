@@ -9,7 +9,7 @@ import com.softlab.okr.entity.UserInfo;
 import com.softlab.okr.mapper.UserInfoMapper;
 import com.softlab.okr.model.dto.SelectUserDTO;
 import com.softlab.okr.model.dto.UpdateUserDTO;
-import com.softlab.okr.model.enums.statusCode.UserInfoStatus;
+import com.softlab.okr.model.enums.UserInfoEnum;
 import com.softlab.okr.model.vo.UserInfoVO;
 import com.softlab.okr.security.IAuthenticationService;
 import com.softlab.okr.service.IUserEntityService;
@@ -62,7 +62,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         UserInfo userInfo = userInfoMapper.selectOne(new QueryWrapper<UserInfo>()
                 .eq("username", username));
         UserInfoVO vo = CopyUtil.copy(userInfo, UserInfoVO.class);
-        vo.setStatusName(UserInfoStatus.getMessage(vo.getStatus()));
+        vo.setStatusName(UserInfoEnum.getMessage(vo.getStatus()));
         return vo;
     }
 
@@ -75,7 +75,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
                 .like(StringUtils.isNotBlank(dto.getMajor()), "major", dto.getMajor()));
         List<UserInfoVO> list = CopyUtil.copyList(userInfoPage.getRecords(), UserInfoVO.class);
         list.forEach(vo -> {
-            vo.setStatusName(UserInfoStatus.getMessage(vo.getStatus()));
+            vo.setStatusName(UserInfoEnum.getMessage(vo.getStatus()));
         });
         return Result
                 .success(list, userInfoPage.getCurrent(), userInfoPage.getTotal());

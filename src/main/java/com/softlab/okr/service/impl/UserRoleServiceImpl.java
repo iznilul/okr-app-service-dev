@@ -7,7 +7,7 @@ import com.softlab.okr.constant.TimeFormat;
 import com.softlab.okr.entity.UserRole;
 import com.softlab.okr.mapper.UserRoleMapper;
 import com.softlab.okr.model.dto.GrantRoleDTO;
-import com.softlab.okr.model.enums.statusCode.RoleStatus;
+import com.softlab.okr.model.enums.RoleEnum;
 import com.softlab.okr.model.exception.BusinessException;
 import com.softlab.okr.service.IUserRoleService;
 import org.springframework.stereotype.Service;
@@ -29,7 +29,7 @@ public class UserRoleServiceImpl extends ServiceImpl<UserRoleMapper, UserRole> i
     public Boolean grantRole(GrantRoleDTO dto) {
         String message = dto.getRoleMessage();
         Integer userId = dto.getUserId();
-        Integer roleId = RoleStatus.getCode(message);
+        Integer roleId = RoleEnum.getCode(message);
         if (null == message || null == userId || null == roleId) {
             throw new BusinessException();
         }

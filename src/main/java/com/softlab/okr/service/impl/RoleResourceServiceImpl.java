@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.softlab.okr.entity.Resource;
 import com.softlab.okr.entity.RoleResource;
 import com.softlab.okr.mapper.RoleResourceMapper;
-import com.softlab.okr.model.enums.statusCode.RoleStatus;
+import com.softlab.okr.model.enums.RoleEnum;
 import com.softlab.okr.service.IRoleResourceService;
 import com.softlab.okr.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,10 +37,10 @@ public class RoleResourceServiceImpl extends
     public boolean reloadRoleResource(List<Resource> list) {
         Set<Long> resourceSet = new HashSet<>();
 //        List<Role> roleList = roleService.list(new QueryWrapper<Role>().orderByDesc("role_id"));
-        List<RoleStatus> roleStatusList = RoleStatus.getListOrderByDesc();
+        List<RoleEnum> roleEnumList = RoleEnum.getListOrderByDesc();
         List<RoleResource> result = new ArrayList<>();
         this.remove(null);
-        for (RoleStatus status : roleStatusList) {
+        for (RoleEnum status : roleEnumList) {
             Set<Long> set = list.stream().filter(resource -> resource.getRole().equals(status.role()))
                     .map(Resource::getResourceId).collect(Collectors.toSet());
             resourceSet.addAll(set);

@@ -2,7 +2,6 @@ package com.softlab.okr.security;
 
 import com.alibaba.fastjson.JSON;
 import com.softlab.okr.entity.Resource;
-import com.softlab.okr.model.enums.returnCode.ResultReturn;
 import com.softlab.okr.utils.Result;
 import lombok.Getter;
 import lombok.Setter;
@@ -49,7 +48,7 @@ public class ApiFilter implements Filter {
                     response.setContentType("application/json;charset=utf-8");
                     PrintWriter out = response.getWriter();
                     //封装一个结果返回类
-                    out.write(JSON.toJSONString(Result.failure(ResultReturn.API_NOT_OPEN)));
+                    out.write(JSON.toJSONString(Result.failure("接口暂时不开放")));
                     out.flush();
                     out.close();
                 }
@@ -62,7 +61,7 @@ public class ApiFilter implements Filter {
             //若没有找到请求接口，返回错误
             response.setContentType("application/json;charset=utf-8");
             PrintWriter out = response.getWriter();
-            out.write(JSON.toJSONString(Result.failure(ResultReturn.API_ERROR)));
+            out.write(JSON.toJSONString(Result.failure("请求接口不存在")));
             out.flush();
             out.close();
         }

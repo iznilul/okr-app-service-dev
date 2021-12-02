@@ -1,7 +1,8 @@
 package com.softlab.okr.utils;
 
-import com.softlab.okr.model.enums.BaseCode;
-import com.softlab.okr.model.enums.returnCode.CommonReturn;
+import com.softlab.okr.model.enums.BaseEnum;
+import com.softlab.okr.model.enums.ReturnEnum;
+import com.softlab.okr.model.exception.BusinessException;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -39,20 +40,20 @@ public class Result {
 
     public static Result success() {
         Result result = new Result();
-        result.setResultCode(CommonReturn.SUCCESS);
+        result.setResultCode(ReturnEnum.SUCCESS);
         return result;
     }
 
     public static Result success(Object data) {
         Result result = new Result();
-        result.setResultCode(CommonReturn.SUCCESS);
+        result.setResultCode(ReturnEnum.SUCCESS);
         result.setData(data);
         return result;
     }
 
     public static Result success(Object data, Long current, Long total) {
         Result result = new Result();
-        result.setResultCode(CommonReturn.SUCCESS);
+        result.setResultCode(ReturnEnum.SUCCESS);
         result.setData(data);
         result.setCurrent(current);
         result.setTotal(total);
@@ -61,34 +62,41 @@ public class Result {
 
     public static Result failure() {
         Result result = new Result();
-        result.setResultCode(CommonReturn.FAIL);
+        result.setResultCode(ReturnEnum.FAIL);
         return result;
     }
 
-    public static Result failure(BaseCode baseCode) {
+    public static Result failure(BaseEnum baseEnum) {
         Result result = new Result();
-        result.setResultCode(baseCode);
+        result.setResultCode(baseEnum);
         return result;
     }
 
     public static Result failure(String message) {
         Result result = new Result();
-        result.setResultCode(CommonReturn.FAIL);
+        result.setCode(ReturnEnum.FAIL.code());
         result.setMsg(message);
         return result;
     }
 
-
-    public static Result failure(BaseCode baseCode, Object data) {
+    public static Result failure(BusinessException e) {
         Result result = new Result();
-        result.setResultCode(baseCode);
+        result.setCode(e.getCode());
+        result.setMsg(e.getMessage());
+        return result;
+    }
+
+
+    public static Result failure(BaseEnum baseEnum, Object data) {
+        Result result = new Result();
+        result.setResultCode(baseEnum);
         result.setData(data);
         return result;
     }
 
-    private void setResultCode(BaseCode baseCode) {
-        this.code = baseCode.code();
-        this.msg = baseCode.message();
+    private void setResultCode(BaseEnum baseEnum) {
+        this.code = baseEnum.code();
+        this.msg = baseEnum.message();
     }
 
 

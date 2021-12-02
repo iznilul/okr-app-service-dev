@@ -1,5 +1,6 @@
 package com.softlab.okr.security;
 
+import com.softlab.okr.model.enums.ReturnEnum;
 import com.softlab.okr.model.exception.BusinessException;
 import com.softlab.okr.service.impl.UserEntityServiceImpl;
 import io.jsonwebtoken.Claims;
@@ -60,11 +61,13 @@ public class LoginFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } catch (UsernameNotFoundException e) {
                 log.error("没有找到用户");
-                request.setAttribute("filter.error", e);
+                BusinessException exception = new BusinessException("没有找到用户");
+                request.setAttribute("filter.error", exception);
                 request.getRequestDispatcher("/error/throw").forward(request, response);
             } catch (BusinessException e) {
-                log.error("应该是权限过期了");
-                request.setAttribute("filter.error", e);
+                log.error("权限过期");
+                BusinessException exception = new BusinessException(ReturnEnum.ROLE_EXPIRED);
+                request.setAttribute("filter.error", exception);
                 request.getRequestDispatcher("/error/throw").forward(request, response);
             }
         } else {

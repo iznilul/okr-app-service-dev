@@ -9,8 +9,8 @@ import com.softlab.okr.entity.Resource;
 import com.softlab.okr.entity.UserRole;
 import com.softlab.okr.mapper.ResourceMapper;
 import com.softlab.okr.model.dto.PageDTO;
-import com.softlab.okr.model.enums.statusCode.ResourceStatus;
-import com.softlab.okr.model.enums.statusCode.RoleStatus;
+import com.softlab.okr.model.enums.ResourceEnum;
+import com.softlab.okr.model.enums.RoleEnum;
 import com.softlab.okr.model.exception.BusinessException;
 import com.softlab.okr.model.vo.ResourceVO;
 import com.softlab.okr.security.ApiFilter;
@@ -43,7 +43,7 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
         List<ResourceVO> list = new ArrayList<>();
         resourcePage.getRecords().forEach(resource -> {
             ResourceVO vo = CopyUtil.copy(resource, ResourceVO.class);
-            vo.setStatusName(ResourceStatus.getMessage(resource.getStatus()));
+            vo.setStatusName(ResourceEnum.getMessage(resource.getStatus()));
             list.add(vo);
         });
         return Result.success(list, resourcePage.getCurrent(), resourcePage.getTotal());
@@ -62,7 +62,7 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
                 .eq("user_id", userId));
         long time = System.currentTimeMillis();
         if (userRole.getExpireTime().getTime() < time) {
-            userRole.setRoleId(RoleStatus.USER.code());
+            userRole.setRoleId(RoleEnum.USER.code());
             userRole.setExpireTime(DateUtil.parse(TimeFormat.neverExpire));
             userRoleService.updateById(userRole);
             throw new BusinessException("权限已到期 请重新登录");

@@ -11,7 +11,7 @@ import com.softlab.okr.entity.SignUp;
 import com.softlab.okr.mapper.SignUpMapper;
 import com.softlab.okr.model.dto.SignUpDTO;
 import com.softlab.okr.model.dto.UserSignUpDTO;
-import com.softlab.okr.model.enums.statusCode.SignUpStatus;
+import com.softlab.okr.model.enums.SignUpEnum;
 import com.softlab.okr.model.vo.SignUpVO;
 import com.softlab.okr.service.ISignUpService;
 import com.softlab.okr.utils.CopyUtil;
@@ -58,12 +58,12 @@ public class SignUpServiceImpl extends ServiceImpl<SignUpMapper, SignUp> impleme
     //根据参数返回报名列表
     @Override
     public Result getSignUpByCond(SignUpDTO dto) {
-        dto.setStatus(dto.getStatueName() == null ? null : SignUpStatus.getCode(dto.getStatueName()));
+        dto.setStatus(dto.getStatueName() == null ? null : SignUpEnum.getCode(dto.getStatueName()));
         Page<SignUp> page = new Page<>(dto.getIndex(), dto.getPageSize());
         Page<SignUpVO> voPage = signUpMapper.selectSignUpByCond(page, dto);
         List<SignUpVO> list = voPage.getRecords();
         list.forEach(vo -> {
-            vo.setStatusName(SignUpStatus.getMessage(vo.getStatus()));
+            vo.setStatusName(SignUpEnum.getMessage(vo.getStatus()));
         });
         return Result.success(list, voPage.getCurrent(), voPage.getTotal());
     }
@@ -75,7 +75,7 @@ public class SignUpServiceImpl extends ServiceImpl<SignUpMapper, SignUp> impleme
                 .selectOne(new QueryWrapper<SignUp>().eq("student_id", studentId));
         if (signUp != null) {
             SignUpVO vo = CopyUtil.copy(signUp, SignUpVO.class);
-            vo.setStatusName(SignUpStatus.getMessage(vo.getStatus()));
+            vo.setStatusName(SignUpEnum.getMessage(vo.getStatus()));
             return vo;
         } else {
             return null;
@@ -88,7 +88,7 @@ public class SignUpServiceImpl extends ServiceImpl<SignUpMapper, SignUp> impleme
         List<SignUpVO> voList = new ArrayList<>();
         list.forEach(signUp -> {
             SignUpVO vo = CopyUtil.copy(signUp, SignUpVO.class);
-            vo.setStatusName(SignUpStatus.getMessage(signUp.getStatus()));
+            vo.setStatusName(SignUpEnum.getMessage(signUp.getStatus()));
             voList.add(vo);
         });
         // 通过工具类创建writer，默认创建xls格式

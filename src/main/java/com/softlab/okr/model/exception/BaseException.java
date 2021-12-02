@@ -1,6 +1,5 @@
 package com.softlab.okr.model.exception;
 
-import com.softlab.okr.model.enums.BaseCode;
 import lombok.Data;
 
 /**
@@ -14,13 +13,5 @@ public class BaseException extends RuntimeException {
 
     public BaseException() {
         super();
-    }
-
-    public BaseException(BaseCode baseCode) {
-        super(baseCode.message());
-    }
-
-    public BaseException(String message) {
-        super(message);
     }
 }
