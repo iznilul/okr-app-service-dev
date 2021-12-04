@@ -1,5 +1,6 @@
 package com.softlab.okr.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,4 +36,8 @@ public class UserInfo extends BaseEntity {
     private String weixin;
     private String profile;
     private Integer status;
+    @TableField(exist = false)
+    private Integer roleId;
+    @TableField(exist = false)
+    private String role;
 }

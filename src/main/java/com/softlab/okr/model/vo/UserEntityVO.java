@@ -21,8 +21,4 @@ public class UserEntityVO {
      * 登录认证token
      */
     private String token;
-    /**
-     * 当前用户的权限路径集合
-     */
-//    private Set<String> paths;
 }

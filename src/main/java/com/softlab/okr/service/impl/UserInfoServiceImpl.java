@@ -1,14 +1,13 @@
 package com.softlab.okr.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.softlab.okr.entity.UserInfo;
 import com.softlab.okr.mapper.UserInfoMapper;
 import com.softlab.okr.model.dto.SelectUserDTO;
 import com.softlab.okr.model.dto.UpdateUserDTO;
+import com.softlab.okr.model.enums.RoleEnum;
 import com.softlab.okr.model.enums.UserInfoEnum;
 import com.softlab.okr.model.vo.UserInfoVO;
 import com.softlab.okr.security.IAuthenticationService;
@@ -22,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Base64;
-import java.util.List;
 
 /**
  * @Author: Devhui
@@ -46,22 +44,22 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
 
     @Override
     public int saveUserInfo(int userId, String username) {
-        UserInfo userInfo = new UserInfo(userId, username, null, null, null, null, null, null, null, 0);
+        UserInfo userInfo = new UserInfo(userId, username, null, null, null, null, null, null, null, 0, null, null);
         return userInfoMapper.insert(userInfo);
     }
 
     @Override
     public UserInfo getUserInfo() {
         String username = authenticationService.getUsername();
-        return userInfoMapper.selectOne(new QueryWrapper<UserInfo>()
-                .eq("username", username));
+        UserInfo userInfo = userInfoMapper.selectUserInfoByUsername(username);
+        userInfo.setRole(RoleEnum.getRole(userInfo.getRoleId()));
+        return userInfo;
     }
 
     @Override
     public UserInfoVO getUserInfoByUsername(String username) {
-        UserInfo userInfo = userInfoMapper.selectOne(new QueryWrapper<UserInfo>()
-                .eq("username", username));
-        UserInfoVO vo = CopyUtil.copy(userInfo, UserInfoVO.class);
+        UserInfoVO vo = userInfoMapper.selectUserInfoVOByUsername(username);
+        vo.setRole(RoleEnum.getMessage(vo.getRoleId()));
         vo.setStatusName(UserInfoEnum.getMessage(vo.getStatus()));
         return vo;
     }
@@ -69,16 +67,13 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
     @Override
     public Result getUserInfoByCond(SelectUserDTO dto) {
         Page<UserInfo> page = new Page<>(dto.getIndex(), dto.getPageSize());
-        Page<UserInfo> userInfoPage = userInfoMapper.selectPage(page, new QueryWrapper<UserInfo>()
-                .eq(StringUtils.isNotBlank(dto.getUsername()), "username", dto.getUsername())
-                .like(StringUtils.isNotBlank(dto.getName()), "name", dto.getName())
-                .like(StringUtils.isNotBlank(dto.getMajor()), "major", dto.getMajor()));
-        List<UserInfoVO> list = CopyUtil.copyList(userInfoPage.getRecords(), UserInfoVO.class);
-        list.forEach(vo -> {
+        Page<UserInfoVO> voPage = userInfoMapper.selectUserInfoVOList(page, dto);
+        voPage.getRecords().forEach(vo -> {
+            vo.setRole(RoleEnum.getMessage(vo.getRoleId()));
             vo.setStatusName(UserInfoEnum.getMessage(vo.getStatus()));
         });
         return Result
-                .success(list, userInfoPage.getCurrent(), userInfoPage.getTotal());
+                .success(voPage.getRecords(), voPage.getCurrent(), voPage.getTotal());
     }
 
     @Override

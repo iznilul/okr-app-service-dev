@@ -26,7 +26,5 @@ public interface IUserEntityService extends IService<UserEntity> {
 
     boolean removeByUsername(String username);
 
-    boolean loginCheck(UserEntity userEntity, String password);
-
     boolean modifyPassword(ModifyPwdDTO dto);
 }

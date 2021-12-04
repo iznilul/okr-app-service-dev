@@ -11,7 +11,7 @@
  Target Server Version : 50722
  File Encoding         : 65001
 
- Date: 01/12/2021 02:10:08
+ Date: 05/12/2021 02:22:20
 */
 
 SET NAMES utf8mb4;
@@ -196,12 +196,11 @@ INSERT INTO `menu` VALUES (3001, 3000, '/keylist', 'keylist', '钥匙列表', 'i
 INSERT INTO `menu` VALUES (3002, 3000, '/keyuser', 'keyuser', '借阅记录', 'md-key', '18', '/KeyUser', NULL, NULL, 3);
 INSERT INTO `menu` VALUES (4000, 0, '/okr', 'okr', 'okr管理', 'ios-egg-outline', '18', NULL, NULL, NULL, 3);
 INSERT INTO `menu` VALUES (4001, 4000, '/okrlist', 'okrlist', 'okr列表', 'ios-egg', '18', '/Okr', NULL, NULL, 3);
-INSERT INTO `menu` VALUES (5000, 0, '/admin', 'admin', '管理员菜单', 'ios-lock', '18', '', NULL, NULL, 2);
+INSERT INTO `menu` VALUES (5000, 0, '/admin', 'admin', '系统管理', 'ios-lock', '18', '', NULL, NULL, 2);
 INSERT INTO `menu` VALUES (5001, 5000, '/sysrecord', 'sysrecord', '操作记录', 'ios-time', '18', '/SysRecord', NULL, NULL, 2);
-INSERT INTO `menu` VALUES (5002, 5000, '/syslog', 'syslog', '系统日志', 'md-list-box', '18', '/Syslog', NULL, NULL, 2);
-INSERT INTO `menu` VALUES (5003, 5000, '/signup', 'signup', '报名管理', 'md-bookmark', '18', '/SignUp', NULL, NULL, 2);
-INSERT INTO `menu` VALUES (5004, 5000, '/resource', 'resource', '接口管理', 'logo-buffer', '18', '/Resource', NULL, NULL, 2);
-INSERT INTO `menu` VALUES (5005, 5000, '/tag', 'tag', '标签管理', 'md-card', '18', '/Tag', NULL, NULL, 2);
+INSERT INTO `menu` VALUES (5002, 5000, '/signup', 'signup', '报名管理', 'md-bookmark', '18', '/SignUp', NULL, NULL, 2);
+INSERT INTO `menu` VALUES (5003, 5000, '/resource', 'resource', '接口管理', 'logo-buffer', '18', '/Resource', NULL, NULL, 2);
+INSERT INTO `menu` VALUES (5004, 5000, '/tag', 'tag', '标签管理', 'md-card', '18', '/Tag', NULL, NULL, 2);
 
 -- ----------------------------
 -- Table structure for resource
@@ -215,60 +214,60 @@ CREATE TABLE `resource`  (
   `role` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '角色',
   `status` tinyint(1) NOT NULL COMMENT '接口状态 0关闭 1开启',
   PRIMARY KEY (`resource_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1465744187340124163 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '资源' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1467193546766372874 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '资源' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of resource
 -- ----------------------------
-INSERT INTO `resource` VALUES (1465744187264626690, '删除书籍', 'GET', '/api/okr/book/cancel', 'admin', 1);
-INSERT INTO `resource` VALUES (1465744187264626691, '借书', 'GET', '/api/okr/book/borrow', 'admin', 1);
-INSERT INTO `resource` VALUES (1465744187273015297, '添加书籍', 'POST', '/api/okr/book/add', 'admin', 1);
-INSERT INTO `resource` VALUES (1465744187273015298, '还书', 'GET', '/api/okr/book/return', 'admin', 1);
-INSERT INTO `resource` VALUES (1465744187273015299, '上传书籍照片', 'GET', '/api/okr/book/changeImg', 'admin', 1);
-INSERT INTO `resource` VALUES (1465744187281403906, '修改书籍', 'POST', '/api/okr/book/change', 'admin', 1);
-INSERT INTO `resource` VALUES (1465744187281403907, '书籍列表', 'POST', '/api/okr/book/query', 'user', 1);
-INSERT INTO `resource` VALUES (1465744187281403908, '认证测试', 'GET', '/api/okr/common/test', 'common', 1);
-INSERT INTO `resource` VALUES (1465744187281403909, '用户退出', 'GET', '/api/okr/common/logout', 'common', 1);
-INSERT INTO `resource` VALUES (1465744187289792513, '用户登录', 'POST', '/api/okr/common/login', 'common', 1);
-INSERT INTO `resource` VALUES (1465744187289792514, '模糊查询角色', 'GET', '/api/okr/enum/role', 'user', 1);
-INSERT INTO `resource` VALUES (1465744187289792515, '模糊查询姓名列表', 'GET', '/api/okr/enum/name', 'user', 1);
-INSERT INTO `resource` VALUES (1465744187289792516, '模糊查询钥匙', 'GET', '/api/okr/enum/key', 'user', 1);
-INSERT INTO `resource` VALUES (1465744187298181121, '模糊查询用户名列表', 'GET', '/api/okr/enum/username', 'user', 1);
-INSERT INTO `resource` VALUES (1465744187298181122, '模糊查询专业列表', 'GET', '/api/okr/enum/major', 'user', 1);
-INSERT INTO `resource` VALUES (1465744187298181123, '增加钥匙', 'GET', '/api/okr/key/add', 'admin', 1);
-INSERT INTO `resource` VALUES (1465744187298181124, '修改钥匙', 'POST', '/api/okr/key/change', 'admin', 1);
-INSERT INTO `resource` VALUES (1465744187306569730, '删除钥匙', 'GET', '/api/okr/key/cancel', 'admin', 1);
-INSERT INTO `resource` VALUES (1465744187306569731, '钥匙列表', 'POST', '/api/okr/key/query', 'user', 1);
-INSERT INTO `resource` VALUES (1465744187306569732, '根据id查询钥匙', 'GET', '/api/okr/key/queryById', 'admin', 1);
-INSERT INTO `resource` VALUES (1465744187306569733, '借钥匙', 'GET', '/api/okr/key/borrow', 'user', 1);
-INSERT INTO `resource` VALUES (1465744187306569734, '还钥匙', 'GET', '/api/okr/key/return', 'user', 1);
-INSERT INTO `resource` VALUES (1465744187306569735, '删除钥匙持有人', 'GET', '/api/okr/keyUser/cancel', 'admin', 1);
-INSERT INTO `resource` VALUES (1465744187314958337, '增加钥匙持有人', 'GET', '/api/okr/keyUser/add', 'admin', 1);
-INSERT INTO `resource` VALUES (1465744187314958338, '钥匙记录列表', 'POST', '/api/okr/keyUser/query', 'user', 1);
-INSERT INTO `resource` VALUES (1465744187314958339, '获取路径', 'GET', '/api/okr/menu/fetch', 'user', 1);
-INSERT INTO `resource` VALUES (1465744187314958340, '服务器监控', 'GET', '/api/okr/monitor/server', 'user', 1);
-INSERT INTO `resource` VALUES (1465744187314958341, 'csdn实时展示', 'GET', '/api/okr/rank/csdn', 'common', 1);
-INSERT INTO `resource` VALUES (1465744187314958342, '获取资源接口', 'POST', '/api/okr/resource/query', 'admin', 1);
-INSERT INTO `resource` VALUES (1465744187314958343, '更改接口开放状态', 'GET', '/api/okr/resource/change', 'admin', 1);
-INSERT INTO `resource` VALUES (1465744187314958344, '报名结果查询', 'GET', '/api/okr/signup/query', 'common', 1);
-INSERT INTO `resource` VALUES (1465744187323346945, '获取报名记录', 'POST', '/api/okr/signup/query', 'admin', 1);
-INSERT INTO `resource` VALUES (1465744187323346946, '纳新报名', 'POST', '/api/okr/signup/add', 'common', 1);
-INSERT INTO `resource` VALUES (1465744187323346947, '更新报名记录', 'POST', '/api/okr/signup/change', 'admin', 1);
-INSERT INTO `resource` VALUES (1465744187323346948, '导出报名单', 'GET', '/api/okr/signup/export', 'admin', 1);
-INSERT INTO `resource` VALUES (1465744187323346949, '登录日志列表', 'POST', '/api/okr/sysRecord/query', 'admin', 1);
-INSERT INTO `resource` VALUES (1465744187323346950, '更新标签', 'GET', '/api/okr/tag/change', 'admin', 1);
-INSERT INTO `resource` VALUES (1465744187323346951, '增加标签', 'GET', '/api/okr/tag/add', 'admin', 1);
-INSERT INTO `resource` VALUES (1465744187323346952, '删除标签', 'GET', '/api/okr/tag/cancel', 'admin', 1);
-INSERT INTO `resource` VALUES (1465744187331735554, '获取标签列表', 'POST', '/api/okr/tag/query', 'admin', 1);
-INSERT INTO `resource` VALUES (1465744187331735555, '注册用户', 'POST', '/api/okr/user/add', 'admin', 1);
-INSERT INTO `resource` VALUES (1465744187331735556, '根据用户名选择用户', 'GET', '/api/okr/user/queryByUsername', 'user', 1);
-INSERT INTO `resource` VALUES (1465744187331735557, '删除用户', 'GET', '/api/okr/user/cancel', 'admin', 1);
-INSERT INTO `resource` VALUES (1465744187331735558, '根据情况选择用户', 'POST', '/api/okr/user/queryList', 'user', 1);
-INSERT INTO `resource` VALUES (1465744187331735559, '更新用户信息', 'POST', '/api/okr/user/change', 'user', 1);
-INSERT INTO `resource` VALUES (1465744187331735560, '上传头像文件', 'POST', '/api/okr/user/changeImg', 'user', 1);
-INSERT INTO `resource` VALUES (1465744187331735561, '根据账号选择用户', 'GET', '/api/okr/user/query', 'user', 1);
-INSERT INTO `resource` VALUES (1465744187340124161, '修改密码', 'POST', '/api/okr/user/changePassword', 'user', 1);
-INSERT INTO `resource` VALUES (1465744187340124162, '修改成员的角色权限', 'POST', '/api/okr/userRole/grant', 'superAdmin', 1);
+INSERT INTO `resource` VALUES (1467193546711846914, '删除书籍', 'GET', '/api/okr/book/cancel', 'admin', 1);
+INSERT INTO `resource` VALUES (1467193546720235522, '借书', 'GET', '/api/okr/book/borrow', 'admin', 1);
+INSERT INTO `resource` VALUES (1467193546720235523, '添加书籍', 'POST', '/api/okr/book/add', 'admin', 1);
+INSERT INTO `resource` VALUES (1467193546720235524, '上传书籍照片', 'GET', '/api/okr/book/changeImg', 'admin', 1);
+INSERT INTO `resource` VALUES (1467193546720235525, '修改书籍', 'POST', '/api/okr/book/change', 'admin', 1);
+INSERT INTO `resource` VALUES (1467193546737012737, '书籍列表', 'POST', '/api/okr/book/query', 'user', 1);
+INSERT INTO `resource` VALUES (1467193546737012738, '还书', 'GET', '/api/okr/book/return', 'admin', 1);
+INSERT INTO `resource` VALUES (1467193546737012739, '认证测试', 'GET', '/api/okr/common/test', 'common', 1);
+INSERT INTO `resource` VALUES (1467193546741207041, '用户退出', 'GET', '/api/okr/common/logout', 'common', 1);
+INSERT INTO `resource` VALUES (1467193546741207042, '用户登录', 'POST', '/api/okr/common/login', 'common', 1);
+INSERT INTO `resource` VALUES (1467193546741207043, '模糊查询姓名列表', 'GET', '/api/okr/enum/name', 'user', 1);
+INSERT INTO `resource` VALUES (1467193546741207044, '模糊查询钥匙', 'GET', '/api/okr/enum/key', 'user', 1);
+INSERT INTO `resource` VALUES (1467193546741207045, '模糊查询用户名列表', 'GET', '/api/okr/enum/username', 'user', 1);
+INSERT INTO `resource` VALUES (1467193546741207046, '模糊查询专业列表', 'GET', '/api/okr/enum/major', 'user', 1);
+INSERT INTO `resource` VALUES (1467193546741207047, '模糊查询角色', 'GET', '/api/okr/enum/role', 'user', 1);
+INSERT INTO `resource` VALUES (1467193546741207048, '增加钥匙', 'GET', '/api/okr/key/add', 'admin', 1);
+INSERT INTO `resource` VALUES (1467193546741207049, '根据id查询钥匙', 'GET', '/api/okr/key/queryById', 'admin', 1);
+INSERT INTO `resource` VALUES (1467193546749595649, '还钥匙', 'GET', '/api/okr/key/return', 'user', 1);
+INSERT INTO `resource` VALUES (1467193546749595650, '修改钥匙', 'POST', '/api/okr/key/change', 'admin', 1);
+INSERT INTO `resource` VALUES (1467193546749595651, '借钥匙', 'GET', '/api/okr/key/borrow', 'user', 1);
+INSERT INTO `resource` VALUES (1467193546749595652, '钥匙列表', 'POST', '/api/okr/key/query', 'user', 1);
+INSERT INTO `resource` VALUES (1467193546749595653, '删除钥匙', 'GET', '/api/okr/key/cancel', 'admin', 1);
+INSERT INTO `resource` VALUES (1467193546749595654, '增加钥匙持有人', 'GET', '/api/okr/keyUser/add', 'admin', 1);
+INSERT INTO `resource` VALUES (1467193546749595655, '钥匙记录列表', 'POST', '/api/okr/keyUser/query', 'user', 1);
+INSERT INTO `resource` VALUES (1467193546749595656, '删除钥匙持有人', 'GET', '/api/okr/keyUser/cancel', 'admin', 1);
+INSERT INTO `resource` VALUES (1467193546749595657, '获取路径', 'GET', '/api/okr/menu/fetch', 'user', 1);
+INSERT INTO `resource` VALUES (1467193546749595658, '服务器监控', 'GET', '/api/okr/monitor/server', 'user', 1);
+INSERT INTO `resource` VALUES (1467193546749595659, 'csdn实时展示', 'GET', '/api/okr/rank/csdn', 'common', 1);
+INSERT INTO `resource` VALUES (1467193546757984258, '更改接口开放状态', 'GET', '/api/okr/resource/change', 'admin', 1);
+INSERT INTO `resource` VALUES (1467193546757984259, '获取资源接口', 'POST', '/api/okr/resource/query', 'admin', 1);
+INSERT INTO `resource` VALUES (1467193546757984260, '导出报名单', 'GET', '/api/okr/signup/export', 'admin', 1);
+INSERT INTO `resource` VALUES (1467193546757984261, '报名结果查询', 'GET', '/api/okr/signup/query', 'common', 1);
+INSERT INTO `resource` VALUES (1467193546757984262, '获取报名记录', 'POST', '/api/okr/signup/query', 'admin', 1);
+INSERT INTO `resource` VALUES (1467193546757984263, '纳新报名', 'POST', '/api/okr/signup/add', 'common', 1);
+INSERT INTO `resource` VALUES (1467193546757984264, '更新报名记录', 'POST', '/api/okr/signup/change', 'admin', 1);
+INSERT INTO `resource` VALUES (1467193546757984265, '登录日志列表', 'POST', '/api/okr/sysRecord/query', 'admin', 1);
+INSERT INTO `resource` VALUES (1467193546757984266, '更新标签', 'GET', '/api/okr/tag/change', 'admin', 1);
+INSERT INTO `resource` VALUES (1467193546757984267, '增加标签', 'GET', '/api/okr/tag/add', 'admin', 1);
+INSERT INTO `resource` VALUES (1467193546757984268, '删除标签', 'GET', '/api/okr/tag/cancel', 'admin', 1);
+INSERT INTO `resource` VALUES (1467193546757984269, '获取标签列表', 'POST', '/api/okr/tag/query', 'admin', 1);
+INSERT INTO `resource` VALUES (1467193546766372865, '注册用户', 'POST', '/api/okr/user/add', 'admin', 1);
+INSERT INTO `resource` VALUES (1467193546766372866, '上传头像文件', 'POST', '/api/okr/user/changeImg', 'user', 1);
+INSERT INTO `resource` VALUES (1467193546766372867, '更新用户信息', 'POST', '/api/okr/user/change', 'user', 1);
+INSERT INTO `resource` VALUES (1467193546766372868, '根据账号选择用户', 'GET', '/api/okr/user/query', 'user', 1);
+INSERT INTO `resource` VALUES (1467193546766372869, '查询用户列表', 'POST', '/api/okr/user/queryList', 'user', 1);
+INSERT INTO `resource` VALUES (1467193546766372870, '修改密码', 'POST', '/api/okr/user/changePassword', 'user', 1);
+INSERT INTO `resource` VALUES (1467193546766372871, '删除用户', 'GET', '/api/okr/user/cancel', 'admin', 1);
+INSERT INTO `resource` VALUES (1467193546766372872, '根据用户名选择用户', 'GET', '/api/okr/user/queryByUsername', 'user', 1);
+INSERT INTO `resource` VALUES (1467193546766372873, '修改成员的角色权限', 'POST', '/api/okr/userRole/grant', 'superAdmin', 1);
 
 -- ----------------------------
 -- Table structure for role
@@ -298,67 +297,54 @@ CREATE TABLE `role_menu`  (
   `role_id` int(11) NOT NULL COMMENT '角色id',
   `menu_id` int(11) NOT NULL COMMENT '菜单id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 334 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1204 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of role_menu
 -- ----------------------------
-INSERT INTO `role_menu` VALUES (278, 3, 1001);
-INSERT INTO `role_menu` VALUES (279, 3, 1002);
-INSERT INTO `role_menu` VALUES (280, 3, 1003);
-INSERT INTO `role_menu` VALUES (281, 3, 2000);
-INSERT INTO `role_menu` VALUES (282, 3, 2001);
-INSERT INTO `role_menu` VALUES (283, 3, 2002);
-INSERT INTO `role_menu` VALUES (284, 3, 3000);
-INSERT INTO `role_menu` VALUES (285, 3, 3001);
-INSERT INTO `role_menu` VALUES (286, 3, 3002);
-INSERT INTO `role_menu` VALUES (287, 3, 4000);
-INSERT INTO `role_menu` VALUES (288, 3, 4001);
-INSERT INTO `role_menu` VALUES (289, 2, 1001);
-INSERT INTO `role_menu` VALUES (290, 2, 1002);
-INSERT INTO `role_menu` VALUES (291, 2, 1003);
-INSERT INTO `role_menu` VALUES (292, 2, 2000);
-INSERT INTO `role_menu` VALUES (293, 2, 2001);
-INSERT INTO `role_menu` VALUES (294, 2, 2002);
-INSERT INTO `role_menu` VALUES (295, 2, 3000);
-INSERT INTO `role_menu` VALUES (296, 2, 3001);
-INSERT INTO `role_menu` VALUES (297, 2, 3002);
-INSERT INTO `role_menu` VALUES (298, 2, 4000);
-INSERT INTO `role_menu` VALUES (299, 2, 4001);
-INSERT INTO `role_menu` VALUES (300, 2, 5000);
-INSERT INTO `role_menu` VALUES (301, 2, 5001);
-INSERT INTO `role_menu` VALUES (302, 2, 5002);
-INSERT INTO `role_menu` VALUES (303, 2, 5003);
-INSERT INTO `role_menu` VALUES (304, 2, 5004);
-INSERT INTO `role_menu` VALUES (305, 2, 5005);
-INSERT INTO `role_menu` VALUES (306, 1, 1001);
-INSERT INTO `role_menu` VALUES (307, 1, 1002);
-INSERT INTO `role_menu` VALUES (308, 1, 1003);
-INSERT INTO `role_menu` VALUES (309, 1, 2000);
-INSERT INTO `role_menu` VALUES (310, 1, 2001);
-INSERT INTO `role_menu` VALUES (311, 1, 2002);
-INSERT INTO `role_menu` VALUES (312, 1, 3000);
-INSERT INTO `role_menu` VALUES (313, 1, 3001);
-INSERT INTO `role_menu` VALUES (314, 1, 3002);
-INSERT INTO `role_menu` VALUES (315, 1, 4000);
-INSERT INTO `role_menu` VALUES (316, 1, 4001);
-INSERT INTO `role_menu` VALUES (317, 1, 1001);
-INSERT INTO `role_menu` VALUES (318, 1, 1002);
-INSERT INTO `role_menu` VALUES (319, 1, 1003);
-INSERT INTO `role_menu` VALUES (320, 1, 2000);
-INSERT INTO `role_menu` VALUES (321, 1, 2001);
-INSERT INTO `role_menu` VALUES (322, 1, 2002);
-INSERT INTO `role_menu` VALUES (323, 1, 3000);
-INSERT INTO `role_menu` VALUES (324, 1, 3001);
-INSERT INTO `role_menu` VALUES (325, 1, 3002);
-INSERT INTO `role_menu` VALUES (326, 1, 4000);
-INSERT INTO `role_menu` VALUES (327, 1, 4001);
-INSERT INTO `role_menu` VALUES (328, 1, 5000);
-INSERT INTO `role_menu` VALUES (329, 1, 5001);
-INSERT INTO `role_menu` VALUES (330, 1, 5002);
-INSERT INTO `role_menu` VALUES (331, 1, 5003);
-INSERT INTO `role_menu` VALUES (332, 1, 5004);
-INSERT INTO `role_menu` VALUES (333, 1, 5005);
+INSERT INTO `role_menu` VALUES (1161, 3, 1001);
+INSERT INTO `role_menu` VALUES (1162, 3, 1002);
+INSERT INTO `role_menu` VALUES (1163, 3, 1003);
+INSERT INTO `role_menu` VALUES (1164, 3, 2000);
+INSERT INTO `role_menu` VALUES (1165, 3, 2001);
+INSERT INTO `role_menu` VALUES (1166, 3, 2002);
+INSERT INTO `role_menu` VALUES (1167, 3, 3000);
+INSERT INTO `role_menu` VALUES (1168, 3, 3001);
+INSERT INTO `role_menu` VALUES (1169, 3, 3002);
+INSERT INTO `role_menu` VALUES (1170, 3, 4000);
+INSERT INTO `role_menu` VALUES (1171, 3, 4001);
+INSERT INTO `role_menu` VALUES (1172, 2, 1001);
+INSERT INTO `role_menu` VALUES (1173, 2, 1002);
+INSERT INTO `role_menu` VALUES (1174, 2, 1003);
+INSERT INTO `role_menu` VALUES (1175, 2, 2000);
+INSERT INTO `role_menu` VALUES (1176, 2, 2001);
+INSERT INTO `role_menu` VALUES (1177, 2, 2002);
+INSERT INTO `role_menu` VALUES (1178, 2, 3000);
+INSERT INTO `role_menu` VALUES (1179, 2, 3001);
+INSERT INTO `role_menu` VALUES (1180, 2, 3002);
+INSERT INTO `role_menu` VALUES (1181, 2, 4000);
+INSERT INTO `role_menu` VALUES (1182, 2, 4001);
+INSERT INTO `role_menu` VALUES (1183, 2, 5000);
+INSERT INTO `role_menu` VALUES (1184, 2, 5001);
+INSERT INTO `role_menu` VALUES (1185, 2, 5002);
+INSERT INTO `role_menu` VALUES (1186, 2, 5003);
+INSERT INTO `role_menu` VALUES (1187, 2, 5004);
+INSERT INTO `role_menu` VALUES (1188, 1, 1001);
+INSERT INTO `role_menu` VALUES (1189, 1, 1002);
+INSERT INTO `role_menu` VALUES (1190, 1, 1003);
+INSERT INTO `role_menu` VALUES (1191, 1, 2000);
+INSERT INTO `role_menu` VALUES (1192, 1, 2001);
+INSERT INTO `role_menu` VALUES (1193, 1, 2002);
+INSERT INTO `role_menu` VALUES (1194, 1, 3000);
+INSERT INTO `role_menu` VALUES (1195, 1, 3001);
+INSERT INTO `role_menu` VALUES (1196, 1, 3002);
+INSERT INTO `role_menu` VALUES (1197, 1, 4000);
+INSERT INTO `role_menu` VALUES (1198, 1, 4001);
+INSERT INTO `role_menu` VALUES (1199, 1, 5000);
+INSERT INTO `role_menu` VALUES (1200, 1, 5001);
+INSERT INTO `role_menu` VALUES (1201, 1, 5002);
+INSERT INTO `role_menu` VALUES (1202, 1, 5003);
+INSERT INTO `role_menu` VALUES (1203, 1, 5004);
 
 -- ----------------------------
 -- Table structure for role_resource
@@ -370,114 +356,114 @@ CREATE TABLE `role_resource`  (
   `resource_id` bigint(11) NOT NULL COMMENT '资源id',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `resource_id`(`resource_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 25829 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色-权限关系' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 27889 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色-权限关系' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of role_resource
 -- ----------------------------
-INSERT INTO `role_resource` VALUES (25726, 3, 1465744187306569733);
-INSERT INTO `role_resource` VALUES (25727, 3, 1465744187289792516);
-INSERT INTO `role_resource` VALUES (25728, 3, 1465744187314958340);
-INSERT INTO `role_resource` VALUES (25729, 3, 1465744187331735556);
-INSERT INTO `role_resource` VALUES (25730, 3, 1465744187331735559);
-INSERT INTO `role_resource` VALUES (25731, 3, 1465744187306569734);
-INSERT INTO `role_resource` VALUES (25732, 3, 1465744187331735558);
-INSERT INTO `role_resource` VALUES (25733, 3, 1465744187298181121);
-INSERT INTO `role_resource` VALUES (25734, 3, 1465744187340124161);
-INSERT INTO `role_resource` VALUES (25735, 3, 1465744187281403907);
-INSERT INTO `role_resource` VALUES (25736, 3, 1465744187289792515);
-INSERT INTO `role_resource` VALUES (25737, 3, 1465744187306569731);
-INSERT INTO `role_resource` VALUES (25738, 3, 1465744187314958339);
-INSERT INTO `role_resource` VALUES (25739, 3, 1465744187289792514);
-INSERT INTO `role_resource` VALUES (25740, 3, 1465744187298181122);
-INSERT INTO `role_resource` VALUES (25741, 3, 1465744187314958338);
-INSERT INTO `role_resource` VALUES (25742, 3, 1465744187331735561);
-INSERT INTO `role_resource` VALUES (25743, 3, 1465744187331735560);
-INSERT INTO `role_resource` VALUES (25744, 2, 1465744187306569733);
-INSERT INTO `role_resource` VALUES (25745, 2, 1465744187323346949);
-INSERT INTO `role_resource` VALUES (25746, 2, 1465744187331735557);
-INSERT INTO `role_resource` VALUES (25747, 2, 1465744187289792516);
-INSERT INTO `role_resource` VALUES (25748, 2, 1465744187314958340);
-INSERT INTO `role_resource` VALUES (25749, 2, 1465744187331735556);
-INSERT INTO `role_resource` VALUES (25750, 2, 1465744187298181124);
-INSERT INTO `role_resource` VALUES (25751, 2, 1465744187306569732);
-INSERT INTO `role_resource` VALUES (25752, 2, 1465744187323346948);
-INSERT INTO `role_resource` VALUES (25753, 2, 1465744187331735559);
-INSERT INTO `role_resource` VALUES (25754, 2, 1465744187306569735);
-INSERT INTO `role_resource` VALUES (25755, 2, 1465744187314958343);
-INSERT INTO `role_resource` VALUES (25756, 2, 1465744187323346951);
-INSERT INTO `role_resource` VALUES (25757, 2, 1465744187306569734);
-INSERT INTO `role_resource` VALUES (25758, 2, 1465744187331735558);
-INSERT INTO `role_resource` VALUES (25759, 2, 1465744187314958342);
-INSERT INTO `role_resource` VALUES (25760, 2, 1465744187323346950);
-INSERT INTO `role_resource` VALUES (25761, 2, 1465744187298181121);
-INSERT INTO `role_resource` VALUES (25762, 2, 1465744187340124161);
-INSERT INTO `role_resource` VALUES (25763, 2, 1465744187273015297);
-INSERT INTO `role_resource` VALUES (25764, 2, 1465744187314958337);
-INSERT INTO `role_resource` VALUES (25765, 2, 1465744187323346945);
-INSERT INTO `role_resource` VALUES (25766, 2, 1465744187264626691);
-INSERT INTO `role_resource` VALUES (25767, 2, 1465744187281403907);
-INSERT INTO `role_resource` VALUES (25768, 2, 1465744187289792515);
-INSERT INTO `role_resource` VALUES (25769, 2, 1465744187306569731);
-INSERT INTO `role_resource` VALUES (25770, 2, 1465744187314958339);
-INSERT INTO `role_resource` VALUES (25771, 2, 1465744187273015299);
-INSERT INTO `role_resource` VALUES (25772, 2, 1465744187298181123);
-INSERT INTO `role_resource` VALUES (25773, 2, 1465744187323346947);
-INSERT INTO `role_resource` VALUES (25774, 2, 1465744187331735555);
-INSERT INTO `role_resource` VALUES (25775, 2, 1465744187289792514);
-INSERT INTO `role_resource` VALUES (25776, 2, 1465744187298181122);
-INSERT INTO `role_resource` VALUES (25777, 2, 1465744187314958338);
-INSERT INTO `role_resource` VALUES (25778, 2, 1465744187264626690);
-INSERT INTO `role_resource` VALUES (25779, 2, 1465744187273015298);
-INSERT INTO `role_resource` VALUES (25780, 2, 1465744187281403906);
-INSERT INTO `role_resource` VALUES (25781, 2, 1465744187306569730);
-INSERT INTO `role_resource` VALUES (25782, 2, 1465744187331735554);
-INSERT INTO `role_resource` VALUES (25783, 2, 1465744187331735561);
-INSERT INTO `role_resource` VALUES (25784, 2, 1465744187331735560);
-INSERT INTO `role_resource` VALUES (25785, 2, 1465744187323346952);
-INSERT INTO `role_resource` VALUES (25786, 1, 1465744187306569733);
-INSERT INTO `role_resource` VALUES (25787, 1, 1465744187323346949);
-INSERT INTO `role_resource` VALUES (25788, 1, 1465744187331735557);
-INSERT INTO `role_resource` VALUES (25789, 1, 1465744187289792516);
-INSERT INTO `role_resource` VALUES (25790, 1, 1465744187314958340);
-INSERT INTO `role_resource` VALUES (25791, 1, 1465744187331735556);
-INSERT INTO `role_resource` VALUES (25792, 1, 1465744187298181124);
-INSERT INTO `role_resource` VALUES (25793, 1, 1465744187306569732);
-INSERT INTO `role_resource` VALUES (25794, 1, 1465744187323346948);
-INSERT INTO `role_resource` VALUES (25795, 1, 1465744187331735559);
-INSERT INTO `role_resource` VALUES (25796, 1, 1465744187306569735);
-INSERT INTO `role_resource` VALUES (25797, 1, 1465744187314958343);
-INSERT INTO `role_resource` VALUES (25798, 1, 1465744187323346951);
-INSERT INTO `role_resource` VALUES (25799, 1, 1465744187306569734);
-INSERT INTO `role_resource` VALUES (25800, 1, 1465744187331735558);
-INSERT INTO `role_resource` VALUES (25801, 1, 1465744187314958342);
-INSERT INTO `role_resource` VALUES (25802, 1, 1465744187323346950);
-INSERT INTO `role_resource` VALUES (25803, 1, 1465744187298181121);
-INSERT INTO `role_resource` VALUES (25804, 1, 1465744187340124161);
-INSERT INTO `role_resource` VALUES (25805, 1, 1465744187273015297);
-INSERT INTO `role_resource` VALUES (25806, 1, 1465744187314958337);
-INSERT INTO `role_resource` VALUES (25807, 1, 1465744187323346945);
-INSERT INTO `role_resource` VALUES (25808, 1, 1465744187264626691);
-INSERT INTO `role_resource` VALUES (25809, 1, 1465744187281403907);
-INSERT INTO `role_resource` VALUES (25810, 1, 1465744187289792515);
-INSERT INTO `role_resource` VALUES (25811, 1, 1465744187306569731);
-INSERT INTO `role_resource` VALUES (25812, 1, 1465744187314958339);
-INSERT INTO `role_resource` VALUES (25813, 1, 1465744187273015299);
-INSERT INTO `role_resource` VALUES (25814, 1, 1465744187298181123);
-INSERT INTO `role_resource` VALUES (25815, 1, 1465744187323346947);
-INSERT INTO `role_resource` VALUES (25816, 1, 1465744187331735555);
-INSERT INTO `role_resource` VALUES (25817, 1, 1465744187264626690);
-INSERT INTO `role_resource` VALUES (25818, 1, 1465744187289792514);
-INSERT INTO `role_resource` VALUES (25819, 1, 1465744187298181122);
-INSERT INTO `role_resource` VALUES (25820, 1, 1465744187314958338);
-INSERT INTO `role_resource` VALUES (25821, 1, 1465744187273015298);
-INSERT INTO `role_resource` VALUES (25822, 1, 1465744187281403906);
-INSERT INTO `role_resource` VALUES (25823, 1, 1465744187306569730);
-INSERT INTO `role_resource` VALUES (25824, 1, 1465744187331735554);
-INSERT INTO `role_resource` VALUES (25825, 1, 1465744187340124162);
-INSERT INTO `role_resource` VALUES (25826, 1, 1465744187331735561);
-INSERT INTO `role_resource` VALUES (25827, 1, 1465744187331735560);
-INSERT INTO `role_resource` VALUES (25828, 1, 1465744187323346952);
+INSERT INTO `role_resource` VALUES (27786, 3, 1467193546766372872);
+INSERT INTO `role_resource` VALUES (27787, 3, 1467193546749595657);
+INSERT INTO `role_resource` VALUES (27788, 3, 1467193546749595658);
+INSERT INTO `role_resource` VALUES (27789, 3, 1467193546741207044);
+INSERT INTO `role_resource` VALUES (27790, 3, 1467193546749595652);
+INSERT INTO `role_resource` VALUES (27791, 3, 1467193546766372868);
+INSERT INTO `role_resource` VALUES (27792, 3, 1467193546741207045);
+INSERT INTO `role_resource` VALUES (27793, 3, 1467193546766372869);
+INSERT INTO `role_resource` VALUES (27794, 3, 1467193546741207046);
+INSERT INTO `role_resource` VALUES (27795, 3, 1467193546766372870);
+INSERT INTO `role_resource` VALUES (27796, 3, 1467193546741207047);
+INSERT INTO `role_resource` VALUES (27797, 3, 1467193546749595655);
+INSERT INTO `role_resource` VALUES (27798, 3, 1467193546737012737);
+INSERT INTO `role_resource` VALUES (27799, 3, 1467193546749595649);
+INSERT INTO `role_resource` VALUES (27800, 3, 1467193546766372866);
+INSERT INTO `role_resource` VALUES (27801, 3, 1467193546741207043);
+INSERT INTO `role_resource` VALUES (27802, 3, 1467193546749595651);
+INSERT INTO `role_resource` VALUES (27803, 3, 1467193546766372867);
+INSERT INTO `role_resource` VALUES (27804, 2, 1467193546757984268);
+INSERT INTO `role_resource` VALUES (27805, 2, 1467193546757984269);
+INSERT INTO `role_resource` VALUES (27806, 2, 1467193546766372872);
+INSERT INTO `role_resource` VALUES (27807, 2, 1467193546741207048);
+INSERT INTO `role_resource` VALUES (27808, 2, 1467193546749595656);
+INSERT INTO `role_resource` VALUES (27809, 2, 1467193546757984264);
+INSERT INTO `role_resource` VALUES (27810, 2, 1467193546749595657);
+INSERT INTO `role_resource` VALUES (27811, 2, 1467193546741207049);
+INSERT INTO `role_resource` VALUES (27812, 2, 1467193546757984265);
+INSERT INTO `role_resource` VALUES (27813, 2, 1467193546749595658);
+INSERT INTO `role_resource` VALUES (27814, 2, 1467193546757984266);
+INSERT INTO `role_resource` VALUES (27815, 2, 1467193546757984267);
+INSERT INTO `role_resource` VALUES (27816, 2, 1467193546741207044);
+INSERT INTO `role_resource` VALUES (27817, 2, 1467193546749595652);
+INSERT INTO `role_resource` VALUES (27818, 2, 1467193546766372868);
+INSERT INTO `role_resource` VALUES (27819, 2, 1467193546720235524);
+INSERT INTO `role_resource` VALUES (27820, 2, 1467193546757984260);
+INSERT INTO `role_resource` VALUES (27821, 2, 1467193546741207045);
+INSERT INTO `role_resource` VALUES (27822, 2, 1467193546766372869);
+INSERT INTO `role_resource` VALUES (27823, 2, 1467193546720235525);
+INSERT INTO `role_resource` VALUES (27824, 2, 1467193546749595653);
+INSERT INTO `role_resource` VALUES (27825, 2, 1467193546741207046);
+INSERT INTO `role_resource` VALUES (27826, 2, 1467193546766372870);
+INSERT INTO `role_resource` VALUES (27827, 2, 1467193546749595654);
+INSERT INTO `role_resource` VALUES (27828, 2, 1467193546757984262);
+INSERT INTO `role_resource` VALUES (27829, 2, 1467193546741207047);
+INSERT INTO `role_resource` VALUES (27830, 2, 1467193546749595655);
+INSERT INTO `role_resource` VALUES (27831, 2, 1467193546766372871);
+INSERT INTO `role_resource` VALUES (27832, 2, 1467193546737012737);
+INSERT INTO `role_resource` VALUES (27833, 2, 1467193546749595649);
+INSERT INTO `role_resource` VALUES (27834, 2, 1467193546766372865);
+INSERT INTO `role_resource` VALUES (27835, 2, 1467193546766372866);
+INSERT INTO `role_resource` VALUES (27836, 2, 1467193546711846914);
+INSERT INTO `role_resource` VALUES (27837, 2, 1467193546720235522);
+INSERT INTO `role_resource` VALUES (27838, 2, 1467193546737012738);
+INSERT INTO `role_resource` VALUES (27839, 2, 1467193546749595650);
+INSERT INTO `role_resource` VALUES (27840, 2, 1467193546757984258);
+INSERT INTO `role_resource` VALUES (27841, 2, 1467193546741207043);
+INSERT INTO `role_resource` VALUES (27842, 2, 1467193546749595651);
+INSERT INTO `role_resource` VALUES (27843, 2, 1467193546766372867);
+INSERT INTO `role_resource` VALUES (27844, 2, 1467193546720235523);
+INSERT INTO `role_resource` VALUES (27845, 2, 1467193546757984259);
+INSERT INTO `role_resource` VALUES (27846, 1, 1467193546757984268);
+INSERT INTO `role_resource` VALUES (27847, 1, 1467193546757984269);
+INSERT INTO `role_resource` VALUES (27848, 1, 1467193546766372872);
+INSERT INTO `role_resource` VALUES (27849, 1, 1467193546741207048);
+INSERT INTO `role_resource` VALUES (27850, 1, 1467193546749595656);
+INSERT INTO `role_resource` VALUES (27851, 1, 1467193546757984264);
+INSERT INTO `role_resource` VALUES (27852, 1, 1467193546749595657);
+INSERT INTO `role_resource` VALUES (27853, 1, 1467193546741207049);
+INSERT INTO `role_resource` VALUES (27854, 1, 1467193546757984265);
+INSERT INTO `role_resource` VALUES (27855, 1, 1467193546766372873);
+INSERT INTO `role_resource` VALUES (27856, 1, 1467193546749595658);
+INSERT INTO `role_resource` VALUES (27857, 1, 1467193546757984266);
+INSERT INTO `role_resource` VALUES (27858, 1, 1467193546757984267);
+INSERT INTO `role_resource` VALUES (27859, 1, 1467193546741207044);
+INSERT INTO `role_resource` VALUES (27860, 1, 1467193546749595652);
+INSERT INTO `role_resource` VALUES (27861, 1, 1467193546766372868);
+INSERT INTO `role_resource` VALUES (27862, 1, 1467193546720235524);
+INSERT INTO `role_resource` VALUES (27863, 1, 1467193546757984260);
+INSERT INTO `role_resource` VALUES (27864, 1, 1467193546741207045);
+INSERT INTO `role_resource` VALUES (27865, 1, 1467193546766372869);
+INSERT INTO `role_resource` VALUES (27866, 1, 1467193546720235525);
+INSERT INTO `role_resource` VALUES (27867, 1, 1467193546749595653);
+INSERT INTO `role_resource` VALUES (27868, 1, 1467193546741207046);
+INSERT INTO `role_resource` VALUES (27869, 1, 1467193546766372870);
+INSERT INTO `role_resource` VALUES (27870, 1, 1467193546749595654);
+INSERT INTO `role_resource` VALUES (27871, 1, 1467193546757984262);
+INSERT INTO `role_resource` VALUES (27872, 1, 1467193546741207047);
+INSERT INTO `role_resource` VALUES (27873, 1, 1467193546749595655);
+INSERT INTO `role_resource` VALUES (27874, 1, 1467193546766372871);
+INSERT INTO `role_resource` VALUES (27875, 1, 1467193546737012737);
+INSERT INTO `role_resource` VALUES (27876, 1, 1467193546749595649);
+INSERT INTO `role_resource` VALUES (27877, 1, 1467193546766372865);
+INSERT INTO `role_resource` VALUES (27878, 1, 1467193546766372866);
+INSERT INTO `role_resource` VALUES (27879, 1, 1467193546711846914);
+INSERT INTO `role_resource` VALUES (27880, 1, 1467193546720235522);
+INSERT INTO `role_resource` VALUES (27881, 1, 1467193546737012738);
+INSERT INTO `role_resource` VALUES (27882, 1, 1467193546749595650);
+INSERT INTO `role_resource` VALUES (27883, 1, 1467193546757984258);
+INSERT INTO `role_resource` VALUES (27884, 1, 1467193546741207043);
+INSERT INTO `role_resource` VALUES (27885, 1, 1467193546749595651);
+INSERT INTO `role_resource` VALUES (27886, 1, 1467193546766372867);
+INSERT INTO `role_resource` VALUES (27887, 1, 1467193546720235523);
+INSERT INTO `role_resource` VALUES (27888, 1, 1467193546757984259);
 
 -- ----------------------------
 -- Table structure for signup
@@ -548,7 +534,7 @@ CREATE TABLE `sys_record`  (
   `time` datetime(0) NULL DEFAULT NULL COMMENT '请求时间点',
   `duration` int(11) NULL DEFAULT NULL COMMENT '用时 单位ms',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3841 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3946 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_record
@@ -1560,6 +1546,111 @@ INSERT INTO `sys_record` VALUES (3837, 1465367418334982148, 20, '127.0.0.1', '20
 INSERT INTO `sys_record` VALUES (3838, 1465367418343370754, 20, '127.0.0.1', '2021-11-30 01:19:21', 16);
 INSERT INTO `sys_record` VALUES (3839, 1465367418334982148, 20, '127.0.0.1', '2021-11-30 01:19:24', 6);
 INSERT INTO `sys_record` VALUES (3840, 1465367418368536580, 20, '127.0.0.1', '2021-11-30 01:22:32', 7);
+INSERT INTO `sys_record` VALUES (3841, NULL, NULL, '127.0.0.1', '2021-12-03 01:18:31', 791);
+INSERT INTO `sys_record` VALUES (3842, 1466455467181006853, 20, '127.0.0.1', '2021-12-03 01:18:37', 5938);
+INSERT INTO `sys_record` VALUES (3843, 1466455467206172678, 20, '127.0.0.1', '2021-12-03 01:18:37', 43);
+INSERT INTO `sys_record` VALUES (3844, 1466455467181006854, 20, '127.0.0.1', '2021-12-03 01:18:39', 2142);
+INSERT INTO `sys_record` VALUES (3845, 1466455467206172680, 20, '127.0.0.1', '2021-12-03 01:21:41', 165);
+INSERT INTO `sys_record` VALUES (3846, NULL, NULL, '127.0.0.1', '2021-12-03 01:23:08', 3);
+INSERT INTO `sys_record` VALUES (3847, 1466455467181006853, 20, '127.0.0.1', '2021-12-03 01:23:08', 4);
+INSERT INTO `sys_record` VALUES (3848, 1466455467206172678, 20, '127.0.0.1', '2021-12-03 01:23:08', 4);
+INSERT INTO `sys_record` VALUES (3849, 1466455467181006854, 20, '127.0.0.1', '2021-12-03 01:23:09', 1214);
+INSERT INTO `sys_record` VALUES (3850, 1466455467181006854, 20, '127.0.0.1', '2021-12-03 01:23:18', 1186);
+INSERT INTO `sys_record` VALUES (3851, 1466455467181006854, 20, '127.0.0.1', '2021-12-03 01:23:25', 1164);
+INSERT INTO `sys_record` VALUES (3852, 1466455467206172680, 20, '127.0.0.1', '2021-12-03 01:26:41', 7);
+INSERT INTO `sys_record` VALUES (3853, 1466807385535926275, 20, '127.0.0.1', '2021-12-04 00:34:42', 1917);
+INSERT INTO `sys_record` VALUES (3854, 1466807385569480710, 20, '127.0.0.1', '2021-12-04 00:35:57', 54);
+INSERT INTO `sys_record` VALUES (3855, 1466807385535926275, 20, '127.0.0.1', '2021-12-04 00:35:58', 1231);
+INSERT INTO `sys_record` VALUES (3856, 1466807385569480708, 20, '127.0.0.1', '2021-12-04 00:36:04', 54);
+INSERT INTO `sys_record` VALUES (3857, 1466807385569480708, 20, '127.0.0.1', '2021-12-04 00:37:13', 4);
+INSERT INTO `sys_record` VALUES (3858, 1466807385569480708, 20, '127.0.0.1', '2021-12-04 00:54:54', 8);
+INSERT INTO `sys_record` VALUES (3859, 1466807385569480710, 20, '127.0.0.1', '2021-12-04 00:54:54', 5);
+INSERT INTO `sys_record` VALUES (3860, 1466807385569480710, 20, '127.0.0.1', '2021-12-04 01:03:13', 3);
+INSERT INTO `sys_record` VALUES (3861, 1466807385569480708, 20, '127.0.0.1', '2021-12-04 01:03:13', 7);
+INSERT INTO `sys_record` VALUES (3862, 1466807385569480710, 20, '127.0.0.1', '2021-12-04 01:44:22', 3);
+INSERT INTO `sys_record` VALUES (3863, 1466807385569480708, 20, '127.0.0.1', '2021-12-04 01:44:22', 6);
+INSERT INTO `sys_record` VALUES (3864, 1467163685985275906, 20, '127.0.0.1', '2021-12-05 00:15:05', 126);
+INSERT INTO `sys_record` VALUES (3865, 1467165909616513031, 20, '127.0.0.1', '2021-12-05 00:16:52', 14);
+INSERT INTO `sys_record` VALUES (3866, 1467169482031058965, 20, '127.0.0.1', '2021-12-05 00:31:13', 65);
+INSERT INTO `sys_record` VALUES (3867, 1467169482031058965, 20, '127.0.0.1', '2021-12-05 00:31:34', 6);
+INSERT INTO `sys_record` VALUES (3868, 1467169482031058965, 20, '127.0.0.1', '2021-12-05 00:31:58', 9);
+INSERT INTO `sys_record` VALUES (3869, 1467169482031058965, 20, '127.0.0.1', '2021-12-05 00:32:12', 2);
+INSERT INTO `sys_record` VALUES (3870, 1467169482031058965, 20, '127.0.0.1', '2021-12-05 00:32:28', 5);
+INSERT INTO `sys_record` VALUES (3871, 1467170208153161731, 20, '127.0.0.1', '2021-12-05 00:54:50', 12);
+INSERT INTO `sys_record` VALUES (3872, 1467175795163222017, 20, '127.0.0.1', '2021-12-05 00:57:21', 14);
+INSERT INTO `sys_record` VALUES (3873, 1467175795154833437, 20, '127.0.0.1', '2021-12-05 00:57:58', 4);
+INSERT INTO `sys_record` VALUES (3874, 1467175795154833420, 20, '127.0.0.1', '2021-12-05 00:58:00', 2001);
+INSERT INTO `sys_record` VALUES (3875, 1467175795163222017, 20, '127.0.0.1', '2021-12-05 00:58:05', 5);
+INSERT INTO `sys_record` VALUES (3876, NULL, 20, '127.0.0.1', '2021-12-05 01:38:35', 6862);
+INSERT INTO `sys_record` VALUES (3877, NULL, 20, '127.0.0.1', '2021-12-05 01:39:56', 18312);
+INSERT INTO `sys_record` VALUES (3878, NULL, 20, '127.0.0.1', '2021-12-05 01:42:48', 11);
+INSERT INTO `sys_record` VALUES (3879, 1467187594289827849, 20, '127.0.0.1', '2021-12-05 01:45:39', 10);
+INSERT INTO `sys_record` VALUES (3880, 1467187594289827850, 20, '127.0.0.1', '2021-12-05 01:45:39', 13);
+INSERT INTO `sys_record` VALUES (3881, 1467187594289827849, 20, '127.0.0.1', '2021-12-05 01:48:53', 3);
+INSERT INTO `sys_record` VALUES (3882, 1467187594289827850, 20, '127.0.0.1', '2021-12-05 01:48:53', 6);
+INSERT INTO `sys_record` VALUES (3883, NULL, NULL, '127.0.0.1', '2021-12-05 01:50:28', 2);
+INSERT INTO `sys_record` VALUES (3884, 1467187594281439251, 20, '127.0.0.1', '2021-12-05 01:50:28', 14);
+INSERT INTO `sys_record` VALUES (3885, 1467187594289827849, 20, '127.0.0.1', '2021-12-05 01:50:28', 2);
+INSERT INTO `sys_record` VALUES (3886, 1467187594281439252, 20, '127.0.0.1', '2021-12-05 01:50:29', 1267);
+INSERT INTO `sys_record` VALUES (3887, 1467187594289827850, 20, '127.0.0.1', '2021-12-05 01:50:32', 4);
+INSERT INTO `sys_record` VALUES (3888, 1467187594289827849, 20, '127.0.0.1', '2021-12-05 01:51:16', 4);
+INSERT INTO `sys_record` VALUES (3889, 1467187594289827850, 20, '127.0.0.1', '2021-12-05 01:51:16', 7);
+INSERT INTO `sys_record` VALUES (3890, 1467187594289827849, 20, '127.0.0.1', '2021-12-05 01:51:45', 3);
+INSERT INTO `sys_record` VALUES (3891, 1467187594289827850, 20, '127.0.0.1', '2021-12-05 01:51:45', 7);
+INSERT INTO `sys_record` VALUES (3892, NULL, NULL, '127.0.0.1', '2021-12-05 02:05:24', 14);
+INSERT INTO `sys_record` VALUES (3893, 1467192743641042946, 20, '127.0.0.1', '2021-12-05 02:05:24', 17);
+INSERT INTO `sys_record` VALUES (3894, 1467192743657820163, 20, '127.0.0.1', '2021-12-05 02:05:25', 13);
+INSERT INTO `sys_record` VALUES (3895, 1467192743641042947, 20, '127.0.0.1', '2021-12-05 02:05:26', 1196);
+INSERT INTO `sys_record` VALUES (3896, NULL, 20, '127.0.0.1', '2021-12-05 02:06:54', 7);
+INSERT INTO `sys_record` VALUES (3897, 1467193546766372868, 20, '127.0.0.1', '2021-12-05 02:06:59', 9);
+INSERT INTO `sys_record` VALUES (3898, 1467193546749595658, 20, '127.0.0.1', '2021-12-05 02:07:00', 1168);
+INSERT INTO `sys_record` VALUES (3899, 1467193546766372869, 20, '127.0.0.1', '2021-12-05 02:07:07', 7);
+INSERT INTO `sys_record` VALUES (3900, 1467193546766372868, 20, '127.0.0.1', '2021-12-05 02:07:47', 1);
+INSERT INTO `sys_record` VALUES (3901, 1467193546766372869, 20, '127.0.0.1', '2021-12-05 02:07:47', 6);
+INSERT INTO `sys_record` VALUES (3902, 1467193546766372868, 20, '127.0.0.1', '2021-12-05 02:14:06', 2);
+INSERT INTO `sys_record` VALUES (3903, 1467193546766372869, 20, '127.0.0.1', '2021-12-05 02:14:06', 8);
+INSERT INTO `sys_record` VALUES (3904, 1467193546766372868, 20, '127.0.0.1', '2021-12-05 02:14:28', 2);
+INSERT INTO `sys_record` VALUES (3905, 1467193546766372869, 20, '127.0.0.1', '2021-12-05 02:14:28', 7);
+INSERT INTO `sys_record` VALUES (3906, 1467193546766372868, 20, '127.0.0.1', '2021-12-05 02:14:34', 1);
+INSERT INTO `sys_record` VALUES (3907, 1467193546766372869, 20, '127.0.0.1', '2021-12-05 02:14:34', 6);
+INSERT INTO `sys_record` VALUES (3908, 1467193546766372868, 20, '127.0.0.1', '2021-12-05 02:14:40', 2);
+INSERT INTO `sys_record` VALUES (3909, 1467193546766372869, 20, '127.0.0.1', '2021-12-05 02:14:40', 6);
+INSERT INTO `sys_record` VALUES (3910, 1467193546766372868, 20, '127.0.0.1', '2021-12-05 02:14:44', 1);
+INSERT INTO `sys_record` VALUES (3911, 1467193546766372869, 20, '127.0.0.1', '2021-12-05 02:14:44', 6);
+INSERT INTO `sys_record` VALUES (3912, 1467193546766372868, 20, '127.0.0.1', '2021-12-05 02:15:04', 1);
+INSERT INTO `sys_record` VALUES (3913, 1467193546766372869, 20, '127.0.0.1', '2021-12-05 02:15:04', 9);
+INSERT INTO `sys_record` VALUES (3914, 1467193546766372868, 20, '127.0.0.1', '2021-12-05 02:15:11', 2);
+INSERT INTO `sys_record` VALUES (3915, 1467193546766372869, 20, '127.0.0.1', '2021-12-05 02:15:11', 6);
+INSERT INTO `sys_record` VALUES (3916, 1467193546766372868, 20, '127.0.0.1', '2021-12-05 02:15:19', 2);
+INSERT INTO `sys_record` VALUES (3917, 1467193546766372869, 20, '127.0.0.1', '2021-12-05 02:15:19', 7);
+INSERT INTO `sys_record` VALUES (3918, 1467193546766372868, 20, '127.0.0.1', '2021-12-05 02:15:30', 1);
+INSERT INTO `sys_record` VALUES (3919, 1467193546766372869, 20, '127.0.0.1', '2021-12-05 02:15:30', 5);
+INSERT INTO `sys_record` VALUES (3920, 1467193546766372868, 20, '127.0.0.1', '2021-12-05 02:15:48', 2);
+INSERT INTO `sys_record` VALUES (3921, 1467193546766372869, 20, '127.0.0.1', '2021-12-05 02:15:48', 6);
+INSERT INTO `sys_record` VALUES (3922, 1467193546766372868, 20, '127.0.0.1', '2021-12-05 02:16:31', 2);
+INSERT INTO `sys_record` VALUES (3923, 1467193546766372869, 20, '127.0.0.1', '2021-12-05 02:16:31', 6);
+INSERT INTO `sys_record` VALUES (3924, 1467193546766372868, 20, '127.0.0.1', '2021-12-05 02:17:10', 2);
+INSERT INTO `sys_record` VALUES (3925, 1467193546766372869, 20, '127.0.0.1', '2021-12-05 02:17:10', 7);
+INSERT INTO `sys_record` VALUES (3926, 1467193546766372868, 20, '127.0.0.1', '2021-12-05 02:18:26', 2);
+INSERT INTO `sys_record` VALUES (3927, 1467193546766372869, 20, '127.0.0.1', '2021-12-05 02:18:26', 6);
+INSERT INTO `sys_record` VALUES (3928, 1467193546766372868, 20, '127.0.0.1', '2021-12-05 02:19:05', 4);
+INSERT INTO `sys_record` VALUES (3929, 1467193546766372869, 20, '127.0.0.1', '2021-12-05 02:19:05', 6);
+INSERT INTO `sys_record` VALUES (3930, 1467193546766372868, 20, '127.0.0.1', '2021-12-05 02:19:14', 1);
+INSERT INTO `sys_record` VALUES (3931, 1467193546766372869, 20, '127.0.0.1', '2021-12-05 02:19:14', 6);
+INSERT INTO `sys_record` VALUES (3932, 1467193546766372868, 20, '127.0.0.1', '2021-12-05 02:19:51', 2);
+INSERT INTO `sys_record` VALUES (3933, 1467193546766372869, 20, '127.0.0.1', '2021-12-05 02:19:51', 7);
+INSERT INTO `sys_record` VALUES (3934, 1467193546766372868, 20, '127.0.0.1', '2021-12-05 02:20:42', 2);
+INSERT INTO `sys_record` VALUES (3935, 1467193546766372869, 20, '127.0.0.1', '2021-12-05 02:20:42', 6);
+INSERT INTO `sys_record` VALUES (3936, 1467193546766372868, 20, '127.0.0.1', '2021-12-05 02:21:01', 1);
+INSERT INTO `sys_record` VALUES (3937, 1467193546766372869, 20, '127.0.0.1', '2021-12-05 02:21:01', 6);
+INSERT INTO `sys_record` VALUES (3938, 1467193546766372868, 20, '127.0.0.1', '2021-12-05 02:21:12', 2);
+INSERT INTO `sys_record` VALUES (3939, 1467193546766372869, 20, '127.0.0.1', '2021-12-05 02:21:12', 6);
+INSERT INTO `sys_record` VALUES (3940, 1467193546766372868, 20, '127.0.0.1', '2021-12-05 02:21:17', 1);
+INSERT INTO `sys_record` VALUES (3941, 1467193546766372869, 20, '127.0.0.1', '2021-12-05 02:21:17', 7);
+INSERT INTO `sys_record` VALUES (3942, 1467193546766372868, 20, '127.0.0.1', '2021-12-05 02:21:22', 2);
+INSERT INTO `sys_record` VALUES (3943, 1467193546766372869, 20, '127.0.0.1', '2021-12-05 02:21:22', 5);
+INSERT INTO `sys_record` VALUES (3944, 1467193546766372868, 20, '127.0.0.1', '2021-12-05 02:21:29', 1);
+INSERT INTO `sys_record` VALUES (3945, 1467193546766372869, 20, '127.0.0.1', '2021-12-05 02:21:29', 5);
 
 -- ----------------------------
 -- Table structure for tag
@@ -1589,7 +1680,7 @@ CREATE TABLE `task`  (
   `class_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '任务类',
   `function` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '任务功能',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 586 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 646 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of task
@@ -2179,6 +2270,66 @@ INSERT INTO `task` VALUES (582, 'T3', '三号测试任务', 'com.softlab.okr.job
 INSERT INTO `task` VALUES (583, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
 INSERT INTO `task` VALUES (584, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
 INSERT INTO `task` VALUES (585, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (586, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (587, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (588, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (589, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (590, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (591, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (592, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (593, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (594, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (595, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (596, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (597, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (598, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (599, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (600, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (601, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (602, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (603, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (604, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (605, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (606, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (607, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (608, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (609, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (610, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (611, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (612, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (613, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (614, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (615, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (616, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (617, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (618, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (619, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (620, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (621, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (622, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (623, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (624, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (625, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (626, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (627, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (628, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (629, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (630, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (631, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (632, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (633, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (634, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (635, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (636, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (637, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (638, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (639, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (640, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (641, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (642, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (643, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (644, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (645, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
 
 -- ----------------------------
 -- Table structure for task_trigger
@@ -2242,7 +2393,7 @@ CREATE TABLE `user_info`  (
 -- ----------------------------
 -- Records of user_info
 -- ----------------------------
-INSERT INTO `user_info` VALUES (20, 'admin', '你是基佬', 'data:image/png;base64,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', '我是蓝翔', '123456', '654312', 'shit12312', '一起搞基，先生！是的，先生', 0, NULL, '2021-10-17 01:59:59', 0);
+INSERT INTO `user_info` VALUES (20, 'admin', '你是基佬', 'data:image/png;base64,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', '我是蓝翔', '1234561234', '654312', 'shit12312', '一起搞基，先生！是的，先生', 0, NULL, '2021-10-17 01:59:59', 0);
 INSERT INTO `user_info` VALUES (21, 'test1', '大便', NULL, '阿斯蒂芬撒地方', '撒分色', '瑟夫', '费萨尔费', '你说的附属恶化覅色回复i色回复i规格和', 0, NULL, NULL, 0);
 
 -- ----------------------------
@@ -2262,7 +2413,7 @@ CREATE TABLE `user_role`  (
 -- ----------------------------
 -- Records of user_role
 -- ----------------------------
-INSERT INTO `user_role` VALUES (14, 20, 3, '2100-01-01 00:00:00', 0);
+INSERT INTO `user_role` VALUES (14, 20, 1, '2100-01-01 00:00:00', 0);
 INSERT INTO `user_role` VALUES (15, 21, 3, '2021-11-27 00:12:12', 0);
 
 SET FOREIGN_KEY_CHECKS = 1;

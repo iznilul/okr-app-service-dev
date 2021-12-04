@@ -65,6 +65,15 @@ public enum RoleEnum implements BaseEnum {
         return null;
     }
 
+    public static String getRole(Integer code) {
+        for (RoleEnum status : RoleEnum.values()) {
+            if (status.code.equals(code)) {
+                return status.role;
+            }
+        }
+        return null;
+    }
+
     public static List<String> getList() {
         List<String> list = new ArrayList<>();
         for (RoleEnum status : RoleEnum.values()) {

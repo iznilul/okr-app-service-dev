@@ -25,6 +25,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -72,10 +73,11 @@ public class UserEntityServiceImpl extends ServiceImpl<UserEntityMapper, UserEnt
             UserEntityVO userEntityVO = new UserEntityVO();
             userEntityVO.setUserId(userEntity.getUserId())
                     .setUsername(userEntity.getUsername())
-                    .setToken(jwtManager.generate(userEntity.getUsername()));//用jwt生成token
+                    .setToken(jwtManager.generate(userEntity.getUsername()));
             return userEntityVO;
         }
     }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) {
@@ -138,12 +140,6 @@ public class UserEntityServiceImpl extends ServiceImpl<UserEntityMapper, UserEnt
     }
 
     @Override
-    public boolean loginCheck(UserEntity userEntity, String password) {
-        // 若没有查到用户或者密码校验失败则抛出异常，将未加密的密码和已加密的密码进行比对
-        return userEntity != null && userEntity.getPassword().equals(password);
-    }
-
-    @Override
     public boolean modifyPassword(ModifyPwdDTO dto) {
         String username = authenticationService.getUsername();
         UserEntity userEntity = userEntityService.getByUsername(username);
@@ -154,5 +150,16 @@ public class UserEntityServiceImpl extends ServiceImpl<UserEntityMapper, UserEnt
         } else {
             return false;
         }
+    }
+
+    private boolean loginCheck(Map<String, Object> map, String password) {
+        // 若没有查到用户或者密码校验失败则抛出异常，将未加密的密码和已加密的密码进行比对
+        String s = (String) map.get("password");
+        return map.size() != 0 && s.equals(password);
+    }
+
+    private boolean loginCheck(UserEntity userEntity, String password) {
+        // 若没有查到用户或者密码校验失败则抛出异常，将未加密的密码和已加密的密码进行比对
+        return userEntity != null && userEntity.getPassword().equals(password);
     }
 }

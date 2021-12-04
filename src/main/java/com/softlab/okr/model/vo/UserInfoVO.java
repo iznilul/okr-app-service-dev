@@ -13,6 +13,9 @@ public class UserInfoVO {
     private Integer userId;
     private String username;
     private String name;
+    private Integer roleId;
+    private String role;
+    private String expireTime;
     private String avatar;
     private String major;
     private String qq;

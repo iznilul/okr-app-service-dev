@@ -36,7 +36,6 @@ public class RoleResourceServiceImpl extends
     @Transactional
     public boolean reloadRoleResource(List<Resource> list) {
         Set<Long> resourceSet = new HashSet<>();
-//        List<Role> roleList = roleService.list(new QueryWrapper<Role>().orderByDesc("role_id"));
         List<RoleEnum> roleEnumList = RoleEnum.getListOrderByDesc();
         List<RoleResource> result = new ArrayList<>();
         this.remove(null);

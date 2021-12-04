@@ -75,9 +75,9 @@ public class UserController {
         return userInfo != null ? Result.success(userInfo) : Result.failure();
     }
 
-    @ApiOperation("根据条件选择用户")
+    @ApiOperation("查询用户列表")
     @PostMapping("queryList")
-    @Auth(role = RoleConstants.USER, name = "根据情况选择用户")
+    @Auth(role = RoleConstants.USER, name = "查询用户列表")
     public Result queryUserList(
             @RequestBody SelectUserDTO dto) throws Exception {
 
