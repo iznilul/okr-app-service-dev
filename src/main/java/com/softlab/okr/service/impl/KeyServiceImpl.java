@@ -1,7 +1,6 @@
 package com.softlab.okr.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.softlab.okr.entity.Key;
@@ -10,6 +9,7 @@ import com.softlab.okr.mapper.KeyMapper;
 import com.softlab.okr.model.dto.KeyDTO;
 import com.softlab.okr.model.dto.PageDTO;
 import com.softlab.okr.model.enums.KeyEnum;
+import com.softlab.okr.model.enums.KeyUserEnum;
 import com.softlab.okr.model.vo.KeyVO;
 import com.softlab.okr.security.IAuthenticationService;
 import com.softlab.okr.service.IKeyService;
@@ -77,11 +77,12 @@ public class KeyServiceImpl extends ServiceImpl<KeyMapper, Key> implements IKeyS
     @Override
     @Transactional
     public int borrowKey(int keyId) {
-        if (keyMapper.selectById(keyId).getStatus() == 1) {
+        Key key = keyMapper.selectOne(new QueryWrapper<Key>().eq("key_id", keyId));
+        if (key.getStatus() == 1) {
             return 0;
         } else {
-            if (keyMapper.update(null, new UpdateWrapper<Key>().eq("key_id", keyId).set("status", 1))
-                    == 0) {
+            key.setStatus(KeyEnum.BORROWED.code());
+            if (keyMapper.updateById(key) == 0) {
                 return 0;
             } else {
                 Integer userId = authenticationService.getUserId();
@@ -93,15 +94,16 @@ public class KeyServiceImpl extends ServiceImpl<KeyMapper, Key> implements IKeyS
     @Override
     @Transactional
     public int returnKey(int keyId) {
-        if (keyMapper.selectById(keyId).getStatus() == 0) {
+        Key key = keyMapper.selectOne(new QueryWrapper<Key>().eq("key_id", keyId));
+        if (key.getStatus() == 0) {
             return 0;
         } else {
-            if (keyMapper.update(null, new UpdateWrapper<Key>().eq("key_id", keyId).set("status", 0))
-                    == 0) {
+            key.setStatus(KeyEnum.NORMAL.code());
+            if (keyMapper.updateById(key) == 0) {
                 return 0;
             } else {
                 Integer userId = authenticationService.getUserId();
-                return keyUserService.modifyKeyUser(keyId, userId, 1);
+                return keyUserService.modifyKeyUser(keyId, userId, KeyUserEnum.BORROWED.code());
             }
         }
     }

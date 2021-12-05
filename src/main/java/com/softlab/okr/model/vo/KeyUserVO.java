@@ -13,11 +13,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class KeyUserVO extends BaseVO {
+public class KeyUserVO {
 
-  private Integer id;
-  private String keyName;
-  private String name;
-  private Integer status;
-  private String statusName;
+    private Long id;
+    private String keyName;
+    private String name;
+    private Integer status;
+    private String statusName;
+    public String updateTime;
 }

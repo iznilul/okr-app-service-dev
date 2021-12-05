@@ -24,7 +24,7 @@ public class Key extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "key_id", type = IdType.AUTO)
-    private Integer keyId;
+    private Long keyId;
 
     private String keyName;
 
