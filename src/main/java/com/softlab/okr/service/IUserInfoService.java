@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.softlab.okr.entity.UserInfo;
 import com.softlab.okr.model.dto.SelectUserDTO;
 import com.softlab.okr.model.dto.UpdateUserDTO;
+import com.softlab.okr.model.dto.UpdateUserRoleDTO;
 import com.softlab.okr.model.vo.UserInfoVO;
 import com.softlab.okr.utils.Result;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,7 +29,9 @@ public interface IUserInfoService extends IService<UserInfo> {
 
     Result getUserInfoByCond(SelectUserDTO dto);
 
-    int modifyUserInfo(UpdateUserDTO dto);
+    void modifyUserInfo(UpdateUserDTO dto);
+
+    void modifyUserRole(UpdateUserRoleDTO dto);
 
     int uploadAvatar(MultipartFile file) throws IOException;
 

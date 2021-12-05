@@ -61,7 +61,8 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
         UserRole userRole = userRoleService.getOne(new QueryWrapper<UserRole>()
                 .eq("user_id", userId));
         long time = System.currentTimeMillis();
-        if (userRole.getExpireTime().getTime() < time) {
+        long expireTime = userRole.getExpireTime().getTime();
+        if (expireTime < time) {
             userRole.setRoleId(RoleEnum.USER.code());
             userRole.setExpireTime(DateUtil.parse(TimeFormat.neverExpire));
             userRoleService.updateById(userRole);

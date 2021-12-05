@@ -3,15 +3,16 @@ package com.softlab.okr.controller;
 import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.constant.RoleConstants;
 import com.softlab.okr.model.dto.LoginDTO;
-import com.softlab.okr.model.exception.BusinessException;
 import com.softlab.okr.model.vo.UserEntityVO;
 import com.softlab.okr.security.IAuthenticationService;
+import com.softlab.okr.security.UserDetail;
 import com.softlab.okr.service.IUserEntityService;
 import com.softlab.okr.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -46,12 +47,11 @@ public class CommonController {
     @Auth(role = RoleConstants.COMMON, name = "认证测试")
     public Result test() {
         log.info("---test---");
-        throw new BusinessException("hist");
-//        Authentication authentication = authenticationService.getAuthentication();
-//        log.info(authentication.toString());
-//        UserDetail userDetail = authenticationService.getPrincipal();
-//        log.info(userDetail.toString());
-//        return Result.success("认证通过");
+        Authentication authentication = authenticationService.getAuthentication();
+        log.info(authentication.toString());
+        UserDetail userDetail = authenticationService.getPrincipal();
+        log.info(userDetail.toString());
+        return Result.success("认证通过");
     }
 
     @ApiOperation("注销")

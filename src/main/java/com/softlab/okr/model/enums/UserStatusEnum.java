@@ -3,6 +3,9 @@ package com.softlab.okr.model.enums;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @Program: okr
  * @Description:
@@ -11,9 +14,9 @@ import lombok.NoArgsConstructor;
  **/
 @AllArgsConstructor
 @NoArgsConstructor
-public enum UserInfoEnum implements BaseEnum {
+public enum UserStatusEnum implements BaseEnum {
     EXAMINE(0, "考核中"),
-    SUCCESS(1, "考核完成"),
+    SUCCESS(1, "考核通过"),
     FAIL(2, "考核未过");
 
     private Integer code;
@@ -29,7 +32,7 @@ public enum UserInfoEnum implements BaseEnum {
 
 
     public static String getMessage(Integer code) {
-        for (UserInfoEnum status : UserInfoEnum.values()) {
+        for (UserStatusEnum status : UserStatusEnum.values()) {
             if (status.code.equals(code)) {
                 return status.message;
             }
@@ -38,12 +41,20 @@ public enum UserInfoEnum implements BaseEnum {
     }
 
     public static Integer getCode(String message) {
-        for (UserInfoEnum status : UserInfoEnum.values()) {
+        for (UserStatusEnum status : UserStatusEnum.values()) {
             if (status.message.equals(message)) {
                 return status.code;
             }
         }
         return null;
+    }
+
+    public static List<String> getList() {
+        List<String> list = new ArrayList<>();
+        for (UserStatusEnum statusEnum : UserStatusEnum.values()) {
+            list.add(statusEnum.message);
+        }
+        return list;
     }
 
     @Override

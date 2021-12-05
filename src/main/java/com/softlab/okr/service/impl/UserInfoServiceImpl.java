@@ -1,22 +1,26 @@
 package com.softlab.okr.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.softlab.okr.entity.UserInfo;
+import com.softlab.okr.entity.UserRole;
 import com.softlab.okr.mapper.UserInfoMapper;
 import com.softlab.okr.model.dto.SelectUserDTO;
 import com.softlab.okr.model.dto.UpdateUserDTO;
+import com.softlab.okr.model.dto.UpdateUserRoleDTO;
 import com.softlab.okr.model.enums.RoleEnum;
-import com.softlab.okr.model.enums.UserInfoEnum;
+import com.softlab.okr.model.enums.UserStatusEnum;
+import com.softlab.okr.model.exception.BusinessException;
 import com.softlab.okr.model.vo.UserInfoVO;
 import com.softlab.okr.security.IAuthenticationService;
-import com.softlab.okr.service.IUserEntityService;
 import com.softlab.okr.service.IUserInfoService;
-import com.softlab.okr.utils.CopyUtil;
+import com.softlab.okr.service.IUserRoleService;
 import com.softlab.okr.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -37,7 +41,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
     private UserInfoMapper userInfoMapper;
 
     @Autowired
-    private IUserEntityService userEntityService;
+    private IUserRoleService userRoleService;
 
     @Autowired
     private IAuthenticationService authenticationService;
@@ -60,7 +64,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
     public UserInfoVO getUserInfoByUsername(String username) {
         UserInfoVO vo = userInfoMapper.selectUserInfoVOByUsername(username);
         vo.setRole(RoleEnum.getMessage(vo.getRoleId()));
-        vo.setStatusName(UserInfoEnum.getMessage(vo.getStatus()));
+        vo.setStatusName(UserStatusEnum.getMessage(vo.getStatus()));
         return vo;
     }
 
@@ -70,24 +74,39 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         Page<UserInfoVO> voPage = userInfoMapper.selectUserInfoVOList(page, dto);
         voPage.getRecords().forEach(vo -> {
             vo.setRole(RoleEnum.getMessage(vo.getRoleId()));
-            vo.setStatusName(UserInfoEnum.getMessage(vo.getStatus()));
+            vo.setStatusName(UserStatusEnum.getMessage(vo.getStatus()));
         });
         return Result
                 .success(voPage.getRecords(), voPage.getCurrent(), voPage.getTotal());
     }
 
     @Override
-    public int modifyUserInfo(UpdateUserDTO dto) {
-        String username =
-                dto.getUsername() != null ? dto.getUsername() : authenticationService.getUsername();
-        Integer userId = userEntityService.getByUsername(username).getUserId();
-        if (null == userId) {
-            return 0;
+    public void modifyUserInfo(UpdateUserDTO dto) {
+        UserInfo userInfo = this.getOne(new QueryWrapper<UserInfo>().eq("username", dto.getUsername()));
+        if (null == userInfo) {
+            throw new BusinessException("没有找到用户");
         } else {
-            UserInfo userInfo = CopyUtil.copy(dto, UserInfo.class);
-            userInfo.setUserId(userId);
-            return userInfoMapper.updateById(userInfo);
+            userInfo.setName(dto.getName()).setMajor(dto.getMajor()).setQq(dto.getQq()).setPhone(dto.getPhone())
+                    .setWeixin(dto.getWeixin()).setPhone(dto.getProfile());
+            userInfoMapper.updateById(userInfo);
         }
+    }
+
+    @Override
+    @Transactional
+    public void modifyUserRole(UpdateUserRoleDTO dto) {
+        UserInfo userInfo = this.getOne(new QueryWrapper<UserInfo>().eq("username", dto.getUsername()));
+        if (null == userInfo) {
+            throw new BusinessException("没有找到用户");
+        }
+        UserRole userRole = userRoleService.getOne(new QueryWrapper<UserRole>().eq("user_id", userInfo.getUserId()));
+        if (null == userRole) {
+            throw new BusinessException("用户权限映射关系有问题，请联系管理员");
+        }
+        userInfo.setStatus(UserStatusEnum.getCode(dto.getStatusName()));
+        userRole.setRoleId(RoleEnum.getCode(dto.getRole())).setExpireTime(dto.getExpireTime());
+        userInfoMapper.updateById(userInfo);
+        userRoleService.updateById(userRole);
     }
 
     @Override

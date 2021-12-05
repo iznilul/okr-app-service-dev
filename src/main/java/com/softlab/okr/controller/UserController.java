@@ -3,10 +3,7 @@ package com.softlab.okr.controller;
 import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.constant.RoleConstants;
 import com.softlab.okr.entity.UserInfo;
-import com.softlab.okr.model.dto.ModifyPwdDTO;
-import com.softlab.okr.model.dto.RegisterDTO;
-import com.softlab.okr.model.dto.SelectUserDTO;
-import com.softlab.okr.model.dto.UpdateUserDTO;
+import com.softlab.okr.model.dto.*;
 import com.softlab.okr.model.vo.UserInfoVO;
 import com.softlab.okr.service.IUserEntityService;
 import com.softlab.okr.service.IUserInfoService;
@@ -61,9 +58,16 @@ public class UserController {
     @PostMapping("change")
     @Auth(role = RoleConstants.USER, name = "更新用户信息")
     public Result changeUser(@RequestBody UpdateUserDTO dto) {
+        userInfoService.modifyUserInfo(dto);
+        return Result.success();
+    }
 
-        return userInfoService.modifyUserInfo(dto) == 1 ?
-                Result.success() : Result.failure();
+    @ApiOperation("更新用户权限")
+    @PostMapping("changeRole")
+    @Auth(role = RoleConstants.USER, name = "更新用户权限")
+    public Result changeUserRole(@RequestBody UpdateUserRoleDTO dto) {
+        userInfoService.modifyUserRole(dto);
+        return Result.success();
     }
 
     @ApiOperation("获取用户信息")

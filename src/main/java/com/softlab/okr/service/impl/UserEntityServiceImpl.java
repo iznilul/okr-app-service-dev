@@ -119,8 +119,7 @@ public class UserEntityServiceImpl extends ServiceImpl<UserEntityMapper, UserEnt
                         .getRoleId();
                 int userId = userEntity.getUserId();
                 UserRole userRole = new UserRole(null, userId, roleId, DateUtil.parse(TimeFormat.neverExpire), null);
-                return userInfoService.saveUserInfo(userId, dto.getUsername()) == 1 && userRoleService
-                        .save(userRole);
+                return userInfoService.saveUserInfo(userId, dto.getUsername()) == 1 && userRoleService.save(userRole);
             }
         }
     }

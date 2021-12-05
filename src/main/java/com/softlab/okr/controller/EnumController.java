@@ -4,6 +4,7 @@ import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.constant.RoleConstants;
 import com.softlab.okr.model.enums.KeyEnum;
 import com.softlab.okr.model.enums.RoleEnum;
+import com.softlab.okr.model.enums.UserStatusEnum;
 import com.softlab.okr.service.IEnumService;
 import com.softlab.okr.utils.Result;
 import io.swagger.annotations.Api;
@@ -32,7 +33,8 @@ public class EnumController {
 
     static {
         DICT_MAP.put("keyStatus", KeyEnum.getList());
-        DICT_MAP.put("RoleStatus", RoleEnum.getList());
+        DICT_MAP.put("roleStatus", RoleEnum.getList());
+        DICT_MAP.put("userStatus", UserStatusEnum.getList());
     }
 
     @Autowired
@@ -70,6 +72,13 @@ public class EnumController {
     @Auth(role = RoleConstants.USER, name = "模糊查询角色")
     public Result enumRole() {
         List<String> list = DICT_MAP.get("roleStatus");
+        return Result.success(list);
+    }
+
+    @GetMapping("userStatus")
+    @Auth(role = RoleConstants.USER, name = "模糊查询成员状态")
+    public Result enumUserStatus() {
+        List<String> list = DICT_MAP.get("userStatus");
         return Result.success(list);
     }
 

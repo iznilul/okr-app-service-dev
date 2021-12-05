@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public enum RoleEnum implements BaseEnum {
-    SUPER_ADMIN(1, "超级管理员", "superAdmin"),
+    SUPER_ADMIN(1, "超级管理", "superAdmin"),
     ADMIN(2, "管理员", "admin"),
     USER(3, "普通用户", "user");
 
@@ -91,8 +91,6 @@ public enum RoleEnum implements BaseEnum {
     public static List<RoleEnum> getListOrderByDesc() {
         List<RoleEnum> list = Arrays.asList(RoleEnum.values());
         list.sort((s1, s2) -> -(s1.code - s2.code));
-//        List<RoleStatus> list = RoleStatus.getListOrderByAsc();
-//        list.sort(Comparator.reverseOrder());
         return list;
     }
 
