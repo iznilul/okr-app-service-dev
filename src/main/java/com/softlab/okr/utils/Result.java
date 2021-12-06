@@ -2,7 +2,7 @@ package com.softlab.okr.utils;
 
 import com.softlab.okr.model.enums.BaseEnum;
 import com.softlab.okr.model.enums.ReturnEnum;
-import com.softlab.okr.model.exception.BusinessException;
+import com.softlab.okr.model.exception.BaseException;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -79,7 +79,7 @@ public class Result {
         return result;
     }
 
-    public static Result failure(BusinessException e) {
+    public static Result failure(BaseException e) {
         Result result = new Result();
         result.setCode(e.getCode());
         result.setMsg(e.getMessage());

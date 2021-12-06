@@ -7,10 +7,7 @@ package com.softlab.okr.aspect;
  * @Date: 2021-08-31 11:53
  **/
 
-import cn.hutool.core.date.DateUtil;
-import com.softlab.okr.constant.TimeFormat;
 import com.softlab.okr.entity.SysRecord;
-import com.softlab.okr.security.MySecurityMetadataSource;
 import com.softlab.okr.service.ISysRecordService;
 import com.softlab.okr.utils.FilterUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +23,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 import java.util.concurrent.Future;
 
 @Slf4j
@@ -75,19 +71,16 @@ public class SysRecordAspect {
         ServletRequestAttributes servletRequestAttributes =
                 (ServletRequestAttributes) RequestContextHolder
                         .getRequestAttributes();
-        HttpServletRequest request = servletRequestAttributes.getRequest();
-        Long resourceId =
-                MySecurityMetadataSource.getResourceId(filterUtil.getRequestPath(request));
-        Integer userId = filterUtil.getRequestUserId();
+        HttpServletRequest request = servletRequestAttributes != null ? servletRequestAttributes.getRequest() : null;
+        String username = filterUtil.getRequestUsername();
         String ip = filterUtil.getRequestIp();
+        String path = filterUtil.getRequestPath(request);
         long duration = System.currentTimeMillis() - startTime.get();
-        SysRecord sysRecord = new SysRecord(null, resourceId, userId, ip,
-                DateUtil.format(new Date(), TimeFormat.format),
-                duration);
+        SysRecord sysRecord = new SysRecord(null, null, path, username, ip, null, duration);
         //long start = System.currentTimeMillis();
         Future<Integer> result = sysRecordService.saveLog(sysRecord);
         //log.info("cost:{}", System.currentTimeMillis() - start);
-        log.info("resourceId:{},userId:{},ip:{},duration:{} ms", resourceId, userId, ip, duration);
+        log.info("path:{},userId:{},ip:{},duration:{} ms", path, username, ip, duration);
     }
 }
 

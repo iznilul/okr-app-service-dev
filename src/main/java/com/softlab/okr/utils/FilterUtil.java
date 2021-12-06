@@ -1,11 +1,12 @@
 package com.softlab.okr.utils;
 
 import com.softlab.okr.security.AuthenticationServiceImpl;
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Program: okr
@@ -16,24 +17,24 @@ import org.springframework.stereotype.Component;
 @Component
 public class FilterUtil {
 
-  @Autowired
-  private AuthenticationServiceImpl authenticationService;
+    @Autowired
+    private AuthenticationServiceImpl authenticationService;
 
-  public String getRequestIp() {
-    Authentication authentication = authenticationService.getAuthentication();
-    return ((WebAuthenticationDetails) authentication.getDetails()).getRemoteAddress();
-  }
+    public String getRequestIp() {
+        Authentication authentication = authenticationService.getAuthentication();
+        return ((WebAuthenticationDetails) authentication.getDetails()).getRemoteAddress();
+    }
 
-  public String getRequestPath(HttpServletRequest request) {
-    return request.getRequestURI();
-  }
+    public String getRequestPath(HttpServletRequest request) {
+        return request != null ? request.getRequestURI() : null;
+    }
 
-  public String getRequestUsername() {
-    return authenticationService.getUsername();
-  }
+    public String getRequestUsername() {
+        return authenticationService.getUsername();
+    }
 
-  public Integer getRequestUserId() {
-    return authenticationService.getUserId();
-  }
+    public Integer getRequestUserId() {
+        return authenticationService.getUserId();
+    }
 
 }

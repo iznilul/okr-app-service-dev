@@ -12,6 +12,7 @@ public enum ReturnEnum implements BaseEnum {
     UNAUTHORIZED(401, "请求未认证"),
     ROLE_EXPIRED(418, "权限过期"),//从418开始自定义，因为417以上官方定了
     TOKEN_EXPIRED(419, "令牌过期"),
+    SQL_ERROR(420, "数据库持久层错误"),
     ERROR(500, "服务系统错误");
 
 

@@ -11,20 +11,18 @@ import lombok.Data;
  **/
 @Data
 public class BusinessException extends BaseException {
-    private Integer code;
-    private String message;
 
     public BusinessException() {
         super();
     }
 
     public BusinessException(BaseEnum baseEnum) {
-        this.code = baseEnum.code();
-        this.message = baseEnum.message();
+        super.setCode(baseEnum.code());
+        this.setMessage(baseEnum.message());
     }
 
     public BusinessException(String message) {
-        this.code = 400;
-        this.message = message;
+        super.setCode(400);
+        super.setMessage(message);
     }
 }
