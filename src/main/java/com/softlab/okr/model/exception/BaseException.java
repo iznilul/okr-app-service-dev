@@ -11,6 +11,9 @@ import lombok.Data;
 @Data
 public class BaseException extends RuntimeException {
 
+    private Integer code;
+    private String message;
+
     public BaseException() {
         super();
     }

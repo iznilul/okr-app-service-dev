@@ -15,10 +15,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SysRecordVO {
 
-  private Integer id;
-  private String path;
-  private String username;
-  private String ip;
-  private String time;
-  private long duration;
+    private String name;
+    private String path;
+    private String username;
+    private String ip;
+    private String updateTime;
+    private long duration;
 }

@@ -31,10 +31,10 @@ public class SysRecordController {
 
     @LimitedAccess(frequency = 2, second = 30)
     @PostMapping("query")
-    @ApiOperation("登录日志列表")
-    @Auth(role = RoleConstants.ADMIN, name = "登录日志列表")
+    @ApiOperation("操作记录列表")
+    @Auth(role = RoleConstants.ADMIN, name = "操作记录列表")
     public Result queryLoginLogList(@RequestBody @Validated SysRecordDTO dto) {
 
-        return sysRecordService.getByCond(dto);
+        return sysRecordService.getSysRecord(dto);
     }
 }

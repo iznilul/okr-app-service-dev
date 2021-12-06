@@ -1,5 +1,6 @@
 package com.softlab.okr.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,7 +23,7 @@ public class Resource {
     /**
      * 主键
      */
-    @TableId(value = "resource_id")
+    @TableId(value = "resource_id", type = IdType.AUTO)
     private Long resourceId;
     /**
      * 名称
