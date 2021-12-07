@@ -6,6 +6,7 @@ import com.softlab.okr.model.dto.SelectUserDTO;
 import com.softlab.okr.model.dto.UpdateUserDTO;
 import com.softlab.okr.model.dto.UpdateUserRoleDTO;
 import com.softlab.okr.model.vo.UserInfoVO;
+import com.softlab.okr.model.vo.UserRoleVO;
 import com.softlab.okr.utils.Result;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,6 +25,8 @@ public interface IUserInfoService extends IService<UserInfo> {
     int saveUserInfo(int userId, String username);
 
     UserInfo getUserInfo();
+
+    UserRoleVO getUserRole();
 
     UserInfoVO getUserInfoByUsername(String username);
 

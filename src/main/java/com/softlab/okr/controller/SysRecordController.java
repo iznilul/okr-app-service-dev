@@ -1,7 +1,6 @@
 package com.softlab.okr.controller;
 
 import com.softlab.okr.annotation.Auth;
-import com.softlab.okr.annotation.LimitedAccess;
 import com.softlab.okr.constant.RoleConstants;
 import com.softlab.okr.model.dto.SysRecordDTO;
 import com.softlab.okr.service.ISysRecordService;
@@ -29,7 +28,7 @@ public class SysRecordController {
     @Autowired
     private ISysRecordService sysRecordService;
 
-    @LimitedAccess(frequency = 2, second = 30)
+    //    @LimitedAccess(frequency = 2, second = 30)
     @PostMapping("query")
     @ApiOperation("操作记录列表")
     @Auth(role = RoleConstants.ADMIN, name = "操作记录列表")

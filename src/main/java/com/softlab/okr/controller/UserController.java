@@ -5,6 +5,7 @@ import com.softlab.okr.constant.RoleConstants;
 import com.softlab.okr.entity.UserInfo;
 import com.softlab.okr.model.dto.*;
 import com.softlab.okr.model.vo.UserInfoVO;
+import com.softlab.okr.model.vo.UserRoleVO;
 import com.softlab.okr.service.IUserEntityService;
 import com.softlab.okr.service.IUserInfoService;
 import com.softlab.okr.utils.Result;
@@ -72,11 +73,19 @@ public class UserController {
 
     @ApiOperation("获取用户信息")
     @GetMapping("query")
-    @Auth(role = RoleConstants.USER, name = "根据账号选择用户")
+    @Auth(role = RoleConstants.USER, name = "获取用户信息")
     public Result queryUser() {
 
         UserInfo userInfo = userInfoService.getUserInfo();
         return userInfo != null ? Result.success(userInfo) : Result.failure();
+    }
+
+    @ApiOperation("获取用户权限信息")
+    @GetMapping("query")
+    @Auth(role = RoleConstants.USER, name = "获取用户权限信息")
+    public Result queryUserRole() {
+        UserRoleVO vo = userInfoService.getUserRole();
+        return vo != null ? Result.success(vo) : Result.failure();
     }
 
     @ApiOperation("查询用户列表")

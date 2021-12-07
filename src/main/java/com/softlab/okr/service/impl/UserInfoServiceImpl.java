@@ -14,9 +14,11 @@ import com.softlab.okr.model.enums.RoleEnum;
 import com.softlab.okr.model.enums.UserStatusEnum;
 import com.softlab.okr.model.exception.BusinessException;
 import com.softlab.okr.model.vo.UserInfoVO;
+import com.softlab.okr.model.vo.UserRoleVO;
 import com.softlab.okr.security.IAuthenticationService;
 import com.softlab.okr.service.IUserInfoService;
 import com.softlab.okr.service.IUserRoleService;
+import com.softlab.okr.utils.CopyUtil;
 import com.softlab.okr.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,6 +60,14 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         UserInfo userInfo = userInfoMapper.selectUserInfoByUsername(username);
         userInfo.setRole(RoleEnum.getRole(userInfo.getRoleId()));
         return userInfo;
+    }
+
+    @Override
+    public UserRoleVO getUserRole() {
+        String username = authenticationService.getUsername();
+        UserInfo userInfo = userInfoMapper.selectUserInfoByUsername(username);
+        userInfo.setRole(RoleEnum.getRole(userInfo.getRoleId()));
+        return CopyUtil.copy(userInfo, UserRoleVO.class);
     }
 
     @Override

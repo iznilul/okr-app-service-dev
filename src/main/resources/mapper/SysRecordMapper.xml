@@ -37,7 +37,7 @@
         <if test="endTime!='' and endTime!=null">
             and unix_timestamp(update_time)&lt;=unix_timestamp(#{endTime})
         </if>
+        order by id desc
     </select>
-    <!--    &#45;&#45; and date_format(`time` ,'%Y-%m-%d')&gt;=#{beginTime}-->
 </mapper>
 

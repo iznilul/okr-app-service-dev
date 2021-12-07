@@ -7,10 +7,8 @@ import com.softlab.okr.model.vo.SysRecordVO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
-
 @Repository
 public interface SysRecordMapper extends BaseMapper<SysRecord> {
 
-    Page<SysRecordVO> selectSysRecord(@Param("page") Page page, String username, Date beginTime, Date endTime);
+    Page<SysRecordVO> selectSysRecord(@Param("page") Page page, String username, String beginTime, String endTime);
 }
