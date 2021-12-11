@@ -11,7 +11,7 @@ import java.util.Set;
 @Repository
 public interface ResourceMapper extends BaseMapper<Resource> {
 
-    int updateResourceStatus(int resourceId) throws DataAccessException;
+    int updateResourceStatus(Long resourceId) throws DataAccessException;
 
     Set<String> selectByUserId(int userId) throws DataAccessException;
 }

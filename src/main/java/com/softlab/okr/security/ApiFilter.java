@@ -48,7 +48,7 @@ public class ApiFilter implements Filter {
                     response.setContentType("application/json;charset=utf-8");
                     PrintWriter out = response.getWriter();
                     //封装一个结果返回类
-                    out.write(JSON.toJSONString(Result.failure("接口暂时不开放")));
+                    out.write(JSON.toJSONString(Result.failure("接口暂时关闭")));
                     out.flush();
                     out.close();
                 }

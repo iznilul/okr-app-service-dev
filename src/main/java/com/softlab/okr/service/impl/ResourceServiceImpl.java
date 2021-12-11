@@ -2,13 +2,14 @@ package com.softlab.okr.service.impl;
 
 import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.softlab.okr.constant.TimeFormat;
 import com.softlab.okr.entity.Resource;
 import com.softlab.okr.entity.UserRole;
 import com.softlab.okr.mapper.ResourceMapper;
-import com.softlab.okr.model.dto.PageDTO;
+import com.softlab.okr.model.dto.ResourceDTO;
 import com.softlab.okr.model.enums.ResourceEnum;
 import com.softlab.okr.model.enums.RoleEnum;
 import com.softlab.okr.model.exception.BusinessException;
@@ -37,12 +38,15 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
     private IUserRoleService userRoleService;
 
     @Override
-    public Result getResourceList(PageDTO dto) {
+    public Result getResourceList(ResourceDTO dto) {
         Page<Resource> page = new Page<>(dto.getIndex(), dto.getPageSize());
-        Page<Resource> resourcePage = resourceMapper.selectPage(page, null);
+        Page<Resource> resourcePage = resourceMapper.selectPage(page, new QueryWrapper<Resource>()
+                .like((StringUtils.isNotBlank(dto.getName())), "name", dto.getName())
+                .orderByAsc("status"));
         List<ResourceVO> list = new ArrayList<>();
         resourcePage.getRecords().forEach(resource -> {
             ResourceVO vo = CopyUtil.copy(resource, ResourceVO.class);
+            vo.setResourceId(String.valueOf(resource.getResourceId()));
             vo.setStatusName(ResourceEnum.getMessage(resource.getStatus()));
             list.add(vo);
         });
@@ -51,7 +55,8 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
 
     @Override
     @Transactional
-    public int modifyResourceStatus(int resourceId) {
+    public int modifyResourceStatus(String id) {
+        long resourceId = Long.parseLong(id);
         ApiFilter.updateResources(resourceId);
         return resourceMapper.updateResourceStatus(resourceId);
     }
@@ -69,5 +74,17 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
             throw new BusinessException("权限已到期 请重新登录");
         }
         return resourceMapper.selectByUserId(userId);
+    }
+
+    @Override
+    public List<String> getResourceName(String name) {
+        QueryWrapper<Resource> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("name", name).select("name");
+        List<String> result = new ArrayList<>();
+        List<Resource> resourceList = resourceMapper.selectList(queryWrapper);
+        resourceList.forEach(resource -> {
+            result.add(resource.getName());
+        });
+        return result;
     }
 }

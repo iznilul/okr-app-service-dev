@@ -63,11 +63,12 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
     }
 
     @Override
-    public UserRoleVO getUserRole() {
-        String username = authenticationService.getUsername();
-        UserInfo userInfo = userInfoMapper.selectUserInfoByUsername(username);
-        userInfo.setRole(RoleEnum.getRole(userInfo.getRoleId()));
-        return CopyUtil.copy(userInfo, UserRoleVO.class);
+    public UserRoleVO getUserRole(String username) {
+        UserInfoVO userInfoVO = this.getUserInfoByUsername(username);
+        if (null == userInfoVO) {
+            return null;
+        }
+        return CopyUtil.copy(userInfoVO, UserRoleVO.class);
     }
 
     @Override
@@ -97,7 +98,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
             throw new BusinessException("没有找到用户");
         } else {
             userInfo.setName(dto.getName()).setMajor(dto.getMajor()).setQq(dto.getQq()).setPhone(dto.getPhone())
-                    .setWeixin(dto.getWeixin()).setPhone(dto.getProfile());
+                    .setWeixin(dto.getWeixin()).setProfile(dto.getProfile());
             userInfoMapper.updateById(userInfo);
         }
     }

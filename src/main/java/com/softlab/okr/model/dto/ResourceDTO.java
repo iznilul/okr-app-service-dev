@@ -1,5 +1,6 @@
-package com.softlab.okr.model.vo;
+package com.softlab.okr.model.dto;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,18 +14,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResourceVO {
+public class ResourceDTO extends PageDTO {
 
-    private String resourceId;
-
-    private String path;
-
+    @ApiModelProperty(value = "标签名", required = true, example = "java")
     private String name;
-
-    private String method;
-
-    private Integer status;
-
-    private String statusName;
 
 }

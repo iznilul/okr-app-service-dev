@@ -26,7 +26,7 @@ public interface IUserInfoService extends IService<UserInfo> {
 
     UserInfo getUserInfo();
 
-    UserRoleVO getUserRole();
+    UserRoleVO getUserRole(String username);
 
     UserInfoVO getUserInfoByUsername(String username);
 

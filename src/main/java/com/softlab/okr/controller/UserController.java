@@ -81,10 +81,10 @@ public class UserController {
     }
 
     @ApiOperation("获取用户权限信息")
-    @GetMapping("query")
+    @GetMapping("queryRole")
     @Auth(role = RoleConstants.USER, name = "获取用户权限信息")
-    public Result queryUserRole() {
-        UserRoleVO vo = userInfoService.getUserRole();
+    public Result queryUserRole(@RequestParam("username") String username) {
+        UserRoleVO vo = userInfoService.getUserRole(username);
         return vo != null ? Result.success(vo) : Result.failure();
     }
 
