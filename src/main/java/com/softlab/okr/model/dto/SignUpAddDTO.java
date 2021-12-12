@@ -15,8 +15,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel("signUpDTO 查询报名传输类")
-public class SignUpDTO extends PageDTO {
+@ApiModel("signUpDTO 用户报名传输类")
+public class SignUpAddDTO {
 
     @ApiModelProperty(value = "学号", required = true, example = "123")
     private String studentId;
@@ -24,6 +24,15 @@ public class SignUpDTO extends PageDTO {
     @ApiModelProperty(value = "姓名", required = true, example = "臭臭")
     private String name;
 
+    @ApiModelProperty(value = "性别", required = true, example = "男")
+    private String gender;
+
+    @ApiModelProperty(value = "qq号", required = true, example = "12345")
+    private String qq;
+
     @ApiModelProperty(value = "专业班级", required = true, example = "挖掘机1802")
     private String major;
+
+    @ApiModelProperty(value = "自我介绍", required = true, example = "shit")
+    private String profile;
 }

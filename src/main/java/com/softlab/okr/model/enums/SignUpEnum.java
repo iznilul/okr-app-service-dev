@@ -3,6 +3,9 @@ package com.softlab.okr.model.enums;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @Program: okr
  * @Description:
@@ -12,7 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public enum SignUpEnum implements BaseEnum {
-    UNDECLARED(0, "等待考核"),
+    UNDECLARED(0, "等待查看"),
     OFFER(1, "录取"),
     REJECT(2, "未录取");
 
@@ -46,6 +49,15 @@ public enum SignUpEnum implements BaseEnum {
         }
         return null;
     }
+
+    public static List<String> getList() {
+        List<String> list = new ArrayList<>();
+        for (SignUpEnum signUpEnum : SignUpEnum.values()) {
+            list.add(signUpEnum.message);
+        }
+        return list;
+    }
+
 
     @Override
     public String toString() {

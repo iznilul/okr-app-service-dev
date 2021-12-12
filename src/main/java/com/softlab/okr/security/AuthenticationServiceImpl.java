@@ -15,33 +15,36 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthenticationServiceImpl implements IAuthenticationService {
 
-  @Autowired
-  private IUserEntityService userEntityService;
+    @Autowired
+    private IUserEntityService userEntityService;
 
-  @Override
-  public Authentication getAuthentication() {
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    return authentication;
-  }
-
-  @Override
-  public UserDetail getPrincipal() {
-    Object object = this.getAuthentication().getPrincipal();
-    if (object instanceof String) {
-      return null;
+    @Override
+    public Authentication getAuthentication() {
+        return SecurityContextHolder.getContext().getAuthentication();
     }
-    return (UserDetail) object;
-  }
 
-  @Override
-  public Integer getUserId() {
-    UserDetail userDetail = getPrincipal();
-    return userDetail == null ? null : userDetail.getUserId();
-  }
+    @Override
+    public UserDetail getPrincipal() {
+        Authentication authentication = this.getAuthentication();
+        if (authentication == null) {
+            return null;
+        }
+        Object object = authentication.getPrincipal();
+        if (object instanceof String) {
+            return null;
+        }
+        return (UserDetail) object;
+    }
 
-  @Override
-  public String getUsername() {
-    return getPrincipal().getUsername();
-  }
+    @Override
+    public Integer getUserId() {
+        UserDetail userDetail = getPrincipal();
+        return userDetail == null ? null : userDetail.getUserId();
+    }
+
+    @Override
+    public String getUsername() {
+        return getPrincipal() != null ? getPrincipal().getUsername() : null;
+    }
 }
 

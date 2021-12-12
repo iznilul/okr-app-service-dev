@@ -5,13 +5,16 @@ import cn.hutool.core.io.IoUtil;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.softlab.okr.entity.SignUp;
 import com.softlab.okr.mapper.SignUpMapper;
+import com.softlab.okr.model.dto.SignUpAddDTO;
 import com.softlab.okr.model.dto.SignUpDTO;
-import com.softlab.okr.model.dto.UserSignUpDTO;
+import com.softlab.okr.model.dto.SignUpUpdateDTO;
 import com.softlab.okr.model.enums.SignUpEnum;
+import com.softlab.okr.model.exception.BusinessException;
 import com.softlab.okr.model.vo.SignUpVO;
 import com.softlab.okr.service.ISignUpService;
 import com.softlab.okr.utils.CopyUtil;
@@ -38,7 +41,7 @@ public class SignUpServiceImpl extends ServiceImpl<SignUpMapper, SignUp> impleme
 
     // 报名
     @Override
-    public int saveSignUp(UserSignUpDTO dto) {
+    public int saveSignUp(SignUpAddDTO dto) {
         QueryWrapper<SignUp> wrapper = new QueryWrapper<SignUp>().eq("student_id", dto.getStudentId());
         SignUp signUp = CopyUtil.copy(dto, SignUp.class);
         signUp.setStatus(0);
@@ -51,21 +54,32 @@ public class SignUpServiceImpl extends ServiceImpl<SignUpMapper, SignUp> impleme
 
     //录取结果更新
     @Override
-    public int modifySignUp(SignUp signUp) {
-        return signUpMapper.updateById(signUp);
+    public void modifySignUp(SignUpUpdateDTO dto) {
+        SignUp signUp = signUpMapper.selectOne(new QueryWrapper<SignUp>().eq("student_id", dto.getStudentId()));
+        if (signUp == null) {
+            throw new BusinessException("活动id错误");
+        }
+        signUp.setComment(dto.getComment());
+        signUp.setStatus(SignUpEnum.getCode(dto.getStatusName()));
+        signUpMapper.updateById(signUp);
     }
 
     //根据参数返回报名列表
     @Override
-    public Result getSignUpByCond(SignUpDTO dto) {
-        dto.setStatus(dto.getStatueName() == null ? null : SignUpEnum.getCode(dto.getStatueName()));
+    public Result getSignUpByList(SignUpDTO dto) {
         Page<SignUp> page = new Page<>(dto.getIndex(), dto.getPageSize());
-        Page<SignUpVO> voPage = signUpMapper.selectSignUpByCond(page, dto);
-        List<SignUpVO> list = voPage.getRecords();
-        list.forEach(vo -> {
+        Page<SignUp> signUpPage = signUpMapper.selectPage(page, new QueryWrapper<SignUp>()
+                .like((StringUtils.isNotBlank(dto.getStudentId())), "student_id", dto.getStudentId())
+                .like((StringUtils.isNotBlank(dto.getName())), "name", dto.getName())
+                .like((StringUtils.isNotBlank(dto.getMajor())), "major", dto.getMajor())
+                .orderByAsc("status"));
+        List<SignUpVO> list = new ArrayList<>();
+        signUpPage.getRecords().forEach(signUp -> {
+            SignUpVO vo = CopyUtil.copy(signUp, SignUpVO.class);
             vo.setStatusName(SignUpEnum.getMessage(vo.getStatus()));
+            list.add(vo);
         });
-        return Result.success(list, voPage.getCurrent(), voPage.getTotal());
+        return Result.success(list, signUpPage.getCurrent(), signUpPage.getTotal());
     }
 
     //根据id返回用户
@@ -99,9 +113,8 @@ public class SignUpServiceImpl extends ServiceImpl<SignUpMapper, SignUp> impleme
         writer.addHeaderAlias("qq", "qq号");
         writer.addHeaderAlias("major", "专业班级");
         writer.addHeaderAlias("profile", "个人简介");
-        writer.addHeaderAlias("status", "状态");
+        writer.addHeaderAlias("statusName", "状态");
         writer.addHeaderAlias("comment", "评语");
-        writer.addHeaderAlias("updateTime", "更新时间");
         // 一次性写出内容，使用默认样式，强制输出标题
         writer.write(voList, true);
         //out为OutputStream，需要写出到的目标流

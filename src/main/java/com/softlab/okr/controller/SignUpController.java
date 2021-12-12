@@ -3,15 +3,16 @@ package com.softlab.okr.controller;
 import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.config.CommonConfig;
 import com.softlab.okr.constant.RoleConstants;
-import com.softlab.okr.entity.SignUp;
+import com.softlab.okr.model.dto.SignUpAddDTO;
 import com.softlab.okr.model.dto.SignUpDTO;
-import com.softlab.okr.model.dto.UserSignUpDTO;
+import com.softlab.okr.model.dto.SignUpUpdateDTO;
 import com.softlab.okr.model.vo.SignUpVO;
 import com.softlab.okr.service.ISignUpService;
 import com.softlab.okr.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -35,19 +36,18 @@ public class SignUpController {
     private CommonConfig commonConfig;
 
     @ApiOperation("获取报名记录")
-    @PostMapping("query")
+    @PostMapping("queryList")
     @Auth(role = RoleConstants.ADMIN, name = "获取报名记录")
-    public Result querySignUp(@RequestBody SignUpDTO dto) {
-        return signUpService.getSignUpByCond(dto);
+    public Result querySignUpList(@RequestBody SignUpDTO dto) {
+        return signUpService.getSignUpByList(dto);
     }
 
     @ApiOperation("更新报名记录")
     @PostMapping("change")
     @Auth(role = RoleConstants.ADMIN, name = "更新报名记录")
-    public Result changeSignUp(@RequestBody SignUp signUP) {
-
-        return signUpService.modifySignUp(signUP) == 1 ?
-                Result.success() : Result.failure();
+    public Result changeSignUp(@RequestBody @Validated SignUpUpdateDTO dto) {
+        signUpService.modifySignUp(dto);
+        return Result.success();
     }
 
     @ApiOperation("导出报名单")
@@ -60,13 +60,13 @@ public class SignUpController {
     @ApiOperation("报名")
     @PostMapping("add")
     @Auth(role = RoleConstants.COMMON, name = "纳新报名")
-    public Result addSignUp(@RequestBody UserSignUpDTO dto) {
+    public Result addSignUp(@RequestBody SignUpAddDTO dto) {
         return signUpService.saveSignUp(dto) == 1
                 ? Result.success("报名成功，请加入纳新群: " + commonConfig.getQqGroupNumber())
                 : Result.failure();
     }
 
-    @ApiOperation("查询报名")
+    @ApiOperation("查询报名结果")
     @GetMapping("query")
     @Auth(role = RoleConstants.COMMON, name = "报名结果查询")
     public Result querySignUp(@RequestParam String studentId) {

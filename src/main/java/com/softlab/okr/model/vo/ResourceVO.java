@@ -21,7 +21,7 @@ public class ResourceVO {
 
     private String name;
 
-    private String method;
+    private String roleName;
 
     private Integer status;
 

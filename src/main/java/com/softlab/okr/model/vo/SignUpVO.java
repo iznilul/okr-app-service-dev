@@ -1,6 +1,5 @@
 package com.softlab.okr.model.vo;
 
-import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,15 +17,14 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class SignUpVO {
 
-  private Integer id;
-  private String studentId;
-  private String name;
-  private String gender;
-  private String qq;
-  private String major;
-  private String profile;
-  private Integer status;
-  private String statusName;
-  private String comment;
-  private Date updateTime;
+    private Integer id;
+    private String studentId;
+    private String name;
+    private String gender;
+    private String qq;
+    private String major;
+    private String profile;
+    private Integer status;
+    private String statusName;
+    private String comment;
 }

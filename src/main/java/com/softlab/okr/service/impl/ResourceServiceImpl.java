@@ -48,6 +48,7 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
             ResourceVO vo = CopyUtil.copy(resource, ResourceVO.class);
             vo.setResourceId(String.valueOf(resource.getResourceId()));
             vo.setStatusName(ResourceEnum.getMessage(resource.getStatus()));
+            vo.setRoleName(RoleEnum.getMessage(resource.getRole()));
             list.add(vo);
         });
         return Result.success(list, resourcePage.getCurrent(), resourcePage.getTotal());
