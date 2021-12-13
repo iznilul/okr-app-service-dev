@@ -1,0 +1,5 @@
+spring:
+  profiles:
+    active: dev
+signup:
+  qq-group-number: 114514

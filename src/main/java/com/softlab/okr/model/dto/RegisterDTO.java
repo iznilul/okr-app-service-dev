@@ -25,7 +25,7 @@ public class RegisterDTO {
     @ApiModelProperty(value = "账号", required = true, example = "123")
     private String username;
 
-    @Pattern(regexp = "^(管理员|普通用户)$", message = "角色需要为管理员或者普通用户")
+    @Pattern(regexp = "^(管理员|普通用户)$", message = "角色格式不对")
     @ApiModelProperty(value = "角色", required = true, example = "管理员")
     private String name;
 }

@@ -15,16 +15,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ResourceVO {
 
-  private Integer resourceId;
+    private String resourceId;
 
-  private String path;
+    private String path;
 
-  private String name;
+    private String name;
 
-  private String method;
+    private String roleName;
 
-  private Integer status;
+    private Integer status;
 
-  private String statusName;
+    private String statusName;
 
 }

@@ -1,42 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.softlab.okr.mapper.SysRecordMapper">
 
-  <resultMap id="BaseResultMap" type="com.softlab.okr.entity.SysRecord">
-    <id property="id" column="id"/>
-    <result property="resourceId" column="resource_id"/>
-    <result property="userId" column="user_id"/>
-    <result property="ip" column="ip"/>
-    <result property="time" column="time"/>
-    <result property="duration" column="duration"/>
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.softlab.okr.entity.SysRecord">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="path" column="path"/>
+        <result property="username" column="username"/>
+        <result property="ip" column="ip"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="duration" column="duration"/>
+    </resultMap>
 
-  <sql id="Base_Column_List">
-    `id`,`resource_id`,`user_id`,`ip`,`time`,`duration`
+    <sql id="Base_Column_List">
+    `id`,`name`,`path`,`username`,`ip`,`update_time`,`duration`
   </sql>
 
-  <select id="selectByCond" resultType="com.softlab.okr.model.vo.SysRecordVO">
-    select
-    id,
-    re.path,
-    ui.username,
-    ip,
-    `time`,
-    duration
-    from `sys_record` sr
-    join resource re on resource.resourceId=sr.resourceId
-    where 1=1
-    <if test="username!='' and username!=null">
-      join user_info ui on ui.username like '%${username}%'
-    </if>
-    <if test="beginTime!='' and beginTime!=null">
-      and date_format(`time` ,'%Y-%m-%d')&gt;=#{beginTime}
-    </if>
-    <if test="endTime!='' and endTime!=null">
-      and date_format(`time` ,'%Y-%m-%d')&lt;=#{endTime}
-    </if>
-  </select>
-
+    <select id="selectSysRecord" resultType="com.softlab.okr.model.vo.SysRecordVO">
+        select
+        id,
+        `name`,
+        path,
+        username,
+        ip,
+        update_time,
+        duration
+        from `sys_record`
+        where 1=1
+        <if test="username!='' and username!=null">
+            and username like '%#{username}%'
+        </if>
+        <if test="beginTime!='' and beginTime!=null">
+            and unix_timestamp(update_time)&gt;=unix_timestamp(#{beginTime})
+        </if>
+        <if test="endTime!='' and endTime!=null">
+            and unix_timestamp(update_time)&lt;=unix_timestamp(#{endTime})
+        </if>
+        order by id desc
+    </select>
 </mapper>
 

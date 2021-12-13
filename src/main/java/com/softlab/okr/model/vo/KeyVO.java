@@ -15,9 +15,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class KeyVO {
 
-  private Integer keyId;
-  private String keyName;
-  private Integer status;
-  private String statusName;
-  private Integer userId;
+    private Long keyId;
+    private String keyName;
+    private Integer status;
+    private String statusName;
+    private Integer userId;
 }

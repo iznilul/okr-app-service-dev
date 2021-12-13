@@ -2,26 +2,27 @@ package com.softlab.okr.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.softlab.okr.entity.Book;
-import com.softlab.okr.exception.ServiceException;
-import com.softlab.okr.model.dto.BookDTO;
+import com.softlab.okr.model.dto.BookChangeDTO;
 import com.softlab.okr.model.dto.BookQueryDTO;
+import com.softlab.okr.model.vo.BookVO;
 import com.softlab.okr.utils.Result;
-import java.io.IOException;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface IBookService extends IService<Book> {
 
-  boolean saveBook(BookDTO dto) throws ServiceException;
+    void saveBook(String bookName);
 
-  boolean modifyBook(BookDTO dto) throws ServiceException;
+    void modifyBook(BookChangeDTO dto);
 
-  int modifyBookImg(int bookId, MultipartFile file) throws ServiceException, IOException;
+    void modifyBookImg(int bookId, MultipartFile file);
 
-  int borrowBook(int bookId) throws ServiceException;
+    void borrowBook(int bookId);
 
-  int returnBook(int bookId) throws ServiceException;
+    void returnBook(int bookId);
 
-  Result getByCond(BookQueryDTO dto) throws ServiceException;
+    Result getBookList(BookQueryDTO dto);
 
-  boolean removeBook(int bookId) throws ServiceException;
+    BookVO getBook(int bookId);
+
+    void removeBook(int bookId);
 }

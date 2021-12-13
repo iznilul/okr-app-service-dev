@@ -1,23 +1,88 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.softlab.okr.mapper.UserInfoMapper">
-  <resultMap id="BaseResultMap" type="com.softlab.okr.entity.UserInfo">
-    <id property="userId" column="user_id"/>
-    <result property="username" column="username"/>
-    <result property="name" column="name"/>
-    <result property="avatar" column="avatar"/>
-    <result property="major" column="major"/>
-    <result property="qq" column="qq"/>
-    <result property="phone" column="phone"/>
-    <result property="weixin" column="weixin"/>
-    <result property="research" column="research"/>
-    <result property="createTime" column="create_time"/>
-    <result property="updateTime" column="update_time"/>
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.softlab.okr.entity.UserInfo">
+        <id property="userId" column="user_id"/>
+        <result property="username" column="username"/>
+        <result property="name" column="name"/>
+        <result property="avatar" column="avatar"/>
+        <result property="major" column="major"/>
+        <result property="qq" column="qq"/>
+        <result property="phone" column="phone"/>
+        <result property="weixin" column="weixin"/>
+        <result property="profile" column="profile"/>
+        <result property="status" column="status"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
 
-  <sql id="Base_Column_List">
-        user_id,username,`name`,avatar,major,qq,phone,weixin,`research`,create_time,update_time
+    <sql id="Base_Column_List">
+        user_id,username,`name`,avatar,major,qq,phone,weixin,`profile`,`status`,create_time,update_time
     </sql>
 
+    <select id="selectUserInfoByUsername" resultType="com.softlab.okr.entity.UserInfo">
+        select
+        ui.user_id,
+        ui.username,
+        ui.name,
+        ui.avatar,
+        ui.major,
+        ui.qq,
+        ui.phone,
+        ui.weixin,
+        ui.profile,
+        ui.status,
+        ur.role_id
+        from user_info ui
+        join user_role ur on ui.user_id=ur.user_id
+        where ui.username=#{username}
+    </select>
+
+    <select id="selectUserInfoVOByUsername" resultType="com.softlab.okr.model.vo.UserInfoVO">
+        select
+        ui.user_id,
+        ui.username,
+        ui.name,
+        ui.avatar,
+        ui.major,
+        ui.qq,
+        ui.phone,
+        ui.weixin,
+        ui.profile,
+        ui.status,
+        ur.role_id,
+        ur.expire_time
+        from user_info ui
+        join user_role ur on ui.user_id=ur.user_id
+        where ui.username=#{username}
+    </select>
+
+    <select id="selectUserInfoVOList" resultType="com.softlab.okr.model.vo.UserInfoVO">
+        select
+        ui.user_id,
+        ui.username,
+        ui.name,
+        ui.avatar,
+        ui.major,
+        ui.qq,
+        ui.phone,
+        ui.weixin,
+        ui.profile,
+        ui.status,
+        ur.role_id,
+        ur.expire_time
+        from user_info ui
+        join user_role ur on ui.user_id=ur.user_id
+        where 1=1
+        <if test="dto.username !='' and dto.username !=null">
+            and ui.username=#{dto.username}
+        </if>
+        <if test="dto.name !='' and dto.name !=null">
+            and ui.name=#{dto.name}
+        </if>
+        <if test="dto.major !='' and dto.major !=null">
+            and ui.major=#{dto.major}
+        </if>
+    </select>
 </mapper>

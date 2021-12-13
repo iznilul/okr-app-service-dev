@@ -1,0 +1,52 @@
+logging:
+  config: classpath:logback/logback-spring.xml
+  file:
+    path: /soft/logs
+  pattern:
+    console: '[%d{yyyy-MM-dd HH:mm:ss}] -- [%-5p]: [%c] -- %m%n'
+    file: '[%d{yyyy-MM-dd HH:mm:ss}] -- [%-5p]: [%c] -- %m%n'
+management:
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+    info:
+      enabled: true
+    metrics:
+      enabled: true
+  endpoints:
+    enabled-by-default: false
+    web:
+      base-path: /api/actuator
+      exposure:
+        include: '*'
+mybatis:
+  config-location: classpath:mybatis/mybatis.xml
+security:
+  jwt:
+    secretKey: radCircle
+server:
+  port: 9101
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    password: P@ssw0rd
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://127.0.0.1:3306/okr?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false
+    username: cyy
+  redis:
+    database: 0.0
+    host: 127.0.0.1
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1
+        min-idle: 0
+    password: P@ssw0rd
+    port: 6379.0
+    timeout: 3000
+  security:
+    userEntity:
+      name: userEntity
+      password: 123456

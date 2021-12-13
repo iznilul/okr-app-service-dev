@@ -1,10 +1,10 @@
 package com.softlab.okr.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.softlab.okr.entity.Resource;
 import com.softlab.okr.entity.RoleResource;
-import com.softlab.okr.exception.ServiceException;
+
 import java.util.List;
-import java.util.Set;
 
 /**
  * <p>
@@ -16,9 +16,5 @@ import java.util.Set;
  */
 public interface IRoleResourceService extends IService<RoleResource> {
 
-  List<RoleResource> buildRoleResourceList(Integer roleId, Set<Integer> resourceIdList)
-      throws ServiceException;
-
-  boolean reloadRoleResource() throws ServiceException;
-
+    boolean reloadRoleResource(List<Resource> list);
 }

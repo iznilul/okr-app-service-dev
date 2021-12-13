@@ -1,0 +1,71 @@
+logging:
+  config: classpath:logback/logback-spring.xml
+  file:
+    path: logs
+  pattern:
+    console: '%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(---){faint}
+      %clr(%logger{79}){cyan} %clr(:){faint} %m%n'
+    file: '[%d{yyyy-MM-dd HH:mm:ss}] -- [%-5p]: [%c] -- %m%n'
+management:
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+    info:
+      enabled: true
+    metrics:
+      enabled: true
+  endpoints:
+    enabled-by-default: false
+    web:
+      base-path: /api/user/monitor
+      exposure:
+        include: '*'
+mybatis:
+  config-location: classpath:mybatis/mybatis.xml
+  mapper-locations: classpath*:mapper/*.xml
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+  #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+security:
+  jwt:
+    secretKey: radCircle
+server:
+  port: 9101
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    password: ''
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://127.0.0.1:3306/okr?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false
+    username: root
+  devtools:
+    restart:
+      poll-interval: 3000ms
+      quiet-period: 2999ms
+  output:
+    ansi:
+      enabled: 'always'
+  redis:
+    database: 0
+    host: 127.0.0.1
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1
+        min-idle: 0
+    password: ''
+    port: 6379
+    timeout: 3000
+  security:
+    switch: true
+    userEntity:
+      name: userEntity
+      password: 123456

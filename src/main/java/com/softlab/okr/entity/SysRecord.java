@@ -1,10 +1,14 @@
 package com.softlab.okr.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
 
 /**
  * @Program: okr
@@ -17,13 +21,21 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SysRecord {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  @TableId(value = "id", type = IdType.AUTO)
-  private Integer id;
-  private Integer resourceId;
-  private Integer userId;
-  private String ip;
-  private String time;
-  private long duration;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
+
+    private String name;
+
+    private String path;
+
+    private String username;
+
+    private String ip;
+
+    @TableField(fill = FieldFill.INSERT)
+    public Date updateTime;
+
+    private long duration;
 }

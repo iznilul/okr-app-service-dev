@@ -1,21 +1,21 @@
 package com.softlab.okr.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.softlab.okr.entity.Role;
+import com.softlab.okr.entity.Resource;
 import com.softlab.okr.entity.RoleResource;
 import com.softlab.okr.mapper.RoleResourceMapper;
-import com.softlab.okr.model.enums.statusCode.RoleStatus;
-import com.softlab.okr.service.IResourceService;
+import com.softlab.okr.model.enums.RoleEnum;
 import com.softlab.okr.service.IRoleResourceService;
 import com.softlab.okr.service.IRoleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -27,42 +27,36 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class RoleResourceServiceImpl extends
-    ServiceImpl<RoleResourceMapper, RoleResource> implements IRoleResourceService {
+        ServiceImpl<RoleResourceMapper, RoleResource> implements IRoleResourceService {
 
-  @Autowired
-  private IResourceService resourceService;
+    @Autowired
+    private IRoleService roleService;
 
-  @Autowired
-  private IRoleService roleService;
-
-  @Override
-  public List<RoleResource> buildRoleResourceList(Integer roleId, Set<Integer> resourceIdList) {
-    return resourceIdList.stream().map(resource ->
-    {
-      RoleResource roleResource = new RoleResource();
-      roleResource.setId(null);
-      roleResource.setRoleId(roleId);
-      roleResource.setResourceId(resource);
-      return roleResource;
-    }).collect(Collectors.toList());
-  }
-
-  @Override
-  @Transactional(
-      propagation = Propagation.REQUIRED,
-      isolation = Isolation.READ_COMMITTED,
-      rollbackFor = Exception.class)
-  public boolean reloadRoleResource() {
-    List<Role> roleList = roleService.list();
-    this.remove(null);
-    for (Role role : roleList) {
-      Set<Integer> set = resourceService.getResourceIds(RoleStatus.getRole(role.getName()));
-      List<RoleResource> list = this.buildRoleResourceList(role.getRoleId(), set);
-      if (!this.saveBatch(list)) {
-        return false;
-      }
+    @Override
+    @Transactional
+    public boolean reloadRoleResource(List<Resource> list) {
+        Set<Long> resourceSet = new HashSet<>();
+        List<RoleEnum> roleEnumList = RoleEnum.getListOrderByDesc();
+        List<RoleResource> result = new ArrayList<>();
+        this.remove(null);
+        for (RoleEnum status : roleEnumList) {
+            Set<Long> set = list.stream().filter(resource -> resource.getRole().equals(status.role()))
+                    .map(Resource::getResourceId).collect(Collectors.toSet());
+            resourceSet.addAll(set);
+            result.addAll(this.buildRoleResourceList(status.code(), resourceSet));
+        }
+        return this.saveBatch(result);
     }
-    return true;
-  }
+
+    private List<RoleResource> buildRoleResourceList(Integer roleId, Set<Long> set) {
+        return set.stream().map(resource ->
+        {
+            RoleResource roleResource = new RoleResource();
+            roleResource.setId(null);
+            roleResource.setRoleId(roleId);
+            roleResource.setResourceId(resource);
+            return roleResource;
+        }).collect(Collectors.toList());
+    }
 
 }

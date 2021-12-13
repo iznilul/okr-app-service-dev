@@ -1,11 +1,11 @@
 package com.softlab.okr.model.vo;
 
 import com.softlab.okr.entity.Tag;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Range;
+
+import java.util.List;
 
 /**
  * @program: okr
@@ -18,23 +18,20 @@ import org.hibernate.validator.constraints.Range;
 @NoArgsConstructor
 public class BookVO {
 
-  private Integer bookId;
+    private Integer bookId;
 
-  private String bookName;
+    private String bookName;
 
-  private String img;
+    private String img;
 
-  private String publisher;
+    private String publisher;
 
-  private Integer price;
+    private Integer userId;
 
-  private String userName;
+    private Integer status;
 
-  @Range(min = 0, max = 2, message = "书籍状态需要满足规则")
-  private Integer status;
+    private String statusName;
 
-  private String statusName;
-
-  private List<Tag> tagList;
+    private List<Tag> tagList;
 
 }

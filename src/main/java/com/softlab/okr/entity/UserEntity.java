@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -12,10 +13,11 @@ import lombok.NoArgsConstructor;
  * @author: radCircle
  * @create: 2021-07-10 17:04
  **/
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserEntity {
+public class UserEntity extends BaseEntity {
 
   private static final long serialVersionUID = 1L;
 
@@ -24,3 +26,8 @@ public class UserEntity {
   private String username;
   private String password;
 }
+
+
+
+
+

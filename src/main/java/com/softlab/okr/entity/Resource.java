@@ -18,23 +18,33 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 public class Resource {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  /**
-   * 主键
-   */
-  @TableId(value = "id", type = IdType.AUTO)
-  private Integer id;
+    /**
+     * 主键
+     */
+    @TableId(value = "resource_id", type = IdType.AUTO)
+    private Long resourceId;
+    /**
+     * 名称
+     */
+    private String name;
+    /**
+     * `
+     * 方法
+     */
+    private String method;
+    /**
+     * 路径
+     */
+    private String path;
 
-  private Integer resourceId;
-  /**
-   * 路径
-   */
-  private String method;
-  private String path;
-  /**
-   * 名称
-   */
-  private String name;
-  private Integer status;
+    /**
+     * 角色
+     */
+    private String role;
+    /**
+     * 状态
+     */
+    private Integer status;
 }

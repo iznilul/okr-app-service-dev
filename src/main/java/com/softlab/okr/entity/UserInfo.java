@@ -1,6 +1,6 @@
 package com.softlab.okr.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,19 +20,24 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class UserInfo extends BaseEntity {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  /**
-   * 主键
-   */
-  @TableId(value = "user_id", type = IdType.AUTO)
-  private Integer userId;
-  private String username;
-  private String name;
-  private String avatar;
-  private String major;
-  private String qq;
-  private String phone;
-  private String weixin;
-  private String research;
+    /**
+     * 主键
+     */
+    @TableId(value = "user_id")
+    private Integer userId;
+    private String username;
+    private String name;
+    private String avatar;
+    private String major;
+    private String qq;
+    private String phone;
+    private String weixin;
+    private String profile;
+    private Integer status;
+    @TableField(exist = false)
+    private Integer roleId;
+    @TableField(exist = false)
+    private String role;
 }

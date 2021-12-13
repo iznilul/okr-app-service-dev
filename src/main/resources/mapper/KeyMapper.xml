@@ -28,6 +28,7 @@
     ku.user_id
     from `key` ky
     left join key_user ku on ky.key_id=ku.key_id and ky.status=1 and ku.status=0
+    where ky.delete_flag=0
   </select>
 
 </mapper>

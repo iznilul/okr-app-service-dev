@@ -2,14 +2,14 @@ package com.softlab.okr.security;
 
 import com.alibaba.fastjson.JSON;
 import com.softlab.okr.utils.Result;
-import java.io.IOException;
-import java.io.PrintWriter;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * 授权错误处理器
@@ -19,17 +19,15 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 @Slf4j
 public class MyDeniedHandler implements AccessDeniedHandler {
 
-  @Override
-  public void handle(HttpServletRequest request, HttpServletResponse response,
-      AccessDeniedException accessDeniedException) throws IOException,
-      ServletException {
-    log.error("用户没有相关权限访问:" + accessDeniedException.toString());
-    //定位打印抛出错误的地方
-    log.error("定位:" + accessDeniedException.getStackTrace()[0].toString());
-    response.setContentType("application/json;charset=utf-8");
-    PrintWriter out = response.getWriter();
-    out.write(JSON.toJSONString(Result.failure()));
-    out.flush();
-    out.close();
-  }
+    @Override
+    public void handle(HttpServletRequest request, HttpServletResponse response,
+                       AccessDeniedException e) throws IOException {
+        log.error("用户没有相关权限访问");
+        e.printStackTrace();
+        response.setContentType("application/json;charset=utf-8");
+        PrintWriter out = response.getWriter();
+        out.write(JSON.toJSONString(Result.failure("权限不足")));
+        out.flush();
+        out.close();
+    }
 }
