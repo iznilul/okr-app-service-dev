@@ -4,8 +4,8 @@ import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.config.CommonConfig;
 import com.softlab.okr.constant.RoleConstants;
 import com.softlab.okr.model.dto.SignUpAddDTO;
+import com.softlab.okr.model.dto.SignUpChangeDTO;
 import com.softlab.okr.model.dto.SignUpDTO;
-import com.softlab.okr.model.dto.SignUpUpdateDTO;
 import com.softlab.okr.model.vo.SignUpVO;
 import com.softlab.okr.service.ISignUpService;
 import com.softlab.okr.utils.Result;
@@ -45,7 +45,7 @@ public class SignUpController {
     @ApiOperation("更新报名记录")
     @PostMapping("change")
     @Auth(role = RoleConstants.ADMIN, name = "更新报名记录")
-    public Result changeSignUp(@RequestBody @Validated SignUpUpdateDTO dto) {
+    public Result changeSignUp(@RequestBody @Validated SignUpChangeDTO dto) {
         signUpService.modifySignUp(dto);
         return Result.success();
     }

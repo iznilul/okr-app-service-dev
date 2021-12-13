@@ -2,10 +2,10 @@ package com.softlab.okr.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.softlab.okr.entity.Tag;
+import com.softlab.okr.model.dto.TagAddDTO;
+import com.softlab.okr.model.dto.TagChangeDTO;
 import com.softlab.okr.model.dto.TagDTO;
 import com.softlab.okr.utils.Result;
-
-import java.util.List;
 
 /**
  * @Author: Devhui
@@ -14,17 +14,13 @@ import java.util.List;
  */
 public interface ITagService extends IService<Tag> {
 
-    Result getTagListByCond(TagDTO dto);
+    Result getTagList(TagDTO dto);
 
-    int saveTag(String name, int order);
+    void saveTag(TagAddDTO dto);
 
-    Tag getTag(String name);
+    Tag getTag(Integer id);
 
-    int modifyTag(Integer tagId, String name, Integer order);
+    void modifyTag(TagChangeDTO dto);
 
-    int removeById(int tagId);
-
-    List<Tag> getTagList();
-
-    List<Integer> getTagIdList();
+    void removeById(Integer tagId);
 }

@@ -91,4 +91,12 @@ public class EnumController {
         return Result.success(list);
     }
 
+    @GetMapping("tag")
+    @Auth(role = RoleConstants.ADMIN, name = "模糊查询标签")
+    public Result enumTag(@RequestParam(value = "param") String tag) {
+        List<String> list = enumService.getLikeTag(tag);
+        return Result.success(list);
+    }
+
+
 }

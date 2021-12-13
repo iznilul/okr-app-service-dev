@@ -19,7 +19,8 @@ import java.util.List;
 public enum RoleEnum implements BaseEnum {
     SUPER_ADMIN(1, "超级管理", "superAdmin"),
     ADMIN(2, "管理员", "admin"),
-    USER(3, "普通用户", "user");
+    USER(3, "普通用户", "user"),
+    COMMON(4, "任何请求", "common");
 
     private Integer code;
     private String message;

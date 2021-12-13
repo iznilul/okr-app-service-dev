@@ -11,8 +11,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.softlab.okr.entity.SignUp;
 import com.softlab.okr.mapper.SignUpMapper;
 import com.softlab.okr.model.dto.SignUpAddDTO;
+import com.softlab.okr.model.dto.SignUpChangeDTO;
 import com.softlab.okr.model.dto.SignUpDTO;
-import com.softlab.okr.model.dto.SignUpUpdateDTO;
 import com.softlab.okr.model.enums.SignUpEnum;
 import com.softlab.okr.model.exception.BusinessException;
 import com.softlab.okr.model.vo.SignUpVO;
@@ -42,7 +42,8 @@ public class SignUpServiceImpl extends ServiceImpl<SignUpMapper, SignUp> impleme
     // 报名
     @Override
     public int saveSignUp(SignUpAddDTO dto) {
-        QueryWrapper<SignUp> wrapper = new QueryWrapper<SignUp>().eq("student_id", dto.getStudentId());
+        QueryWrapper<SignUp> wrapper = new QueryWrapper<SignUp>().eq("student_id",
+                dto.getStudentId());
         SignUp signUp = CopyUtil.copy(dto, SignUp.class);
         signUp.setStatus(0);
         if (null != signUpMapper.selectOne(wrapper)) {
@@ -54,8 +55,9 @@ public class SignUpServiceImpl extends ServiceImpl<SignUpMapper, SignUp> impleme
 
     //录取结果更新
     @Override
-    public void modifySignUp(SignUpUpdateDTO dto) {
-        SignUp signUp = signUpMapper.selectOne(new QueryWrapper<SignUp>().eq("student_id", dto.getStudentId()));
+    public void modifySignUp(SignUpChangeDTO dto) {
+        SignUp signUp = signUpMapper.selectOne(new QueryWrapper<SignUp>().eq("student_id",
+                dto.getStudentId()));
         if (signUp == null) {
             throw new BusinessException("活动id错误");
         }
@@ -69,7 +71,8 @@ public class SignUpServiceImpl extends ServiceImpl<SignUpMapper, SignUp> impleme
     public Result getSignUpByList(SignUpDTO dto) {
         Page<SignUp> page = new Page<>(dto.getIndex(), dto.getPageSize());
         Page<SignUp> signUpPage = signUpMapper.selectPage(page, new QueryWrapper<SignUp>()
-                .like((StringUtils.isNotBlank(dto.getStudentId())), "student_id", dto.getStudentId())
+                .like((StringUtils.isNotBlank(dto.getStudentId())), "student_id",
+                        dto.getStudentId())
                 .like((StringUtils.isNotBlank(dto.getName())), "name", dto.getName())
                 .like((StringUtils.isNotBlank(dto.getMajor())), "major", dto.getMajor())
                 .orderByAsc("status"));

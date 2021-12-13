@@ -15,7 +15,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SignUpUpdateDTO {
+public class SignUpChangeDTO {
 
     @NotBlank
     private String studentId;
