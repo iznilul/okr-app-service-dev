@@ -21,18 +21,11 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class Book extends BaseEntity {
 
-  private static final long serialVersionUID = 1L;
-
-  /**
-   * 主键
-   */
-  @TableId(value = "book_id", type = IdType.AUTO)
-  private Integer bookId;
-  private String bookName;
-  private String img;
-  private String publisher;
-  private Integer price;
-  private Integer status;
-  private Integer userId;
-
+    private static final long serialVersionUID = 1L;
+    @TableId(value = "book_id", type = IdType.AUTO)
+    private Integer bookId;
+    private String bookName;
+    private String img;
+    private String publisher;
+    private Integer status;
 }

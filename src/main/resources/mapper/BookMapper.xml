@@ -1,59 +1,63 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.softlab.okr.mapper.BookMapper">
-  <resultMap id="BaseResultMap" type="com.softlab.okr.entity.Book">
-    <id property="bookId" column="book_id"/>
-    <result property="bookName" column="book_name"/>
-    <result property="img" column="img"/>
-    <result property="publisher" column="publisher"/>
-    <result property="price" column="price"/>
-    <result property="status" column="status"/>
-    <result property="userId" column="user_id"/>
-    <result property="createTime" column="create_time"/>
-    <result property="updateTime" column="update_time"/>
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.softlab.okr.entity.Book">
+        <id property="bookId" column="book_id"/>
+        <result property="bookName" column="book_name"/>
+        <result property="img" column="img"/>
+        <result property="publisher" column="publisher"/>
+        <result property="status" column="status"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
 
-  <resultMap id="VoMap" type="com.softlab.okr.model.vo.BookVO">
-    <id property="bookId" column="book_id"/>
-    <result property="bookName" column="book_name"/>
-    <result property="img" column="img"/>
-    <result property="publisher" column="publisher"/>
-    <result property="price" column="price"/>
-    <result property="userName" column="user_name"/>
-    <result property="status" column="status"/>
-  </resultMap>
+    <resultMap id="VoMap" type="com.softlab.okr.model.vo.BookVO">
+        <id property="bookId" column="book_id"/>
+        <result property="bookName" column="book_name"/>
+        <result property="img" column="img"/>
+        <result property="publisher" column="publisher"/>
+        <result property="userId" column="user_id"/>
+        <result property="status" column="status"/>
+        <collection property="tagList" ofType="java.lang.String" javaType="ArrayList"
+                    column="book_id" select="selectTag"/>
+    </resultMap>
 
 
-  <sql id="Base_Column_List">
-    `book_id`,`book_name`,`img`,`publisher`,`price`,`status`,`user_id`,`create_time`,`update_time`
+    <sql id="Base_Column_List">
+    `book_id`,`book_name`,`img`,`publisher`,`status`,`create_time`,`update_time`
   </sql>
 
-  <sql id="bookTagColumn">
-    `book_id`,`tag_id`
-  </sql>
+    <select id="selectBook" resultMap="VoMap">
+        select
+        book_id,
+        book_name,
+        img,
+        publisher,
+        status
+        from book
+        where book_id=#{bookId}
+    </select>
 
-  <sql id="tag">
-    `book_tag`
-  </sql>
+    <select id="selectBookList" resultMap="VoMap">
+        select
+        book.book_id,
+        book.book_name,
+        book.img,
+        book.publisher,
+        book.status,
+        bu.user_id
+        from book
+        left join book_user bu on book.book_id=bu.book_id and book.status=1 and bu.status=0
+        where book.delete_flag=0
+        <if test="bookName!='' and bookName!=null">and `book_name` like '%#{bookName}%'</if>
+        <if test="publisher!='' and publisher!=null">and `publisher` like '%#{publisher}%'</if>
+    </select>
 
-  <!--    根据条件选取book-->
-  <select id="selectByCond" resultMap="VoMap">
-    select
-    book.book_id,
-    book.book_name,
-    book.img,
-    book.publisher,
-    book.price,
-    user_info.name as user_name,
-    book.status
-    from book
-    join user_info on book.user_id is not null and book.user_id=user_info.user_id
-    where 1=1
-    <if test="bookName!='' and bookName!=null">and `book_name` like '%${bookName}%'</if>
-    <if test="publisher!='' and publisher!=null">and `publisher` like '%${publisher}%'</if>
-    <if test="status!=null">and `status` = #{status}</if>
-  </select>
-
+    <select id="selectTag" parameterType="java.lang.Integer" resultType="java.lang.String">
+        select `name` from tag
+        join book_tag bt on bt.tag_id=tag.tag_id
+        where bt.book_id=#{bookId,jdbcType=INTEGER} and tag.delete_flag=0
+    </select>
 
 </mapper>

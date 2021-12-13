@@ -10,5 +10,5 @@ public interface IEnumService {
 
     List<String> getLikeMajor(String major);
 
-    List<String> getLikeTag(String tag);
+    List<String> getLikeTag();
 }

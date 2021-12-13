@@ -2,8 +2,9 @@ package com.softlab.okr.controller;
 
 import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.constant.RoleConstants;
-import com.softlab.okr.model.dto.BookDTO;
+import com.softlab.okr.model.dto.BookChangeDTO;
 import com.softlab.okr.model.dto.BookQueryDTO;
+import com.softlab.okr.model.vo.BookVO;
 import com.softlab.okr.service.IBookService;
 import com.softlab.okr.utils.Result;
 import io.swagger.annotations.Api;
@@ -13,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -29,49 +31,52 @@ public class BookController {
     @Autowired
     private IBookService bookService;
 
-    @PostMapping("add")
+    @GetMapping("add")
     @ApiOperation("添加书籍")
     @Auth(role = RoleConstants.ADMIN, name = "添加书籍")
-    public Result addBook(@RequestBody BookDTO dto) {
-
-        return bookService.saveBook(dto) ?
-                Result.success() : Result.failure();
+    public Result addBook(@RequestParam("param") @NotBlank(message = "书名不能为空") String bookName) {
+        bookService.saveBook(bookName);
+        return Result.success();
     }
 
-    @GetMapping("changeImg")
+    @PostMapping("changeImg")
     @ApiOperation("上传书籍照片")
     @Auth(role = RoleConstants.ADMIN, name = "上传书籍照片")
     public Result changeBookImg(
-            @RequestParam("bookId") int bookId, @RequestParam("file") MultipartFile file)
-            throws Exception {
-
-        return bookService.modifyBookImg(bookId, file) == 1 ?
-                Result.success() : Result.failure();
+            @RequestParam("bookId") int bookId, @RequestParam("file") MultipartFile file) {
+        bookService.modifyBookImg(bookId, file);
+        return Result.success();
     }
 
     @PostMapping("change")
     @ApiOperation("修改书籍")
     @Auth(role = RoleConstants.ADMIN, name = "修改书籍")
-    public Result changeBook(@RequestBody BookDTO dto) {
-
-        return bookService.modifyBook(dto) ?
-                Result.success() : Result.failure();
+    public Result changeBook(@RequestBody BookChangeDTO dto) {
+        bookService.modifyBook(dto);
+        return Result.success();
     }
 
     @GetMapping("cancel")
     @ApiOperation("删除书籍")
     @Auth(role = RoleConstants.ADMIN, name = "删除书籍")
     public Result cancelBook(@RequestParam("bookId") @NotNull int bookId) {
-
-        return bookService.removeBook(bookId) ?
-                Result.success() : Result.failure();
+        bookService.removeBook(bookId);
+        return Result.success();
     }
 
-    @PostMapping("query")
+    @PostMapping("queryList")
     @ApiOperation("书籍列表")
     @Auth(role = RoleConstants.USER, name = "书籍列表")
-    public Result queryBook(@RequestBody @Validated BookQueryDTO dto) {
-        return bookService.getByCond(dto);
+    public Result queryBookList(@RequestBody @Validated BookQueryDTO dto) {
+        return bookService.getBookList(dto);
+    }
+
+    @GetMapping("query")
+    @ApiOperation("请求书籍")
+    @Auth(role = RoleConstants.USER, name = "请求书籍")
+    public Result queryBook(@RequestParam("bookId") @NotNull int bookId) {
+        BookVO vo = bookService.getBook(bookId);
+        return Result.success(vo);
     }
 
     @GetMapping("borrow")

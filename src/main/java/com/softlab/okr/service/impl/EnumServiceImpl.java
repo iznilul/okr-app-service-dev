@@ -54,9 +54,9 @@ public class EnumServiceImpl implements IEnumService {
     }
 
     @Override
-    public List<String> getLikeTag(String name) {
+    public List<String> getLikeTag() {
         return tagService
-                .list((new QueryWrapper<Tag>().like("name", name).orderByDesc("order"))).stream()
+                .list((new QueryWrapper<Tag>().orderByDesc("weight"))).stream()
                 .map(Tag::getName).collect(Collectors.toList());
     }
 }

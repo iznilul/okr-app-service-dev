@@ -1,10 +1,11 @@
-package com.softlab.okr.model.vo;
+package com.softlab.okr.model.dto;
 
-import com.softlab.okr.entity.Tag;
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -16,22 +17,15 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookVO {
+@ApiModel("BookDto 书籍接口类")
+public class BookChangeDTO {
 
+    @NotNull(message = "bookId不能为空")
     private Integer bookId;
-
     private String bookName;
-
     private String img;
-
     private String publisher;
-
-    private Integer userId;
-
-    private Integer status;
-
     private String statusName;
-
-    private List<Tag> tagList;
+    private List<String> tagList;
 
 }

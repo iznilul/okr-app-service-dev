@@ -3,6 +3,9 @@ package com.softlab.okr.model.enums;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @Program: okr
  * @Description:
@@ -44,6 +47,14 @@ public enum BookEnum implements BaseEnum {
             }
         }
         return null;
+    }
+
+    public static List<String> getList() {
+        List<String> list = new ArrayList<>();
+        for (BookEnum status : BookEnum.values()) {
+            list.add(status.message);
+        }
+        return list;
     }
 
     @Override

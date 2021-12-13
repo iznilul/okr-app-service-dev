@@ -2,10 +2,7 @@ package com.softlab.okr.controller;
 
 import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.constant.RoleConstants;
-import com.softlab.okr.model.enums.KeyEnum;
-import com.softlab.okr.model.enums.RoleEnum;
-import com.softlab.okr.model.enums.SignUpEnum;
-import com.softlab.okr.model.enums.UserStatusEnum;
+import com.softlab.okr.model.enums.*;
 import com.softlab.okr.service.IEnumService;
 import com.softlab.okr.utils.Result;
 import io.swagger.annotations.Api;
@@ -37,6 +34,7 @@ public class EnumController {
         DICT_MAP.put("roleStatus", RoleEnum.getList());
         DICT_MAP.put("userStatus", UserStatusEnum.getList());
         DICT_MAP.put("signUpStatus", SignUpEnum.getList());
+        DICT_MAP.put("bookStatus", BookEnum.getList());
     }
 
     @Autowired
@@ -91,10 +89,17 @@ public class EnumController {
         return Result.success(list);
     }
 
+    @GetMapping("book")
+    @Auth(role = RoleConstants.ADMIN, name = "模糊查询书籍状态")
+    public Result enumBook() {
+        List<String> list = DICT_MAP.get("bookStatus");
+        return Result.success(list);
+    }
+
     @GetMapping("tag")
     @Auth(role = RoleConstants.ADMIN, name = "模糊查询标签")
-    public Result enumTag(@RequestParam(value = "param") String tag) {
-        List<String> list = enumService.getLikeTag(tag);
+    public Result enumTag() {
+        List<String> list = enumService.getLikeTag();
         return Result.success(list);
     }
 
