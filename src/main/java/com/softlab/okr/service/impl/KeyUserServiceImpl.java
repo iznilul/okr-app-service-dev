@@ -30,13 +30,14 @@ public class KeyUserServiceImpl extends ServiceImpl<KeyUserMapper, KeyUser> impl
 
     @Override
     public int saveKeyUser(int keyId, int userId) {
-        KeyUser keyUser = new KeyUser(null, keyId, userId, 0, null);
+        KeyUser keyUser = new KeyUser(null, keyId, userId, KeyUserEnum.NORMAL.code(), null);
         return keyUserMapper.insert(keyUser);
     }
 
     @Override
     public int modifyKeyUser(int keyId, int userId, int status) {
-        KeyUser keyUser = this.getOne(new QueryWrapper<KeyUser>().eq("key_id", keyId).eq("user_id", userId)
+        KeyUser keyUser = this.getOne(new QueryWrapper<KeyUser>().eq("key_id", keyId).eq("user_id"
+                , userId)
                 .orderByDesc("id").last("limit 1"));
         keyUser.setStatus(status);
         return keyUserMapper.updateById(keyUser);

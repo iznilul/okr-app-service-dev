@@ -83,16 +83,16 @@ public class BookController {
     @ApiOperation("借书")
     @Auth(role = RoleConstants.ADMIN, name = "借书")
     public Result borrowBook(@RequestParam("bookId") @NotNull int bookId) {
-        return bookService.borrowBook(bookId) == 1 ?
-                Result.success() : Result.failure();
+        bookService.borrowBook(bookId);
+        return Result.success();
     }
 
     @GetMapping("return")
     @ApiOperation("还书")
     @Auth(role = RoleConstants.ADMIN, name = "还书")
     public Result returnBook(@RequestParam("bookId") @NotNull int bookId) {
-        return bookService.returnBook(bookId) == 1 ?
-                Result.success() : Result.failure();
+        bookService.returnBook(bookId);
+        return Result.success();
     }
 
 }

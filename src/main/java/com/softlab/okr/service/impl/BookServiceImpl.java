@@ -11,6 +11,7 @@ import com.softlab.okr.mapper.BookMapper;
 import com.softlab.okr.model.dto.BookChangeDTO;
 import com.softlab.okr.model.dto.BookQueryDTO;
 import com.softlab.okr.model.enums.BookEnum;
+import com.softlab.okr.model.enums.BookUserEnum;
 import com.softlab.okr.model.exception.BusinessException;
 import com.softlab.okr.model.vo.BookVO;
 import com.softlab.okr.security.IAuthenticationService;
@@ -75,17 +76,32 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements
         if (book.getStatus() == 1) {
             throw new BusinessException("此书已被借走");
         }
+        if (book.getStatus() == 2) {
+            throw new BusinessException("此书已丢失");
+        }
         book.setStatus(BookEnum.BORROW.code());
         Integer userId = authenticationService.getUserId();
-        if (bookMapper.updateById(book) != 1 || bookUserService. (BookId, userId);){
+        if (bookMapper.updateById(book) != 1) {
             throw new BusinessException("借书失败");
         }
+        bookUserService.saveBookUser(bookId, userId, BookUserEnum.NOT_RETURN.code());
     }
 
     @Override
-    public int returnBook(int bookId) {
-        return bookMapper
-                .update(null, new UpdateWrapper<Book>().eq("book_id", bookId).set("user_id", null));
+    public void returnBook(int bookId) {
+        Book book = bookMapper.selectOne(new QueryWrapper<Book>().eq("book_id", bookId));
+        if (book.getStatus() == 0) {
+            throw new BusinessException("此书未被借走");
+        }
+        if (book.getStatus() == 2) {
+            throw new BusinessException("此书已丢失");
+        }
+        book.setStatus(BookEnum.FREE.code());
+        Integer userId = authenticationService.getUserId();
+        if (bookMapper.updateById(book) != 1) {
+            throw new BusinessException("还书失败");
+        }
+        bookUserService.modifyBookUser(bookId, userId, BookUserEnum.RETURNED.code());
     }
 
     @Override
