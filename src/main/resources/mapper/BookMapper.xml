@@ -50,8 +50,12 @@
         from book
         left join book_user bu on book.book_id=bu.book_id and book.status=1 and bu.status=0
         where book.delete_flag=0
-        <if test="bookName!='' and bookName!=null">and `book_name` like '%#{bookName}%'</if>
-        <if test="publisher!='' and publisher!=null">and `publisher` like '%#{publisher}%'</if>
+        <if test="bookName!='' and bookName!=null">and book.book_name like
+            concat('%',#{bookName},'%')
+        </if>
+        <if test="publisher!='' and publisher!=null">and book.publisher like
+            concat('%',#{publisher},'%')
+        </if>
     </select>
 
     <select id="selectTag" parameterType="java.lang.Integer" resultType="java.lang.String">

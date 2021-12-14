@@ -90,7 +90,8 @@ public class ApplicationStartup implements ApplicationRunner {
         resourceService.remove(null);
         resourceService.saveBatch(list);
         // 筛选权限资源
-        Set<Resource> set = list.stream().filter(resource -> !resource.getRole().equals(RoleConstants.COMMON)).collect(Collectors.toSet());
+        Set<Resource> set =
+                list.stream().filter(resource -> !resource.getRole().equals(RoleConstants.COMMON)).collect(Collectors.toSet());
         // 将权限资源给放到本地权限缓存里，用于请求时校验使用
         MySecurityMetadataSource.setResources(set);
         //添加所有资源进资源过滤器
@@ -165,6 +166,7 @@ public class ApplicationStartup implements ApplicationRunner {
      * 加载所有的task任务
      */
     private void loadTask() {
+        taskService.remove(null);
         List<Task> taskList = getTasks();
         taskService.saveOrUpdateBatch(taskList);
     }

@@ -29,7 +29,7 @@
         from `sys_record`
         where 1=1
         <if test="username!='' and username!=null">
-            and username like '%#{username}%'
+            and username like concat('%',#{username},'%')
         </if>
         <if test="beginTime!='' and beginTime!=null">
             and unix_timestamp(update_time)&gt;=unix_timestamp(#{beginTime})

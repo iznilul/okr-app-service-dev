@@ -89,6 +89,7 @@ public enum RoleEnum implements BaseEnum {
         for (RoleEnum status : RoleEnum.values()) {
             list.add(status.message);
         }
+        list.remove(RoleEnum.COMMON.message);
         return list;
     }
 
