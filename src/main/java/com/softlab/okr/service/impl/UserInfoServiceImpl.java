@@ -19,6 +19,7 @@ import com.softlab.okr.security.IAuthenticationService;
 import com.softlab.okr.service.IUserInfoService;
 import com.softlab.okr.service.IUserRoleService;
 import com.softlab.okr.utils.CopyUtil;
+import com.softlab.okr.utils.FileUtil;
 import com.softlab.okr.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,7 +51,8 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
 
     @Override
     public int saveUserInfo(int userId, String username) {
-        UserInfo userInfo = new UserInfo(userId, username, null, null, null, null, null, null, null, 0, null, null);
+        UserInfo userInfo = new UserInfo(userId, username, null, null, null, null, null, null,
+                null, 0, null, null);
         return userInfoMapper.insert(userInfo);
     }
 
@@ -93,7 +95,8 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
 
     @Override
     public void modifyUserInfo(UpdateUserDTO dto) {
-        UserInfo userInfo = this.getOne(new QueryWrapper<UserInfo>().eq("username", dto.getUsername()));
+        UserInfo userInfo = this.getOne(new QueryWrapper<UserInfo>().eq("username",
+                dto.getUsername()));
         if (null == userInfo) {
             throw new BusinessException("没有找到用户");
         } else {
@@ -106,11 +109,13 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
     @Override
     @Transactional
     public void modifyUserRole(UpdateUserRoleDTO dto) {
-        UserInfo userInfo = this.getOne(new QueryWrapper<UserInfo>().eq("username", dto.getUsername()));
+        UserInfo userInfo = this.getOne(new QueryWrapper<UserInfo>().eq("username",
+                dto.getUsername()));
         if (null == userInfo) {
             throw new BusinessException("没有找到用户");
         }
-        UserRole userRole = userRoleService.getOne(new QueryWrapper<UserRole>().eq("user_id", userInfo.getUserId()));
+        UserRole userRole = userRoleService.getOne(new QueryWrapper<UserRole>().eq("user_id",
+                userInfo.getUserId()));
         if (null == userRole) {
             throw new BusinessException("用户权限映射关系有问题，请联系管理员");
         }
@@ -125,6 +130,9 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         byte[] data = file.getBytes();
         if (data.length > 1024000) {
             return 0;
+        }
+        if (!FileUtil.judgeImage(file)) {
+            throw new BusinessException("需要上传图片格式的文件");
         }
         // 将字节流转成字符串
         Base64.Encoder encoder = Base64.getEncoder();

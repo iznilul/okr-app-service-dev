@@ -105,8 +105,7 @@ public class UserController {
             @RequestParam("file") MultipartFile file)
             throws IOException {
         return userInfoService.uploadAvatar(file) == 1 ?
-                Result
-                        .success("data:image/png;base64," + Base64.getEncoder().encodeToString(file.getBytes()))
+                Result.success("data:image/png;base64," + Base64.getEncoder().encodeToString(file.getBytes()))
                 : Result.failure();
     }
 
