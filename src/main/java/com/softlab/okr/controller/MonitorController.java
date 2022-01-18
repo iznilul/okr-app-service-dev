@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @create: 2021-08-05 13:47
  **/
 @RestController
-@RequestMapping("/api/okr/monitor")
+@RequestMapping("/okr/monitor")
 @Api(tags = "用户 性能接口")
 public class MonitorController {
 

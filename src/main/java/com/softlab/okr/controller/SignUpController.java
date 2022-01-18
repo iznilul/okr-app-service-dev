@@ -25,7 +25,7 @@ import java.io.IOException;
  * @create: 2021-10-05 22:05
  **/
 @RestController
-@RequestMapping("/api/okr/signup")
+@RequestMapping("/okr/signup")
 @Api(tags = "管理员 报名接口")
 public class SignUpController {
 

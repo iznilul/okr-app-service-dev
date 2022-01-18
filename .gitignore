@@ -4,6 +4,9 @@ logs/
 mysql/
 info/
 warn/
+Dockerfile
+src/main/resources/
+src/main/resources/application-prod.yml
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**

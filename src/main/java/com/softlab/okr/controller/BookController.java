@@ -24,7 +24,7 @@ import javax.validation.constraints.NotNull;
  * @create: 2021-11-21 15:46
  **/
 @RestController
-@RequestMapping("/api/okr/book")
+@RequestMapping("/okr/book")
 @Api(tags = "管理员 书籍接口")
 public class BookController {
 

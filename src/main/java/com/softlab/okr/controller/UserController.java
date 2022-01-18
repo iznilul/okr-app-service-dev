@@ -27,7 +27,7 @@ import java.util.Base64;
  * @create: 2021-10-05 22:05
  **/
 @RestController
-@RequestMapping("/api/okr/user")
+@RequestMapping("/okr/user")
 @Api(tags = "管理员 用户接口")
 public class UserController {
 

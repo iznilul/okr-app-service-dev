@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @create: 2021-11-21 15:46
  **/
 @RestController
-@RequestMapping("/api/okr/bookUser")
+@RequestMapping("/okr/bookUser")
 @Api(tags = "书籍借阅记录")
 public class BookUserController {
 

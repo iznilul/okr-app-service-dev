@@ -20,7 +20,7 @@ import java.util.List;
  * @create: 2021-10-05 22:05
  **/
 @RestController
-@RequestMapping("/api/okr/resource")
+@RequestMapping("/okr/resource")
 @Api(tags = "管理员 资源接口")
 public class ResourceController {
 

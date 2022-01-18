@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @Api(tags = "通用 登陆部分接口")
-@RequestMapping("/api/okr/common")
+@RequestMapping("/okr/common")
 public class CommonController {
 
     @Autowired

@@ -1,6 +1,7 @@
 package com.softlab.okr.service.impl;
 
 
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
@@ -25,6 +26,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,6 +103,7 @@ public class SignUpServiceImpl extends ServiceImpl<SignUpMapper, SignUp> impleme
 
     @Override
     public void exportSignUp(HttpServletResponse response) throws IOException {
+        String name = "实验室报名表" + DateUtil.today();
         List<SignUp> list = signUpMapper.selectList(null);
         List<SignUpVO> voList = new ArrayList<>();
         list.forEach(signUp -> {
@@ -125,7 +128,8 @@ public class SignUpServiceImpl extends ServiceImpl<SignUpMapper, SignUp> impleme
         //response为HttpServletResponse对象
         response.setContentType("application/vnd.ms-excel;charset=utf-8");
         //test.xls是弹出下载对话框的文件名，不能为中文，中文请自行编码
-        response.setHeader("Content-Disposition", "attachment;filename=signUp.xls");
+        response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(name,
+                "utf-8") + ".xls");
         ServletOutputStream out = response.getOutputStream();
 
         writer.flush(out, true);

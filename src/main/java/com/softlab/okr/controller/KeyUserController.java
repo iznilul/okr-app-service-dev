@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
  * @create: 2021-10-05 22:05
  **/
 @RestController
-@RequestMapping("/api/okr/keyUser")
+@RequestMapping("/okr/keyUser")
 @Api(tags = "管理员 钥匙记录接口")
 public class KeyUserController {
 

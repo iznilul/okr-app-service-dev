@@ -20,7 +20,7 @@ import java.util.List;
  * @create: 2021-10-25 01:51
  **/
 @RestController
-@RequestMapping("/api/okr/menu")
+@RequestMapping("/okr/menu")
 @Api(tags = "用户 性能接口")
 public class MenuController {
 
