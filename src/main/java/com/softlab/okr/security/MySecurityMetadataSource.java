@@ -4,7 +4,6 @@ import com.softlab.okr.entity.Resource;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.access.SecurityMetadataSource;
@@ -32,9 +31,6 @@ public class MySecurityMetadataSource implements SecurityMetadataSource {
     @Setter
     private static Set<Resource> resources = new HashSet<>();
 
-    @Value("${spring.security.switch}")
-    private boolean securitySwitch;
-
     // 根据请求的路径匹配资源
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) {
@@ -42,10 +38,6 @@ public class MySecurityMetadataSource implements SecurityMetadataSource {
         // 该对象是Spring Security帮我们封装好的，可以通过该对象获取request等信息
         FilterInvocation filterInvocation = (FilterInvocation) object;
         HttpServletRequest request = filterInvocation.getRequest();
-        ////如果验证开关不开启直接放行
-        //if (!securitySwitch) {
-        //  return null;
-        //}
         // 遍历所有权限资源，以和当前请求所需的权限进行匹配
         for (Resource resource : resources) {
             String method = resource.getMethod();

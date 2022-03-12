@@ -23,7 +23,7 @@ import javax.validation.constraints.NotNull;
  * @create: 2021-10-05 22:05
  **/
 @RestController
-@RequestMapping("/api/okr/tag")
+@RequestMapping("/okr/tag")
 @Api(tags = "管理员 标签接口")
 public class TagController {
 

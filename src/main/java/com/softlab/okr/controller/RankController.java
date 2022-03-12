@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @Api(tags = "通用 热榜接口")
-@RequestMapping("/api/okr/rank")
+@RequestMapping("/okr/rank")
 public class RankController {
 
     @Autowired

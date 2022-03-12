@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @create: 2021-10-05 22:05
  **/
 @RestController
-@RequestMapping("/api/okr/sysRecord")
+@RequestMapping("/okr/sysRecord")
 @Api(tags = "管理员 操作日志接口")
 public class SysRecordController {
 

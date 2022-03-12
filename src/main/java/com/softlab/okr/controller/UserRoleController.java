@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @create: 2021-10-25 01:51
  **/
 @RestController
-@RequestMapping("/api/okr/userRole")
+@RequestMapping("/okr/userRole")
 @Api(tags = "用户 性能接口")
 public class UserRoleController {
 

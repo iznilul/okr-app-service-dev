@@ -22,7 +22,7 @@ import javax.validation.constraints.NotNull;
  * @create: 2021-10-05 22:05
  **/
 @RestController
-@RequestMapping("/api/okr/key")
+@RequestMapping("/okr/key")
 @Api(tags = "管理员 钥匙接口")
 public class KeyController {
 

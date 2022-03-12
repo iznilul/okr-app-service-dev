@@ -23,7 +23,7 @@ import java.util.Map;
  * @Date: 2021-09-23 19:42
  **/
 @RestController
-@RequestMapping("/api/okr/enum")
+@RequestMapping("/okr/enum")
 @Api(tags = "用户 公共枚举接口")
 public class EnumController {
 

@@ -7,7 +7,9 @@ warn/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
-
+cert/
+Dockerfile
+src/main/resources/application-prod.yml
 ### STS ###
 .apt_generated
 .classpath
