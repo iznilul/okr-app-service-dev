@@ -40,6 +40,7 @@ public class ApiFilter implements Filter {
         log.info("----ApiFilter 接口过滤器----");
         int flag = 0;
         String path = ((HttpServletRequest) request).getRequestURI();
+        log.info("请求路径{}", path);
         for (Resource resource : resources) {
             if (resource.getPath().equals(path)) {
                 if (resource.getStatus() == 1) {

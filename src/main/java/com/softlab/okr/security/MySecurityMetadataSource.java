@@ -4,7 +4,6 @@ import com.softlab.okr.entity.Resource;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.access.SecurityMetadataSource;
@@ -31,9 +30,6 @@ public class MySecurityMetadataSource implements SecurityMetadataSource {
     @Getter
     @Setter
     private static Set<Resource> resources = new HashSet<>();
-
-    @Value("${spring.security.switch}")
-    private boolean securitySwitch;
 
     // 根据请求的路径匹配资源
     @Override

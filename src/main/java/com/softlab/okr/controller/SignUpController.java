@@ -71,6 +71,6 @@ public class SignUpController {
     @Auth(role = RoleConstants.COMMON, name = "报名结果查询")
     public Result querySignUp(@RequestParam String studentId) {
         SignUpVO signUpVO = signUpService.getSignUpById(studentId);
-        return signUpVO != null ? Result.success(signUpVO) : Result.failure();
+        return signUpVO != null ? Result.success(signUpVO) : Result.failure("没有查到这个学号的报名信息");
     }
 }
