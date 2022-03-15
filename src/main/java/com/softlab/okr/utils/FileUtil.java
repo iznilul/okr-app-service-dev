@@ -1,12 +1,14 @@
 package com.softlab.okr.utils;
 
 import com.softlab.okr.model.exception.BusinessException;
+import com.vladsch.flexmark.html.HtmlRenderer;
+import com.vladsch.flexmark.parser.Parser;
+import com.vladsch.flexmark.util.ast.Node;
+import com.vladsch.flexmark.util.data.MutableDataSet;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.activation.MimetypesFileTypeMap;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Objects;
 
 /**
@@ -41,5 +43,23 @@ public class FileUtil {
             ins.close();
         }
         return toFile;
+    }
+
+    public String markdownToHtml(MultipartFile file) throws IOException {
+        Reader reader = new InputStreamReader(file.getInputStream(), "utf-8");
+        BufferedReader br = new BufferedReader(reader);
+        String line;
+        String content = "";
+        while ((line = br.readLine()) != null) {
+            content += line + "\n";
+        }
+        MutableDataSet options = new MutableDataSet();
+
+        Parser parser = Parser.builder(options).build();
+        HtmlRenderer renderer = HtmlRenderer.builder(options).build();
+        Node document = parser.parse(content);
+        String html = renderer.render(document);  // "<p>This is <em>Sparta</em></p>\n"
+        System.out.println(html);
+        return html;
     }
 }
