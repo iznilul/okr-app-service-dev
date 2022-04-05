@@ -1,12 +1,12 @@
 package com.softlab.okr.controller;
 
 import com.softlab.okr.annotation.Auth;
-import com.softlab.okr.config.CommonConfig;
 import com.softlab.okr.constant.RoleConstants;
 import com.softlab.okr.model.dto.SignUpAddDTO;
 import com.softlab.okr.model.dto.SignUpChangeDTO;
 import com.softlab.okr.model.dto.SignUpDTO;
 import com.softlab.okr.model.vo.SignUpVO;
+import com.softlab.okr.service.IRecruitGroupService;
 import com.softlab.okr.service.ISignUpService;
 import com.softlab.okr.utils.Result;
 import io.swagger.annotations.Api;
@@ -33,7 +33,7 @@ public class SignUpController {
     private ISignUpService signUpService;
 
     @Autowired
-    private CommonConfig commonConfig;
+    private IRecruitGroupService recruitGroupService;
 
     @ApiOperation("获取报名记录")
     @PostMapping("queryList")
@@ -62,7 +62,7 @@ public class SignUpController {
     @Auth(role = RoleConstants.COMMON, name = "纳新报名")
     public Result addSignUp(@RequestBody SignUpAddDTO dto) {
         return signUpService.saveSignUp(dto) == 1
-                ? Result.success("报名成功，请加入纳新群: " + commonConfig.getQqGroupNumber())
+                ? Result.success("报名成功，请加入纳新群: " + recruitGroupService.getOne(null).getGroupNumber())
                 : Result.failure();
     }
 
