@@ -27,4 +27,5 @@ public class SignUpVO {
     private Integer status;
     private String statusName;
     private String comment;
+    private String other;
 }

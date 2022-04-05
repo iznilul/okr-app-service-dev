@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.softlab.okr.entity.RecruitGroup;
 import com.softlab.okr.entity.SignUp;
 import com.softlab.okr.mapper.SignUpMapper;
 import com.softlab.okr.model.dto.SignUpAddDTO;
@@ -17,6 +18,7 @@ import com.softlab.okr.model.dto.SignUpDTO;
 import com.softlab.okr.model.enums.SignUpEnum;
 import com.softlab.okr.model.exception.BusinessException;
 import com.softlab.okr.model.vo.SignUpVO;
+import com.softlab.okr.service.IRecruitGroupService;
 import com.softlab.okr.service.ISignUpService;
 import com.softlab.okr.utils.CopyUtil;
 import com.softlab.okr.utils.Result;
@@ -40,6 +42,9 @@ public class SignUpServiceImpl extends ServiceImpl<SignUpMapper, SignUp> impleme
 
     @Autowired
     private SignUpMapper signUpMapper;
+
+    @Autowired
+    private IRecruitGroupService recruitGroupService;
 
     // 报名
     @Override
@@ -94,7 +99,9 @@ public class SignUpServiceImpl extends ServiceImpl<SignUpMapper, SignUp> impleme
                 .selectOne(new QueryWrapper<SignUp>().eq("student_id", studentId));
         if (signUp != null) {
             SignUpVO vo = CopyUtil.copy(signUp, SignUpVO.class);
+            RecruitGroup recruitGroup = recruitGroupService.getOne(null);
             vo.setStatusName(SignUpEnum.getMessage(vo.getStatus()));
+            vo.setOther(recruitGroup.getGroupNumber());
             return vo;
         } else {
             return null;
