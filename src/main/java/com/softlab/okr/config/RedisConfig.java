@@ -1,55 +1,133 @@
 package com.softlab.okr.config;
 
+import cn.hutool.crypto.SecureUtil;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
+import com.softlab.okr.constant.BeanNames;
+import com.softlab.okr.model.enums.CacheKeyUnitEnum;
+import com.softlab.okr.model.exception.BusinessException;
+import com.softlab.okr.utils.JsonUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.interceptor.KeyGenerator;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.RedisCache;
+import org.springframework.data.redis.cache.RedisCacheConfiguration;
+import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.cache.RedisCacheWriter;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializationContext;
+import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
+
+import java.time.Duration;
+import java.util.Arrays;
+
 /**
  * @program: okr
  * @description:
  * @author: radCircle
  * @create: 2021-08-24 22:03
  **/
-//@Configuration
-//public class RedisConfig {
-//
-//  @Value("${spring.redis.host}")
-//  private String redisHost;
-//
-//  @Value("${spring.redis.port}")
-//  private int redisPort;
-//
-//  @Value("${spring.redis.password}")
-//  private String password;
-//
-//  @Bean(destroyMethod = "shutdown")
-//  public ClientResources clientResources() {
-//    return DefaultClientResources.create();
-//  }
-//
-//  @Bean
-//  public RedisStandaloneConfiguration redisStandaloneConfiguration() {
-//    RedisStandaloneConfiguration redisStandaloneConfiguration =
-//        new RedisStandaloneConfiguration(redisHost, redisPort);
-//    if (password != null && !password.trim().equals("")) {
-//      RedisPassword redisPassword = RedisPassword.of(password);
-//      redisStandaloneConfiguration.setPassword(redisPassword);
-//    }
-//    return redisStandaloneConfiguration;
-//  }
-//
-//  @Bean
-//  @ConditionalOnMissingBean(name = "redisTemplate")
-//  @Primary
-//  public RedisTemplate<String, Object> redisTemplate(
-//      RedisConnectionFactory redisConnectionFactory) {
-//    RedisTemplate<String, Object> template = new RedisTemplate<>();
-//    template.setConnectionFactory(redisConnectionFactory);
-//    RedisSerializer<String> redisSerializer = new StringRedisSerializer();
-//    FastJsonRedisSerializer<Object> fastJsonRedisSerializer = new FastJsonRedisSerializer<>(
-//        Object.class);
-//    template.setKeySerializer(redisSerializer);
-//    template.setHashKeySerializer(redisSerializer);
-//    template.setHashValueSerializer(fastJsonRedisSerializer);
-//    template.setValueSerializer(fastJsonRedisSerializer);
-//    return template;
-//  }
-//
-//}
+@Slf4j
+@EnableCaching
+@Configuration
+public class RedisConfig {
+
+    @Bean
+    public <T> RedisTemplate<String, T> redisTemplate(RedisConnectionFactory factory) {
+        RedisTemplate<String, T> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(factory);
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(valueSerializer());
+        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
+        redisTemplate.setHashValueSerializer(valueSerializer());
+        redisTemplate.afterPropertiesSet();
+        return redisTemplate;
+    }
+
+    @Bean
+    public RedisCacheManager redisCacheManager(RedisConnectionFactory factory) {
+        RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(factory);
+        RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
+                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(valueSerializer()));
+        return new CustomRedisCacheManager(redisCacheWriter, redisCacheConfiguration);
+    }
+
+    @Bean(name = BeanNames.MD5_KEY_GENERATOR)
+    public KeyGenerator keyGenerator() {
+        return (target, method, params) -> {
+            String key = JsonUtil.toJsonString(Arrays.asList(params));
+            return SecureUtil.md5(key);
+        };
+    }
+
+    private RedisSerializer<Object> valueSerializer() {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL);
+        mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        Jackson2JsonRedisSerializer redisSerializer = new Jackson2JsonRedisSerializer(Object.class);
+        redisSerializer.setObjectMapper(mapper);
+        return redisSerializer;
+    }
+
+    static class CustomRedisCacheManager extends RedisCacheManager {
+        /**
+         * {cacheName}#{ttl}{d/h/m/s}
+         */
+        @Override
+        protected RedisCache createRedisCache(String name, RedisCacheConfiguration configuration) {
+            String[] split = name.split("#");
+            if (split.length == 1) {
+                //没有设置过期值
+                return super.createRedisCache(name, configuration);
+            }
+            Duration duration = buildCacheKeyTtl(split[1]);
+            return super.createRedisCache(split[0], configuration.entryTtl(duration));
+        }
+
+        public CustomRedisCacheManager(RedisCacheWriter writer, RedisCacheConfiguration configuration) {
+            super(writer, configuration);
+        }
+
+        public Duration buildCacheKeyTtl(String ttlParam) {
+            //单位
+            String unit;
+            //过期时间
+            int ttl;
+            try {
+                //判断最后一位是否为数字
+                String lastChar = ttlParam.substring(ttlParam.length() - 1);
+                if (StringUtils.isNumeric(lastChar)) {
+                    ttl = Integer.parseInt(ttlParam);
+                    unit = String.valueOf(CacheKeyUnitEnum.SECOND.getCode());
+                } else {
+                    ttl = Integer.parseInt(ttlParam.substring(0, ttlParam.length() - 1));
+                    unit = lastChar;
+                }
+            } catch (Exception e) {
+                log.error("cache key expire param set error. ttl:{}", ttlParam, e);
+                throw new BusinessException("缓存参数配置异常");
+            }
+
+            if (CacheKeyUnitEnum.HOUR.getCode().equals(unit)) {
+                return Duration.ofHours(ttl);
+            } else if (CacheKeyUnitEnum.MINUTE.getCode().equals(unit)) {
+                return Duration.ofMinutes(ttl);
+            } else if (CacheKeyUnitEnum.SECOND.getCode().equals(unit)) {
+                return Duration.ofSeconds(ttl);
+            } else if (CacheKeyUnitEnum.DAY.getCode().equals(unit)) {
+                return Duration.ofDays(ttl);
+            }
+            return Duration.ofSeconds(ttl);
+        }
+    }
+}
 
