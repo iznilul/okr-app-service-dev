@@ -31,6 +31,19 @@ public class FileUtil {
         }
     }
 
+    public static boolean judgeMarkdown(MultipartFile file){
+        MimetypesFileTypeMap mimetypesFileTypeMap = new MimetypesFileTypeMap();
+        mimetypesFileTypeMap.addMimeTypes("md");
+        String contentType = null;
+        try {
+            contentType = mimetypesFileTypeMap.getContentType(multipartFileToFile(file));
+            String type = contentType.split("/")[0];
+            return ("md").equals(type);
+        } catch (IOException e) {
+            throw new BusinessException("文件转换错误");
+        }
+    }
+
     public static File multipartFileToFile(MultipartFile file) throws IOException {
 
         File toFile = null;
@@ -45,7 +58,7 @@ public class FileUtil {
         return toFile;
     }
 
-    public String markdownToHtml(MultipartFile file) throws IOException {
+    public static String markdownToHtml(MultipartFile file) throws IOException {
         Reader reader = new InputStreamReader(file.getInputStream(), "utf-8");
         BufferedReader br = new BufferedReader(reader);
         String line;
