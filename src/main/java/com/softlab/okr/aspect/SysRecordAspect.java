@@ -9,7 +9,7 @@ package com.softlab.okr.aspect;
 
 import com.softlab.okr.entity.SysRecord;
 import com.softlab.okr.service.ISysRecordService;
-import com.softlab.okr.utils.FilterUtil;
+import com.softlab.okr.utils.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -28,7 +28,7 @@ import java.util.concurrent.Future;
 @Slf4j
 @Aspect
 @Component
-@Order(2)
+@Order(3)
 public class SysRecordAspect {
 
 
@@ -38,7 +38,7 @@ public class SysRecordAspect {
     private ISysRecordService sysRecordService;
 
     @Autowired
-    private FilterUtil filterUtil;
+    private SecurityUtil securityUtil;
 
     /**
      * 定义切入点，以controller下所有包的请求为切入点
@@ -72,9 +72,9 @@ public class SysRecordAspect {
                 (ServletRequestAttributes) RequestContextHolder
                         .getRequestAttributes();
         HttpServletRequest request = servletRequestAttributes != null ? servletRequestAttributes.getRequest() : null;
-        String username = filterUtil.getRequestUsername();
-        String ip = filterUtil.getRequestIp();
-        String path = filterUtil.getRequestPath(request);
+        String username = securityUtil.getRequestUsername();
+        String ip = securityUtil.getRequestIp();
+        String path = securityUtil.getRequestPath(request);
         long duration = System.currentTimeMillis() - startTime.get();
         SysRecord sysRecord = new SysRecord(null, null, path, username, ip, null, duration);
         //long start = System.currentTimeMillis();

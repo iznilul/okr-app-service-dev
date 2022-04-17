@@ -1,6 +1,7 @@
 package com.softlab.okr.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.softlab.okr.constant.BeanNames;
 import com.softlab.okr.entity.Tag;
 import com.softlab.okr.entity.UserEntity;
 import com.softlab.okr.entity.UserInfo;
@@ -9,6 +10,7 @@ import com.softlab.okr.service.ITagService;
 import com.softlab.okr.service.IUserEntityService;
 import com.softlab.okr.service.IUserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,6 +35,8 @@ public class EnumServiceImpl implements IEnumService {
     private ITagService tagService;
 
     @Override
+    @Cacheable(cacheNames = BeanNames.ENUM_USERNAME + "#30m", keyGenerator = BeanNames.MD5_KEY_GENERATOR,
+            unless = "#result=null")
     public List<String> getLikeUsername(String username) {
         return userEntityService
                 .list(new QueryWrapper<UserEntity>().like("username", username)).stream()

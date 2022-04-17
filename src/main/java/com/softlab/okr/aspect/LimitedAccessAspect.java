@@ -1,8 +1,8 @@
 package com.softlab.okr.aspect;
 
 import com.softlab.okr.model.exception.BusinessException;
-import com.softlab.okr.utils.FilterUtil;
 import com.softlab.okr.utils.RedisUtil;
+import com.softlab.okr.utils.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -24,21 +24,21 @@ import javax.servlet.http.HttpServletRequest;
 @Aspect
 @Component
 @Slf4j
-@Order(0)
+@Order(1)
 public class LimitedAccessAspect {
 
     public static String IPLimit = "IpLimit";
 
     public static String BLACKLIST = "BlackList";
 
-    public static Integer FREQUENCY = 2;
+    public static Integer FREQUENCY = 20;
 
     public static Integer SECOND = 60;
 
     public static Integer DETENTION = 30 * 60;
 
     @Autowired
-    private FilterUtil filterUtil;
+    private SecurityUtil securityUtil;
 
     @Autowired
     private RedisUtil redisUtil;
@@ -57,11 +57,10 @@ public class LimitedAccessAspect {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder
                 .getRequestAttributes();
         if (null != attributes) {
-            //String methodName = point.getSignature().getName();
             //String realRequestIps = request.getHeader("X-Forwarded-For");
             //log.info("realRequestIps地址:" + realRequestIps);
             HttpServletRequest request = attributes.getRequest();
-            String ip = filterUtil.getRequestIp();
+            String ip = securityUtil.getRequestIp();
             this.isInBlackList(ip);
             String ipLimitKey = IPLimit + "#" + ip;
 

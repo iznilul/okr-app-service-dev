@@ -1,6 +1,7 @@
 package com.softlab.okr.controller;
 
 import com.softlab.okr.annotation.Auth;
+import com.softlab.okr.annotation.DisableRepeatSubmit;
 import com.softlab.okr.constant.RoleConstants;
 import com.softlab.okr.model.dto.LoginDTO;
 import com.softlab.okr.model.vo.UserEntityVO;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Slf4j
 @RestController
+@DisableRepeatSubmit
 @Api(tags = "通用 登陆部分接口")
 @RequestMapping("/okr/common")
 public class CommonController {

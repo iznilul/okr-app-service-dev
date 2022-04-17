@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
  * @Date: 2021-09-06 13:46
  **/
 @Component
-public class FilterUtil {
+public class SecurityUtil {
 
     @Autowired
     private AuthenticationServiceImpl authenticationService;

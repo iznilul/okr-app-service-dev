@@ -20,7 +20,7 @@ import java.util.Objects;
 @Component
 @Aspect
 @Slf4j
-@Order(1)
+@Order(0)
 public class TrimInterceptor {
 
     /**
