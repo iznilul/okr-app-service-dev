@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.softlab.okr.constant.BeanNames;
 import com.softlab.okr.entity.UserInfo;
 import com.softlab.okr.entity.UserRole;
 import com.softlab.okr.mapper.UserInfoMapper;
@@ -22,6 +23,7 @@ import com.softlab.okr.utils.CopyUtil;
 import com.softlab.okr.utils.FileUtil;
 import com.softlab.okr.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -94,6 +96,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
     }
 
     @Override
+    @CacheEvict(cacheNames = BeanNames.USERNAME, allEntries = true)
     public void modifyUserInfo(UpdateUserDTO dto) {
         UserInfo userInfo = this.getOne(new QueryWrapper<UserInfo>().eq("username",
                 dto.getUsername()));

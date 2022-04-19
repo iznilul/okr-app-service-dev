@@ -10,5 +10,5 @@ public class BeanNames {
 
     public static final String MD5_KEY_GENERATOR = "MD5KeyGenerator";
 
-    public static final String ENUM_USERNAME = "UserName";
+    public static final String USERNAME = "userName";
 }

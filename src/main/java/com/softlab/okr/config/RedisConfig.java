@@ -64,8 +64,9 @@ public class RedisConfig {
     @Bean(name = BeanNames.MD5_KEY_GENERATOR)
     public KeyGenerator keyGenerator() {
         return (target, method, params) -> {
-            String key = JsonUtil.toJsonString(Arrays.asList(params));
-            return SecureUtil.md5(key);
+            String methodName = method.getName();
+            String json = JsonUtil.toJsonString(Arrays.asList(params));
+            return methodName + "_" + SecureUtil.md5(json);
         };
     }
 

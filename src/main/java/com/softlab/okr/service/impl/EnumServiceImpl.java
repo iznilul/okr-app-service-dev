@@ -35,7 +35,7 @@ public class EnumServiceImpl implements IEnumService {
     private ITagService tagService;
 
     @Override
-    @Cacheable(cacheNames = BeanNames.ENUM_USERNAME + "#30m", keyGenerator = BeanNames.MD5_KEY_GENERATOR,
+    @Cacheable(cacheNames = BeanNames.USERNAME + "#30m", keyGenerator = BeanNames.MD5_KEY_GENERATOR,
             unless = "#result=null")
     public List<String> getLikeUsername(String username) {
         return userEntityService
