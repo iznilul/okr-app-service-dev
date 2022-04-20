@@ -5,7 +5,6 @@ import com.softlab.okr.constant.RoleConstants;
 import com.softlab.okr.model.vo.MenuVO;
 import com.softlab.okr.service.IMenuService;
 import com.softlab.okr.utils.Result;
-import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +20,6 @@ import java.util.List;
  **/
 @RestController
 @RequestMapping("/okr/menu")
-@Api(tags = "用户 性能接口")
 public class MenuController {
 
     @Autowired

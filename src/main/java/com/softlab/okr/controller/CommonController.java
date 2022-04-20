@@ -9,8 +9,6 @@ import com.softlab.okr.security.IAuthenticationService;
 import com.softlab.okr.security.UserDetail;
 import com.softlab.okr.service.IUserEntityService;
 import com.softlab.okr.utils.Result;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -25,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @DisableRepeatSubmit
-@Api(tags = "通用 登陆部分接口")
 @RequestMapping("/okr/common")
 public class CommonController {
 
@@ -36,7 +33,6 @@ public class CommonController {
     private IAuthenticationService authenticationService;
 
     //将登录后的用户信息包括token返回给前端页面
-    @ApiOperation("登录")
     @PostMapping("login")
     @Auth(role = RoleConstants.COMMON, name = "用户登录")
     public Result login(@RequestBody LoginDTO dto) throws Exception {
@@ -44,7 +40,6 @@ public class CommonController {
         return userEntityVO != null ? Result.success(userEntityVO) : Result.failure();
     }
 
-    @ApiOperation("测试")
     @GetMapping("test")
     @Auth(role = RoleConstants.COMMON, name = "认证测试")
     public Result test() {
@@ -56,7 +51,6 @@ public class CommonController {
         return Result.success("认证通过");
     }
 
-    @ApiOperation("注销")
     @GetMapping("logout")
     @Auth(role = RoleConstants.COMMON, name = "用户退出")
     public Result logout() {

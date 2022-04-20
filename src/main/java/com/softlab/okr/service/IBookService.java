@@ -1,11 +1,11 @@
 package com.softlab.okr.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.softlab.okr.entity.Book;
 import com.softlab.okr.model.dto.BookChangeDTO;
 import com.softlab.okr.model.dto.BookQueryDTO;
 import com.softlab.okr.model.vo.BookVO;
-import com.softlab.okr.utils.Result;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface IBookService extends IService<Book> {
@@ -20,7 +20,7 @@ public interface IBookService extends IService<Book> {
 
     void returnBook(int bookId);
 
-    Result getBookList(BookQueryDTO dto);
+    Page<BookVO> getBookList(BookQueryDTO dto);
 
     BookVO getBook(int bookId);
 

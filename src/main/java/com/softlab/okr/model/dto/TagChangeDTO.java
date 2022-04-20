@@ -1,6 +1,5 @@
 package com.softlab.okr.model.dto;
 
-import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +16,6 @@ import javax.validation.constraints.NotNull;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel("TagDto 标签传输类")
 public class TagChangeDTO {
 
     @NotNull(message = "标签id不能为空")

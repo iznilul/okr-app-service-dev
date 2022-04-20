@@ -1,7 +1,5 @@
 package com.softlab.okr.model.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,16 +13,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel("SelectUesrDto 选择用户接口传输类")
 public class SelectUserDTO extends PageDTO {
 
-    @ApiModelProperty(value = "用户名", required = true, example = "123")
     private String username;
 
-    @ApiModelProperty(value = "姓名", required = true, example = "llz")
     private String name;
 
-    @ApiModelProperty(value = "专业班级", required = true, example = "1802")
     private String major;
 
 }

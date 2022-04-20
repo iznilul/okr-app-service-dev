@@ -5,7 +5,6 @@ import com.softlab.okr.constant.RoleConstants;
 import com.softlab.okr.model.enums.*;
 import com.softlab.okr.service.IEnumService;
 import com.softlab.okr.utils.Result;
-import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +23,6 @@ import java.util.Map;
  **/
 @RestController
 @RequestMapping("/okr/enum")
-@Api(tags = "用户 公共枚举接口")
 public class EnumController {
 
     private static Map<String, List<String>> DICT_MAP = new HashMap<>();

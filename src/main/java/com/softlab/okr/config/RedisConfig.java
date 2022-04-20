@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
-import com.softlab.okr.constant.BeanNames;
+import com.softlab.okr.constant.EntityNames;
 import com.softlab.okr.model.enums.CacheKeyUnitEnum;
 import com.softlab.okr.model.exception.BusinessException;
 import com.softlab.okr.utils.JsonUtil;
@@ -61,12 +61,14 @@ public class RedisConfig {
         return new CustomRedisCacheManager(redisCacheWriter, redisCacheConfiguration);
     }
 
-    @Bean(name = BeanNames.MD5_KEY_GENERATOR)
+    @Bean(name = EntityNames.MD5_KEY_GENERATOR)
     public KeyGenerator keyGenerator() {
         return (target, method, params) -> {
             String methodName = method.getName();
             String json = JsonUtil.toJsonString(Arrays.asList(params));
-            return methodName + "_" + SecureUtil.md5(json);
+            String key = methodName + "_" + SecureUtil.md5(json);
+            log.info("生成缓存key:{}", key);
+            return key;
         };
     }
 
@@ -76,6 +78,7 @@ public class RedisConfig {
         mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         Jackson2JsonRedisSerializer redisSerializer = new Jackson2JsonRedisSerializer(Object.class);
         redisSerializer.setObjectMapper(mapper);
+        //GenericJackson2JsonRedisSerializer redisSerializer = new GenericJackson2JsonRedisSerializer();
         return redisSerializer;
     }
 

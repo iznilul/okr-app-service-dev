@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.softlab.okr.constant.BeanNames;
+import com.softlab.okr.constant.EntityNames;
 import com.softlab.okr.entity.UserInfo;
 import com.softlab.okr.entity.UserRole;
 import com.softlab.okr.mapper.UserInfoMapper;
@@ -96,7 +96,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
     }
 
     @Override
-    @CacheEvict(cacheNames = BeanNames.USERNAME, allEntries = true)
+    @CacheEvict(cacheNames = EntityNames.USER_INFO, allEntries = true)
     public void modifyUserInfo(UpdateUserDTO dto) {
         UserInfo userInfo = this.getOne(new QueryWrapper<UserInfo>().eq("username",
                 dto.getUsername()));

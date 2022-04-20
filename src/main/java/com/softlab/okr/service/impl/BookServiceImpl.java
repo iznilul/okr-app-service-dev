@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.softlab.okr.constant.EntityNames;
 import com.softlab.okr.entity.Book;
 import com.softlab.okr.entity.BookTag;
 import com.softlab.okr.entity.Tag;
@@ -19,8 +20,8 @@ import com.softlab.okr.service.IBookService;
 import com.softlab.okr.service.IBookTagService;
 import com.softlab.okr.service.IBookUserService;
 import com.softlab.okr.service.ITagService;
-import com.softlab.okr.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -163,17 +164,24 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements
     }
 
     @Override
-    public Result getBookList(BookQueryDTO dto) {
+    @Cacheable(cacheNames = EntityNames.BOOK + "#30m", keyGenerator =
+            com.softlab.okr.constant.EntityNames.MD5_KEY_GENERATOR,
+            unless = "#result=null")
+    public Page<BookVO> getBookList(BookQueryDTO dto) {
         Page<Book> page = new Page<>(dto.getIndex(), dto.getPageSize());
         Page<BookVO> voPage = bookMapper.selectBookList(page, dto.getBookName(),
                 dto.getPublisher());
         voPage.getRecords().forEach(vo -> {
             vo.setStatusName(BookEnum.getMessage(vo.getStatus()));
         });
-        return Result.success(voPage.getRecords(), voPage.getCurrent(), voPage.getTotal());
+        return voPage;
     }
 
+    
     @Override
+    @Cacheable(cacheNames = EntityNames.BOOK + "#30m", keyGenerator =
+            com.softlab.okr.constant.EntityNames.MD5_KEY_GENERATOR,
+            unless = "#result=null")
     public BookVO getBook(int bookId) {
         BookVO vo = bookMapper.selectBook(bookId);
         if (null == vo) {

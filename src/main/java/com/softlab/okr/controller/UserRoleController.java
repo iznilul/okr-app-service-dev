@@ -5,7 +5,6 @@ import com.softlab.okr.constant.RoleConstants;
 import com.softlab.okr.model.dto.GrantRoleDTO;
 import com.softlab.okr.service.IUserRoleService;
 import com.softlab.okr.utils.Result;
-import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
  **/
 @RestController
 @RequestMapping("/okr/userRole")
-@Api(tags = "用户 性能接口")
 public class UserRoleController {
 
     @Autowired

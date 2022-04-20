@@ -1,6 +1,5 @@
 package com.softlab.okr.model.dto;
 
-import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +16,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel("BookDto 书籍接口类")
 public class BookChangeDTO {
 
     @NotNull(message = "bookId不能为空")

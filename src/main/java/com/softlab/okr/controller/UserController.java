@@ -9,8 +9,6 @@ import com.softlab.okr.model.vo.UserRoleVO;
 import com.softlab.okr.service.IUserEntityService;
 import com.softlab.okr.service.IUserInfoService;
 import com.softlab.okr.utils.Result;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +26,6 @@ import java.util.Base64;
  **/
 @RestController
 @RequestMapping("/okr/user")
-@Api(tags = "管理员 用户接口")
 public class UserController {
 
     @Autowired
@@ -37,7 +34,6 @@ public class UserController {
     @Autowired
     private IUserEntityService userEntityService;
 
-    @ApiOperation("注册用户")
     @PostMapping("add")
     @Auth(role = RoleConstants.ADMIN, name = "注册用户")
     public Result addUser(@Validated @RequestBody RegisterDTO dto) {
@@ -45,7 +41,6 @@ public class UserController {
         return userEntityService.register(dto) ? Result.success() : Result.failure();
     }
 
-    @ApiOperation("删除用户")
     @GetMapping("cancel")
     @Auth(role = RoleConstants.ADMIN, name = "删除用户")
     public Result cancelUser(
@@ -55,7 +50,6 @@ public class UserController {
                 Result.success() : Result.failure();
     }
 
-    @ApiOperation("更新用户信息")
     @PostMapping("change")
     @Auth(role = RoleConstants.USER, name = "更新用户信息")
     public Result changeUser(@RequestBody UpdateUserDTO dto) {
@@ -63,7 +57,6 @@ public class UserController {
         return Result.success();
     }
 
-    @ApiOperation("更新用户权限")
     @PostMapping("changeRole")
     @Auth(role = RoleConstants.USER, name = "更新用户权限")
     public Result changeUserRole(@RequestBody UpdateUserRoleDTO dto) {
@@ -71,7 +64,6 @@ public class UserController {
         return Result.success();
     }
 
-    @ApiOperation("获取用户信息")
     @GetMapping("query")
     @Auth(role = RoleConstants.USER, name = "获取用户信息")
     public Result queryUser() {
@@ -80,7 +72,6 @@ public class UserController {
         return userInfo != null ? Result.success(userInfo) : Result.failure();
     }
 
-    @ApiOperation("获取用户权限信息")
     @GetMapping("queryRole")
     @Auth(role = RoleConstants.USER, name = "获取用户权限信息")
     public Result queryUserRole(@RequestParam("username") String username) {
@@ -88,7 +79,6 @@ public class UserController {
         return vo != null ? Result.success(vo) : Result.failure();
     }
 
-    @ApiOperation("查询用户列表")
     @PostMapping("queryList")
     @Auth(role = RoleConstants.USER, name = "查询用户列表")
     public Result queryUserList(
@@ -96,8 +86,6 @@ public class UserController {
 
         return userInfoService.getUserInfoByCond(dto);
     }
-
-    @ApiOperation("上传头像文件")
 
     @PostMapping("changeImg")
     @Auth(role = RoleConstants.USER, name = "上传头像文件")
@@ -109,7 +97,6 @@ public class UserController {
                 : Result.failure();
     }
 
-    @ApiOperation("修改密码")
     @PostMapping("changePassword")
     @Auth(role = RoleConstants.USER, name = "修改密码")
     public Result changePassword(@RequestBody ModifyPwdDTO dto) {
@@ -117,7 +104,6 @@ public class UserController {
                 Result.success() : Result.failure();
     }
 
-    @ApiOperation("根据用户名获取用户信息")
     @GetMapping("queryByUsername")
     @Auth(role = RoleConstants.USER, name = "根据用户名选择用户")
     public Result queryUserByUsername(@RequestParam("username") String username) {

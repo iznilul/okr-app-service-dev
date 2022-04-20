@@ -8,8 +8,6 @@ import com.softlab.okr.model.dto.TagChangeDTO;
 import com.softlab.okr.model.dto.TagDTO;
 import com.softlab.okr.service.ITagService;
 import com.softlab.okr.utils.Result;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -24,13 +22,11 @@ import javax.validation.constraints.NotNull;
  **/
 @RestController
 @RequestMapping("/okr/tag")
-@Api(tags = "管理员 标签接口")
 public class TagController {
 
     @Autowired
     private ITagService tagService;
 
-    @ApiOperation("增加标签")
     @PostMapping("add")
     @Auth(role = RoleConstants.ADMIN, name = "增加标签")
     public Result addTag(@RequestBody @Validated TagAddDTO dto) {
@@ -38,7 +34,6 @@ public class TagController {
         return Result.success(dto);
     }
 
-    @ApiOperation("更新标签")
     @PostMapping("change")
     @Auth(role = RoleConstants.ADMIN, name = "更新标签")
     public Result changeTag(@RequestBody @Validated TagChangeDTO dto) {
@@ -46,7 +41,6 @@ public class TagController {
         return Result.success();
     }
 
-    @ApiOperation("删除标签")
     @GetMapping("cancel")
     @Auth(role = RoleConstants.ADMIN, name = "删除标签")
     public Result cancelTag(@RequestParam("tagId") @NotNull Integer tagId) {
@@ -54,14 +48,12 @@ public class TagController {
         return Result.success();
     }
 
-    @ApiOperation("获取标签列表")
     @PostMapping("queryList")
     @Auth(role = RoleConstants.USER, name = "获取标签列表")
     public Result queryList(@RequestBody @Validated TagDTO dto) {
         return tagService.getTagList(dto);
     }
 
-    @ApiOperation("获取标签")
     @GetMapping("query")
     @Auth(role = RoleConstants.ADMIN, name = "获取标签")
     public Result queryTag(@NotNull(message = "id不能为空")
