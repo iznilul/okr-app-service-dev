@@ -17,7 +17,6 @@ import com.softlab.okr.security.IAuthenticationService;
 import com.softlab.okr.service.IKeyService;
 import com.softlab.okr.service.IKeyUserService;
 import com.softlab.okr.utils.CopyUtil;
-import com.softlab.okr.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -66,13 +65,13 @@ public class KeyServiceImpl extends ServiceImpl<KeyMapper, Key> implements IKeyS
     @Cacheable(cacheNames = EntityNames.KEY + "#10m", keyGenerator =
             com.softlab.okr.constant.EntityNames.MD5_KEY_GENERATOR,
             unless = "#result=null")
-    public Result getKey(PageDTO dto) {
+    public Page<KeyVO> getKey(PageDTO dto) {
         Page<Key> page = new Page<>(dto.getIndex(), dto.getPageSize());
         Page<KeyVO> voPage = keyMapper.selectKeyList(page);
         voPage.getRecords().forEach(vo -> {
             vo.setStatusName(KeyEnum.getMessage(vo.getStatus()));
         });
-        return Result.success(voPage.getRecords(), voPage.getCurrent(), voPage.getTotal());
+        return voPage;
     }
 
     @Override

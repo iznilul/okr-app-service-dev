@@ -1,5 +1,6 @@
 package com.softlab.okr.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.softlab.okr.entity.UserInfo;
 import com.softlab.okr.model.dto.SelectUserDTO;
@@ -7,7 +8,6 @@ import com.softlab.okr.model.dto.UpdateUserDTO;
 import com.softlab.okr.model.dto.UpdateUserRoleDTO;
 import com.softlab.okr.model.vo.UserInfoVO;
 import com.softlab.okr.model.vo.UserRoleVO;
-import com.softlab.okr.utils.Result;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -30,7 +30,7 @@ public interface IUserInfoService extends IService<UserInfo> {
 
     UserInfoVO getUserInfoByUsername(String username);
 
-    Result getUserInfoByCond(SelectUserDTO dto);
+    Page<UserInfoVO> getUserInfoByCond(SelectUserDTO dto);
 
     void modifyUserInfo(UpdateUserDTO dto);
 

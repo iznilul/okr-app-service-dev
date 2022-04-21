@@ -10,7 +10,6 @@ import com.softlab.okr.model.dto.PageDTO;
 import com.softlab.okr.model.enums.KeyUserEnum;
 import com.softlab.okr.model.vo.KeyUserVO;
 import com.softlab.okr.service.IKeyUserService;
-import com.softlab.okr.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -52,13 +51,13 @@ public class KeyUserServiceImpl extends ServiceImpl<KeyUserMapper, KeyUser> impl
     @Cacheable(cacheNames = EntityNames.KEY_USER + "#10m", keyGenerator =
             com.softlab.okr.constant.EntityNames.MD5_KEY_GENERATOR,
             unless = "#result=null")
-    public Result getKeyUser(PageDTO dto) {
+    public Page<KeyUserVO> getKeyUser(PageDTO dto) {
         Page<KeyUser> page = new Page<>(dto.getIndex(), dto.getPageSize());
         Page<KeyUserVO> voPage = keyUserMapper.selectKeyUserVO(page);
         voPage.getRecords().forEach(vo -> {
             vo.setStatusName(KeyUserEnum.getMessage(vo.getStatus()));
         });
-        return Result.success(voPage.getRecords(), voPage.getCurrent(), voPage.getTotal());
+        return voPage;
     }
 
     @Override

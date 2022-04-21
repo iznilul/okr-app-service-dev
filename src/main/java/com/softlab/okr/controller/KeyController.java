@@ -1,5 +1,6 @@
 package com.softlab.okr.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.constant.RoleConstants;
 import com.softlab.okr.model.dto.KeyDTO;
@@ -57,13 +58,16 @@ public class KeyController {
     @PostMapping("query")
     @Auth(role = RoleConstants.USER, name = "钥匙列表")
     public Result queryKey(@RequestBody PageDTO dto) {
-        return keyService.getKey(dto);
+        Page<KeyVO> voPage = keyService.getKey(dto);
+        return Result.success(voPage.getRecords(), voPage.getCurrent(), voPage.getTotal());
     }
 
     @GetMapping("borrow")
     @Auth(role = RoleConstants.USER, name = "借钥匙")
     public Result borrowKey(@RequestParam("keyId") int keyId) {
         keyService.borrowKey(keyId);
+        
+
         return Result.success();
     }
 

@@ -1,7 +1,9 @@
 package com.softlab.okr.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.constant.RoleConstants;
+import com.softlab.okr.entity.Resource;
 import com.softlab.okr.model.dto.ResourceDTO;
 import com.softlab.okr.service.IResourceService;
 import com.softlab.okr.utils.Result;
@@ -35,7 +37,8 @@ public class ResourceController {
     @PostMapping("query")
     @Auth(role = RoleConstants.ADMIN, name = "获取资源接口")
     public Result queryResource(@RequestBody ResourceDTO dto) {
-        return resourceService.getResourceList(dto);
+        Page<Resource> page = resourceService.getResourceList(dto);
+        return Result.success(page.getRecords(), page.getCurrent(), page.getTotal());
     }
 
     @GetMapping("queryName")

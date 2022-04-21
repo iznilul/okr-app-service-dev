@@ -12,7 +12,6 @@ import com.softlab.okr.model.dto.TagChangeDTO;
 import com.softlab.okr.model.dto.TagDTO;
 import com.softlab.okr.model.exception.BusinessException;
 import com.softlab.okr.service.ITagService;
-import com.softlab.okr.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,12 +40,11 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements ITagS
     }
 
     @Override
-    public Result getTagList(TagDTO dto) {
+    public Page<Tag> getTagList(TagDTO dto) {
         Page<Tag> page = new Page<>(dto.getIndex(), dto.getPageSize());
-        Page<Tag> tagPage = tagMapper.selectPage(page, new QueryWrapper<Tag>()
+        return tagMapper.selectPage(page, new QueryWrapper<Tag>()
                 .like((StringUtils.isNotBlank(dto.getName())), "name", dto.getName())
                 .orderByDesc("weight"));
-        return Result.success(tagPage.getRecords(), tagPage.getCurrent(), tagPage.getTotal());
     }
 
     @Override

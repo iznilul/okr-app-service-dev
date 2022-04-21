@@ -12,7 +12,6 @@ import com.softlab.okr.model.dto.SysRecordDTO;
 import com.softlab.okr.model.vo.SysRecordVO;
 import com.softlab.okr.service.IResourceService;
 import com.softlab.okr.service.ISysRecordService;
-import com.softlab.okr.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
@@ -38,11 +37,10 @@ public class SysRecordServiceImpl extends ServiceImpl<SysRecordMapper, SysRecord
     }
 
     @Override
-    public Result getSysRecord(SysRecordDTO dto) {
+    public Page<SysRecordVO> getSysRecord(SysRecordDTO dto) {
         Page<SysRecord> page = new Page<>(dto.getIndex(), dto.getPageSize());
         String beginTime = dto.getBeginTime() != null ? DateUtil.format(dto.getBeginTime(), TimeFormat.format) : null;
         String endTime = dto.getEndTime() != null ? DateUtil.format(dto.getEndTime(), TimeFormat.format) : null;
-        Page<SysRecordVO> recordPage = sysRecordMapper.selectSysRecord(page, dto.getUsername(), beginTime, endTime);
-        return Result.success(recordPage.getRecords(), recordPage.getCurrent(), recordPage.getTotal());
+        return sysRecordMapper.selectSysRecord(page, dto.getUsername(), beginTime, endTime);
     }
 }

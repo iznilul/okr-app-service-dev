@@ -1,9 +1,10 @@
 package com.softlab.okr.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.softlab.okr.entity.BookUser;
 import com.softlab.okr.model.dto.PageDTO;
-import com.softlab.okr.utils.Result;
+import com.softlab.okr.model.vo.BookUserVO;
 
 /**
  * <p>
@@ -15,7 +16,7 @@ import com.softlab.okr.utils.Result;
  */
 public interface IBookUserService extends IService<BookUser> {
 
-    Result getBookUserList(PageDTO dto);
+    Page<BookUserVO> getBookUserList(PageDTO dto);
 
     void saveBookUser(int bookId, int userId, int status);
 

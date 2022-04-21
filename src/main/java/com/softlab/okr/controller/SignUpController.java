@@ -1,5 +1,6 @@
 package com.softlab.okr.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.constant.RoleConstants;
 import com.softlab.okr.model.dto.SignUpAddDTO;
@@ -35,7 +36,8 @@ public class SignUpController {
     @PostMapping("queryList")
     @Auth(role = RoleConstants.ADMIN, name = "获取报名记录")
     public Result querySignUpList(@RequestBody SignUpDTO dto) {
-        return signUpService.getSignUpByList(dto);
+        Page<SignUpVO> voPage = signUpService.getSignUpByList(dto);
+        return Result.success(voPage.getRecords(), voPage.getCurrent(), voPage.getTotal());
     }
 
     @PostMapping("change")

@@ -1,8 +1,10 @@
 package com.softlab.okr.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.constant.RoleConstants;
 import com.softlab.okr.model.dto.PageDTO;
+import com.softlab.okr.model.vo.KeyUserVO;
 import com.softlab.okr.service.IKeyUserService;
 import com.softlab.okr.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +43,8 @@ public class KeyUserController {
     @PostMapping("query")
     @Auth(role = RoleConstants.USER, name = "钥匙记录列表")
     public Result queryKeyUser(@RequestBody PageDTO dto) {
-        return keyUserService.getKeyUser(dto);
+        Page<KeyUserVO> voPage = keyUserService.getKeyUser(dto);
+        return Result.success(voPage.getRecords(), voPage.getCurrent(), voPage.getTotal());
     }
 
 }

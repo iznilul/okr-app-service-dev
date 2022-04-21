@@ -21,7 +21,6 @@ import com.softlab.okr.service.IUserInfoService;
 import com.softlab.okr.service.IUserRoleService;
 import com.softlab.okr.utils.CopyUtil;
 import com.softlab.okr.utils.FileUtil;
-import com.softlab.okr.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
@@ -84,15 +83,14 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
     }
 
     @Override
-    public Result getUserInfoByCond(SelectUserDTO dto) {
+    public Page<UserInfoVO> getUserInfoByCond(SelectUserDTO dto) {
         Page<UserInfo> page = new Page<>(dto.getIndex(), dto.getPageSize());
         Page<UserInfoVO> voPage = userInfoMapper.selectUserInfoVOList(page, dto);
         voPage.getRecords().forEach(vo -> {
             vo.setRole(RoleEnum.getMessage(vo.getRoleId()));
             vo.setStatusName(UserStatusEnum.getMessage(vo.getStatus()));
         });
-        return Result
-                .success(voPage.getRecords(), voPage.getCurrent(), voPage.getTotal());
+        return voPage;
     }
 
     @Override

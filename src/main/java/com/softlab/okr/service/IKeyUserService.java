@@ -1,9 +1,10 @@
 package com.softlab.okr.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.softlab.okr.entity.KeyUser;
 import com.softlab.okr.model.dto.PageDTO;
-import com.softlab.okr.utils.Result;
+import com.softlab.okr.model.vo.KeyUserVO;
 
 /**
  * <p>
@@ -19,7 +20,7 @@ public interface IKeyUserService extends IService<KeyUser> {
 
     void modifyKeyUser(int keyId, int userId, int status);
 
-    Result getKeyUser(PageDTO dto);
+    Page<KeyUserVO> getKeyUser(PageDTO dto);
 
     void removeByUserId(int id);
 }

@@ -1,5 +1,6 @@
 package com.softlab.okr.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.constant.RoleConstants;
 import com.softlab.okr.entity.Tag;
@@ -51,7 +52,8 @@ public class TagController {
     @PostMapping("queryList")
     @Auth(role = RoleConstants.USER, name = "获取标签列表")
     public Result queryList(@RequestBody @Validated TagDTO dto) {
-        return tagService.getTagList(dto);
+        Page<Tag> page = tagService.getTagList(dto);
+        return Result.success(page.getRecords(), page.getCurrent(), page.getTotal());
     }
 
     @GetMapping("query")

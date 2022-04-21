@@ -21,7 +21,6 @@ import com.softlab.okr.model.vo.SignUpVO;
 import com.softlab.okr.service.IRecruitGroupService;
 import com.softlab.okr.service.ISignUpService;
 import com.softlab.okr.utils.CopyUtil;
-import com.softlab.okr.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -75,7 +74,7 @@ public class SignUpServiceImpl extends ServiceImpl<SignUpMapper, SignUp> impleme
 
     //根据参数返回报名列表
     @Override
-    public Result getSignUpByList(SignUpDTO dto) {
+    public Page<SignUpVO> getSignUpByList(SignUpDTO dto) {
         Page<SignUp> page = new Page<>(dto.getIndex(), dto.getPageSize());
         Page<SignUp> signUpPage = signUpMapper.selectPage(page, new QueryWrapper<SignUp>()
                 .like((StringUtils.isNotBlank(dto.getStudentId())), "student_id",
@@ -83,13 +82,15 @@ public class SignUpServiceImpl extends ServiceImpl<SignUpMapper, SignUp> impleme
                 .like((StringUtils.isNotBlank(dto.getName())), "name", dto.getName())
                 .like((StringUtils.isNotBlank(dto.getMajor())), "major", dto.getMajor())
                 .orderByAsc("status"));
-        List<SignUpVO> list = new ArrayList<>();
+        Page<SignUpVO> voPage = new Page<>();
         signUpPage.getRecords().forEach(signUp -> {
             SignUpVO vo = CopyUtil.copy(signUp, SignUpVO.class);
             vo.setStatusName(SignUpEnum.getMessage(vo.getStatus()));
-            list.add(vo);
+            voPage.getRecords().add(vo);
         });
-        return Result.success(list, signUpPage.getCurrent(), signUpPage.getTotal());
+        voPage.setCurrent(signUpPage.getCurrent());
+        voPage.setTotal(signUpPage.getTotal());
+        return voPage;
     }
 
     //根据id返回用户

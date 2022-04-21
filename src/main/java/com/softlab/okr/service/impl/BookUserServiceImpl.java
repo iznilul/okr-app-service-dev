@@ -11,7 +11,6 @@ import com.softlab.okr.model.enums.BookUserEnum;
 import com.softlab.okr.model.exception.BusinessException;
 import com.softlab.okr.model.vo.BookUserVO;
 import com.softlab.okr.service.IBookUserService;
-import com.softlab.okr.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -35,13 +34,13 @@ public class BookUserServiceImpl extends ServiceImpl<BookUserMapper, BookUser> i
     @Cacheable(cacheNames = EntityNames.BOOK_USER + "#10m", keyGenerator =
             com.softlab.okr.constant.EntityNames.MD5_KEY_GENERATOR,
             unless = "#result=null")
-    public Result getBookUserList(PageDTO dto) {
+    public Page<BookUserVO> getBookUserList(PageDTO dto) {
         Page<BookUser> page = new Page<>(dto.getIndex(), dto.getPageSize());
         Page<BookUserVO> voPage = bookUserMapper.selectBookUserVO(page);
         voPage.getRecords().forEach(vo -> {
             vo.setStatusName(BookUserEnum.getMessage(vo.getStatus()));
         });
-        return Result.success(voPage.getRecords(), voPage.getCurrent(), voPage.getTotal());
+        return voPage;
     }
 
     @Override

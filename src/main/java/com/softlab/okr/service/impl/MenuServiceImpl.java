@@ -46,7 +46,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 
     }
 
-    public List<MenuVO> getChildren(List<Menu> fatherList, List<Menu> menuList) {
+    private List<MenuVO> getChildren(List<Menu> fatherList, List<Menu> menuList) {
         List<MenuVO> list = new ArrayList<>();
         fatherList.forEach(fatherMenu -> {
             MenuVO vo = menuToVO(fatherMenu);

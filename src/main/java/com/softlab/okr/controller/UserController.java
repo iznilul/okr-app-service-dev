@@ -1,5 +1,6 @@
 package com.softlab.okr.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.constant.RoleConstants;
 import com.softlab.okr.entity.UserInfo;
@@ -83,8 +84,8 @@ public class UserController {
     @Auth(role = RoleConstants.USER, name = "查询用户列表")
     public Result queryUserList(
             @RequestBody SelectUserDTO dto) throws Exception {
-
-        return userInfoService.getUserInfoByCond(dto);
+        Page<UserInfoVO> voPage = userInfoService.getUserInfoByCond(dto);
+        return Result.success(voPage.getRecords(), voPage.getCurrent(), voPage.getTotal());
     }
 
     @PostMapping("changeImg")

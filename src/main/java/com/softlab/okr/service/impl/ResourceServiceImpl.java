@@ -18,7 +18,6 @@ import com.softlab.okr.security.ApiFilter;
 import com.softlab.okr.service.IResourceService;
 import com.softlab.okr.service.IUserRoleService;
 import com.softlab.okr.utils.CopyUtil;
-import com.softlab.okr.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,7 +37,7 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
     private IUserRoleService userRoleService;
 
     @Override
-    public Result getResourceList(ResourceDTO dto) {
+    public Page<Resource> getResourceList(ResourceDTO dto) {
         Page<Resource> page = new Page<>(dto.getIndex(), dto.getPageSize());
         Page<Resource> resourcePage = resourceMapper.selectPage(page, new QueryWrapper<Resource>()
                 .like((StringUtils.isNotBlank(dto.getName())), "name", dto.getName())
@@ -51,7 +50,7 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
             vo.setRoleName(RoleEnum.getMessage(resource.getRole()));
             list.add(vo);
         });
-        return Result.success(list, resourcePage.getCurrent(), resourcePage.getTotal());
+        return resourcePage;
     }
 
     @Override
