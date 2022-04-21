@@ -27,8 +27,8 @@ public class UserRoleController {
     @Auth(role = RoleConstants.SUPER_ADMIN, name = "修改成员的角色权限")
     @PostMapping("grant")
     public Result grantRole(@RequestBody GrantRoleDTO dto) {
-        Boolean result = userRoleService.grantRole(dto);
-        return result ? Result.success() : Result.failure();
+        userRoleService.grantRole(dto);
+        return Result.success();
     }
 
 }

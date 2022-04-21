@@ -130,9 +130,8 @@ public class UserEntityServiceImpl extends ServiceImpl<UserEntityMapper, UserEnt
                 .getRoleId();
         int userId = userEntity.getUserId();
         UserRole userRole = new UserRole(null, userId, roleId, DateUtil.parse(TimeFormat.neverExpire), null);
-        if (userInfoService.saveUserInfo(userId, dto.getUsername()) != 1 || !userRoleService.save(userRole)) {
-            throw new BusinessException("注册失败");
-        }
+        userRoleService.save(userRole);
+        userInfoService.saveUserInfo(userId, dto.getUsername());
     }
 
     @Override

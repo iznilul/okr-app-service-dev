@@ -27,15 +27,15 @@ public class KeyUserController {
     @Auth(role = RoleConstants.ADMIN, name = "增加钥匙持有人")
     public Result addKeyUser(@RequestParam("keyId") @NotNull int keyId,
                              @RequestParam("userId") @NotNull int userId) {
-        return keyUserService.saveKeyUser(keyId, userId) == 1 ?
-                Result.success() : Result.failure();
+        keyUserService.saveKeyUser(keyId, userId);
+        return Result.success();
     }
 
     @GetMapping("cancel")
     @Auth(role = RoleConstants.ADMIN, name = "删除钥匙持有人")
     public Result cancelKeyUser(@RequestParam("id") @NotNull int id) {
-        return keyUserService.removeByUserId(id) == 1 ?
-                Result.success() : Result.failure();
+        keyUserService.removeByUserId(id);
+        return Result.success();
     }
 
     @PostMapping("query")

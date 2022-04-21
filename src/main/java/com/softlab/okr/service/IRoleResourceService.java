@@ -16,5 +16,5 @@ import java.util.List;
  */
 public interface IRoleResourceService extends IService<RoleResource> {
 
-    boolean reloadRoleResource(List<Resource> list);
+    void reloadRoleResource(List<Resource> list);
 }

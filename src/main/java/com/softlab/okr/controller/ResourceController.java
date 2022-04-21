@@ -28,8 +28,8 @@ public class ResourceController {
     @Auth(role = RoleConstants.ADMIN, name = "更改接口开放状态")
     public Result changeResource(
             @NotBlank(message = "resourceId不能为空") @RequestParam("resourceId") String resourceId) {
-        return resourceService.modifyResourceStatus(resourceId) == 1 ?
-                Result.success() : Result.failure();
+        resourceService.modifyResourceStatus(resourceId);
+        return Result.success();
     }
 
     @PostMapping("query")
@@ -37,7 +37,7 @@ public class ResourceController {
     public Result queryResource(@RequestBody ResourceDTO dto) {
         return resourceService.getResourceList(dto);
     }
-    
+
     @GetMapping("queryName")
     @Auth(role = RoleConstants.ADMIN, name = "获取资源名称")
     public Result queryResourceName(@RequestParam(value = "param") String name) {

@@ -26,12 +26,12 @@ import java.util.Date;
 public class UserRoleServiceImpl extends ServiceImpl<UserRoleMapper, UserRole> implements IUserRoleService {
 
     @Override
-    public Boolean grantRole(GrantRoleDTO dto) {
+    public void grantRole(GrantRoleDTO dto) {
         String message = dto.getRoleMessage();
         Integer userId = dto.getUserId();
         Integer roleId = RoleEnum.getCode(message);
         if (null == message || null == userId || null == roleId) {
-            throw new BusinessException();
+            throw new BusinessException("信息错误，请联系管理员");
         }
         Date date = dto.getDate();
         Boolean flag = dto.getFlag();
@@ -41,7 +41,7 @@ public class UserRoleServiceImpl extends ServiceImpl<UserRoleMapper, UserRole> i
         UserRole userRole = this.getOne(new QueryWrapper<UserRole>()
                 .eq("user_id", userId).eq("role_id", roleId));
         userRole.setExpireTime(date);
-        return this.updateById(userRole);
+        this.updateById(userRole);
     }
 
 }

@@ -14,5 +14,5 @@ import com.softlab.okr.model.dto.GrantRoleDTO;
  */
 public interface IUserRoleService extends IService<UserRole> {
 
-    Boolean grantRole(GrantRoleDTO dto);
+    void grantRole(GrantRoleDTO dto);
 }

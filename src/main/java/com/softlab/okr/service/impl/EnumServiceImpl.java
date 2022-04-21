@@ -55,6 +55,9 @@ public class EnumServiceImpl implements IEnumService {
     }
 
     @Override
+    @Cacheable(cacheNames = EntityNames.USER_INFO + "#10m", keyGenerator =
+            com.softlab.okr.constant.EntityNames.MD5_KEY_GENERATOR,
+            unless = "#result=null")
     public List<String> getLikeMajor(String major) {
         return userInfoService
                 .list(new QueryWrapper<UserInfo>().like("major", major)).stream()
@@ -62,6 +65,9 @@ public class EnumServiceImpl implements IEnumService {
     }
 
     @Override
+    @Cacheable(cacheNames = EntityNames.TAG + "#10m", keyGenerator =
+            com.softlab.okr.constant.EntityNames.MD5_KEY_GENERATOR,
+            unless = "#result=null")
     public List<String> getLikeTag() {
         return tagService
                 .list((new QueryWrapper<Tag>().orderByDesc("weight"))).stream()

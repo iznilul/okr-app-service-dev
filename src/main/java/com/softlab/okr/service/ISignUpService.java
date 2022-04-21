@@ -19,7 +19,7 @@ import java.io.IOException;
 public interface ISignUpService extends IService<SignUp> {
 
     // 报名
-    int saveSignUp(SignUpAddDTO dto);
+    void saveSignUp(SignUpAddDTO dto);
 
     //录取结果更新
     void modifySignUp(SignUpChangeDTO dto);

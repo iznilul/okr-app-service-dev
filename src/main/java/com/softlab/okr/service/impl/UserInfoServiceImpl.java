@@ -52,10 +52,10 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
     private IAuthenticationService authenticationService;
 
     @Override
-    public int saveUserInfo(int userId, String username) {
+    public void saveUserInfo(int userId, String username) {
         UserInfo userInfo = new UserInfo(userId, username, null, null, null, null, null, null,
                 null, 0, null, null);
-        return userInfoMapper.insert(userInfo);
+        userInfoMapper.insert(userInfo);
     }
 
     @Override
@@ -129,10 +129,10 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
     }
 
     @Override
-    public int uploadAvatar(MultipartFile file) throws IOException {
+    public void uploadAvatar(MultipartFile file) throws IOException {
         byte[] data = file.getBytes();
         if (data.length > 1024000) {
-            return 0;
+            throw new BusinessException("文件太大,请上传1m以内的文件");
         }
         if (!FileUtil.judgeImage(file)) {
             throw new BusinessException("需要上传图片格式的文件");
@@ -141,7 +141,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         Base64.Encoder encoder = Base64.getEncoder();
         String avatar = "data:image/png;base64," + encoder.encodeToString(file.getBytes());
         String username = authenticationService.getUsername();
-        return userInfoMapper.update(null, new UpdateWrapper<UserInfo>()
+        userInfoMapper.update(null, new UpdateWrapper<UserInfo>()
                 .eq("username", username)
                 .set("avatar", avatar));
     }

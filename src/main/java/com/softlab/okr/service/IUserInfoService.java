@@ -22,7 +22,7 @@ import java.io.IOException;
 public interface IUserInfoService extends IService<UserInfo> {
 
 
-    int saveUserInfo(int userId, String username);
+    void saveUserInfo(int userId, String username);
 
     UserInfo getUserInfo();
 
@@ -36,6 +36,6 @@ public interface IUserInfoService extends IService<UserInfo> {
 
     void modifyUserRole(UpdateUserRoleDTO dto);
 
-    int uploadAvatar(MultipartFile file) throws IOException;
+    void uploadAvatar(MultipartFile file) throws IOException;
 
 }

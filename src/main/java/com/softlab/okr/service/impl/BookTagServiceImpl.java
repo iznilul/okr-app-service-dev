@@ -31,14 +31,15 @@ public class BookTagServiceImpl extends ServiceImpl<BookTagMapper, BookTag> impl
 
     @Override
     @CacheEvict(cacheNames = EntityNames.BOOK_TAG, allEntries = true)
-    public boolean saveBookTag(int bookId, List<Integer> list) {
+    public void saveBookTag(int bookId, List<Integer> list) {
         List<BookTag> bookTagList = list.stream().map(tagId -> {
             BookTag bookTag = new BookTag();
             bookTag.setBookId(bookId);
             bookTag.setTagId(tagId);
             return bookTag;
         }).collect(Collectors.toList());
-        return this.saveBatch(bookTagList);
+
+        this.saveBatch(bookTagList);
     }
 
     @Override

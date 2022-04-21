@@ -9,17 +9,17 @@ import com.softlab.okr.utils.Result;
 
 public interface IKeyService extends IService<Key> {
 
-    int saveKey(String keyName);
+    void saveKey(String keyName);
 
-    int modifyKey(KeyDTO dto);
+    void modifyKey(KeyDTO dto);
 
-    int removeById(int keyId);
+    void removeById(int keyId);
 
     Result getKey(PageDTO dto);
 
     KeyVO getKeyById(int keyId);
 
-    int borrowKey(int keyId);
+    void borrowKey(int keyId);
 
-    int returnKey(int keyId);
+    void returnKey(int keyId);
 }

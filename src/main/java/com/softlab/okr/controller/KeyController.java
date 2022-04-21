@@ -29,22 +29,22 @@ public class KeyController {
     @GetMapping("add")
     @Auth(role = RoleConstants.ADMIN, name = "增加钥匙")
     public Result addKey(@RequestParam("keyName") @NotBlank String keyName) {
-        return keyService.saveKey(keyName) == 1 ?
-                Result.success() : Result.failure();
+        keyService.saveKey(keyName);
+        return Result.success();
     }
 
     @PostMapping("change")
     @Auth(role = RoleConstants.ADMIN, name = "修改钥匙")
     public Result changeKey(@RequestBody KeyDTO dto) {
-        return keyService.modifyKey(dto) == 1 ?
-                Result.success() : Result.failure();
+        keyService.modifyKey(dto);
+        return Result.success();
     }
 
     @GetMapping("cancel")
     @Auth(role = RoleConstants.ADMIN, name = "删除钥匙")
     public Result cancelKey(@RequestParam("keyId") @NotNull int keyId) {
-        return keyService.removeById(keyId) == 1 ?
-                Result.success() : Result.failure();
+        keyService.removeById(keyId);
+        return Result.success();
     }
 
     @GetMapping("queryById")
@@ -63,13 +63,15 @@ public class KeyController {
     @GetMapping("borrow")
     @Auth(role = RoleConstants.USER, name = "借钥匙")
     public Result borrowKey(@RequestParam("keyId") int keyId) {
-        return keyService.borrowKey(keyId) == 1 ? Result.success() : Result.failure();
+        keyService.borrowKey(keyId);
+        return Result.success();
     }
 
     @GetMapping("return")
     @Auth(role = RoleConstants.USER, name = "还钥匙")
     public Result returnKey(@RequestParam("keyId") int keyId) {
-        return keyService.returnKey(keyId) == 1 ? Result.success() : Result.failure();
+        keyService.returnKey(keyId);
+        return Result.success();
     }
 
 }

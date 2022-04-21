@@ -2,6 +2,7 @@ package com.softlab.okr.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.softlab.okr.entity.BookTag;
+
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ import java.util.List;
  */
 public interface IBookTagService extends IService<BookTag> {
 
-  boolean saveBookTag(int bookId, List<Integer> list);
+    void saveBookTag(int bookId, List<Integer> list);
 
-  List<Integer> getTagIdList(int bookId);
+    List<Integer> getTagIdList(int bookId);
 }

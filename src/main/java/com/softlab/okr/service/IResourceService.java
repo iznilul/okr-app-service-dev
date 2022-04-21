@@ -12,7 +12,7 @@ public interface IResourceService extends IService<Resource> {
 
     Result getResourceList(ResourceDTO dto);
 
-    int modifyResourceStatus(String id);
+    void modifyResourceStatus(String id);
 
     Set<String> getResourceByUserId(int userId);
 

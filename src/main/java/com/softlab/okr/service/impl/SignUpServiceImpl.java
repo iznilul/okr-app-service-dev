@@ -48,15 +48,15 @@ public class SignUpServiceImpl extends ServiceImpl<SignUpMapper, SignUp> impleme
 
     // 报名
     @Override
-    public int saveSignUp(SignUpAddDTO dto) {
+    public void saveSignUp(SignUpAddDTO dto) {
         QueryWrapper<SignUp> wrapper = new QueryWrapper<SignUp>().eq("student_id",
                 dto.getStudentId());
         SignUp signUp = CopyUtil.copy(dto, SignUp.class);
         signUp.setStatus(0);
         if (null != signUpMapper.selectOne(wrapper)) {
-            return signUpMapper.update(signUp, wrapper);
+            signUpMapper.update(signUp, wrapper);
         } else {
-            return signUpMapper.insert(signUp);
+            signUpMapper.insert(signUp);
         }
     }
 

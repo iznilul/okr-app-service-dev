@@ -56,10 +56,10 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
 
     @Override
     @Transactional
-    public int modifyResourceStatus(String id) {
+    public void modifyResourceStatus(String id) {
         long resourceId = Long.parseLong(id);
         ApiFilter.updateResources(resourceId);
-        return resourceMapper.updateResourceStatus(resourceId);
+        resourceMapper.updateResourceStatus(resourceId);
     }
 
     @Override

@@ -46,8 +46,8 @@ public class UserController {
     public Result cancelUser(
             @NotBlank(message = "username不能为空") @RequestParam("username") String username) {
 
-        return userEntityService.removeByUsername(username) ?
-                Result.success() : Result.failure();
+        userEntityService.removeByUsername(username);
+        return Result.success();
     }
 
     @PostMapping("change")
@@ -92,16 +92,15 @@ public class UserController {
     public Result changeUserImg(
             @RequestParam("file") MultipartFile file)
             throws IOException {
-        return userInfoService.uploadAvatar(file) == 1 ?
-                Result.success("data:image/png;base64," + Base64.getEncoder().encodeToString(file.getBytes()))
-                : Result.failure();
+        userInfoService.uploadAvatar(file);
+        return Result.success("data:image/png;base64," + Base64.getEncoder().encodeToString(file.getBytes()));
     }
 
     @PostMapping("changePassword")
     @Auth(role = RoleConstants.USER, name = "修改密码")
     public Result changePassword(@RequestBody ModifyPwdDTO dto) {
-        return userEntityService.modifyPassword(dto) ?
-                Result.success() : Result.failure();
+        userEntityService.modifyPassword(dto);
+        return Result.success();
     }
 
     @GetMapping("queryByUsername")

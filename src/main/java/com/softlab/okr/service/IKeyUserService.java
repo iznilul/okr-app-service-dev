@@ -15,11 +15,11 @@ import com.softlab.okr.utils.Result;
  */
 public interface IKeyUserService extends IService<KeyUser> {
 
-    int saveKeyUser(int keyId, int userId);
+    void saveKeyUser(int keyId, int userId);
 
-    int modifyKeyUser(int keyId, int userId, int status);
+    void modifyKeyUser(int keyId, int userId, int status);
 
     Result getKeyUser(PageDTO dto);
 
-    int removeByUserId(int id);
+    void removeByUserId(int id);
 }

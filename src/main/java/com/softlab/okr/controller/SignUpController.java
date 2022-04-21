@@ -54,9 +54,9 @@ public class SignUpController {
     @PostMapping("add")
     @Auth(role = RoleConstants.COMMON, name = "纳新报名")
     public Result addSignUp(@RequestBody SignUpAddDTO dto) {
-        return signUpService.saveSignUp(dto) == 1
-                ? Result.success("报名成功，请加入纳新群: " + recruitGroupService.getOne(null).getGroupNumber())
-                : Result.failure();
+        signUpService.saveSignUp(dto);
+        return Result.success("报名成功，请加入纳新群: " + recruitGroupService.getOne(null).getGroupNumber());
+
     }
 
     @GetMapping("query")

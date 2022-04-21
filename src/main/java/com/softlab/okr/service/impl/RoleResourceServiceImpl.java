@@ -34,7 +34,7 @@ public class RoleResourceServiceImpl extends
 
     @Override
     @Transactional
-    public boolean reloadRoleResource(List<Resource> list) {
+    public void reloadRoleResource(List<Resource> list) {
         Set<Long> resourceSet = new HashSet<>();
         List<RoleEnum> roleEnumList = RoleEnum.getListOrderByDesc();
         List<RoleResource> result = new ArrayList<>();
@@ -45,7 +45,7 @@ public class RoleResourceServiceImpl extends
             resourceSet.addAll(set);
             result.addAll(this.buildRoleResourceList(status.code(), resourceSet));
         }
-        return this.saveBatch(result);
+        this.saveBatch(result);
     }
 
     private List<RoleResource> buildRoleResourceList(Integer roleId, Set<Long> set) {
