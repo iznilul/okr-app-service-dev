@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.softlab.okr.constant.EntityNames;
 import com.softlab.okr.entity.Tag;
 import com.softlab.okr.mapper.TagMapper;
 import com.softlab.okr.model.dto.TagAddDTO;
@@ -13,6 +14,8 @@ import com.softlab.okr.model.dto.TagDTO;
 import com.softlab.okr.model.exception.BusinessException;
 import com.softlab.okr.service.ITagService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -27,6 +30,7 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements ITagS
     private TagMapper tagMapper;
 
     @Override
+    @CacheEvict(cacheNames = EntityNames.TAG, allEntries = true)
     public void saveTag(TagAddDTO dto) {
         Tag tag = new Tag(null, dto.getName(), dto.getWeight(), 0);
         if (tagMapper.insert(tag) != 1) {
@@ -35,11 +39,17 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements ITagS
     }
 
     @Override
+    @Cacheable(cacheNames = EntityNames.TAG + "#10m", keyGenerator =
+            com.softlab.okr.constant.EntityNames.MD5_KEY_GENERATOR,
+            unless = "#result=null")
     public Tag getTag(Integer id) {
         return tagMapper.selectById(id);
     }
 
     @Override
+    @Cacheable(cacheNames = EntityNames.TAG + "#10m", keyGenerator =
+            com.softlab.okr.constant.EntityNames.MD5_KEY_GENERATOR,
+            unless = "#result=null")
     public Page<Tag> getTagList(TagDTO dto) {
         Page<Tag> page = new Page<>(dto.getIndex(), dto.getPageSize());
         return tagMapper.selectPage(page, new QueryWrapper<Tag>()
@@ -48,6 +58,7 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements ITagS
     }
 
     @Override
+    @CacheEvict(cacheNames = EntityNames.TAG, allEntries = true)
     public void modifyTag(TagChangeDTO dto) {
         Tag tag = tagMapper.selectById(dto.getTagId());
         if (null == tag) {
@@ -61,6 +72,7 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements ITagS
     }
 
     @Override
+    @CacheEvict(cacheNames = EntityNames.TAG, allEntries = true)
     public void removeById(Integer tagId) {
         if (tagMapper.deleteById(tagId) != 1) {
             throw new BusinessException("标签删除失败");

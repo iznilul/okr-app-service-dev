@@ -20,6 +20,7 @@ import com.softlab.okr.security.UserDetail;
 import com.softlab.okr.service.*;
 import com.softlab.okr.utils.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -66,9 +67,6 @@ public class UserEntityServiceImpl extends ServiceImpl<UserEntityMapper, UserEnt
 
     //登录操作
     @Override
-    @Cacheable(cacheNames = EntityNames.USER_ENTITY + "#10m", keyGenerator =
-            com.softlab.okr.constant.EntityNames.MD5_KEY_GENERATOR,
-            unless = "#result=null")
     public UserEntityVO login(LoginDTO dto) {
         // 根据用户名查询出用户实体对象
         UserEntity userEntity = userEntityService.getByUsername(dto.getUsername());
@@ -88,8 +86,7 @@ public class UserEntityServiceImpl extends ServiceImpl<UserEntityMapper, UserEnt
     @Override
     public UserDetails loadUserByUsername(String username) {
         // 先调用DAO层查询用户实体对象
-        UserEntity user = userEntityMapper.selectOne(new QueryWrapper<UserEntity>()
-                .eq("username", username));
+        UserEntity user = this.getByUsername(username);
         // 若没查询到一定要抛出该异常，这样才能被Spring Security的错误处理器处理
         if (user == null) {
             throw new UsernameNotFoundException("没有找到该用户");
@@ -114,6 +111,7 @@ public class UserEntityServiceImpl extends ServiceImpl<UserEntityMapper, UserEnt
 
     @Override
     @Transactional
+    @CacheEvict(cacheNames = {EntityNames.USER_ENTITY, EntityNames.USER_INFO, EntityNames.USER_ROLE}, allEntries = true)
     public void register(RegisterDTO dto) {
         if (null != this.getByUsername(dto.getUsername())) {
             throw new BusinessException("此用户名已被注册");
@@ -133,6 +131,7 @@ public class UserEntityServiceImpl extends ServiceImpl<UserEntityMapper, UserEnt
 
     @Override
     @Transactional
+    @CacheEvict(cacheNames = {EntityNames.USER_ENTITY, EntityNames.USER_INFO, EntityNames.USER_ROLE}, allEntries = true)
     public void removeByUsername(String username) {
         UserEntity entity = this.getByUsername(username);
         if (null == entity) {
@@ -148,6 +147,7 @@ public class UserEntityServiceImpl extends ServiceImpl<UserEntityMapper, UserEnt
     }
 
     @Override
+    @CacheEvict(cacheNames = EntityNames.USER_ENTITY, allEntries = true)
     public void modifyPassword(ModifyPwdDTO dto) {
         String username = authenticationService.getUsername();
         UserEntity userEntity = userEntityService.getByUsername(username);
