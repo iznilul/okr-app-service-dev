@@ -23,6 +23,7 @@ import com.softlab.okr.utils.CopyUtil;
 import com.softlab.okr.utils.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -51,6 +52,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
     private IAuthenticationService authenticationService;
 
     @Override
+    @CacheEvict(cacheNames = EntityNames.USER_INFO, allEntries = true)
     public void saveUserInfo(int userId, String username) {
         UserInfo userInfo = new UserInfo(userId, username, null, null, null, null, null, null,
                 null, 0, null, null);
@@ -58,6 +60,9 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
     }
 
     @Override
+    @Cacheable(cacheNames = EntityNames.USER_INFO + "#10m", keyGenerator =
+            com.softlab.okr.constant.EntityNames.MD5_KEY_GENERATOR,
+            unless = "#result=null")
     public UserInfo getUserInfo() {
         String username = authenticationService.getUsername();
         UserInfo userInfo = userInfoMapper.selectUserInfoByUsername(username);
@@ -66,6 +71,9 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
     }
 
     @Override
+    @Cacheable(cacheNames = EntityNames.USER_INFO + "#10m", keyGenerator =
+            com.softlab.okr.constant.EntityNames.MD5_KEY_GENERATOR,
+            unless = "#result=null")
     public UserRoleVO getUserRole(String username) {
         UserInfoVO userInfoVO = this.getUserInfoByUsername(username);
         if (null == userInfoVO) {
@@ -75,6 +83,9 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
     }
 
     @Override
+    @Cacheable(cacheNames = EntityNames.USER_INFO + "#10m", keyGenerator =
+            com.softlab.okr.constant.EntityNames.MD5_KEY_GENERATOR,
+            unless = "#result=null")
     public UserInfoVO getUserInfoByUsername(String username) {
         UserInfoVO vo = userInfoMapper.selectUserInfoVOByUsername(username);
         vo.setRole(RoleEnum.getMessage(vo.getRoleId()));
@@ -83,6 +94,9 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
     }
 
     @Override
+    @Cacheable(cacheNames = EntityNames.USER_INFO + "#10m", keyGenerator =
+            com.softlab.okr.constant.EntityNames.MD5_KEY_GENERATOR,
+            unless = "#result=null")
     public Page<UserInfoVO> getUserInfoByCond(SelectUserDTO dto) {
         Page<UserInfo> page = new Page<>(dto.getIndex(), dto.getPageSize());
         Page<UserInfoVO> voPage = userInfoMapper.selectUserInfoVOList(page, dto);
@@ -109,6 +123,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
 
     @Override
     @Transactional
+    @CacheEvict(cacheNames = {EntityNames.USER_INFO, EntityNames.USER_ROLE}, allEntries = true)
     public void modifyUserRole(UpdateUserRoleDTO dto) {
         UserInfo userInfo = this.getOne(new QueryWrapper<UserInfo>().eq("username",
                 dto.getUsername()));
@@ -127,6 +142,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
     }
 
     @Override
+    @CacheEvict(cacheNames = EntityNames.USER_INFO, allEntries = true)
     public void uploadAvatar(MultipartFile file) throws IOException {
         byte[] data = file.getBytes();
         if (data.length > 1024000) {

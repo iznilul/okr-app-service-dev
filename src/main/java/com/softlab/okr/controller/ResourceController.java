@@ -3,15 +3,14 @@ package com.softlab.okr.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.constant.RoleConstants;
-import com.softlab.okr.entity.Resource;
 import com.softlab.okr.model.dto.ResourceDTO;
+import com.softlab.okr.model.vo.ResourceVO;
 import com.softlab.okr.service.IResourceService;
 import com.softlab.okr.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
-import java.util.List;
 
 /**
  * @program: okr
@@ -37,14 +36,7 @@ public class ResourceController {
     @PostMapping("query")
     @Auth(role = RoleConstants.ADMIN, name = "获取资源接口")
     public Result queryResource(@RequestBody ResourceDTO dto) {
-        Page<Resource> page = resourceService.getResourceList(dto);
+        Page<ResourceVO> page = resourceService.getResourceList(dto);
         return Result.success(page.getRecords(), page.getCurrent(), page.getTotal());
-    }
-
-    @GetMapping("queryName")
-    @Auth(role = RoleConstants.ADMIN, name = "获取资源名称")
-    public Result queryResourceName(@RequestParam(value = "param") String name) {
-        List<String> list = resourceService.getResourceName(name);
-        return Result.success(list);
     }
 }

@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.softlab.okr.constant.EntityNames;
 import com.softlab.okr.entity.RecruitGroup;
 import com.softlab.okr.entity.SignUp;
 import com.softlab.okr.mapper.SignUpMapper;
@@ -22,6 +23,8 @@ import com.softlab.okr.service.IRecruitGroupService;
 import com.softlab.okr.service.ISignUpService;
 import com.softlab.okr.utils.CopyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.ServletOutputStream;
@@ -47,6 +50,7 @@ public class SignUpServiceImpl extends ServiceImpl<SignUpMapper, SignUp> impleme
 
     // 报名
     @Override
+    @CacheEvict(cacheNames = EntityNames.SIGNUP, allEntries = true)
     public void saveSignUp(SignUpAddDTO dto) {
         QueryWrapper<SignUp> wrapper = new QueryWrapper<SignUp>().eq("student_id",
                 dto.getStudentId());
@@ -61,6 +65,7 @@ public class SignUpServiceImpl extends ServiceImpl<SignUpMapper, SignUp> impleme
 
     //录取结果更新
     @Override
+    @CacheEvict(cacheNames = EntityNames.SIGNUP, allEntries = true)
     public void modifySignUp(SignUpChangeDTO dto) {
         SignUp signUp = signUpMapper.selectOne(new QueryWrapper<SignUp>().eq("student_id",
                 dto.getStudentId()));
@@ -74,6 +79,9 @@ public class SignUpServiceImpl extends ServiceImpl<SignUpMapper, SignUp> impleme
 
     //根据参数返回报名列表
     @Override
+    @Cacheable(cacheNames = EntityNames.SIGNUP + "#10m", keyGenerator =
+            com.softlab.okr.constant.EntityNames.MD5_KEY_GENERATOR,
+            unless = "#result=null")
     public Page<SignUpVO> getSignUpByList(SignUpDTO dto) {
         Page<SignUp> page = new Page<>(dto.getIndex(), dto.getPageSize());
         Page<SignUp> signUpPage = signUpMapper.selectPage(page, new QueryWrapper<SignUp>()
@@ -83,11 +91,13 @@ public class SignUpServiceImpl extends ServiceImpl<SignUpMapper, SignUp> impleme
                 .like((StringUtils.isNotBlank(dto.getMajor())), "major", dto.getMajor())
                 .orderByAsc("status"));
         Page<SignUpVO> voPage = new Page<>();
+        List<SignUpVO> list = new ArrayList<>();
         signUpPage.getRecords().forEach(signUp -> {
             SignUpVO vo = CopyUtil.copy(signUp, SignUpVO.class);
             vo.setStatusName(SignUpEnum.getMessage(vo.getStatus()));
-            voPage.getRecords().add(vo);
+            list.add(vo);
         });
+        voPage.setRecords(list);
         voPage.setCurrent(signUpPage.getCurrent());
         voPage.setTotal(signUpPage.getTotal());
         return voPage;
@@ -95,6 +105,9 @@ public class SignUpServiceImpl extends ServiceImpl<SignUpMapper, SignUp> impleme
 
     //根据id返回用户
     @Override
+    @Cacheable(cacheNames = EntityNames.SIGNUP + "#10m", keyGenerator =
+            com.softlab.okr.constant.EntityNames.MD5_KEY_GENERATOR,
+            unless = "#result=null")
     public SignUpVO getSignUpById(String studentId) {
         SignUp signUp = signUpMapper
                 .selectOne(new QueryWrapper<SignUp>().eq("student_id", studentId));

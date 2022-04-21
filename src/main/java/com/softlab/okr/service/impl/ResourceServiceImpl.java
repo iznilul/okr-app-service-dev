@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.softlab.okr.constant.EntityNames;
 import com.softlab.okr.constant.TimeFormat;
 import com.softlab.okr.entity.Resource;
 import com.softlab.okr.entity.UserRole;
@@ -19,8 +20,9 @@ import com.softlab.okr.service.IResourceService;
 import com.softlab.okr.service.IUserRoleService;
 import com.softlab.okr.utils.CopyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,11 +39,15 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
     private IUserRoleService userRoleService;
 
     @Override
-    public Page<Resource> getResourceList(ResourceDTO dto) {
+    @Cacheable(cacheNames = EntityNames.RESOURCE + "#10m", keyGenerator =
+            com.softlab.okr.constant.EntityNames.MD5_KEY_GENERATOR,
+            unless = "#result=null")
+    public Page<ResourceVO> getResourceList(ResourceDTO dto) {
         Page<Resource> page = new Page<>(dto.getIndex(), dto.getPageSize());
         Page<Resource> resourcePage = resourceMapper.selectPage(page, new QueryWrapper<Resource>()
                 .like((StringUtils.isNotBlank(dto.getName())), "name", dto.getName())
                 .orderByAsc("status"));
+        Page<ResourceVO> voPage = new Page<>();
         List<ResourceVO> list = new ArrayList<>();
         resourcePage.getRecords().forEach(resource -> {
             ResourceVO vo = CopyUtil.copy(resource, ResourceVO.class);
@@ -50,11 +56,14 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
             vo.setRoleName(RoleEnum.getMessage(resource.getRole()));
             list.add(vo);
         });
-        return resourcePage;
+        voPage.setRecords(list);
+        voPage.setCurrent(resourcePage.getCurrent());
+        voPage.setTotal(resourcePage.getTotal());
+        return voPage;
     }
 
     @Override
-    @Transactional
+    @CacheEvict(cacheNames = EntityNames.RESOURCE, allEntries = true)
     public void modifyResourceStatus(String id) {
         long resourceId = Long.parseLong(id);
         ApiFilter.updateResources(resourceId);
@@ -62,6 +71,9 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
     }
 
     @Override
+    @Cacheable(cacheNames = EntityNames.RESOURCE + "#10m", keyGenerator =
+            com.softlab.okr.constant.EntityNames.MD5_KEY_GENERATOR,
+            unless = "#result=null")
     public Set<String> getResourceByUserId(int userId) {
         UserRole userRole = userRoleService.getOne(new QueryWrapper<UserRole>()
                 .eq("user_id", userId));
@@ -74,17 +86,5 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
             throw new BusinessException("权限已到期 请重新登录");
         }
         return resourceMapper.selectByUserId(userId);
-    }
-
-    @Override
-    public List<String> getResourceName(String name) {
-        QueryWrapper<Resource> queryWrapper = new QueryWrapper<>();
-        queryWrapper.like("name", name).select("name");
-        List<String> result = new ArrayList<>();
-        List<Resource> resourceList = resourceMapper.selectList(queryWrapper);
-        resourceList.forEach(resource -> {
-            result.add(resource.getName());
-        });
-        return result;
     }
 }
