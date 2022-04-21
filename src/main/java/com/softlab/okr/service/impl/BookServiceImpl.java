@@ -21,6 +21,7 @@ import com.softlab.okr.service.IBookTagService;
 import com.softlab.okr.service.IBookUserService;
 import com.softlab.okr.service.ITagService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,6 +57,7 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements
     private IBookUserService bookUserService;
 
     @Override
+    @CacheEvict(cacheNames = EntityNames.BOOK, allEntries = true)
     public void saveBook(String bookName) {
         Book book = new Book(null, bookName, null, null, 0);
         if (bookMapper.insert(book) != 1) {
@@ -64,6 +66,7 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements
     }
 
     @Override
+    @CacheEvict(cacheNames = EntityNames.BOOK, allEntries = true)
     public void removeBook(int bookId) {
         if (bookMapper.deleteById(bookId) != 1) {
             throw new BusinessException("书籍删除失败");
@@ -72,6 +75,7 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements
 
     @Override
     @Transactional
+    @CacheEvict(cacheNames = EntityNames.BOOK, allEntries = true)
     public void borrowBook(int bookId) {
         Book book = bookMapper.selectOne(new QueryWrapper<Book>().eq("book_id", bookId));
         if (book.getStatus() == 1) {
@@ -89,6 +93,7 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements
     }
 
     @Override
+    @CacheEvict(cacheNames = EntityNames.BOOK, allEntries = true)
     public void returnBook(int bookId) {
         Book book = bookMapper.selectOne(new QueryWrapper<Book>().eq("book_id", bookId));
         if (book.getStatus() == 0) {
@@ -107,6 +112,7 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements
 
     @Override
     @Transactional
+    @CacheEvict(cacheNames = EntityNames.BOOK, allEntries = true)
     public void modifyBook(BookChangeDTO dto) {
         Book book = bookMapper.selectById(dto.getBookId());
         if (null == book) {
@@ -143,6 +149,7 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements
     }
 
     @Override
+    @CacheEvict(cacheNames = EntityNames.BOOK, allEntries = true)
     public void modifyBookImg(int bookId, MultipartFile file) {
         // 通过base64来转化图片
         String img = null;
@@ -164,7 +171,7 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements
     }
 
     @Override
-    @Cacheable(cacheNames = EntityNames.BOOK + "#30m", keyGenerator =
+    @Cacheable(cacheNames = EntityNames.BOOK + "#10m", keyGenerator =
             com.softlab.okr.constant.EntityNames.MD5_KEY_GENERATOR,
             unless = "#result=null")
     public Page<BookVO> getBookList(BookQueryDTO dto) {
@@ -177,9 +184,9 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements
         return voPage;
     }
 
-    
+
     @Override
-    @Cacheable(cacheNames = EntityNames.BOOK + "#30m", keyGenerator =
+    @Cacheable(cacheNames = EntityNames.BOOK + "#10m", keyGenerator =
             com.softlab.okr.constant.EntityNames.MD5_KEY_GENERATOR,
             unless = "#result=null")
     public BookVO getBook(int bookId) {

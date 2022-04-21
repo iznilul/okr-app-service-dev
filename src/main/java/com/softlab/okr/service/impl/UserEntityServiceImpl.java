@@ -3,6 +3,7 @@ package com.softlab.okr.service.impl;
 import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.softlab.okr.constant.EntityNames;
 import com.softlab.okr.constant.TimeFormat;
 import com.softlab.okr.entity.Role;
 import com.softlab.okr.entity.UserEntity;
@@ -11,6 +12,7 @@ import com.softlab.okr.mapper.UserEntityMapper;
 import com.softlab.okr.model.dto.LoginDTO;
 import com.softlab.okr.model.dto.ModifyPwdDTO;
 import com.softlab.okr.model.dto.RegisterDTO;
+import com.softlab.okr.model.exception.BusinessException;
 import com.softlab.okr.model.vo.UserEntityVO;
 import com.softlab.okr.security.IAuthenticationService;
 import com.softlab.okr.security.JwtManager;
@@ -18,6 +20,7 @@ import com.softlab.okr.security.UserDetail;
 import com.softlab.okr.service.*;
 import com.softlab.okr.utils.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -63,6 +66,9 @@ public class UserEntityServiceImpl extends ServiceImpl<UserEntityMapper, UserEnt
 
     //登录操作
     @Override
+    @Cacheable(cacheNames = EntityNames.USER_ENTITY + "#10m", keyGenerator =
+            com.softlab.okr.constant.EntityNames.MD5_KEY_GENERATOR,
+            unless = "#result=null")
     public UserEntityVO login(LoginDTO dto) {
         // 根据用户名查询出用户实体对象
         UserEntity userEntity = userEntityService.getByUsername(dto.getUsername());
@@ -80,6 +86,9 @@ public class UserEntityServiceImpl extends ServiceImpl<UserEntityMapper, UserEnt
 
 
     @Override
+    @Cacheable(cacheNames = EntityNames.USER_ROLE + "#10m", keyGenerator =
+            com.softlab.okr.constant.EntityNames.MD5_KEY_GENERATOR,
+            unless = "#result=null")
     public UserDetails loadUserByUsername(String username) {
         // 先调用DAO层查询用户实体对象
         UserEntity user = userEntityMapper.selectOne(new QueryWrapper<UserEntity>()
@@ -98,6 +107,9 @@ public class UserEntityServiceImpl extends ServiceImpl<UserEntityMapper, UserEnt
     }
 
     @Override
+    @Cacheable(cacheNames = EntityNames.USER_ENTITY + "#10m", keyGenerator =
+            com.softlab.okr.constant.EntityNames.MD5_KEY_GENERATOR,
+            unless = "#result=null")
     public UserEntity getByUsername(String username) {
         return userEntityMapper.selectOne(new QueryWrapper<UserEntity>()
                 .eq("username", username));
@@ -105,59 +117,59 @@ public class UserEntityServiceImpl extends ServiceImpl<UserEntityMapper, UserEnt
 
     @Override
     @Transactional
-    public boolean register(RegisterDTO dto) {
+    public void register(RegisterDTO dto) {
         if (null != this.getByUsername(dto.getUsername())) {
-            return false;
-        } else {
-            String password = MD5Util.string2MD5(dto.getUsername());
-            UserEntity userEntity = new UserEntity(null, dto.getUsername(), password);
+            throw new BusinessException("此用户名已被注册");
+        }
+        String password = MD5Util.string2MD5(dto.getUsername());
+        UserEntity userEntity = new UserEntity(null, dto.getUsername(), password);
 
-            if (userEntityMapper.insert(userEntity) == 0) {
-                return false;
-            } else {
-                int roleId = roleService.getOne(new QueryWrapper<Role>().eq("name", dto.getName()))
-                        .getRoleId();
-                int userId = userEntity.getUserId();
-                UserRole userRole = new UserRole(null, userId, roleId, DateUtil.parse(TimeFormat.neverExpire), null);
-                return userInfoService.saveUserInfo(userId, dto.getUsername()) == 1 && userRoleService.save(userRole);
-            }
+        userEntityMapper.insert(userEntity);
+
+        int roleId = roleService.getOne(new QueryWrapper<Role>().eq("name", dto.getName()))
+                .getRoleId();
+        int userId = userEntity.getUserId();
+        UserRole userRole = new UserRole(null, userId, roleId, DateUtil.parse(TimeFormat.neverExpire), null);
+        if (userInfoService.saveUserInfo(userId, dto.getUsername()) != 1 || !userRoleService.save(userRole)) {
+            throw new BusinessException("注册失败");
         }
     }
 
     @Override
     @Transactional
-    public boolean removeByUsername(String username) {
+    public void removeByUsername(String username) {
         UserEntity entity = this.getByUsername(username);
         if (null == entity) {
-            return false;
-        } else {
-            Integer userId = entity.getUserId();
-            return userEntityMapper.deleteByUsername(username) == 1
-                    && userInfoService.removeById(userId)
-                    && userRoleService.remove(new QueryWrapper<UserRole>().eq("user_id", userId));
+            throw new BusinessException("用户名输入错误");
         }
+        Integer userId = entity.getUserId();
+        if (userEntityMapper.deleteByUsername(username) != 1
+                || !userInfoService.removeById(userId)
+                || !userRoleService.remove(new QueryWrapper<UserRole>().eq("user_id", userId))) {
+            throw new BusinessException("删除失败");
+        }
+
     }
 
     @Override
-    public boolean modifyPassword(ModifyPwdDTO dto) {
+    public void modifyPassword(ModifyPwdDTO dto) {
         String username = authenticationService.getUsername();
         UserEntity userEntity = userEntityService.getByUsername(username);
 
-        if (loginCheck(userEntity, dto.getOldPassword())) {
-            userEntity.setPassword(dto.getNewPassword());
-            return this.updateById(userEntity);
-        } else {
-            return false;
+        if (!loginCheck(userEntity, dto.getOldPassword())) {
+            throw new BusinessException("密码错误");
         }
+        userEntity.setPassword(dto.getNewPassword());
+        this.updateById(userEntity);
     }
 
-    private boolean loginCheck(Map<String, Object> map, String password) {
+    private Boolean loginCheck(Map<String, Object> map, String password) {
         // 若没有查到用户或者密码校验失败则抛出异常，将未加密的密码和已加密的密码进行比对
         String s = (String) map.get("password");
         return map.size() != 0 && s.equals(password);
     }
 
-    private boolean loginCheck(UserEntity userEntity, String password) {
+    private Boolean loginCheck(UserEntity userEntity, String password) {
         // 若没有查到用户或者密码校验失败则抛出异常，将未加密的密码和已加密的密码进行比对
         return userEntity != null && userEntity.getPassword().equals(password);
     }

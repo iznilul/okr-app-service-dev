@@ -3,6 +3,7 @@ package com.softlab.okr.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.softlab.okr.constant.EntityNames;
 import com.softlab.okr.entity.BookUser;
 import com.softlab.okr.mapper.BookUserMapper;
 import com.softlab.okr.model.dto.PageDTO;
@@ -12,6 +13,8 @@ import com.softlab.okr.model.vo.BookUserVO;
 import com.softlab.okr.service.IBookUserService;
 import com.softlab.okr.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -29,6 +32,9 @@ public class BookUserServiceImpl extends ServiceImpl<BookUserMapper, BookUser> i
     private BookUserMapper bookUserMapper;
 
     @Override
+    @Cacheable(cacheNames = EntityNames.BOOK_USER + "#10m", keyGenerator =
+            com.softlab.okr.constant.EntityNames.MD5_KEY_GENERATOR,
+            unless = "#result=null")
     public Result getBookUserList(PageDTO dto) {
         Page<BookUser> page = new Page<>(dto.getIndex(), dto.getPageSize());
         Page<BookUserVO> voPage = bookUserMapper.selectBookUserVO(page);
@@ -39,6 +45,7 @@ public class BookUserServiceImpl extends ServiceImpl<BookUserMapper, BookUser> i
     }
 
     @Override
+    @CacheEvict(cacheNames = EntityNames.BOOK_USER, allEntries = true)
     public void saveBookUser(int bookId, int userId, int status) {
         BookUser bookUser = new BookUser(null, bookId, userId, BookUserEnum.NOT_RETURN.code(),
                 null);
@@ -48,6 +55,7 @@ public class BookUserServiceImpl extends ServiceImpl<BookUserMapper, BookUser> i
     }
 
     @Override
+    @CacheEvict(cacheNames = EntityNames.BOOK_USER, allEntries = true)
     public void modifyBookUser(int bookId, int userId, int status) {
         BookUser bookUser = bookUserMapper.selectOne(new QueryWrapper<BookUser>().eq("book_id",
                 bookId).eq(

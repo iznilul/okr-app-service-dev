@@ -1,10 +1,10 @@
 package com.softlab.okr.utils;
 
-import com.softlab.okr.security.AuthenticationServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.softlab.okr.security.UserDetail;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,27 +14,41 @@ import javax.servlet.http.HttpServletRequest;
  * @Author: lulinzi
  * @Date: 2021-09-06 13:46
  **/
-@Component
 public class SecurityUtil {
 
-    @Autowired
-    private AuthenticationServiceImpl authenticationService;
+    private static Authentication getAuthentication() {
+        SecurityContext context = SecurityContextHolder.getContext();
+        return context.getAuthentication();
+    }
 
-    public String getRequestIp() {
-        Authentication authentication = authenticationService.getAuthentication();
+    private static UserDetail getPrincipal() {
+        Authentication authentication = getAuthentication();
+        if (authentication == null) {
+            return null;
+        }
+        Object object = authentication.getPrincipal();
+        if (object instanceof String) {
+            return null;
+        }
+        return (UserDetail) object;
+    }
+
+    public static String getRequestIp() {
+        Authentication authentication = getAuthentication();
         return ((WebAuthenticationDetails) authentication.getDetails()).getRemoteAddress();
     }
 
-    public String getRequestPath(HttpServletRequest request) {
+    public static String getRequestPath(HttpServletRequest request) {
         return request != null ? request.getRequestURI() : null;
     }
 
-    public String getRequestUsername() {
-        return authenticationService.getUsername();
+    public static String getUsername() {
+        UserDetail userDetail = getPrincipal();
+        return userDetail == null ? null : userDetail.getUsername();
     }
 
-    public Integer getRequestUserId() {
-        return authenticationService.getUserId();
+    public static Integer getUserId() {
+        UserDetail userDetail = getPrincipal();
+        return userDetail == null ? null : userDetail.getUserId();
     }
-
 }

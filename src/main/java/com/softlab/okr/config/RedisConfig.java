@@ -9,6 +9,7 @@ import com.softlab.okr.constant.EntityNames;
 import com.softlab.okr.model.enums.CacheKeyUnitEnum;
 import com.softlab.okr.model.exception.BusinessException;
 import com.softlab.okr.utils.JsonUtil;
+import com.softlab.okr.utils.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cache.annotation.EnableCaching;
@@ -64,9 +65,10 @@ public class RedisConfig {
     @Bean(name = EntityNames.MD5_KEY_GENERATOR)
     public KeyGenerator keyGenerator() {
         return (target, method, params) -> {
+            String userName = SecurityUtil.getUsername();
             String methodName = method.getName();
             String json = JsonUtil.toJsonString(Arrays.asList(params));
-            String key = methodName + "_" + SecureUtil.md5(json);
+            String key = userName + "_" + methodName + "_" + SecureUtil.md5(json);
             log.info("生成缓存key:{}", key);
             return key;
         };

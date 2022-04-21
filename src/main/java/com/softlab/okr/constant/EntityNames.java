@@ -30,6 +30,8 @@ public class EntityNames {
 
     public static final String ROLE_RESOURCE = "roleResource";
 
+    public static final String RESOURCE = "resource";
+
     public static final String SIGNUP = "signUp";
 
     public static final String SYS_RECORD = "sysRecord";

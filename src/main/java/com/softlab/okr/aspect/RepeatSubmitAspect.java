@@ -37,9 +37,6 @@ public class RepeatSubmitAspect {
     @Autowired
     private StringRedisTemplate redisTemplate;
 
-    @Autowired
-    private SecurityUtil securityUtil;
-
     /**
      * 调用切面类
      *
@@ -56,7 +53,7 @@ public class RepeatSubmitAspect {
             return;
         }
         String requestURI = attributes.getRequest().getRequestURI();
-        String username = securityUtil.getRequestUsername();
+        String username = SecurityUtil.getUsername();
         String lockKey = generatorLockKey(requestURI, username);
 
         Boolean locked = redisTemplate.opsForValue().setIfAbsent(lockKey, requestURI, LOCK_KEY_EXPIRED_SECOND,

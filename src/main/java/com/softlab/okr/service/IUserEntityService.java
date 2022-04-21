@@ -22,9 +22,9 @@ public interface IUserEntityService extends IService<UserEntity> {
 
     UserEntity getByUsername(String username);
 
-    boolean register(RegisterDTO dto);
+    void register(RegisterDTO dto);
 
-    boolean removeByUsername(String username);
+    void removeByUsername(String username);
 
-    boolean modifyPassword(ModifyPwdDTO dto);
+    void modifyPassword(ModifyPwdDTO dto);
 }

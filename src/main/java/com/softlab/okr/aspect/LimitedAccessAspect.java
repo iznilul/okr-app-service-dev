@@ -38,9 +38,6 @@ public class LimitedAccessAspect {
     public static Integer DETENTION = 30 * 60;
 
     @Autowired
-    private SecurityUtil securityUtil;
-
-    @Autowired
     private RedisUtil redisUtil;
 
     /**
@@ -60,7 +57,7 @@ public class LimitedAccessAspect {
             //String realRequestIps = request.getHeader("X-Forwarded-For");
             //log.info("realRequestIps地址:" + realRequestIps);
             HttpServletRequest request = attributes.getRequest();
-            String ip = securityUtil.getRequestIp();
+            String ip = SecurityUtil.getRequestIp();
             this.isInBlackList(ip);
             String ipLimitKey = IPLimit + "#" + ip;
 

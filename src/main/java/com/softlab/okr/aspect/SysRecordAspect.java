@@ -37,9 +37,6 @@ public class SysRecordAspect {
     @Autowired
     private ISysRecordService sysRecordService;
 
-    @Autowired
-    private SecurityUtil securityUtil;
-
     /**
      * 定义切入点，以controller下所有包的请求为切入点
      */
@@ -72,9 +69,9 @@ public class SysRecordAspect {
                 (ServletRequestAttributes) RequestContextHolder
                         .getRequestAttributes();
         HttpServletRequest request = servletRequestAttributes != null ? servletRequestAttributes.getRequest() : null;
-        String username = securityUtil.getRequestUsername();
-        String ip = securityUtil.getRequestIp();
-        String path = securityUtil.getRequestPath(request);
+        String username = SecurityUtil.getUsername();
+        String ip = SecurityUtil.getRequestIp();
+        String path = SecurityUtil.getRequestPath(request);
         long duration = System.currentTimeMillis() - startTime.get();
         SysRecord sysRecord = new SysRecord(null, null, path, username, ip, null, duration);
         //long start = System.currentTimeMillis();

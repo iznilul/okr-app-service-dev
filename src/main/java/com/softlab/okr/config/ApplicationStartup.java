@@ -17,6 +17,7 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.core.type.classreading.CachingMetadataReaderFactory;
 import org.springframework.core.type.classreading.MetadataReader;
 import org.springframework.core.type.classreading.MetadataReaderFactory;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ClassUtils;
@@ -56,6 +57,9 @@ public class ApplicationStartup implements ApplicationRunner {
     @Autowired
     private IRoleService roleService;
 
+    @Autowired
+    private StringRedisTemplate redisTemplate;
+
 
     private static final String jobPackage = "com.softlab.okr.job";
 
@@ -67,6 +71,7 @@ public class ApplicationStartup implements ApplicationRunner {
         loadResource();
         loadMenu();
         loadTask();
+        cleanRedis();
     }
 
     @Transactional
@@ -205,5 +210,13 @@ public class ApplicationStartup implements ApplicationRunner {
             System.out.println(e.getStackTrace()[0]);
         }
         return list;
+    }
+
+    private void cleanRedis() {
+        Set<String> keys = redisTemplate.keys("*");
+        Iterator<String> iterator = keys.iterator();
+        while (iterator.hasNext()) {
+            redisTemplate.delete(iterator.next());
+        }
     }
 }

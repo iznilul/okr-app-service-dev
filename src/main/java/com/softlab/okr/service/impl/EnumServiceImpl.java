@@ -35,7 +35,7 @@ public class EnumServiceImpl implements IEnumService {
     private ITagService tagService;
 
     @Override
-    @Cacheable(cacheNames = EntityNames.USER_ENTITY + "#30m", keyGenerator =
+    @Cacheable(cacheNames = EntityNames.USER_INFO + "#10m", keyGenerator =
             com.softlab.okr.constant.EntityNames.MD5_KEY_GENERATOR,
             unless = "#result=null")
     public List<String> getLikeUsername(String username) {
@@ -45,6 +45,9 @@ public class EnumServiceImpl implements IEnumService {
     }
 
     @Override
+    @Cacheable(cacheNames = EntityNames.USER_INFO + "#10m", keyGenerator =
+            com.softlab.okr.constant.EntityNames.MD5_KEY_GENERATOR,
+            unless = "#result=null")
     public List<String> getLikeName(String name) {
         return userInfoService
                 .list(new QueryWrapper<UserInfo>().like("name", name)).stream()

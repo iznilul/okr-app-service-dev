@@ -37,8 +37,8 @@ public class UserController {
     @PostMapping("add")
     @Auth(role = RoleConstants.ADMIN, name = "注册用户")
     public Result addUser(@Validated @RequestBody RegisterDTO dto) {
-
-        return userEntityService.register(dto) ? Result.success() : Result.failure();
+        userEntityService.register(dto);
+        return Result.success();
     }
 
     @GetMapping("cancel")
