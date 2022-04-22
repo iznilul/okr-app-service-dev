@@ -86,7 +86,7 @@ public class UserEntityServiceImpl extends ServiceImpl<UserEntityMapper, UserEnt
     @Override
     public UserDetails loadUserByUsername(String username) {
         // 先调用DAO层查询用户实体对象
-        UserEntity user = this.getByUsername(username);
+        UserEntity user = userEntityService.getByUsername(username);
         // 若没查询到一定要抛出该异常，这样才能被Spring Security的错误处理器处理
         if (user == null) {
             throw new UsernameNotFoundException("没有找到该用户");
