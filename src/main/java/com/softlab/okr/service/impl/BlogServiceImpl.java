@@ -22,7 +22,8 @@ public class BlogServiceImpl implements IBlogService {
 
     @Override
     public void uploadMarkdown(MultipartFile file){
-        if(!FileUtil.judgeMarkdown(file)){
+        String fileName = file.getOriginalFilename();
+        if(!FileUtil.isMarkdown(fileName)){
             throw new BusinessException("请上传md格式文件");
         }
         String html=null;
@@ -32,6 +33,5 @@ public class BlogServiceImpl implements IBlogService {
             log.error(e.toString());
             throw new BusinessException("markdown文件解析错误");
         }
-        log.info(html);
     }
 }

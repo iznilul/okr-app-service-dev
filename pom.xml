@@ -197,17 +197,6 @@
             <artifactId>commons-io</artifactId>
             <version>1.3.2</version>
         </dependency>
-        <!--分布式锁-->
-        <!--<dependency>-->
-        <!--  <groupId>net.javacrumbs.shedlock</groupId>-->
-        <!--  <artifactId>shedlock-provider-redis-spring</artifactId>-->
-        <!--  <version>2.3.0</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--  <groupId>net.javacrumbs.shedlock</groupId>-->
-        <!--  <artifactId>shedlock-spring</artifactId>-->
-        <!--  <version>2.3.0</version>-->
-        <!--</dependency>-->
         <!--    MyBatis-plus，ORM框架，访问并操作数据库-->
         <dependency>
             <groupId>com.baomidou</groupId>
