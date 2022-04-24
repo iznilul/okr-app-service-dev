@@ -24,8 +24,15 @@ public class BlogController {
 
     @PostMapping("upload")
     @Auth(role = RoleConstants.COMMON, name = "上传博客文件")
-    public Result changeResource(@RequestParam("file") MultipartFile file) {
+    public Result uploadBlog(@RequestParam("file") MultipartFile file) {
         blogService.uploadMarkdown(file);
+        return Result.success();
+    }
+
+    @GetMapping("query")
+    @Auth(role = RoleConstants.COMMON, name = "查看博客")
+    public Result queryBlog(@RequestParam("id") String id){
+        blogService.getBlog("1");
         return Result.success();
     }
 }

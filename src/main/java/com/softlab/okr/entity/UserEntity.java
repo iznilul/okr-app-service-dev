@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @program: okr
  * @description:
@@ -17,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserEntity extends BaseEntity {
+public class UserEntity extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

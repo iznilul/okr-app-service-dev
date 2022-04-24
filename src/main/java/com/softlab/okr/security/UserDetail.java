@@ -1,6 +1,8 @@
 package com.softlab.okr.security;
 
 import com.softlab.okr.entity.UserEntity;
+
+import java.io.Serializable;
 import java.util.Collection;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -16,7 +18,10 @@ import org.springframework.security.core.userdetails.User;
 @Getter
 @ToString
 @EqualsAndHashCode(callSuper = false)
-public class UserDetail extends User {
+public class UserDetail extends User implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     /**
      * 我们自己的用户实体对象，这里省略掉get/set方法
      */
