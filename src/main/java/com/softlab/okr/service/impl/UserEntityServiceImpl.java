@@ -29,6 +29,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -84,9 +85,6 @@ public class UserEntityServiceImpl extends ServiceImpl<UserEntityMapper, UserEnt
 
 
     @Override
-    @Cacheable(cacheNames = EntityNames.USER_ROLE + "#10m", keyGenerator =
-            com.softlab.okr.constant.EntityNames.MD5_KEY_GENERATOR,
-            unless = "#result=null")
     public UserDetails loadUserByUsername(String username) {
         // 先调用DAO层查询用户实体对象
         UserEntity user = userEntityService.getByUsername(username);

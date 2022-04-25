@@ -4,6 +4,7 @@ import com.softlab.okr.model.enums.ReturnEnum;
 import com.softlab.okr.utils.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.serializer.SerializationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -60,6 +61,14 @@ public class GlobalExceptionHandler {
         e.printStackTrace();
         return Result.failure(e);
     }
+
+    @ExceptionHandler(value = SerializationException.class)
+    public Result BusinessExceptionHandler(SerializationException e) {
+        log.error("redis序列化错误:" + e.toString());
+        e.printStackTrace();
+        return Result.failure("redis序列化错误");
+    }
+
 
     @ExceptionHandler(value = Exception.class)
     public Result exceptionHandler(Exception e) {

@@ -19,7 +19,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserEntity extends BaseEntity implements Serializable {
+public class UserEntity extends BaseEntity{
 
     private static final long serialVersionUID = 1L;
 

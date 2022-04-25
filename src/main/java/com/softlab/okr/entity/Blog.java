@@ -1,27 +1,33 @@
 package com.softlab.okr.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldStrategy;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.softlab.okr.entity.BaseEntity;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.util.List;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
- * 博客表
+ * <p>
+ * 
+ * </p>
  *
- * @author 陌溪
- * @date 2018-09-08
+ * @author Mybatis-plus自动生成
+ * @since 2022-04-25
  */
 @Data
-@TableName("t_blog")
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class Blog extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 唯一oid【自动递增】
+     * 主键id
      */
+    @TableId(value = "blog_id", type = IdType.AUTO)
     private Integer blogId;
 
     /**
@@ -37,35 +43,42 @@ public class Blog extends BaseEntity {
     /**
      * 博客点击数
      */
-    private Integer clickCount;
+    private String clickCount;
 
     /**
-     * 是否发布
+     * 是否对外展示
      */
-    private String isPublish;
+    private Integer publishIsOrNot;
 
     /**
      * 是否原创
      */
-    private String isOriginal;
+    private Integer originalIsOrNot;
 
     /**
-     * 如果原创，作者为管理员名
+     * 发布者账号
      */
-    private String userName;
+    private String username;
 
     /**
-     * 文章出处
+     * 类别id
      */
-    private String articlesPart;
+    private Integer categoryId;
 
     /**
-     * 推荐级别，用于首页推荐
-     * 0：正常
-     * 1：一级推荐(轮播图)
-     * 2：二级推荐(top)
-     * 3：三级推荐 ()
-     * 4：四级 推荐 (特别推荐)
+     * 文章原出处
      */
-    private Integer level;
+    private String originUrl;
+
+    /**
+     * 评分  0：未评分 1：不及格  2：及格  3：良好  4：优秀
+     */
+    private Integer status;
+
+    /**
+     * 评论
+     */
+    private String comment;
+
+
 }

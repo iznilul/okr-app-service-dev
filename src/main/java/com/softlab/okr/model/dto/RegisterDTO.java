@@ -21,6 +21,6 @@ public class RegisterDTO {
     @NotBlank(message = "账号不能为空")
     private String username;
 
-    @Pattern(regexp = "^(管理员|普通用户)$", message = "角色格式不对")
+    @Pattern(regexp = "^(管理员|普通用户)$", message = "请输入正确的格式")
     private String name;
 }

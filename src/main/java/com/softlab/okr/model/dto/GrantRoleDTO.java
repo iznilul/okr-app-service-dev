@@ -20,7 +20,7 @@ public class GrantRoleDTO {
     private Integer userId;
 
     //正则表达式匹配需要跟枚举类里的一样
-    @Pattern(regexp = "^(超级管理员|管理员|普通用户)$")
+    @Pattern(regexp = "^(超级管理员|管理员|普通用户)$",message = "请输入正确的格式")
     private String roleMessage;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")

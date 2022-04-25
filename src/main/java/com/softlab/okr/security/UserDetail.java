@@ -20,7 +20,7 @@ import org.springframework.security.core.userdetails.User;
 @EqualsAndHashCode(callSuper = false)
 public class UserDetail extends User implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
 
     /**
      * 我们自己的用户实体对象，这里省略掉get/set方法

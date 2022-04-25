@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.softlab.okr.mapper.BlogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.softlab.okr.entity.Blog">
+        <id column="blog_id" property="blogId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="delete_flag" property="deleteFlag"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="click_count" property="clickCount"/>
+        <result column="publish_is_or_not" property="publishIsOrNot"/>
+        <result column="original_is_or_not" property="originalIsOrNot"/>
+        <result column="username" property="username"/>
+        <result column="category_id" property="categoryId"/>
+        <result column="origin_url" property="originUrl"/>
+        <result column="status" property="status"/>
+        <result column="comment" property="comment"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        create_time,
+        update_time,
+        delete_flag,
+        blog_id, title, content, click_count, publish_is_or_not, original_is_or_not, username, category_id,origin_url,
+        status,
+        comment
+    </sql>
+
+</mapper>

@@ -2,7 +2,9 @@ package com.softlab.okr.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * <p>
@@ -13,6 +15,8 @@ import lombok.Data;
  * @since 2021-09-23
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class BookTag {
 
   private static final long serialVersionUID = 1L;
