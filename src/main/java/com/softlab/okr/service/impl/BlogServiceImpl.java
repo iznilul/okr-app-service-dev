@@ -34,7 +34,18 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IB
     @Override
     public void saveBlog(BlogDTO dto) {
         MultipartFile file = dto.getFile();
+        try {
+            byte[] data = file.getBytes();
+            if (data.length > 10240000) {
+                throw new BusinessException("文件太大,请上传10m以内的文件");
+            }
+        }catch (IOException e){
+            throw new BusinessException("文件流io错误");
+        }
         String fileName = file.getOriginalFilename();
+        if (null == fileName) {
+            throw new BusinessException("文件名不合法");
+        }
         if (!FileUtil.isMarkdown(fileName)) {
             throw new BusinessException("请上传md格式文件");
         }
@@ -43,7 +54,7 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IB
             html = FileUtil.markdownToHtml(file);
         } catch (IOException e) {
             log.error(e.toString());
-            throw new BusinessException("markdown文件解析错误");
+            throw new BusinessException("md文件解析错误");
         }
     }
 
@@ -59,6 +70,5 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IB
         map.put("shit", list);
         return map;
     }
-
 
 }

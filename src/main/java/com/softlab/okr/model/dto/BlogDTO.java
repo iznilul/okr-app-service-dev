@@ -29,6 +29,6 @@ public class BlogDTO {
     private Integer originalIsOrNot;
     private String originUrl;
     private String categoryName;
-    private List<Tag> tagList;
+    private List<String> tagList;
 
 }

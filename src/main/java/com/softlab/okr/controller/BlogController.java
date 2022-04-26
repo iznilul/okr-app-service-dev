@@ -35,8 +35,8 @@ public class BlogController {
             @RequestParam(value = "originUrl",required = false) String originUrl,
             @RequestParam("categoryName") String categoryName,
             @RequestParam("tagList") List<String> tagList) {
-        System.out.println("sdfsadfeas");
-        //blogService.saveBlog();
+        BlogDTO dto = new BlogDTO(title, file, originalIsOrNot, originUrl, categoryName, tagList);
+        blogService.saveBlog(dto);
         return Result.success();
     }
 

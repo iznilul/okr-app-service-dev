@@ -9,8 +9,10 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
 import javax.validation.ConstraintViolationException;
+import java.io.IOException;
 
 /**
  * @program: okr
@@ -24,7 +26,7 @@ import javax.validation.ConstraintViolationException;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = BaseException.class)
-    public Result BusinessExceptionHandler(BaseException e) {
+    public Result baseExceptionHandler(BaseException e) {
         log.error("业务错误:" + e.toString());
         e.printStackTrace();
         return Result.failure(e);
@@ -41,7 +43,7 @@ public class GlobalExceptionHandler {
 
     //post入参格式错误
     @ExceptionHandler(value = ConstraintViolationException.class)
-    public Result ConstraintViolationExceptionHandler(ConstraintViolationException e) {
+    public Result constraintViolationExceptionHandler(ConstraintViolationException e) {
         log.error("参数格式错误:" + e.toString());
         e.printStackTrace();
         String message = e.getMessage();
@@ -55,20 +57,19 @@ public class GlobalExceptionHandler {
         return Result.failure(ReturnEnum.SQL_ERROR);
     }
 
-    @ExceptionHandler(value = BusinessException.class)
-    public Result BusinessExceptionHandler(BusinessException e) {
-        log.error("业务错误:" + e.toString());
-        e.printStackTrace();
-        return Result.failure(e);
-    }
-
     @ExceptionHandler(value = SerializationException.class)
-    public Result BusinessExceptionHandler(SerializationException e) {
+    public Result serializationExceptionHandler(SerializationException e) {
         log.error("redis序列化错误:" + e.toString());
         e.printStackTrace();
         return Result.failure("redis序列化错误");
     }
 
+    @ExceptionHandler(value = MissingServletRequestPartException.class)
+    public Result missingServletRequestPartExceptionHandler(MissingServletRequestPartException e) {
+        log.error("请求参数缺失:" + e.toString());
+        e.printStackTrace();
+        return Result.failure("请求参数缺失");
+    }
 
     @ExceptionHandler(value = Exception.class)
     public Result exceptionHandler(Exception e) {
