@@ -1,15 +1,13 @@
 package com.softlab.okr.service;
 
-import com.softlab.okr.entity.Blog;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.softlab.okr.entity.Blog;
 import com.softlab.okr.model.dto.BlogDTO;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.Map;
+import com.softlab.okr.model.vo.BlogVO;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author Mybatis-plus自动生成
@@ -19,5 +17,5 @@ public interface IBlogService extends IService<Blog> {
 
     void saveBlog(BlogDTO dto);
 
-    Map<String, Object> getBlog(String id);
+    BlogVO getBlog(String id);
 }

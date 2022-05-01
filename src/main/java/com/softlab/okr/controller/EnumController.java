@@ -33,6 +33,9 @@ public class EnumController {
         DICT_MAP.put("userStatus", UserStatusEnum.getList());
         DICT_MAP.put("signUpStatus", SignUpEnum.getList());
         DICT_MAP.put("bookStatus", BookEnum.getList());
+        DICT_MAP.put("blogStatus", BlogStatusEnum.getList());
+        DICT_MAP.put("publishIsOrNot", PublishIsOrNotEnum.getList());
+        DICT_MAP.put("originalIsOrNot", OriginalIsOrNotEnum.getList());
     }
 
     @Autowired
@@ -94,6 +97,27 @@ public class EnumController {
         return Result.success(list);
     }
 
+    @GetMapping("blog")
+    @Auth(role = RoleConstants.ADMIN, name = "模糊查询博客状态")
+    public Result enumBlog() {
+        List<String> list = DICT_MAP.get("blogStatus");
+        return Result.success(list);
+    }
+
+    @GetMapping("publish")
+    @Auth(role = RoleConstants.ADMIN, name = "模糊查询博客发布状态")
+    public Result enumPublish() {
+        List<String> list = DICT_MAP.get("publishIsOrNot");
+        return Result.success(list);
+    }
+
+    @GetMapping("original")
+    @Auth(role = RoleConstants.ADMIN, name = "模糊查询博客原创状态")
+    public Result enumOriginal() {
+        List<String> list = DICT_MAP.get("originalIsOrNot");
+        return Result.success(list);
+    }
+
     @GetMapping("tag")
     @Auth(role = RoleConstants.ADMIN, name = "模糊查询标签")
     public Result enumTag() {
@@ -101,5 +125,10 @@ public class EnumController {
         return Result.success(list);
     }
 
-
+    @GetMapping("category")
+    @Auth(role = RoleConstants.ADMIN, name = "模糊查询分类")
+    public Result enumCategory() {
+        List<String> list = enumService.getLikeCategory();
+        return Result.success(list);
+    }
 }

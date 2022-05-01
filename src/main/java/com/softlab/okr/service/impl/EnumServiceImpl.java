@@ -1,14 +1,13 @@
 package com.softlab.okr.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.softlab.okr.constant.EntityNames;
+import com.softlab.okr.entity.Category;
 import com.softlab.okr.entity.Tag;
 import com.softlab.okr.entity.UserEntity;
 import com.softlab.okr.entity.UserInfo;
-import com.softlab.okr.service.IEnumService;
-import com.softlab.okr.service.ITagService;
-import com.softlab.okr.service.IUserEntityService;
-import com.softlab.okr.service.IUserInfoService;
+import com.softlab.okr.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -33,6 +32,9 @@ public class EnumServiceImpl implements IEnumService {
 
     @Autowired
     private ITagService tagService;
+
+    @Autowired
+    private ICategoryService categoryService;
 
     @Override
     @Cacheable(cacheNames = EntityNames.USER_INFO + "#10m", keyGenerator =
@@ -72,5 +74,15 @@ public class EnumServiceImpl implements IEnumService {
         return tagService
                 .list((new QueryWrapper<Tag>().orderByDesc("weight"))).stream()
                 .map(Tag::getName).collect(Collectors.toList());
+    }
+
+    @Override
+    @Cacheable(cacheNames = EntityNames.CATEGORY + "#10m", keyGenerator =
+            com.softlab.okr.constant.EntityNames.MD5_KEY_GENERATOR,
+            unless = "#result=null")
+    public List<String> getLikeCategory() {
+        return categoryService
+                .list((new LambdaQueryWrapper<Category>().orderByDesc(Category::getWeight))).stream()
+                .map(Category::getName).collect(Collectors.toList());
     }
 }

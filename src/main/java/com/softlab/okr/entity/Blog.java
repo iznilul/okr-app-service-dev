@@ -2,7 +2,6 @@ package com.softlab.okr.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.softlab.okr.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author Mybatis-plus自动生成
@@ -43,7 +42,7 @@ public class Blog extends BaseEntity {
     /**
      * 博客点击数
      */
-    private String clickCount;
+    private Integer clickCount;
 
     /**
      * 是否对外展示

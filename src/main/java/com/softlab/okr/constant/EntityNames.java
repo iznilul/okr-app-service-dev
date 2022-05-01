@@ -10,11 +10,15 @@ public class EntityNames {
 
     public static final String MD5_KEY_GENERATOR = "MD5KeyGenerator";
 
+    public static final String BLOG = "blog";
+
     public static final String BOOK = "book";
 
     public static final String BOOK_TAG = "userEntity";
 
     public static final String BOOK_USER = "bookUser";
+
+    public static final String CATEGORY = "category";
 
     public static final String KEY = "key";
 

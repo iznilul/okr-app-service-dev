@@ -1,14 +1,10 @@
 package com.softlab.okr.model.dto;
 
-import com.softlab.okr.entity.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Range;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -30,5 +26,5 @@ public class BlogDTO {
     private String originUrl;
     private String categoryName;
     private List<String> tagList;
-
+    private String username;
 }
