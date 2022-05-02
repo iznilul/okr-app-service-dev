@@ -3,7 +3,9 @@ package com.softlab.okr.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * <p>
@@ -14,6 +16,8 @@ import lombok.Data;
  * @since 2022-04-25
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Category {
 
     private static final long serialVersionUID = 1L;
