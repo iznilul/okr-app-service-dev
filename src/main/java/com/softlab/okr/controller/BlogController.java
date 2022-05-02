@@ -1,13 +1,15 @@
 package com.softlab.okr.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.softlab.okr.annotation.Auth;
 import com.softlab.okr.constant.RoleConstants;
 import com.softlab.okr.model.dto.BlogDTO;
+import com.softlab.okr.model.dto.BlogListDTO;
+import com.softlab.okr.model.vo.BlogListVO;
 import com.softlab.okr.model.vo.BlogVO;
 import com.softlab.okr.service.IBlogService;
 import com.softlab.okr.utils.Result;
 import com.softlab.okr.utils.SecurityUtil;
-import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +39,7 @@ public class BlogController {
     public Result addBlog(
             @RequestParam("title") @NotBlank String title,
             @RequestParam("file") @NotNull MultipartFile file,
-            @RequestParam("originalIsOrNot") @Range(min = 0, max = 1) Integer originalIsOrNot,
+            @RequestParam("originalIsOrNot") @NotBlank String originalIsOrNot,
             @RequestParam(value = "originUrl", required = false) String originUrl,
             @RequestParam("categoryName") @NotBlank String categoryName,
             @RequestParam("tagList") List<String> tagList) {
@@ -52,5 +54,12 @@ public class BlogController {
     public Result queryBlog(@RequestParam("id") String id) {
         BlogVO vo = blogService.getBlog(id);
         return Result.success(vo);
+    }
+
+    @PostMapping("queryList")
+    @Auth(role = RoleConstants.COMMON, name = "查看博客")
+    public Result queryBlogList(@RequestBody BlogListDTO dto) {
+        Page<BlogListVO> voPage = blogService.getBlogList(dto);
+        return Result.success(voPage.getRecords(), voPage.getCurrent(), voPage.getTotal());
     }
 }

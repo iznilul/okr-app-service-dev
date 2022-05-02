@@ -22,12 +22,13 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
+        blog_id
+        , title, content, click_count, publish_is_or_not, original_is_or_not, username, category_id,origin_url,
+        status,
+        comment,
         create_time,
         update_time,
         delete_flag,
-        blog_id, title, content, click_count, publish_is_or_not, original_is_or_not, username, category_id,origin_url,
-        status,
-        comment
     </sql>
 
 </mapper>

@@ -4,14 +4,16 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.softlab.okr.entity.BlogTag">
-        <id column="id" property="id" />
-        <result column="blog_id" property="blogId" />
-        <result column="tag_id" property="tagId" />
+        <id column="id" property="id"/>
+        <result column="blog_id" property="blogId"/>
+        <result column="tag_id" property="tagId"/>
+        <result column="delete_flag" property="deleteFlag"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, blog_id, tag_id
+        id
+        , blog_id, tag_id,delete_flag
     </sql>
 
 </mapper>

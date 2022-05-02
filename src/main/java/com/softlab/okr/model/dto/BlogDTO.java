@@ -22,7 +22,7 @@ public class BlogDTO {
     private String title;
     private MultipartFile file;
     //@Range(min = 0, max = 1, message = "参数需为0或1")
-    private Integer originalIsOrNot;
+    private String originalIsOrNot;
     private String originUrl;
     private String categoryName;
     private List<String> tagList;

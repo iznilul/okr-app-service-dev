@@ -2,21 +2,19 @@ package com.softlab.okr.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.softlab.okr.entity.BaseEntity;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author Mybatis-plus自动生成
  * @since 2022-04-25
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class BlogTag extends BaseEntity {
+public class BlogTag {
 
     private static final long serialVersionUID = 1L;
 
@@ -27,5 +25,6 @@ public class BlogTag extends BaseEntity {
 
     private Integer tagId;
 
-
+    @TableLogic
+    private Integer deleteFlag;
 }

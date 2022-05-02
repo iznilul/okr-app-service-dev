@@ -1,12 +1,9 @@
 package com.softlab.okr.utils;
 
 import com.softlab.okr.model.exception.BusinessException;
-import com.vladsch.flexmark.ext.autolink.AutolinkExtension;
 import com.vladsch.flexmark.ext.emoji.EmojiExtension;
 import com.vladsch.flexmark.ext.emoji.EmojiImageType;
 import com.vladsch.flexmark.ext.emoji.EmojiShortcutType;
-import com.vladsch.flexmark.ext.gfm.strikethrough.StrikethroughExtension;
-import com.vladsch.flexmark.ext.gfm.tasklist.TaskListExtension;
 import com.vladsch.flexmark.ext.tables.TablesExtension;
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
@@ -82,14 +79,13 @@ public class FileUtil {
                 // uncomment and change to your image directory for emoji images if you have it setup
                 //.set(EmojiExtension.ROOT_IMAGE_PATH, emojiInstallDirectory())
                 .set(EmojiExtension.USE_SHORTCUT_TYPE, EmojiShortcutType.GITHUB)
-                .set(EmojiExtension.USE_IMAGE_TYPE, EmojiImageType.IMAGE_ONLY)
-                ;
+                .set(EmojiExtension.USE_IMAGE_TYPE, EmojiImageType.IMAGE_ONLY);
 
         Parser parser = Parser.builder(options).build();
         HtmlRenderer renderer = HtmlRenderer.builder(options).build();
         Node document = parser.parse(content);
         String html = renderer.render(document);  // "<p>This is <em>Sparta</em></p>\n"
-        System.out.println(html);
+        //System.out.println(html);
         return html;
     }
 }

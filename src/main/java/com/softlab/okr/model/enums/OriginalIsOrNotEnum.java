@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public enum OriginalIsOrNotEnum implements BaseEnum {
-    NOT_ORIGINAL(0, "非原创"),
+    NOT_ORIGINAL(0, "转载"),
     ORIGINAL(1, "原创");
 
     private Integer code;
