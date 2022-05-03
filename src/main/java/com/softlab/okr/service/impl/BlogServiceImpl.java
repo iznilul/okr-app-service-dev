@@ -18,6 +18,7 @@ import com.softlab.okr.model.exception.BusinessException;
 import com.softlab.okr.model.vo.BlogDetailVO;
 import com.softlab.okr.model.vo.BlogListVO;
 import com.softlab.okr.model.vo.BlogVO;
+import com.softlab.okr.model.vo.UserInfoVO;
 import com.softlab.okr.service.*;
 import com.softlab.okr.utils.CopyUtil;
 import com.softlab.okr.utils.FileUtil;
@@ -119,14 +120,16 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IB
     }
 
     @Override
-    @Cacheable(cacheNames = EntityNames.BLOG + "#10m", keyGenerator =
-            com.softlab.okr.constant.EntityNames.MD5_KEY_GENERATOR,
-            unless = "#result=null")
+    //@Cacheable(cacheNames = EntityNames.BLOG + "#10m", keyGenerator =
+    //        com.softlab.okr.constant.EntityNames.MD5_KEY_GENERATOR,
+    //        unless = "#result=null")
     public BlogVO getBlog(String id) {
         Blog blog = this.getOne(new LambdaQueryWrapper<Blog>().eq(Blog::getBlogId, id));
         BlogVO vo = CopyUtil.copy(blog, BlogVO.class);
         List<BlogTag> blogTagList = blogTagService.list();
         List<Category> categoryList = categoryService.list();
+        UserInfoVO userInfo = userInfoService.getUserInfoByUsername(blog.getUsername());
+        vo.setName(userInfo.getName());
         vo.setStatusName(BlogStatusEnum.getMessage(blog.getStatus()));
         vo.setCategoryName(this.getCategoryName(categoryList, blog.getCategoryId()));
         vo.setTagList(this.buildTagList(blog.getBlogId(), blogTagList));

@@ -25,11 +25,11 @@ public class BlogVO {
 
     private String comment;
 
-    private String name;
+    private Integer status;
 
     private String statusName;
 
-    private String updateTime;
+    private String name;
 
     private String categoryName;
 
