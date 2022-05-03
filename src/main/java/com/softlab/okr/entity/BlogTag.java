@@ -2,7 +2,6 @@ package com.softlab.okr.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 
 /**
@@ -24,7 +23,4 @@ public class BlogTag {
     private Integer blogId;
 
     private Integer tagId;
-
-    @TableLogic
-    private Integer deleteFlag;
 }

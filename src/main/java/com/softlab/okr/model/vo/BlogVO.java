@@ -31,6 +31,8 @@ public class BlogVO {
 
     private String updateTime;
 
+    private String categoryName;
+
     private List<String> tagList;
 
 }

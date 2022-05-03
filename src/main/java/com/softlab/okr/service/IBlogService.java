@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.softlab.okr.entity.Blog;
 import com.softlab.okr.model.dto.BlogDTO;
 import com.softlab.okr.model.dto.BlogListDTO;
+import com.softlab.okr.model.dto.BlogModifyDTO;
+import com.softlab.okr.model.vo.BlogDetailVO;
 import com.softlab.okr.model.vo.BlogListVO;
 import com.softlab.okr.model.vo.BlogVO;
 
@@ -22,5 +24,11 @@ public interface IBlogService extends IService<Blog> {
 
     BlogVO getBlog(String id);
 
+    BlogDetailVO getBlogDetail(String id);
+
     Page<BlogListVO> getBlogList(BlogListDTO dto);
+
+    void removeBlog(String id);
+
+    void modifyBlog(BlogModifyDTO dto);
 }

@@ -1,8 +1,6 @@
 package com.softlab.okr.model.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * @program: okr
@@ -11,8 +9,6 @@ import lombok.NoArgsConstructor;
  * @create: 2021-07-07 21:59
  **/
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class BlogListDTO extends PageDTO {
-    
+
 }

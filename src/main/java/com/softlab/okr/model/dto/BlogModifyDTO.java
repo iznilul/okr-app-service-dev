@@ -16,15 +16,15 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BlogDTO {
-
-    //@NotBlank(message = "博客标题不能为空")
+public class BlogModifyDTO {
+    private String blogId;
     private String title;
     private MultipartFile file;
-    //@Range(min = 0, max = 1, message = "参数需为0或1")
     private String originalName;
     private String originUrl;
+    private String statusName;
+    private String publishName;
     private String categoryName;
+    private String comment;
     private List<String> tagList;
-    private String username;
 }

@@ -1,9 +1,8 @@
-package com.softlab.okr.model.dto;
+package com.softlab.okr.model.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -16,15 +15,24 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BlogDTO {
+public class BlogDetailVO {
 
-    //@NotBlank(message = "博客标题不能为空")
+    private Integer blogId;
+
     private String title;
-    private MultipartFile file;
-    //@Range(min = 0, max = 1, message = "参数需为0或1")
+
     private String originalName;
+
     private String originUrl;
+
+    private String statusName;
+
+    private String publishName;
+
+    private String comment;
+
     private String categoryName;
+
     private List<String> tagList;
-    private String username;
+
 }

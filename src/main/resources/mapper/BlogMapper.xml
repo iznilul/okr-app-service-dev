@@ -7,7 +7,6 @@
         <id column="blog_id" property="blogId"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
-        <result column="delete_flag" property="deleteFlag"/>
         <result column="title" property="title"/>
         <result column="content" property="content"/>
         <result column="click_count" property="clickCount"/>
@@ -28,7 +27,6 @@
         comment,
         create_time,
         update_time,
-        delete_flag,
     </sql>
 
 </mapper>

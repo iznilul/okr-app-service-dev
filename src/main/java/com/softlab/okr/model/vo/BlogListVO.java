@@ -21,13 +21,21 @@ public class BlogListVO {
 
     private String title;
 
+    private String username;
+
     private String name;
 
     private String statusName;
 
     private Integer status;
 
+    private String publishName;
+
+    private Integer publishIsOrNot;
+
     private String updateTime;
+
+    private String category;
 
     private List<String> tagList;
 
