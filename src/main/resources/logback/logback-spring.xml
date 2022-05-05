@@ -1,113 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--  <logger name="org.springframework" additivity="false">-->
-<!--    <level value="ERROR"/>-->
-<!--    <appender-ref ref="STDOUT"/>-->
-<!--    <appender-ref ref="errorAppender"/>-->
-<!--  </logger>-->
-
-<!--  &lt;!&ndash; 由于启动的时候，以下两个包下打印debug级别日志很多 ，所以调到ERROR&ndash;&gt;-->
-<!--  <logger name="org.apache.tomcat.util" additivity="false">-->
-<!--    <level value="ERROR"/>-->
-<!--    <appender-ref ref="STDOUT"/>-->
-<!--    <appender-ref ref="errorAppender"/>-->
-<!--  </logger>-->
-
-<!--  &lt;!&ndash; 默认spring boot导入hibernate很多的依赖包，启动的时候，会有hibernate相关的内容，直接去除 &ndash;&gt;-->
-<!--  <logger name="org.hibernate.validator" additivity="false">-->
-<!--    <level value="ERROR"/>-->
-<!--    <appender-ref ref="STDOUT"/>-->
-<!--    <appender-ref ref="errorAppender"/>-->
-<!--  </logger>-->
-<!--  &lt;!&ndash; mybatis日志打印&ndash;&gt;-->
-<!--  <logger name="com.softlab.okr.dao" level="DEBUG" additivity="false">-->
-<!--    <appender-ref ref="STDOUT"/>-->
-<!--    <appender-ref ref="mysqlAppender"/>-->
-<!--  </logger>-->
-<!--  &lt;!&ndash;它是根logger,是所有<logger>的上级。只有一个level属性，因为name已经被命名为"root",且已经是最上级了 &ndash;&gt;-->
-<!--  <root level="INFO">-->
-<!--  </root>-->
 <configuration>
-  <property name="pattern"
-    value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg %n"/>
-  <property name="pattern-color"
-    value="%yellow(%d{yyyy-MM-dd HH:mm:ss.SSS}) [%thread] %highlight(%-5level) %green(%logger{50}) - %highlight(%msg) %n"/>
+    <property name="pattern"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg %n"/>
+    <property name="pattern-color"
+              value="%yellow(%d{yyyy-MM-dd HH:mm:ss.SSS}) [%thread] %highlight(%-5level) %green(%logger{50}) - %highlight(%msg) %n"/>
 
-  <!--<property name="LOG_HOME" value="/data/logs"/>-->
-  <property name="LOG_HOME" value="logs"/>
-  <property name="APP_NAME" value="mgt-platform"/>
+    <!--<property name="LOG_HOME" value="/data/logs"/>-->
+    <property name="LOG_HOME" value="logs"/>
+    <property name="APP_NAME" value="mgt-platform"/>
 
-  <appender name="CONSOLE-WITH-COLOR" class="ch.qos.logback.core.ConsoleAppender">
-    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-      <pattern>${pattern-color}</pattern>
-    </encoder>
-  </appender>
+    <appender name="CONSOLE-WITH-COLOR" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${pattern-color}</pattern>
+        </encoder>
+    </appender>
 
-  <appender name="INFO_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>${LOG_HOME}/${APP_NAME}/info/%d{yyyy-MM-dd}/%d{HH}.log
-      </fileNamePattern>
-      <maxHistory>30</maxHistory>
-    </rollingPolicy>
-    <encoder charset="utf-8">
-      <pattern>${pattern}</pattern>
-    </encoder>
-    <filter class="ch.qos.logback.classic.filter.LevelFilter">
-      <level>INFO</level>
-      <onMatch>ACCEPT</onMatch>
-      <onMismatch>DENY</onMismatch>
-    </filter>
-  </appender>
+    <appender name="INFO_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${APP_NAME}/info/%d{yyyy-MM-dd}/%d{HH}.log
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder charset="utf-8">
+            <pattern>${pattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
 
-  <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>${LOG_HOME}/${APP_NAME}/error/%d{yyyy-MM-dd}/%d{HH_mm}.log
-      </fileNamePattern>
-      <maxHistory>30</maxHistory>
-    </rollingPolicy>
-    <encoder charset="utf-8">
-      <pattern>${pattern}</pattern>
-    </encoder>
-    <filter class="ch.qos.logback.classic.filter.LevelFilter">
-      <level>ERROR</level>
-      <onMatch>ACCEPT</onMatch>
-      <onMismatch>DENY</onMismatch>
-    </filter>
-  </appender>
+    <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${APP_NAME}/error/%d{yyyy-MM-dd}/%d{HH_mm}.log
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder charset="utf-8">
+            <pattern>${pattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
 
-  <appender name="FATAL_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>
-        ${LOG_HOME}/${APP_NAME}/fatal/%d{yyyy-MM-dd}/%d{HH_mm_ss}.log
-      </fileNamePattern>
-      <maxHistory>30</maxHistory>
-    </rollingPolicy>
-    <encoder charset="utf-8">
-      <pattern>${pattern}</pattern>
-    </encoder>
-    <filter class="ch.qos.logback.classic.filter.LevelFilter">
-      <level>FATAL</level>
-      <onMatch>ACCEPT</onMatch>
-      <onMismatch>DENY</onMismatch>
-    </filter>
-  </appender>
+    <appender name="FATAL_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${LOG_HOME}/${APP_NAME}/fatal/%d{yyyy-MM-dd}/%d{HH_mm_ss}.log
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder charset="utf-8">
+            <pattern>${pattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>FATAL</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
 
-  <!-- 文件 异步日志(async) -->
-  <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
-    <!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
-    <discardingThreshold>0</discardingThreshold>
-    <!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
-    <queueSize>512</queueSize>
-    <neverBlock>true</neverBlock>
-    <!-- 添加附加的appender,最多只能添加一个 -->
-    <appender-ref ref="INFO_FILE"/>
-  </appender>
+    <!-- 文件 异步日志(async) -->
+    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+        <discardingThreshold>0</discardingThreshold>
+        <!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+        <queueSize>512</queueSize>
+        <neverBlock>true</neverBlock>
+        <!-- 添加附加的appender,最多只能添加一个 -->
+        <appender-ref ref="INFO_FILE"/>
+    </appender>
 
-  <root level="INFO">
-    <appender-ref ref="CONSOLE-WITH-COLOR"/>
-    <appender-ref ref="ASYNC"/>
-    <!--    <appender-ref ref="INFO_FILE"/>-->
-    <appender-ref ref="ERROR_FILE"/>
-    <appender-ref ref="FATAL_FILE"/>
-  </root>
+    <root level="INFO">
+        <appender-ref ref="CONSOLE-WITH-COLOR"/>
+        <appender-ref ref="ASYNC"/>
+        <appender-ref ref="INFO_FILE"/>
+        <appender-ref ref="ERROR_FILE"/>
+        <appender-ref ref="FATAL_FILE"/>
+    </root>
 
 </configuration>

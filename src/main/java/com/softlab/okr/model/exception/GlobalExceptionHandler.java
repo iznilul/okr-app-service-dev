@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
 import javax.validation.ConstraintViolationException;
-import java.io.IOException;
 
 /**
  * @program: okr
@@ -28,6 +27,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = BaseException.class)
     public Result baseExceptionHandler(BaseException e) {
         log.error("业务错误:" + e.toString());
+        log.error(e.getStackTrace()[0].toString());
         e.printStackTrace();
         return Result.failure(e);
     }
@@ -74,6 +74,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     public Result exceptionHandler(Exception e) {
         log.error("服务系统错误:" + e.toString());
+        log.error(e.getStackTrace()[0].toString());
         e.printStackTrace();
         return Result.failure(ReturnEnum.ERROR);
     }

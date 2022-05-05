@@ -6,9 +6,14 @@ import com.softlab.okr.entity.Blog;
 import com.softlab.okr.model.dto.BlogDTO;
 import com.softlab.okr.model.dto.BlogListDTO;
 import com.softlab.okr.model.dto.BlogModifyDTO;
+import com.softlab.okr.model.dto.UserBlogDTO;
 import com.softlab.okr.model.vo.BlogDetailVO;
 import com.softlab.okr.model.vo.BlogListVO;
 import com.softlab.okr.model.vo.BlogVO;
+import com.softlab.okr.model.vo.UserBlogVO;
+import org.springframework.scheduling.annotation.Async;
+
+import java.util.concurrent.Future;
 
 /**
  * <p>
@@ -28,7 +33,12 @@ public interface IBlogService extends IService<Blog> {
 
     Page<BlogListVO> getBlogList(BlogListDTO dto);
 
+    Page<UserBlogVO> getBlogUserList(UserBlogDTO dto);
+
     void removeBlog(String id);
 
     void modifyBlog(BlogModifyDTO dto);
+
+    @Async
+    Future<Integer> incr(Blog blog);
 }

@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost
+ Source Server         : mysql5.7
  Source Server Type    : MySQL
  Source Server Version : 50722
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 50722
  File Encoding         : 65001
 
- Date: 25/04/2022 20:41:17
+ Date: 06/05/2022 00:21:33
 */
 
 SET NAMES utf8mb4;
@@ -24,8 +24,8 @@ DROP TABLE IF EXISTS `blog`;
 CREATE TABLE `blog`  (
   `blog_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '博客标题',
-  `content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '博客内容',
-  `click_count` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '博客点击数',
+  `content` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '博客内容',
+  `click_count` int(11) NULL DEFAULT NULL COMMENT '博客点击数',
   `publish_is_or_not` tinyint(2) NULL DEFAULT NULL COMMENT '是否对外展示',
   `original_is_or_not` tinyint(2) NULL DEFAULT NULL COMMENT '是否原创',
   `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '发布者账号',
@@ -33,15 +33,17 @@ CREATE TABLE `blog`  (
   `origin_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文章原出处',
   `status` int(11) NULL DEFAULT NULL COMMENT '评分  0：未评分 1：不及格  2：及格  3：良好  4：优秀',
   `comment` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '评论',
-  `create_time` datetime(0) NULL DEFAULT NULL,
-  `update_time` datetime(0) NULL DEFAULT NULL,
-  `delete_flag` tinyint(2) NULL DEFAULT NULL,
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `delete_flag` tinyint(2) NOT NULL COMMENT '删除标志',
   PRIMARY KEY (`blog_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of blog
 -- ----------------------------
+INSERT INTO `blog` VALUES (21, '123', '<hr />\n<p>title: itlab主页开发\ndate: 2021-05-11\ntags:</p>\n<ul>\n<li>vue</li>\n</ul>\n<hr />\n<h1>itlab主页开发</h1>\n<p>[TOC]</p>\n<h2>0x01 简介及开发技术栈</h2>\n<p>因为实验室之前的主页有点年头了，而且由于多人开发所以功能也有点重叠，所以重新整合了一下</p>\n<p>开发框架：vue3</p>\n<p>构建工具：vite</p>\n<p>UI框架：element-plus</p>\n<p>动画库：aos，particles.vue3</p>\n<p>其他还用到了诸如less等</p>\n<p>github：https://github.com/iznilul/itlab_home</p>\n<h2>0x02 整体布局</h2>\n<pre><code class=\"language-vue\">&lt;AHeader @gotoPage=&quot;gotoPage&quot;&gt;&lt;/AHeader&gt;\n&lt;AContent&gt;&lt;/AContent&gt;\n&lt;AFooter&gt;&lt;/AFooter&gt;\n</code></pre>\n<p>封装BasicLayout组件，由页头内容页脚三部分组成</p>\n<p>AHeader页头就是菜单，点击，调用父组件注册的跳转方法，实现路由</p>\n<p>AFooter页脚就是一段话( ╯□╰ )</p>\n<p>AContent包含了当前路由内容和粒子动画效果</p>\n<p>三个部分都采取了position:fixed 相对定位</p>\n<pre><code class=\"language-less\">#baseLayout{\n  height: 100%;\n  color: #000000;\n  position: relative;// 关键\n  box-sizing: border-box;\n  min-height:100%; // 关键\n  #header {\n    z-index: 2;\n    height: 60px;\n    position: fixed;// 关键\n    background: black;\n    top: 0;\n    left: 0;\n    right: 0;\n  }\n  #content{\n    height: 100%;\n    width: 100%;\n    //z-index: 0;\n    //background: black;\n    position: absolute;// 关键\n    top: 50px;\n    left: -8px;\n    right: 0;\n  }\n  #footer {\n    text-align: center;\n    overflow: auto;\n    background: black; //背景颜色，可以防止被覆盖\n    z-index: 1;\n    height: 30px;\n    position: fixed;// 关键\n    bottom: 0;\n    left: 0;\n    right: 0;\n  }\n}\n</code></pre>\n<p>这样保证页面滚动时位置相对锁定，时刻能呈现这三个组件</p>\n<p>预览效果</p>\n<p><img src=\"https://cdn.jsdelivr.net/gh/iznilul/img/1645457002233.gif\" alt=\"\" /></p>\n<h2>0x03 页内导航和步骤条</h2>\n<p>导航栏可以用a标签页内定位元素，实现导航</p>\n<pre><code class=\"language-vue\">&lt;el-tab-pane name=&quot;0&quot; label=&quot;实验室介绍&quot;&gt;&lt;a href=&quot;#first&quot;&gt;实验室介绍&lt;/a&gt;&lt;/el-tab-pane&gt;\n&lt;el-tab-pane name=&quot;1&quot; label=&quot;欢迎加入&quot;&gt;&lt;a href=&quot;#second&quot;&gt;欢迎加入&lt;/a&gt;&lt;/el-tab-pane&gt;\n&lt;el-tab-pane name=&quot;2&quot; label=&quot;学习方向&quot;&gt;&lt;a href=&quot;#third&quot;&gt;学习方向&lt;/a&gt;&lt;/el-tab-pane&gt;\n</code></pre>\n<p>步骤栏要麻烦一些</p>\n<pre><code class=\"language-vue\">&lt;el-steps id=&quot;step&quot; direction=&quot;vertical&quot; :active=&quot;active-0&quot;&gt;\n    &lt;el-step title=&quot;实验室介绍&quot;&gt;&lt;/el-step&gt;\n    &lt;el-step title=&quot;欢迎加入&quot;&gt;&lt;/el-step&gt;\n    &lt;el-step title=&quot;学习方向&quot;&gt;&lt;/el-step&gt;\n    &lt;el-step title=&quot;主要比赛&quot;&gt;&lt;/el-step&gt;\n    &lt;el-step title=&quot;实验室照片&quot;&gt;&lt;/el-step&gt;\n    &lt;el-step title=&quot;友情链接&quot;&gt;&lt;/el-step&gt;\n&lt;/el-steps&gt;\n</code></pre>\n<p>首先在步骤栏的组件上绑定一个active属性，代表当前激活的是哪一个步骤</p>\n<pre><code class=\"language-javascript\">const active=ref(&quot;&quot;);\nlet actives=reactive({\n    &quot;first&quot;:&quot;0&quot;,\n    &quot;second&quot;:&quot;1&quot;,\n    &quot;third&quot;:&quot;2&quot;,\n    &quot;fourth&quot;:&quot;3&quot;,\n    &quot;fifth&quot;:&quot;4&quot;,\n    &quot;sixth&quot;:&quot;5&quot;});\n</code></pre>\n<p>在setup函数里设置变量和id的对应关系</p>\n<pre><code class=\"language-javascript\">let list=reactive([&quot;first&quot;,&quot;second&quot;,&quot;third&quot;,&quot;fourth&quot;,&quot;fifth&quot;,&quot;sixth&quot;]);\nconst scrollHandle=(e)=&gt;{\n                // 获取视窗高度\n                let domHeight = document.body.offsetHeight;\n                // dom滚动位置\n                let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;\n                // 获取监听元素\n                let id=null;\n                // 获取监听元素本身高度\n                let scrollHeight=null;\n                // 获取监听元素距离视窗顶部距离\n                let offsetTop=null;\n                // 获取监听元素距离顶部高度-窗口高度\n                let top=null;\n                // 元素距离底部的高度+元素本身高度\n                let bottom=null;\n                list.map((i) =&gt; {\n                    id = document.getElementById(i);\n                    scrollHeight = id.scrollHeight;\n                    // console.log(&quot;元素高度:&quot;+scrollHeight)\n                    offsetTop = id.offsetTop;\n                    // console.log(&quot;元素绝对位置:&quot;+offsetTop)\n                    top = offsetTop - domHeight &gt; 0 ? offsetTop - domHeight : 0;\n                    // console.log(&quot;元素顶部:&quot;+top)\n                    bottom = scrollHeight + offsetTop;\n                    // console.log(&quot;元素底部:&quot;+bottom)\n                    // 页面滚动位置 &gt; 元素距离顶部高度-窗口高度 &amp;&amp; 页面滚动位置 &lt; 元素距离顶部高度+元素本身高度\n                    if (scrollTop &gt;= top &amp;&amp; scrollTop &lt;= bottom) {\n                        // console.log(\'元素出现在可视区: \' + i);\n                        active.value=actives[i]\n                    }\n                });\n            };\n            onMounted(()=&gt;{\n                window.addEventListener(&quot;scroll&quot;,scrollHandle)\n            });\n            return{\n                active\n            }\n</code></pre>\n<p>编写一个判断当前可视页面处于哪个位置的函数，来计算active变量</p>\n<p>把这个函数注册到浏览器，监听到事件即可执行</p>\n<p><img src=\"https://cdn.jsdelivr.net/gh/iznilul/img/1645457001003.gif\" alt=\"\" /></p>\n<h2>0x04 移动端拒绝</h2>\n<p>由于时间有限只开发完了web版本，移动端访问的话样式会有很大问题，所以干脆直接惯了移动端</p>\n<p>在app.vue中</p>\n<pre><code class=\"language-javascript\">const isMobile=()=&gt;{\n   let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)\n   return flag;\n}\nonMounted(()=&gt;{\n   // console.log(&quot;isMobile&quot;,isMobile())\n   if(isMobile()){\n      ElMessageBox({\n         title:&quot;设备错误&quot;,\n         message:&quot;请在电脑网页版访问，手机移动端暂不支持&quot;,\n         showClose:false,\n         showConfirmButton:false,\n         closeOnClickModal:false,\n         closeOnPressEscape:false\n      });\n   }\n})\n</code></pre>\n<p>先判断用户是不是移动端访问，是的话直接返回一个不能关闭的提示框，让用户乖乖去web端</p>\n<p><img src=\"https://cdn.jsdelivr.net/gh/iznilul/img/1645457001920.png\" alt=\"\" /></p>\n<h2>0x05防抖</h2>\n<p>如果用户持续点击访问后端资源的按钮会给服务器和数据库带来很大压力，这里给axios加全局防抖功能，控制恶意访问</p>\n<pre><code class=\"language-javascript\">// 正在进行中的请求列表\nlet reqList = []\n/**\n * 阻止重复请求\n * @param {array} reqList - 请求缓存列表\n * @param {string} url - 当前请求地址\n * @param {function} cancel - 请求中断函数\n * @param {string} errorMessage - 请求中断时需要显示的错误信息\n */\nconst stopRepeatRequest = function (reqList, url, cancel, errorMessage) {\n    const errorMsg = errorMessage || \'\'\n    for (let i = 0; i &lt; reqList.length; i++) {\n        if (reqList[i] === url) {\n            console.log(&quot;重复请求,请求被中断&quot;)\n            cancel(errorMsg)\n            return\n        }\n    }\n    reqList.push(url)\n}\n\n/**\n * 允许某个请求可以继续进行\n * @param {array} reqList 全部请求列表\n * @param {string} url 请求地址\n */\nconst allowRequest = function (reqList, url) {\n    for (let i = 0; i &lt; reqList.length; i++) {\n        if (reqList[i] === url) {\n            reqList.splice(i, 1)\n            break\n        }\n    }\n}\n\nconst service = axios.create({\n  baseURL: baseURL,\n  timeout: 6000,\n})\n\nservice.interceptors.request.use(\n  (config) =&gt; {\n      let cancel\n      // 设置cancelToken对象\n      config.cancelToken = new axios.CancelToken((config)=&gt; {\n          cancel = config\n      })\n      // 阻止重复请求。当上个请求未完成时，相同的请求不会进行\n      stopRepeatRequest(reqList, config.url, cancel, `已有相同请求，${config.url} 请求被中断`)\n    return config\n  },\n  (error) =&gt; {\n    return Promise.reject(error)\n  }\n)\n\nservice.interceptors.response.use(\n  (response) =&gt; {\n      // 增加延迟，相同请求不得在短时间内重复发送,在延迟时间内，由于请求列表还没有清除，相同的请求会在请求拦截器被拦截\n      setTimeout(() =&gt; {\n          allowRequest(reqList, response.config.url)\n      }, 1000)\n    // 正常，直接返回数据\n    return res\n  },\n  (error) =&gt; {\n      // 增加延迟，相同请求不得在短时间内重复发送,在延迟时间内，由于请求列表还没有清除，相同的请求会在请求拦截器被拦截\n      setTimeout(() =&gt; {\n          allowRequest(reqList, error.config.url)\n      }, 1000)\n    return Promise.reject(error)\n  }\n)\n</code></pre>\n<p>这样，发出去的请求会在全局请求队列中暂时保存，等到请求返回1000ms之后才可以再次发起请求，控制请求频率</p>\n<p><img src=\"https://cdn.jsdelivr.net/gh/iznilul/img/1645457002118.gif\" alt=\"\" /></p>\n<h2>0x06参考资料</h2>\n<p>https://juejin.cn/post/6844903921706614791</p>\n<p>https://blog.csdn.net/weixin_48255917/article/details/110041031</p>\n', 0, 0, 0, '18111493050', 7, '', 0, NULL, '2022-05-04 15:51:23', '2022-05-04 15:51:23', 0);
+INSERT INTO `blog` VALUES (22, '1234', '<hr />\n<p>title: itlab主页开发\ndate: 2021-05-11\ntags:</p>\n<ul>\n<li>vue</li>\n</ul>\n<hr />\n<h1>itlab主页开发</h1>\n<p>[TOC]</p>\n<h2>0x01 简介及开发技术栈</h2>\n<p>因为实验室之前的主页有点年头了，而且由于多人开发所以功能也有点重叠，所以重新整合了一下</p>\n<p>开发框架：vue3</p>\n<p>构建工具：vite</p>\n<p>UI框架：element-plus</p>\n<p>动画库：aos，particles.vue3</p>\n<p>其他还用到了诸如less等</p>\n<p>github：https://github.com/iznilul/itlab_home</p>\n<h2>0x02 整体布局</h2>\n<pre><code class=\"language-vue\">&lt;AHeader @gotoPage=&quot;gotoPage&quot;&gt;&lt;/AHeader&gt;\n&lt;AContent&gt;&lt;/AContent&gt;\n&lt;AFooter&gt;&lt;/AFooter&gt;\n</code></pre>\n<p>封装BasicLayout组件，由页头内容页脚三部分组成</p>\n<p>AHeader页头就是菜单，点击，调用父组件注册的跳转方法，实现路由</p>\n<p>AFooter页脚就是一段话( ╯□╰ )</p>\n<p>AContent包含了当前路由内容和粒子动画效果</p>\n<p>三个部分都采取了position:fixed 相对定位</p>\n<pre><code class=\"language-less\">#baseLayout{\n  height: 100%;\n  color: #000000;\n  position: relative;// 关键\n  box-sizing: border-box;\n  min-height:100%; // 关键\n  #header {\n    z-index: 2;\n    height: 60px;\n    position: fixed;// 关键\n    background: black;\n    top: 0;\n    left: 0;\n    right: 0;\n  }\n  #content{\n    height: 100%;\n    width: 100%;\n    //z-index: 0;\n    //background: black;\n    position: absolute;// 关键\n    top: 50px;\n    left: -8px;\n    right: 0;\n  }\n  #footer {\n    text-align: center;\n    overflow: auto;\n    background: black; //背景颜色，可以防止被覆盖\n    z-index: 1;\n    height: 30px;\n    position: fixed;// 关键\n    bottom: 0;\n    left: 0;\n    right: 0;\n  }\n}\n</code></pre>\n<p>这样保证页面滚动时位置相对锁定，时刻能呈现这三个组件</p>\n<p>预览效果</p>\n<p><img src=\"https://cdn.jsdelivr.net/gh/iznilul/img/1645457002233.gif\" alt=\"\" /></p>\n<h2>0x03 页内导航和步骤条</h2>\n<p>导航栏可以用a标签页内定位元素，实现导航</p>\n<pre><code class=\"language-vue\">&lt;el-tab-pane name=&quot;0&quot; label=&quot;实验室介绍&quot;&gt;&lt;a href=&quot;#first&quot;&gt;实验室介绍&lt;/a&gt;&lt;/el-tab-pane&gt;\n&lt;el-tab-pane name=&quot;1&quot; label=&quot;欢迎加入&quot;&gt;&lt;a href=&quot;#second&quot;&gt;欢迎加入&lt;/a&gt;&lt;/el-tab-pane&gt;\n&lt;el-tab-pane name=&quot;2&quot; label=&quot;学习方向&quot;&gt;&lt;a href=&quot;#third&quot;&gt;学习方向&lt;/a&gt;&lt;/el-tab-pane&gt;\n</code></pre>\n<p>步骤栏要麻烦一些</p>\n<pre><code class=\"language-vue\">&lt;el-steps id=&quot;step&quot; direction=&quot;vertical&quot; :active=&quot;active-0&quot;&gt;\n    &lt;el-step title=&quot;实验室介绍&quot;&gt;&lt;/el-step&gt;\n    &lt;el-step title=&quot;欢迎加入&quot;&gt;&lt;/el-step&gt;\n    &lt;el-step title=&quot;学习方向&quot;&gt;&lt;/el-step&gt;\n    &lt;el-step title=&quot;主要比赛&quot;&gt;&lt;/el-step&gt;\n    &lt;el-step title=&quot;实验室照片&quot;&gt;&lt;/el-step&gt;\n    &lt;el-step title=&quot;友情链接&quot;&gt;&lt;/el-step&gt;\n&lt;/el-steps&gt;\n</code></pre>\n<p>首先在步骤栏的组件上绑定一个active属性，代表当前激活的是哪一个步骤</p>\n<pre><code class=\"language-javascript\">const active=ref(&quot;&quot;);\nlet actives=reactive({\n    &quot;first&quot;:&quot;0&quot;,\n    &quot;second&quot;:&quot;1&quot;,\n    &quot;third&quot;:&quot;2&quot;,\n    &quot;fourth&quot;:&quot;3&quot;,\n    &quot;fifth&quot;:&quot;4&quot;,\n    &quot;sixth&quot;:&quot;5&quot;});\n</code></pre>\n<p>在setup函数里设置变量和id的对应关系</p>\n<pre><code class=\"language-javascript\">let list=reactive([&quot;first&quot;,&quot;second&quot;,&quot;third&quot;,&quot;fourth&quot;,&quot;fifth&quot;,&quot;sixth&quot;]);\nconst scrollHandle=(e)=&gt;{\n                // 获取视窗高度\n                let domHeight = document.body.offsetHeight;\n                // dom滚动位置\n                let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;\n                // 获取监听元素\n                let id=null;\n                // 获取监听元素本身高度\n                let scrollHeight=null;\n                // 获取监听元素距离视窗顶部距离\n                let offsetTop=null;\n                // 获取监听元素距离顶部高度-窗口高度\n                let top=null;\n                // 元素距离底部的高度+元素本身高度\n                let bottom=null;\n                list.map((i) =&gt; {\n                    id = document.getElementById(i);\n                    scrollHeight = id.scrollHeight;\n                    // console.log(&quot;元素高度:&quot;+scrollHeight)\n                    offsetTop = id.offsetTop;\n                    // console.log(&quot;元素绝对位置:&quot;+offsetTop)\n                    top = offsetTop - domHeight &gt; 0 ? offsetTop - domHeight : 0;\n                    // console.log(&quot;元素顶部:&quot;+top)\n                    bottom = scrollHeight + offsetTop;\n                    // console.log(&quot;元素底部:&quot;+bottom)\n                    // 页面滚动位置 &gt; 元素距离顶部高度-窗口高度 &amp;&amp; 页面滚动位置 &lt; 元素距离顶部高度+元素本身高度\n                    if (scrollTop &gt;= top &amp;&amp; scrollTop &lt;= bottom) {\n                        // console.log(\'元素出现在可视区: \' + i);\n                        active.value=actives[i]\n                    }\n                });\n            };\n            onMounted(()=&gt;{\n                window.addEventListener(&quot;scroll&quot;,scrollHandle)\n            });\n            return{\n                active\n            }\n</code></pre>\n<p>编写一个判断当前可视页面处于哪个位置的函数，来计算active变量</p>\n<p>把这个函数注册到浏览器，监听到事件即可执行</p>\n<p><img src=\"https://cdn.jsdelivr.net/gh/iznilul/img/1645457001003.gif\" alt=\"\" /></p>\n<h2>0x04 移动端拒绝</h2>\n<p>由于时间有限只开发完了web版本，移动端访问的话样式会有很大问题，所以干脆直接惯了移动端</p>\n<p>在app.vue中</p>\n<pre><code class=\"language-javascript\">const isMobile=()=&gt;{\n   let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)\n   return flag;\n}\nonMounted(()=&gt;{\n   // console.log(&quot;isMobile&quot;,isMobile())\n   if(isMobile()){\n      ElMessageBox({\n         title:&quot;设备错误&quot;,\n         message:&quot;请在电脑网页版访问，手机移动端暂不支持&quot;,\n         showClose:false,\n         showConfirmButton:false,\n         closeOnClickModal:false,\n         closeOnPressEscape:false\n      });\n   }\n})\n</code></pre>\n<p>先判断用户是不是移动端访问，是的话直接返回一个不能关闭的提示框，让用户乖乖去web端</p>\n<p><img src=\"https://cdn.jsdelivr.net/gh/iznilul/img/1645457001920.png\" alt=\"\" /></p>\n<h2>0x05防抖</h2>\n<p>如果用户持续点击访问后端资源的按钮会给服务器和数据库带来很大压力，这里给axios加全局防抖功能，控制恶意访问</p>\n<pre><code class=\"language-javascript\">// 正在进行中的请求列表\nlet reqList = []\n/**\n * 阻止重复请求\n * @param {array} reqList - 请求缓存列表\n * @param {string} url - 当前请求地址\n * @param {function} cancel - 请求中断函数\n * @param {string} errorMessage - 请求中断时需要显示的错误信息\n */\nconst stopRepeatRequest = function (reqList, url, cancel, errorMessage) {\n    const errorMsg = errorMessage || \'\'\n    for (let i = 0; i &lt; reqList.length; i++) {\n        if (reqList[i] === url) {\n            console.log(&quot;重复请求,请求被中断&quot;)\n            cancel(errorMsg)\n            return\n        }\n    }\n    reqList.push(url)\n}\n\n/**\n * 允许某个请求可以继续进行\n * @param {array} reqList 全部请求列表\n * @param {string} url 请求地址\n */\nconst allowRequest = function (reqList, url) {\n    for (let i = 0; i &lt; reqList.length; i++) {\n        if (reqList[i] === url) {\n            reqList.splice(i, 1)\n            break\n        }\n    }\n}\n\nconst service = axios.create({\n  baseURL: baseURL,\n  timeout: 6000,\n})\n\nservice.interceptors.request.use(\n  (config) =&gt; {\n      let cancel\n      // 设置cancelToken对象\n      config.cancelToken = new axios.CancelToken((config)=&gt; {\n          cancel = config\n      })\n      // 阻止重复请求。当上个请求未完成时，相同的请求不会进行\n      stopRepeatRequest(reqList, config.url, cancel, `已有相同请求，${config.url} 请求被中断`)\n    return config\n  },\n  (error) =&gt; {\n    return Promise.reject(error)\n  }\n)\n\nservice.interceptors.response.use(\n  (response) =&gt; {\n      // 增加延迟，相同请求不得在短时间内重复发送,在延迟时间内，由于请求列表还没有清除，相同的请求会在请求拦截器被拦截\n      setTimeout(() =&gt; {\n          allowRequest(reqList, response.config.url)\n      }, 1000)\n    // 正常，直接返回数据\n    return res\n  },\n  (error) =&gt; {\n      // 增加延迟，相同请求不得在短时间内重复发送,在延迟时间内，由于请求列表还没有清除，相同的请求会在请求拦截器被拦截\n      setTimeout(() =&gt; {\n          allowRequest(reqList, error.config.url)\n      }, 1000)\n    return Promise.reject(error)\n  }\n)\n</code></pre>\n<p>这样，发出去的请求会在全局请求队列中暂时保存，等到请求返回1000ms之后才可以再次发起请求，控制请求频率</p>\n<p><img src=\"https://cdn.jsdelivr.net/gh/iznilul/img/1645457002118.gif\" alt=\"\" /></p>\n<h2>0x06参考资料</h2>\n<p>https://juejin.cn/post/6844903921706614791</p>\n<p>https://blog.csdn.net/weixin_48255917/article/details/110041031</p>\n', 0, 0, 1, 'test', 8, '', 0, NULL, '2022-05-04 15:54:51', '2022-05-04 15:54:51', 0);
 
 -- ----------------------------
 -- Table structure for blog_tag
@@ -52,11 +54,13 @@ CREATE TABLE `blog_tag`  (
   `blog_id` int(11) NULL DEFAULT NULL,
   `tag_id` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of blog_tag
 -- ----------------------------
+INSERT INTO `blog_tag` VALUES (24, 21, 15);
+INSERT INTO `blog_tag` VALUES (25, 22, 14);
 
 -- ----------------------------
 -- Table structure for book
@@ -138,11 +142,14 @@ CREATE TABLE `category`  (
   `weight` int(11) NULL DEFAULT NULL COMMENT '排序权重',
   `delete_flag` tinyint(2) NULL DEFAULT NULL,
   PRIMARY KEY (`category_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of category
 -- ----------------------------
+INSERT INTO `category` VALUES (7, 'web', 0, 0);
+INSERT INTO `category` VALUES (8, 'java', 0, 0);
+INSERT INTO `category` VALUES (9, 'python', 0, 0);
 
 -- ----------------------------
 -- Table structure for csdn_spider
@@ -272,11 +279,14 @@ INSERT INTO `menu` VALUES (3001, 3000, '/keylist', 'keylist', '钥匙列表', 'i
 INSERT INTO `menu` VALUES (3002, 3000, '/keyuser', 'keyuser', '钥匙记录', 'md-key', '18', '/KeyUser', NULL, NULL, 3);
 INSERT INTO `menu` VALUES (4000, 0, '/okr', 'okr', 'okr管理', 'ios-egg-outline', '18', NULL, NULL, NULL, 3);
 INSERT INTO `menu` VALUES (4001, 4000, '/okrlist', 'okrlist', 'okr列表', 'ios-egg', '18', '/Okr', NULL, NULL, 3);
+INSERT INTO `menu` VALUES (4002, 4000, '/blog/:blogId', 'blog', '博客管理', 'md-briefcase', '18', '/Blog', NULL, 1, 3);
+INSERT INTO `menu` VALUES (4003, 4000, '/userBlog', 'userBlog', '博客统计', 'md-beaker', '18', '/UserBlog', NULL, NULL, 3);
 INSERT INTO `menu` VALUES (5000, 0, '/admin', 'admin', '系统管理', 'ios-lock', '18', '', NULL, NULL, 2);
 INSERT INTO `menu` VALUES (5001, 5000, '/sysrecord', 'sysrecord', '操作记录', 'ios-time', '18', '/SysRecord', NULL, NULL, 2);
 INSERT INTO `menu` VALUES (5002, 5000, '/signup', 'signup', '报名管理', 'md-bookmark', '18', '/SignUp', NULL, NULL, 2);
 INSERT INTO `menu` VALUES (5003, 5000, '/resource', 'resource', '接口管理', 'logo-buffer', '18', '/Resource', NULL, NULL, 2);
 INSERT INTO `menu` VALUES (5004, 5000, '/tag', 'tag', '标签管理', 'md-card', '18', '/Tag', NULL, NULL, 2);
+INSERT INTO `menu` VALUES (5005, 5000, '/category', 'category', '分类管理', 'md-albums', '18', '/Category', NULL, NULL, 2);
 
 -- ----------------------------
 -- Table structure for recruit_group
@@ -305,71 +315,85 @@ CREATE TABLE `resource`  (
   `role` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '角色',
   `status` tinyint(1) NOT NULL COMMENT '接口状态 0关闭 1开启',
   PRIMARY KEY (`resource_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1467896460384773625 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '资源' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1467896460384775531 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '资源' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of resource
 -- ----------------------------
-INSERT INTO `resource` VALUES (1467896460384773565, '上传博客文件', 'POST', '/okr/blog/add', 'common', 1);
-INSERT INTO `resource` VALUES (1467896460384773566, '查看博客', 'GET', '/okr/blog/query', 'common', 1);
-INSERT INTO `resource` VALUES (1467896460384773567, '删除书籍', 'GET', '/okr/book/cancel', 'admin', 1);
-INSERT INTO `resource` VALUES (1467896460384773568, '借书', 'GET', '/okr/book/borrow', 'admin', 1);
-INSERT INTO `resource` VALUES (1467896460384773569, '请求书籍', 'GET', '/okr/book/query', 'user', 1);
-INSERT INTO `resource` VALUES (1467896460384773570, '添加书籍', 'GET', '/okr/book/add', 'admin', 1);
-INSERT INTO `resource` VALUES (1467896460384773571, '还书', 'GET', '/okr/book/return', 'admin', 1);
-INSERT INTO `resource` VALUES (1467896460384773572, '上传书籍照片', 'POST', '/okr/book/changeImg', 'admin', 1);
-INSERT INTO `resource` VALUES (1467896460384773573, '修改书籍', 'POST', '/okr/book/change', 'admin', 1);
-INSERT INTO `resource` VALUES (1467896460384773574, '书籍列表', 'POST', '/okr/book/queryList', 'user', 1);
-INSERT INTO `resource` VALUES (1467896460384773575, '查询借阅记录', 'POST', '/okr/bookUser/query', 'user', 1);
-INSERT INTO `resource` VALUES (1467896460384773576, '认证测试', 'GET', '/okr/common/test', 'common', 1);
-INSERT INTO `resource` VALUES (1467896460384773577, '用户退出', 'GET', '/okr/common/logout', 'common', 1);
-INSERT INTO `resource` VALUES (1467896460384773578, '用户登录', 'POST', '/okr/common/login', 'common', 1);
-INSERT INTO `resource` VALUES (1467896460384773579, '模糊查询钥匙', 'GET', '/okr/enum/key', 'user', 1);
-INSERT INTO `resource` VALUES (1467896460384773580, '模糊查询用户名列表', 'GET', '/okr/enum/username', 'user', 1);
-INSERT INTO `resource` VALUES (1467896460384773581, '模糊查询姓名列表', 'GET', '/okr/enum/name', 'user', 1);
-INSERT INTO `resource` VALUES (1467896460384773582, '模糊查询成员状态', 'GET', '/okr/enum/userStatus', 'user', 1);
-INSERT INTO `resource` VALUES (1467896460384773583, '模糊查询书籍状态', 'GET', '/okr/enum/book', 'admin', 1);
-INSERT INTO `resource` VALUES (1467896460384773584, '模糊查询报名状态', 'GET', '/okr/enum/signUpStatus', 'admin', 1);
-INSERT INTO `resource` VALUES (1467896460384773585, '模糊查询专业列表', 'GET', '/okr/enum/major', 'user', 1);
-INSERT INTO `resource` VALUES (1467896460384773586, '模糊查询角色', 'GET', '/okr/enum/role', 'user', 1);
-INSERT INTO `resource` VALUES (1467896460384773587, '模糊查询标签', 'GET', '/okr/enum/tag', 'admin', 1);
-INSERT INTO `resource` VALUES (1467896460384773588, '删除钥匙', 'GET', '/okr/key/cancel', 'admin', 1);
-INSERT INTO `resource` VALUES (1467896460384773589, '根据id查询钥匙', 'GET', '/okr/key/queryById', 'admin', 1);
-INSERT INTO `resource` VALUES (1467896460384773590, '钥匙列表', 'POST', '/okr/key/query', 'user', 1);
-INSERT INTO `resource` VALUES (1467896460384773591, '还钥匙', 'GET', '/okr/key/return', 'user', 1);
-INSERT INTO `resource` VALUES (1467896460384773592, '修改钥匙', 'POST', '/okr/key/change', 'admin', 1);
-INSERT INTO `resource` VALUES (1467896460384773593, '增加钥匙', 'GET', '/okr/key/add', 'admin', 1);
-INSERT INTO `resource` VALUES (1467896460384773594, '借钥匙', 'GET', '/okr/key/borrow', 'user', 1);
-INSERT INTO `resource` VALUES (1467896460384773595, '增加钥匙持有人', 'GET', '/okr/keyUser/add', 'admin', 1);
-INSERT INTO `resource` VALUES (1467896460384773596, '钥匙记录列表', 'POST', '/okr/keyUser/query', 'user', 1);
-INSERT INTO `resource` VALUES (1467896460384773597, '删除钥匙持有人', 'GET', '/okr/keyUser/cancel', 'admin', 1);
-INSERT INTO `resource` VALUES (1467896460384773598, '获取路径', 'GET', '/okr/menu/fetch', 'user', 1);
-INSERT INTO `resource` VALUES (1467896460384773599, '服务器监控', 'GET', '/okr/monitor/server', 'user', 1);
-INSERT INTO `resource` VALUES (1467896460384773600, 'csdn实时展示', 'GET', '/okr/rank/csdn', 'common', 1);
-INSERT INTO `resource` VALUES (1467896460384773601, '更改接口开放状态', 'GET', '/okr/resource/change', 'admin', 1);
-INSERT INTO `resource` VALUES (1467896460384773602, '获取资源接口', 'POST', '/okr/resource/query', 'admin', 1);
-INSERT INTO `resource` VALUES (1467896460384773603, '纳新报名', 'POST', '/okr/signup/add', 'common', 1);
-INSERT INTO `resource` VALUES (1467896460384773604, '获取报名记录', 'POST', '/okr/signup/queryList', 'admin', 1);
-INSERT INTO `resource` VALUES (1467896460384773605, '更新报名记录', 'POST', '/okr/signup/change', 'admin', 1);
-INSERT INTO `resource` VALUES (1467896460384773606, '导出报名单', 'GET', '/okr/signup/export', 'admin', 1);
-INSERT INTO `resource` VALUES (1467896460384773607, '报名结果查询', 'GET', '/okr/signup/query', 'common', 1);
-INSERT INTO `resource` VALUES (1467896460384773608, '操作记录列表', 'POST', '/okr/sysRecord/query', 'admin', 1);
-INSERT INTO `resource` VALUES (1467896460384773609, '获取标签列表', 'POST', '/okr/tag/queryList', 'user', 1);
-INSERT INTO `resource` VALUES (1467896460384773610, '更新标签', 'POST', '/okr/tag/change', 'admin', 1);
-INSERT INTO `resource` VALUES (1467896460384773611, '删除标签', 'GET', '/okr/tag/cancel', 'admin', 1);
-INSERT INTO `resource` VALUES (1467896460384773612, '获取标签', 'GET', '/okr/tag/query', 'admin', 1);
-INSERT INTO `resource` VALUES (1467896460384773613, '增加标签', 'POST', '/okr/tag/add', 'admin', 1);
-INSERT INTO `resource` VALUES (1467896460384773614, '注册用户', 'POST', '/okr/user/add', 'admin', 1);
-INSERT INTO `resource` VALUES (1467896460384773615, '更新用户权限', 'POST', '/okr/user/changeRole', 'user', 1);
-INSERT INTO `resource` VALUES (1467896460384773616, '删除用户', 'GET', '/okr/user/cancel', 'admin', 1);
-INSERT INTO `resource` VALUES (1467896460384773617, '上传头像文件', 'POST', '/okr/user/changeImg', 'user', 1);
-INSERT INTO `resource` VALUES (1467896460384773618, '更新用户信息', 'POST', '/okr/user/change', 'user', 1);
-INSERT INTO `resource` VALUES (1467896460384773619, '获取用户信息', 'GET', '/okr/user/query', 'user', 1);
-INSERT INTO `resource` VALUES (1467896460384773620, '查询用户列表', 'POST', '/okr/user/queryList', 'user', 1);
-INSERT INTO `resource` VALUES (1467896460384773621, '获取用户权限信息', 'GET', '/okr/user/queryRole', 'user', 1);
-INSERT INTO `resource` VALUES (1467896460384773622, '修改密码', 'POST', '/okr/user/changePassword', 'user', 1);
-INSERT INTO `resource` VALUES (1467896460384773623, '根据用户名选择用户', 'GET', '/okr/user/queryByUsername', 'user', 1);
-INSERT INTO `resource` VALUES (1467896460384773624, '修改成员的角色权限', 'POST', '/okr/userRole/grant', 'superAdmin', 1);
+INSERT INTO `resource` VALUES (1467896460384775457, '删除博客', 'GET', '/okr/blog/cancel', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775458, '查看博客', 'POST', '/okr/blog/queryList', 'common', 1);
+INSERT INTO `resource` VALUES (1467896460384775459, '回显博客信息', 'GET', '/okr/blog/detail', 'common', 1);
+INSERT INTO `resource` VALUES (1467896460384775460, '修改博客信息', 'POST', '/okr/blog/change', 'common', 1);
+INSERT INTO `resource` VALUES (1467896460384775461, '查看博客', 'GET', '/okr/blog/query', 'common', 1);
+INSERT INTO `resource` VALUES (1467896460384775462, '上传博客文件', 'POST', '/okr/blog/add', 'common', 1);
+INSERT INTO `resource` VALUES (1467896460384775463, '查看博客', 'POST', '/okr/blog/queryUserBlogList', 'common', 1);
+INSERT INTO `resource` VALUES (1467896460384775464, '还书', 'GET', '/okr/book/return', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775465, '上传书籍照片', 'POST', '/okr/book/changeImg', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775466, '借书', 'GET', '/okr/book/borrow', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775467, '删除书籍', 'GET', '/okr/book/cancel', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775468, '修改书籍', 'POST', '/okr/book/change', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775469, '书籍列表', 'POST', '/okr/book/queryList', 'user', 1);
+INSERT INTO `resource` VALUES (1467896460384775470, '添加书籍', 'GET', '/okr/book/add', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775471, '请求书籍', 'GET', '/okr/book/query', 'user', 1);
+INSERT INTO `resource` VALUES (1467896460384775472, '查询借阅记录', 'POST', '/okr/bookUser/query', 'user', 1);
+INSERT INTO `resource` VALUES (1467896460384775473, '获取分类列表', 'POST', '/okr/category/queryList', 'user', 1);
+INSERT INTO `resource` VALUES (1467896460384775474, '更新分类', 'POST', '/okr/category/change', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775475, '删除分类', 'GET', '/okr/category/cancel', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775476, '增加分类', 'POST', '/okr/category/add', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775477, '获取分类', 'GET', '/okr/category/query', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775478, '认证测试', 'GET', '/okr/common/test', 'common', 1);
+INSERT INTO `resource` VALUES (1467896460384775479, '用户退出', 'GET', '/okr/common/logout', 'common', 1);
+INSERT INTO `resource` VALUES (1467896460384775480, '用户登录', 'POST', '/okr/common/login', 'common', 1);
+INSERT INTO `resource` VALUES (1467896460384775481, '模糊查询钥匙', 'GET', '/okr/enum/key', 'user', 1);
+INSERT INTO `resource` VALUES (1467896460384775482, '模糊查询用户名列表', 'GET', '/okr/enum/username', 'user', 1);
+INSERT INTO `resource` VALUES (1467896460384775483, '模糊查询姓名列表', 'GET', '/okr/enum/name', 'user', 1);
+INSERT INTO `resource` VALUES (1467896460384775484, '模糊查询标签', 'GET', '/okr/enum/tag', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775485, '模糊查询成员状态', 'GET', '/okr/enum/userStatus', 'user', 1);
+INSERT INTO `resource` VALUES (1467896460384775486, '模糊查询分类', 'GET', '/okr/enum/category', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775487, '模糊查询专业列表', 'GET', '/okr/enum/major', 'user', 1);
+INSERT INTO `resource` VALUES (1467896460384775488, '模糊查询角色', 'GET', '/okr/enum/role', 'user', 1);
+INSERT INTO `resource` VALUES (1467896460384775489, '模糊查询书籍状态', 'GET', '/okr/enum/book', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775490, '模糊查询报名状态', 'GET', '/okr/enum/signUpStatus', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775491, '模糊查询博客发布状态', 'GET', '/okr/enum/publish', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775492, '模糊查询博客原创状态', 'GET', '/okr/enum/original', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775493, '模糊查询博客状态', 'GET', '/okr/enum/blog', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775494, '借钥匙', 'GET', '/okr/key/borrow', 'user', 1);
+INSERT INTO `resource` VALUES (1467896460384775495, '钥匙列表', 'POST', '/okr/key/query', 'user', 1);
+INSERT INTO `resource` VALUES (1467896460384775496, '增加钥匙', 'GET', '/okr/key/add', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775497, '还钥匙', 'GET', '/okr/key/return', 'user', 1);
+INSERT INTO `resource` VALUES (1467896460384775498, '修改钥匙', 'POST', '/okr/key/change', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775499, '删除钥匙', 'GET', '/okr/key/cancel', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775500, '根据id查询钥匙', 'GET', '/okr/key/queryById', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775501, '增加钥匙持有人', 'GET', '/okr/keyUser/add', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775502, '删除钥匙持有人', 'GET', '/okr/keyUser/cancel', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775503, '钥匙记录列表', 'POST', '/okr/keyUser/query', 'user', 1);
+INSERT INTO `resource` VALUES (1467896460384775504, '获取路径', 'GET', '/okr/menu/fetch', 'user', 1);
+INSERT INTO `resource` VALUES (1467896460384775505, '服务器监控', 'GET', '/okr/monitor/server', 'user', 1);
+INSERT INTO `resource` VALUES (1467896460384775506, 'csdn实时展示', 'GET', '/okr/rank/csdn', 'common', 1);
+INSERT INTO `resource` VALUES (1467896460384775507, '获取资源接口', 'POST', '/okr/resource/query', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775508, '更改接口开放状态', 'GET', '/okr/resource/change', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775509, '更新报名记录', 'POST', '/okr/signup/change', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775510, '报名结果查询', 'GET', '/okr/signup/query', 'common', 1);
+INSERT INTO `resource` VALUES (1467896460384775511, '纳新报名', 'POST', '/okr/signup/add', 'common', 1);
+INSERT INTO `resource` VALUES (1467896460384775512, '导出报名单', 'GET', '/okr/signup/export', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775513, '获取报名记录', 'POST', '/okr/signup/queryList', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775514, '操作记录列表', 'POST', '/okr/sysRecord/query', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775515, '获取标签列表', 'POST', '/okr/tag/queryList', 'user', 1);
+INSERT INTO `resource` VALUES (1467896460384775516, '获取标签', 'GET', '/okr/tag/query', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775517, '更新标签', 'POST', '/okr/tag/change', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775518, '删除标签', 'GET', '/okr/tag/cancel', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775519, '增加标签', 'POST', '/okr/tag/add', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775520, '注册用户', 'POST', '/okr/user/add', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775521, '查询用户列表', 'POST', '/okr/user/queryList', 'user', 1);
+INSERT INTO `resource` VALUES (1467896460384775522, '修改密码', 'POST', '/okr/user/changePassword', 'user', 1);
+INSERT INTO `resource` VALUES (1467896460384775523, '获取用户信息', 'GET', '/okr/user/query', 'user', 1);
+INSERT INTO `resource` VALUES (1467896460384775524, '删除用户', 'GET', '/okr/user/cancel', 'admin', 1);
+INSERT INTO `resource` VALUES (1467896460384775525, '获取用户权限信息', 'GET', '/okr/user/queryRole', 'user', 1);
+INSERT INTO `resource` VALUES (1467896460384775526, '更新用户权限', 'POST', '/okr/user/changeRole', 'user', 1);
+INSERT INTO `resource` VALUES (1467896460384775527, '上传头像文件', 'POST', '/okr/user/changeImg', 'user', 1);
+INSERT INTO `resource` VALUES (1467896460384775528, '更新用户信息', 'POST', '/okr/user/change', 'user', 1);
+INSERT INTO `resource` VALUES (1467896460384775529, '根据用户名选择用户', 'GET', '/okr/user/queryByUsername', 'user', 1);
+INSERT INTO `resource` VALUES (1467896460384775530, '修改成员的角色权限', 'POST', '/okr/userRole/grant', 'superAdmin', 1);
 
 -- ----------------------------
 -- Table structure for role
@@ -400,54 +424,62 @@ CREATE TABLE `role_menu`  (
   `role_id` int(11) NOT NULL COMMENT '角色id',
   `menu_id` int(11) NOT NULL COMMENT '菜单id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9890 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11215 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of role_menu
 -- ----------------------------
-INSERT INTO `role_menu` VALUES (9847, 3, 1001);
-INSERT INTO `role_menu` VALUES (9848, 3, 1002);
-INSERT INTO `role_menu` VALUES (9849, 3, 1003);
-INSERT INTO `role_menu` VALUES (9850, 3, 2000);
-INSERT INTO `role_menu` VALUES (9851, 3, 2001);
-INSERT INTO `role_menu` VALUES (9852, 3, 2002);
-INSERT INTO `role_menu` VALUES (9853, 3, 3000);
-INSERT INTO `role_menu` VALUES (9854, 3, 3001);
-INSERT INTO `role_menu` VALUES (9855, 3, 3002);
-INSERT INTO `role_menu` VALUES (9856, 3, 4000);
-INSERT INTO `role_menu` VALUES (9857, 3, 4001);
-INSERT INTO `role_menu` VALUES (9858, 2, 1001);
-INSERT INTO `role_menu` VALUES (9859, 2, 1002);
-INSERT INTO `role_menu` VALUES (9860, 2, 1003);
-INSERT INTO `role_menu` VALUES (9861, 2, 2000);
-INSERT INTO `role_menu` VALUES (9862, 2, 2001);
-INSERT INTO `role_menu` VALUES (9863, 2, 2002);
-INSERT INTO `role_menu` VALUES (9864, 2, 3000);
-INSERT INTO `role_menu` VALUES (9865, 2, 3001);
-INSERT INTO `role_menu` VALUES (9866, 2, 3002);
-INSERT INTO `role_menu` VALUES (9867, 2, 4000);
-INSERT INTO `role_menu` VALUES (9868, 2, 4001);
-INSERT INTO `role_menu` VALUES (9869, 2, 5000);
-INSERT INTO `role_menu` VALUES (9870, 2, 5001);
-INSERT INTO `role_menu` VALUES (9871, 2, 5002);
-INSERT INTO `role_menu` VALUES (9872, 2, 5003);
-INSERT INTO `role_menu` VALUES (9873, 2, 5004);
-INSERT INTO `role_menu` VALUES (9874, 1, 1001);
-INSERT INTO `role_menu` VALUES (9875, 1, 1002);
-INSERT INTO `role_menu` VALUES (9876, 1, 1003);
-INSERT INTO `role_menu` VALUES (9877, 1, 2000);
-INSERT INTO `role_menu` VALUES (9878, 1, 2001);
-INSERT INTO `role_menu` VALUES (9879, 1, 2002);
-INSERT INTO `role_menu` VALUES (9880, 1, 3000);
-INSERT INTO `role_menu` VALUES (9881, 1, 3001);
-INSERT INTO `role_menu` VALUES (9882, 1, 3002);
-INSERT INTO `role_menu` VALUES (9883, 1, 4000);
-INSERT INTO `role_menu` VALUES (9884, 1, 4001);
-INSERT INTO `role_menu` VALUES (9885, 1, 5000);
-INSERT INTO `role_menu` VALUES (9886, 1, 5001);
-INSERT INTO `role_menu` VALUES (9887, 1, 5002);
-INSERT INTO `role_menu` VALUES (9888, 1, 5003);
-INSERT INTO `role_menu` VALUES (9889, 1, 5004);
+INSERT INTO `role_menu` VALUES (11164, 3, 1001);
+INSERT INTO `role_menu` VALUES (11165, 3, 1002);
+INSERT INTO `role_menu` VALUES (11166, 3, 1003);
+INSERT INTO `role_menu` VALUES (11167, 3, 2000);
+INSERT INTO `role_menu` VALUES (11168, 3, 2001);
+INSERT INTO `role_menu` VALUES (11169, 3, 2002);
+INSERT INTO `role_menu` VALUES (11170, 3, 3000);
+INSERT INTO `role_menu` VALUES (11171, 3, 3001);
+INSERT INTO `role_menu` VALUES (11172, 3, 3002);
+INSERT INTO `role_menu` VALUES (11173, 3, 4000);
+INSERT INTO `role_menu` VALUES (11174, 3, 4001);
+INSERT INTO `role_menu` VALUES (11175, 3, 4002);
+INSERT INTO `role_menu` VALUES (11176, 3, 4003);
+INSERT INTO `role_menu` VALUES (11177, 2, 1001);
+INSERT INTO `role_menu` VALUES (11178, 2, 1002);
+INSERT INTO `role_menu` VALUES (11179, 2, 1003);
+INSERT INTO `role_menu` VALUES (11180, 2, 2000);
+INSERT INTO `role_menu` VALUES (11181, 2, 2001);
+INSERT INTO `role_menu` VALUES (11182, 2, 2002);
+INSERT INTO `role_menu` VALUES (11183, 2, 3000);
+INSERT INTO `role_menu` VALUES (11184, 2, 3001);
+INSERT INTO `role_menu` VALUES (11185, 2, 3002);
+INSERT INTO `role_menu` VALUES (11186, 2, 4000);
+INSERT INTO `role_menu` VALUES (11187, 2, 4001);
+INSERT INTO `role_menu` VALUES (11188, 2, 4002);
+INSERT INTO `role_menu` VALUES (11189, 2, 4003);
+INSERT INTO `role_menu` VALUES (11190, 2, 5000);
+INSERT INTO `role_menu` VALUES (11191, 2, 5001);
+INSERT INTO `role_menu` VALUES (11192, 2, 5002);
+INSERT INTO `role_menu` VALUES (11193, 2, 5003);
+INSERT INTO `role_menu` VALUES (11194, 2, 5004);
+INSERT INTO `role_menu` VALUES (11195, 2, 5005);
+INSERT INTO `role_menu` VALUES (11196, 1, 1001);
+INSERT INTO `role_menu` VALUES (11197, 1, 1002);
+INSERT INTO `role_menu` VALUES (11198, 1, 1003);
+INSERT INTO `role_menu` VALUES (11199, 1, 2000);
+INSERT INTO `role_menu` VALUES (11200, 1, 2001);
+INSERT INTO `role_menu` VALUES (11201, 1, 2002);
+INSERT INTO `role_menu` VALUES (11202, 1, 3000);
+INSERT INTO `role_menu` VALUES (11203, 1, 3001);
+INSERT INTO `role_menu` VALUES (11204, 1, 3002);
+INSERT INTO `role_menu` VALUES (11205, 1, 4000);
+INSERT INTO `role_menu` VALUES (11206, 1, 4001);
+INSERT INTO `role_menu` VALUES (11207, 1, 4002);
+INSERT INTO `role_menu` VALUES (11208, 1, 4003);
+INSERT INTO `role_menu` VALUES (11209, 1, 5000);
+INSERT INTO `role_menu` VALUES (11210, 1, 5001);
+INSERT INTO `role_menu` VALUES (11211, 1, 5002);
+INSERT INTO `role_menu` VALUES (11212, 1, 5003);
+INSERT INTO `role_menu` VALUES (11213, 1, 5004);
+INSERT INTO `role_menu` VALUES (11214, 1, 5005);
 
 -- ----------------------------
 -- Table structure for role_resource
@@ -459,170 +491,207 @@ CREATE TABLE `role_resource`  (
   `resource_id` bigint(11) NOT NULL COMMENT '资源id',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `resource_id`(`resource_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 55049 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色-权限关系' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 60049 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色-权限关系' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of role_resource
 -- ----------------------------
-INSERT INTO `role_resource` VALUES (54890, 4, 1467896460384773578);
-INSERT INTO `role_resource` VALUES (54891, 4, 1467896460384773577);
-INSERT INTO `role_resource` VALUES (54892, 4, 1467896460384773576);
-INSERT INTO `role_resource` VALUES (54893, 4, 1467896460384773566);
-INSERT INTO `role_resource` VALUES (54894, 4, 1467896460384773565);
-INSERT INTO `role_resource` VALUES (54895, 4, 1467896460384773603);
-INSERT INTO `role_resource` VALUES (54896, 4, 1467896460384773600);
-INSERT INTO `role_resource` VALUES (54897, 4, 1467896460384773607);
-INSERT INTO `role_resource` VALUES (54898, 3, 1467896460384773594);
-INSERT INTO `role_resource` VALUES (54899, 3, 1467896460384773599);
-INSERT INTO `role_resource` VALUES (54900, 3, 1467896460384773598);
-INSERT INTO `role_resource` VALUES (54901, 3, 1467896460384773596);
-INSERT INTO `role_resource` VALUES (54902, 3, 1467896460384773586);
-INSERT INTO `role_resource` VALUES (54903, 3, 1467896460384773585);
-INSERT INTO `role_resource` VALUES (54904, 3, 1467896460384773591);
-INSERT INTO `role_resource` VALUES (54905, 3, 1467896460384773590);
-INSERT INTO `role_resource` VALUES (54906, 3, 1467896460384773579);
-INSERT INTO `role_resource` VALUES (54907, 3, 1467896460384773578);
-INSERT INTO `role_resource` VALUES (54908, 3, 1467896460384773577);
-INSERT INTO `role_resource` VALUES (54909, 3, 1467896460384773576);
-INSERT INTO `role_resource` VALUES (54910, 3, 1467896460384773582);
-INSERT INTO `role_resource` VALUES (54911, 3, 1467896460384773581);
-INSERT INTO `role_resource` VALUES (54912, 3, 1467896460384773580);
-INSERT INTO `role_resource` VALUES (54913, 3, 1467896460384773569);
-INSERT INTO `role_resource` VALUES (54914, 3, 1467896460384773575);
-INSERT INTO `role_resource` VALUES (54915, 3, 1467896460384773574);
-INSERT INTO `role_resource` VALUES (54916, 3, 1467896460384773566);
-INSERT INTO `role_resource` VALUES (54917, 3, 1467896460384773565);
-INSERT INTO `role_resource` VALUES (54918, 3, 1467896460384773619);
-INSERT INTO `role_resource` VALUES (54919, 3, 1467896460384773618);
-INSERT INTO `role_resource` VALUES (54920, 3, 1467896460384773617);
-INSERT INTO `role_resource` VALUES (54921, 3, 1467896460384773623);
-INSERT INTO `role_resource` VALUES (54922, 3, 1467896460384773622);
-INSERT INTO `role_resource` VALUES (54923, 3, 1467896460384773621);
-INSERT INTO `role_resource` VALUES (54924, 3, 1467896460384773620);
-INSERT INTO `role_resource` VALUES (54925, 3, 1467896460384773609);
-INSERT INTO `role_resource` VALUES (54926, 3, 1467896460384773615);
-INSERT INTO `role_resource` VALUES (54927, 3, 1467896460384773603);
-INSERT INTO `role_resource` VALUES (54928, 3, 1467896460384773600);
-INSERT INTO `role_resource` VALUES (54929, 3, 1467896460384773607);
-INSERT INTO `role_resource` VALUES (54930, 2, 1467896460384773567);
-INSERT INTO `role_resource` VALUES (54931, 2, 1467896460384773566);
-INSERT INTO `role_resource` VALUES (54932, 2, 1467896460384773565);
-INSERT INTO `role_resource` VALUES (54933, 2, 1467896460384773595);
-INSERT INTO `role_resource` VALUES (54934, 2, 1467896460384773594);
-INSERT INTO `role_resource` VALUES (54935, 2, 1467896460384773593);
-INSERT INTO `role_resource` VALUES (54936, 2, 1467896460384773592);
-INSERT INTO `role_resource` VALUES (54937, 2, 1467896460384773599);
-INSERT INTO `role_resource` VALUES (54938, 2, 1467896460384773598);
-INSERT INTO `role_resource` VALUES (54939, 2, 1467896460384773597);
-INSERT INTO `role_resource` VALUES (54940, 2, 1467896460384773596);
-INSERT INTO `role_resource` VALUES (54941, 2, 1467896460384773587);
-INSERT INTO `role_resource` VALUES (54942, 2, 1467896460384773586);
-INSERT INTO `role_resource` VALUES (54943, 2, 1467896460384773585);
-INSERT INTO `role_resource` VALUES (54944, 2, 1467896460384773584);
-INSERT INTO `role_resource` VALUES (54945, 2, 1467896460384773591);
-INSERT INTO `role_resource` VALUES (54946, 2, 1467896460384773590);
-INSERT INTO `role_resource` VALUES (54947, 2, 1467896460384773589);
-INSERT INTO `role_resource` VALUES (54948, 2, 1467896460384773588);
-INSERT INTO `role_resource` VALUES (54949, 2, 1467896460384773579);
-INSERT INTO `role_resource` VALUES (54950, 2, 1467896460384773578);
-INSERT INTO `role_resource` VALUES (54951, 2, 1467896460384773577);
-INSERT INTO `role_resource` VALUES (54952, 2, 1467896460384773576);
-INSERT INTO `role_resource` VALUES (54953, 2, 1467896460384773583);
-INSERT INTO `role_resource` VALUES (54954, 2, 1467896460384773582);
-INSERT INTO `role_resource` VALUES (54955, 2, 1467896460384773581);
-INSERT INTO `role_resource` VALUES (54956, 2, 1467896460384773580);
-INSERT INTO `role_resource` VALUES (54957, 2, 1467896460384773571);
-INSERT INTO `role_resource` VALUES (54958, 2, 1467896460384773570);
-INSERT INTO `role_resource` VALUES (54959, 2, 1467896460384773569);
-INSERT INTO `role_resource` VALUES (54960, 2, 1467896460384773568);
-INSERT INTO `role_resource` VALUES (54961, 2, 1467896460384773575);
-INSERT INTO `role_resource` VALUES (54962, 2, 1467896460384773574);
-INSERT INTO `role_resource` VALUES (54963, 2, 1467896460384773573);
-INSERT INTO `role_resource` VALUES (54964, 2, 1467896460384773572);
-INSERT INTO `role_resource` VALUES (54965, 2, 1467896460384773619);
-INSERT INTO `role_resource` VALUES (54966, 2, 1467896460384773618);
-INSERT INTO `role_resource` VALUES (54967, 2, 1467896460384773617);
-INSERT INTO `role_resource` VALUES (54968, 2, 1467896460384773616);
-INSERT INTO `role_resource` VALUES (54969, 2, 1467896460384773623);
-INSERT INTO `role_resource` VALUES (54970, 2, 1467896460384773622);
-INSERT INTO `role_resource` VALUES (54971, 2, 1467896460384773621);
-INSERT INTO `role_resource` VALUES (54972, 2, 1467896460384773620);
-INSERT INTO `role_resource` VALUES (54973, 2, 1467896460384773611);
-INSERT INTO `role_resource` VALUES (54974, 2, 1467896460384773610);
-INSERT INTO `role_resource` VALUES (54975, 2, 1467896460384773609);
-INSERT INTO `role_resource` VALUES (54976, 2, 1467896460384773608);
-INSERT INTO `role_resource` VALUES (54977, 2, 1467896460384773615);
-INSERT INTO `role_resource` VALUES (54978, 2, 1467896460384773614);
-INSERT INTO `role_resource` VALUES (54979, 2, 1467896460384773613);
-INSERT INTO `role_resource` VALUES (54980, 2, 1467896460384773612);
-INSERT INTO `role_resource` VALUES (54981, 2, 1467896460384773603);
-INSERT INTO `role_resource` VALUES (54982, 2, 1467896460384773602);
-INSERT INTO `role_resource` VALUES (54983, 2, 1467896460384773601);
-INSERT INTO `role_resource` VALUES (54984, 2, 1467896460384773600);
-INSERT INTO `role_resource` VALUES (54985, 2, 1467896460384773607);
-INSERT INTO `role_resource` VALUES (54986, 2, 1467896460384773606);
-INSERT INTO `role_resource` VALUES (54987, 2, 1467896460384773605);
-INSERT INTO `role_resource` VALUES (54988, 2, 1467896460384773604);
-INSERT INTO `role_resource` VALUES (54989, 1, 1467896460384773567);
-INSERT INTO `role_resource` VALUES (54990, 1, 1467896460384773566);
-INSERT INTO `role_resource` VALUES (54991, 1, 1467896460384773565);
-INSERT INTO `role_resource` VALUES (54992, 1, 1467896460384773595);
-INSERT INTO `role_resource` VALUES (54993, 1, 1467896460384773594);
-INSERT INTO `role_resource` VALUES (54994, 1, 1467896460384773593);
-INSERT INTO `role_resource` VALUES (54995, 1, 1467896460384773592);
-INSERT INTO `role_resource` VALUES (54996, 1, 1467896460384773599);
-INSERT INTO `role_resource` VALUES (54997, 1, 1467896460384773598);
-INSERT INTO `role_resource` VALUES (54998, 1, 1467896460384773597);
-INSERT INTO `role_resource` VALUES (54999, 1, 1467896460384773596);
-INSERT INTO `role_resource` VALUES (55000, 1, 1467896460384773587);
-INSERT INTO `role_resource` VALUES (55001, 1, 1467896460384773586);
-INSERT INTO `role_resource` VALUES (55002, 1, 1467896460384773585);
-INSERT INTO `role_resource` VALUES (55003, 1, 1467896460384773584);
-INSERT INTO `role_resource` VALUES (55004, 1, 1467896460384773591);
-INSERT INTO `role_resource` VALUES (55005, 1, 1467896460384773590);
-INSERT INTO `role_resource` VALUES (55006, 1, 1467896460384773589);
-INSERT INTO `role_resource` VALUES (55007, 1, 1467896460384773588);
-INSERT INTO `role_resource` VALUES (55008, 1, 1467896460384773579);
-INSERT INTO `role_resource` VALUES (55009, 1, 1467896460384773578);
-INSERT INTO `role_resource` VALUES (55010, 1, 1467896460384773577);
-INSERT INTO `role_resource` VALUES (55011, 1, 1467896460384773576);
-INSERT INTO `role_resource` VALUES (55012, 1, 1467896460384773583);
-INSERT INTO `role_resource` VALUES (55013, 1, 1467896460384773582);
-INSERT INTO `role_resource` VALUES (55014, 1, 1467896460384773581);
-INSERT INTO `role_resource` VALUES (55015, 1, 1467896460384773580);
-INSERT INTO `role_resource` VALUES (55016, 1, 1467896460384773571);
-INSERT INTO `role_resource` VALUES (55017, 1, 1467896460384773570);
-INSERT INTO `role_resource` VALUES (55018, 1, 1467896460384773569);
-INSERT INTO `role_resource` VALUES (55019, 1, 1467896460384773568);
-INSERT INTO `role_resource` VALUES (55020, 1, 1467896460384773575);
-INSERT INTO `role_resource` VALUES (55021, 1, 1467896460384773574);
-INSERT INTO `role_resource` VALUES (55022, 1, 1467896460384773573);
-INSERT INTO `role_resource` VALUES (55023, 1, 1467896460384773572);
-INSERT INTO `role_resource` VALUES (55024, 1, 1467896460384773624);
-INSERT INTO `role_resource` VALUES (55025, 1, 1467896460384773619);
-INSERT INTO `role_resource` VALUES (55026, 1, 1467896460384773618);
-INSERT INTO `role_resource` VALUES (55027, 1, 1467896460384773617);
-INSERT INTO `role_resource` VALUES (55028, 1, 1467896460384773616);
-INSERT INTO `role_resource` VALUES (55029, 1, 1467896460384773623);
-INSERT INTO `role_resource` VALUES (55030, 1, 1467896460384773622);
-INSERT INTO `role_resource` VALUES (55031, 1, 1467896460384773621);
-INSERT INTO `role_resource` VALUES (55032, 1, 1467896460384773620);
-INSERT INTO `role_resource` VALUES (55033, 1, 1467896460384773611);
-INSERT INTO `role_resource` VALUES (55034, 1, 1467896460384773610);
-INSERT INTO `role_resource` VALUES (55035, 1, 1467896460384773609);
-INSERT INTO `role_resource` VALUES (55036, 1, 1467896460384773608);
-INSERT INTO `role_resource` VALUES (55037, 1, 1467896460384773615);
-INSERT INTO `role_resource` VALUES (55038, 1, 1467896460384773614);
-INSERT INTO `role_resource` VALUES (55039, 1, 1467896460384773613);
-INSERT INTO `role_resource` VALUES (55040, 1, 1467896460384773612);
-INSERT INTO `role_resource` VALUES (55041, 1, 1467896460384773603);
-INSERT INTO `role_resource` VALUES (55042, 1, 1467896460384773602);
-INSERT INTO `role_resource` VALUES (55043, 1, 1467896460384773601);
-INSERT INTO `role_resource` VALUES (55044, 1, 1467896460384773600);
-INSERT INTO `role_resource` VALUES (55045, 1, 1467896460384773607);
-INSERT INTO `role_resource` VALUES (55046, 1, 1467896460384773606);
-INSERT INTO `role_resource` VALUES (55047, 1, 1467896460384773605);
-INSERT INTO `role_resource` VALUES (55048, 1, 1467896460384773604);
+INSERT INTO `role_resource` VALUES (59853, 4, 1467896460384775480);
+INSERT INTO `role_resource` VALUES (59854, 4, 1467896460384775459);
+INSERT INTO `role_resource` VALUES (59855, 4, 1467896460384775458);
+INSERT INTO `role_resource` VALUES (59856, 4, 1467896460384775506);
+INSERT INTO `role_resource` VALUES (59857, 4, 1467896460384775463);
+INSERT INTO `role_resource` VALUES (59858, 4, 1467896460384775479);
+INSERT INTO `role_resource` VALUES (59859, 4, 1467896460384775511);
+INSERT INTO `role_resource` VALUES (59860, 4, 1467896460384775462);
+INSERT INTO `role_resource` VALUES (59861, 4, 1467896460384775478);
+INSERT INTO `role_resource` VALUES (59862, 4, 1467896460384775510);
+INSERT INTO `role_resource` VALUES (59863, 4, 1467896460384775461);
+INSERT INTO `role_resource` VALUES (59864, 4, 1467896460384775460);
+INSERT INTO `role_resource` VALUES (59865, 3, 1467896460384775515);
+INSERT INTO `role_resource` VALUES (59866, 3, 1467896460384775506);
+INSERT INTO `role_resource` VALUES (59867, 3, 1467896460384775505);
+INSERT INTO `role_resource` VALUES (59868, 3, 1467896460384775504);
+INSERT INTO `role_resource` VALUES (59869, 3, 1467896460384775511);
+INSERT INTO `role_resource` VALUES (59870, 3, 1467896460384775510);
+INSERT INTO `role_resource` VALUES (59871, 3, 1467896460384775497);
+INSERT INTO `role_resource` VALUES (59872, 3, 1467896460384775503);
+INSERT INTO `role_resource` VALUES (59873, 3, 1467896460384775488);
+INSERT INTO `role_resource` VALUES (59874, 3, 1467896460384775495);
+INSERT INTO `role_resource` VALUES (59875, 3, 1467896460384775494);
+INSERT INTO `role_resource` VALUES (59876, 3, 1467896460384775483);
+INSERT INTO `role_resource` VALUES (59877, 3, 1467896460384775482);
+INSERT INTO `role_resource` VALUES (59878, 3, 1467896460384775481);
+INSERT INTO `role_resource` VALUES (59879, 3, 1467896460384775480);
+INSERT INTO `role_resource` VALUES (59880, 3, 1467896460384775487);
+INSERT INTO `role_resource` VALUES (59881, 3, 1467896460384775485);
+INSERT INTO `role_resource` VALUES (59882, 3, 1467896460384775473);
+INSERT INTO `role_resource` VALUES (59883, 3, 1467896460384775472);
+INSERT INTO `role_resource` VALUES (59884, 3, 1467896460384775479);
+INSERT INTO `role_resource` VALUES (59885, 3, 1467896460384775478);
+INSERT INTO `role_resource` VALUES (59886, 3, 1467896460384775529);
+INSERT INTO `role_resource` VALUES (59887, 3, 1467896460384775528);
+INSERT INTO `role_resource` VALUES (59888, 3, 1467896460384775471);
+INSERT INTO `role_resource` VALUES (59889, 3, 1467896460384775469);
+INSERT INTO `role_resource` VALUES (59890, 3, 1467896460384775459);
+INSERT INTO `role_resource` VALUES (59891, 3, 1467896460384775523);
+INSERT INTO `role_resource` VALUES (59892, 3, 1467896460384775458);
+INSERT INTO `role_resource` VALUES (59893, 3, 1467896460384775522);
+INSERT INTO `role_resource` VALUES (59894, 3, 1467896460384775521);
+INSERT INTO `role_resource` VALUES (59895, 3, 1467896460384775463);
+INSERT INTO `role_resource` VALUES (59896, 3, 1467896460384775527);
+INSERT INTO `role_resource` VALUES (59897, 3, 1467896460384775462);
+INSERT INTO `role_resource` VALUES (59898, 3, 1467896460384775526);
+INSERT INTO `role_resource` VALUES (59899, 3, 1467896460384775461);
+INSERT INTO `role_resource` VALUES (59900, 3, 1467896460384775525);
+INSERT INTO `role_resource` VALUES (59901, 3, 1467896460384775460);
+INSERT INTO `role_resource` VALUES (59902, 2, 1467896460384775483);
+INSERT INTO `role_resource` VALUES (59903, 2, 1467896460384775482);
+INSERT INTO `role_resource` VALUES (59904, 2, 1467896460384775481);
+INSERT INTO `role_resource` VALUES (59905, 2, 1467896460384775480);
+INSERT INTO `role_resource` VALUES (59906, 2, 1467896460384775487);
+INSERT INTO `role_resource` VALUES (59907, 2, 1467896460384775486);
+INSERT INTO `role_resource` VALUES (59908, 2, 1467896460384775485);
+INSERT INTO `role_resource` VALUES (59909, 2, 1467896460384775484);
+INSERT INTO `role_resource` VALUES (59910, 2, 1467896460384775475);
+INSERT INTO `role_resource` VALUES (59911, 2, 1467896460384775474);
+INSERT INTO `role_resource` VALUES (59912, 2, 1467896460384775473);
+INSERT INTO `role_resource` VALUES (59913, 2, 1467896460384775472);
+INSERT INTO `role_resource` VALUES (59914, 2, 1467896460384775479);
+INSERT INTO `role_resource` VALUES (59915, 2, 1467896460384775478);
+INSERT INTO `role_resource` VALUES (59916, 2, 1467896460384775477);
+INSERT INTO `role_resource` VALUES (59917, 2, 1467896460384775476);
+INSERT INTO `role_resource` VALUES (59918, 2, 1467896460384775467);
+INSERT INTO `role_resource` VALUES (59919, 2, 1467896460384775466);
+INSERT INTO `role_resource` VALUES (59920, 2, 1467896460384775465);
+INSERT INTO `role_resource` VALUES (59921, 2, 1467896460384775464);
+INSERT INTO `role_resource` VALUES (59922, 2, 1467896460384775471);
+INSERT INTO `role_resource` VALUES (59923, 2, 1467896460384775470);
+INSERT INTO `role_resource` VALUES (59924, 2, 1467896460384775469);
+INSERT INTO `role_resource` VALUES (59925, 2, 1467896460384775468);
+INSERT INTO `role_resource` VALUES (59926, 2, 1467896460384775459);
+INSERT INTO `role_resource` VALUES (59927, 2, 1467896460384775458);
+INSERT INTO `role_resource` VALUES (59928, 2, 1467896460384775457);
+INSERT INTO `role_resource` VALUES (59929, 2, 1467896460384775463);
+INSERT INTO `role_resource` VALUES (59930, 2, 1467896460384775462);
+INSERT INTO `role_resource` VALUES (59931, 2, 1467896460384775461);
+INSERT INTO `role_resource` VALUES (59932, 2, 1467896460384775460);
+INSERT INTO `role_resource` VALUES (59933, 2, 1467896460384775515);
+INSERT INTO `role_resource` VALUES (59934, 2, 1467896460384775514);
+INSERT INTO `role_resource` VALUES (59935, 2, 1467896460384775513);
+INSERT INTO `role_resource` VALUES (59936, 2, 1467896460384775512);
+INSERT INTO `role_resource` VALUES (59937, 2, 1467896460384775519);
+INSERT INTO `role_resource` VALUES (59938, 2, 1467896460384775518);
+INSERT INTO `role_resource` VALUES (59939, 2, 1467896460384775517);
+INSERT INTO `role_resource` VALUES (59940, 2, 1467896460384775516);
+INSERT INTO `role_resource` VALUES (59941, 2, 1467896460384775507);
+INSERT INTO `role_resource` VALUES (59942, 2, 1467896460384775506);
+INSERT INTO `role_resource` VALUES (59943, 2, 1467896460384775505);
+INSERT INTO `role_resource` VALUES (59944, 2, 1467896460384775504);
+INSERT INTO `role_resource` VALUES (59945, 2, 1467896460384775511);
+INSERT INTO `role_resource` VALUES (59946, 2, 1467896460384775510);
+INSERT INTO `role_resource` VALUES (59947, 2, 1467896460384775509);
+INSERT INTO `role_resource` VALUES (59948, 2, 1467896460384775508);
+INSERT INTO `role_resource` VALUES (59949, 2, 1467896460384775499);
+INSERT INTO `role_resource` VALUES (59950, 2, 1467896460384775498);
+INSERT INTO `role_resource` VALUES (59951, 2, 1467896460384775497);
+INSERT INTO `role_resource` VALUES (59952, 2, 1467896460384775496);
+INSERT INTO `role_resource` VALUES (59953, 2, 1467896460384775503);
+INSERT INTO `role_resource` VALUES (59954, 2, 1467896460384775502);
+INSERT INTO `role_resource` VALUES (59955, 2, 1467896460384775501);
+INSERT INTO `role_resource` VALUES (59956, 2, 1467896460384775500);
+INSERT INTO `role_resource` VALUES (59957, 2, 1467896460384775491);
+INSERT INTO `role_resource` VALUES (59958, 2, 1467896460384775490);
+INSERT INTO `role_resource` VALUES (59959, 2, 1467896460384775489);
+INSERT INTO `role_resource` VALUES (59960, 2, 1467896460384775488);
+INSERT INTO `role_resource` VALUES (59961, 2, 1467896460384775495);
+INSERT INTO `role_resource` VALUES (59962, 2, 1467896460384775494);
+INSERT INTO `role_resource` VALUES (59963, 2, 1467896460384775493);
+INSERT INTO `role_resource` VALUES (59964, 2, 1467896460384775492);
+INSERT INTO `role_resource` VALUES (59965, 2, 1467896460384775529);
+INSERT INTO `role_resource` VALUES (59966, 2, 1467896460384775528);
+INSERT INTO `role_resource` VALUES (59967, 2, 1467896460384775523);
+INSERT INTO `role_resource` VALUES (59968, 2, 1467896460384775522);
+INSERT INTO `role_resource` VALUES (59969, 2, 1467896460384775521);
+INSERT INTO `role_resource` VALUES (59970, 2, 1467896460384775520);
+INSERT INTO `role_resource` VALUES (59971, 2, 1467896460384775527);
+INSERT INTO `role_resource` VALUES (59972, 2, 1467896460384775526);
+INSERT INTO `role_resource` VALUES (59973, 2, 1467896460384775525);
+INSERT INTO `role_resource` VALUES (59974, 2, 1467896460384775524);
+INSERT INTO `role_resource` VALUES (59975, 1, 1467896460384775483);
+INSERT INTO `role_resource` VALUES (59976, 1, 1467896460384775482);
+INSERT INTO `role_resource` VALUES (59977, 1, 1467896460384775481);
+INSERT INTO `role_resource` VALUES (59978, 1, 1467896460384775480);
+INSERT INTO `role_resource` VALUES (59979, 1, 1467896460384775487);
+INSERT INTO `role_resource` VALUES (59980, 1, 1467896460384775486);
+INSERT INTO `role_resource` VALUES (59981, 1, 1467896460384775485);
+INSERT INTO `role_resource` VALUES (59982, 1, 1467896460384775484);
+INSERT INTO `role_resource` VALUES (59983, 1, 1467896460384775475);
+INSERT INTO `role_resource` VALUES (59984, 1, 1467896460384775474);
+INSERT INTO `role_resource` VALUES (59985, 1, 1467896460384775473);
+INSERT INTO `role_resource` VALUES (59986, 1, 1467896460384775472);
+INSERT INTO `role_resource` VALUES (59987, 1, 1467896460384775479);
+INSERT INTO `role_resource` VALUES (59988, 1, 1467896460384775478);
+INSERT INTO `role_resource` VALUES (59989, 1, 1467896460384775477);
+INSERT INTO `role_resource` VALUES (59990, 1, 1467896460384775476);
+INSERT INTO `role_resource` VALUES (59991, 1, 1467896460384775467);
+INSERT INTO `role_resource` VALUES (59992, 1, 1467896460384775466);
+INSERT INTO `role_resource` VALUES (59993, 1, 1467896460384775465);
+INSERT INTO `role_resource` VALUES (59994, 1, 1467896460384775464);
+INSERT INTO `role_resource` VALUES (59995, 1, 1467896460384775471);
+INSERT INTO `role_resource` VALUES (59996, 1, 1467896460384775470);
+INSERT INTO `role_resource` VALUES (59997, 1, 1467896460384775469);
+INSERT INTO `role_resource` VALUES (59998, 1, 1467896460384775468);
+INSERT INTO `role_resource` VALUES (59999, 1, 1467896460384775459);
+INSERT INTO `role_resource` VALUES (60000, 1, 1467896460384775458);
+INSERT INTO `role_resource` VALUES (60001, 1, 1467896460384775457);
+INSERT INTO `role_resource` VALUES (60002, 1, 1467896460384775463);
+INSERT INTO `role_resource` VALUES (60003, 1, 1467896460384775462);
+INSERT INTO `role_resource` VALUES (60004, 1, 1467896460384775461);
+INSERT INTO `role_resource` VALUES (60005, 1, 1467896460384775460);
+INSERT INTO `role_resource` VALUES (60006, 1, 1467896460384775515);
+INSERT INTO `role_resource` VALUES (60007, 1, 1467896460384775514);
+INSERT INTO `role_resource` VALUES (60008, 1, 1467896460384775513);
+INSERT INTO `role_resource` VALUES (60009, 1, 1467896460384775512);
+INSERT INTO `role_resource` VALUES (60010, 1, 1467896460384775519);
+INSERT INTO `role_resource` VALUES (60011, 1, 1467896460384775518);
+INSERT INTO `role_resource` VALUES (60012, 1, 1467896460384775517);
+INSERT INTO `role_resource` VALUES (60013, 1, 1467896460384775516);
+INSERT INTO `role_resource` VALUES (60014, 1, 1467896460384775507);
+INSERT INTO `role_resource` VALUES (60015, 1, 1467896460384775506);
+INSERT INTO `role_resource` VALUES (60016, 1, 1467896460384775505);
+INSERT INTO `role_resource` VALUES (60017, 1, 1467896460384775504);
+INSERT INTO `role_resource` VALUES (60018, 1, 1467896460384775511);
+INSERT INTO `role_resource` VALUES (60019, 1, 1467896460384775510);
+INSERT INTO `role_resource` VALUES (60020, 1, 1467896460384775509);
+INSERT INTO `role_resource` VALUES (60021, 1, 1467896460384775508);
+INSERT INTO `role_resource` VALUES (60022, 1, 1467896460384775499);
+INSERT INTO `role_resource` VALUES (60023, 1, 1467896460384775498);
+INSERT INTO `role_resource` VALUES (60024, 1, 1467896460384775497);
+INSERT INTO `role_resource` VALUES (60025, 1, 1467896460384775496);
+INSERT INTO `role_resource` VALUES (60026, 1, 1467896460384775503);
+INSERT INTO `role_resource` VALUES (60027, 1, 1467896460384775502);
+INSERT INTO `role_resource` VALUES (60028, 1, 1467896460384775501);
+INSERT INTO `role_resource` VALUES (60029, 1, 1467896460384775500);
+INSERT INTO `role_resource` VALUES (60030, 1, 1467896460384775491);
+INSERT INTO `role_resource` VALUES (60031, 1, 1467896460384775490);
+INSERT INTO `role_resource` VALUES (60032, 1, 1467896460384775489);
+INSERT INTO `role_resource` VALUES (60033, 1, 1467896460384775488);
+INSERT INTO `role_resource` VALUES (60034, 1, 1467896460384775495);
+INSERT INTO `role_resource` VALUES (60035, 1, 1467896460384775494);
+INSERT INTO `role_resource` VALUES (60036, 1, 1467896460384775493);
+INSERT INTO `role_resource` VALUES (60037, 1, 1467896460384775492);
+INSERT INTO `role_resource` VALUES (60038, 1, 1467896460384775530);
+INSERT INTO `role_resource` VALUES (60039, 1, 1467896460384775529);
+INSERT INTO `role_resource` VALUES (60040, 1, 1467896460384775528);
+INSERT INTO `role_resource` VALUES (60041, 1, 1467896460384775523);
+INSERT INTO `role_resource` VALUES (60042, 1, 1467896460384775522);
+INSERT INTO `role_resource` VALUES (60043, 1, 1467896460384775521);
+INSERT INTO `role_resource` VALUES (60044, 1, 1467896460384775520);
+INSERT INTO `role_resource` VALUES (60045, 1, 1467896460384775527);
+INSERT INTO `role_resource` VALUES (60046, 1, 1467896460384775526);
+INSERT INTO `role_resource` VALUES (60047, 1, 1467896460384775525);
+INSERT INTO `role_resource` VALUES (60048, 1, 1467896460384775524);
 
 -- ----------------------------
 -- Table structure for sign_up
@@ -687,7 +756,7 @@ CREATE TABLE `sys_record`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `duration` int(11) NULL DEFAULT NULL COMMENT '用时 单位ms',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8817 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9583 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_record
@@ -732,14 +801,14 @@ CREATE TABLE `task`  (
   `class_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '任务类',
   `function` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '任务功能',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1252 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1336 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of task
 -- ----------------------------
-INSERT INTO `task` VALUES (1249, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
-INSERT INTO `task` VALUES (1250, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
-INSERT INTO `task` VALUES (1251, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
+INSERT INTO `task` VALUES (1333, 'T1', 'csdn爬虫', 'com.softlab.okr.job.testTask1', '测试cdsn爬虫');
+INSERT INTO `task` VALUES (1334, 'T2', '二号测试任务', 'com.softlab.okr.job.testTask2', '测试用的,输出名字');
+INSERT INTO `task` VALUES (1335, 'T3', '三号测试任务', 'com.softlab.okr.job.testTask3', '测试用的,输出数字');
 
 -- ----------------------------
 -- Table structure for task_trigger

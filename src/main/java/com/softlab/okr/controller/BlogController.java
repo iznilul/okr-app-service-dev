@@ -6,9 +6,11 @@ import com.softlab.okr.constant.RoleConstants;
 import com.softlab.okr.model.dto.BlogDTO;
 import com.softlab.okr.model.dto.BlogListDTO;
 import com.softlab.okr.model.dto.BlogModifyDTO;
+import com.softlab.okr.model.dto.UserBlogDTO;
 import com.softlab.okr.model.vo.BlogDetailVO;
 import com.softlab.okr.model.vo.BlogListVO;
 import com.softlab.okr.model.vo.BlogVO;
+import com.softlab.okr.model.vo.UserBlogVO;
 import com.softlab.okr.service.IBlogService;
 import com.softlab.okr.utils.Result;
 import com.softlab.okr.utils.SecurityUtil;
@@ -84,7 +86,7 @@ public class BlogController {
     }
 
     @GetMapping("cancel")
-    @Auth(role = RoleConstants.COMMON, name = "删除博客")
+    @Auth(role = RoleConstants.ADMIN, name = "删除博客")
     public Result cancelBlog(@RequestParam("blogId") String blogId) {
         blogService.removeBlog(blogId);
         return Result.success();
@@ -96,4 +98,12 @@ public class BlogController {
         Page<BlogListVO> voPage = blogService.getBlogList(dto);
         return Result.success(voPage.getRecords(), voPage.getCurrent(), voPage.getTotal());
     }
+
+    @PostMapping("queryUserBlogList")
+    @Auth(role = RoleConstants.COMMON, name = "查看博客")
+    public Result queryUserBlogList(@RequestBody UserBlogDTO dto) {
+        Page<UserBlogVO> voPage = blogService.getBlogUserList(dto);
+        return Result.success(voPage.getRecords(), voPage.getCurrent(), voPage.getTotal());
+    }
+
 }

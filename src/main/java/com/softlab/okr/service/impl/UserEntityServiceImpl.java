@@ -29,7 +29,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -72,7 +71,7 @@ public class UserEntityServiceImpl extends ServiceImpl<UserEntityMapper, UserEnt
         // 根据用户名查询出用户实体对象
         UserEntity userEntity = userEntityService.getByUsername(dto.getUsername());
         if (!loginCheck(userEntity, dto.getPassword())) {
-            return null;
+            throw new BusinessException("用户名或密码错误");
         } else {
             //VO是返回给前端用户展示的实体类，不过可以统一包装返回类
             UserEntityVO userEntityVO = new UserEntityVO();

@@ -11,27 +11,28 @@ import com.softlab.okr.mapper.BlogMapper;
 import com.softlab.okr.model.dto.BlogDTO;
 import com.softlab.okr.model.dto.BlogListDTO;
 import com.softlab.okr.model.dto.BlogModifyDTO;
+import com.softlab.okr.model.dto.UserBlogDTO;
 import com.softlab.okr.model.enums.BlogStatusEnum;
 import com.softlab.okr.model.enums.OriginalIsOrNotEnum;
 import com.softlab.okr.model.enums.PublishIsOrNotEnum;
 import com.softlab.okr.model.exception.BusinessException;
-import com.softlab.okr.model.vo.BlogDetailVO;
-import com.softlab.okr.model.vo.BlogListVO;
-import com.softlab.okr.model.vo.BlogVO;
-import com.softlab.okr.model.vo.UserInfoVO;
+import com.softlab.okr.model.vo.*;
 import com.softlab.okr.service.*;
 import com.softlab.okr.utils.CopyUtil;
 import com.softlab.okr.utils.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 /**
@@ -120,9 +121,9 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IB
     }
 
     @Override
-    //@Cacheable(cacheNames = EntityNames.BLOG + "#10m", keyGenerator =
-    //        com.softlab.okr.constant.EntityNames.MD5_KEY_GENERATOR,
-    //        unless = "#result=null")
+    @Cacheable(cacheNames = EntityNames.BLOG + "#10m", keyGenerator =
+            com.softlab.okr.constant.EntityNames.MD5_KEY_GENERATOR,
+            unless = "#result=null")
     public BlogVO getBlog(String id) {
         Blog blog = this.getOne(new LambdaQueryWrapper<Blog>().eq(Blog::getBlogId, id));
         BlogVO vo = CopyUtil.copy(blog, BlogVO.class);
@@ -133,6 +134,15 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IB
         vo.setStatusName(BlogStatusEnum.getMessage(blog.getStatus()));
         vo.setCategoryName(this.getCategoryName(categoryList, blog.getCategoryId()));
         vo.setTagList(this.buildTagList(blog.getBlogId(), blogTagList));
+        blog.setClickCount(blog.getClickCount() + 1);
+        Future<Integer> result = this.incr(blog);
+        try {
+            if (result.get() != 1) {
+                log.error("博客点击量更新失败");
+            }
+        } catch (Exception e) {
+            log.error("博客异步方法异常");
+        }
         return vo;
     }
 
@@ -154,9 +164,9 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IB
     }
 
     @Override
-    //@Cacheable(cacheNames = EntityNames.BLOG + "#10m", keyGenerator =
-    //        com.softlab.okr.constant.EntityNames.MD5_KEY_GENERATOR,
-    //        unless = "#result=null")
+    @Cacheable(cacheNames = EntityNames.BLOG + "#10m", keyGenerator =
+            com.softlab.okr.constant.EntityNames.MD5_KEY_GENERATOR,
+            unless = "#result=null")
     public Page<BlogListVO> getBlogList(BlogListDTO dto) {
         Page<Blog> page = new Page<>(dto.getIndex(), dto.getPageSize());
         Page<Blog> blogPage = blogMapper.selectPage(page, null);
@@ -180,6 +190,81 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IB
         voPage.setCurrent(page.getCurrent());
         voPage.setTotal(page.getTotal());
         return voPage;
+    }
+
+    @Override
+    //@Cacheable(cacheNames = EntityNames.BLOG + "#10m", keyGenerator =
+    //        com.softlab.okr.constant.EntityNames.MD5_KEY_GENERATOR,
+    //        unless = "#result=null")
+    public Page<UserBlogVO> getBlogUserList(UserBlogDTO dto) {
+        Page<UserInfo> page = new Page<>(dto.getIndex(), dto.getPageSize());
+        Page<UserInfo> userInfoPage = userInfoService.page(page, null);
+        Page<UserBlogVO> voPage = new Page<>();
+        List<UserBlogVO> list = new ArrayList<>();
+        List<Blog> blogList = this.list();
+        userInfoPage.getRecords().forEach(userInfo -> {
+            UserBlogVO vo = new UserBlogVO();
+            List<Blog> userBlogList = this.getBlogList(blogList, userInfo.getUsername());
+            String lastSubmitTime = this.getLastSubmitTime(userBlogList);
+            Integer notScore = this.getStatus(blogList, BlogStatusEnum.NOT_SCORED);
+            Integer failed = this.getStatus(blogList, BlogStatusEnum.FAILED);
+            Integer pass = this.getStatus(blogList, BlogStatusEnum.PASS);
+            Integer good = this.getStatus(blogList, BlogStatusEnum.GOOD);
+            Integer excellent = this.getStatus(blogList, BlogStatusEnum.EXCELLENT);
+            vo.setName(userInfo.getName());
+            vo.setBlogNumbers(userBlogList.size());
+            vo.setNotScored(notScore);
+            vo.setFailed(failed);
+            vo.setPass(pass);
+            vo.setGood(good);
+            vo.setExcellent(excellent);
+            vo.setLastSubmitTime(lastSubmitTime);
+            list.add(vo);
+        });
+        voPage.setRecords(list);
+        voPage.setCurrent(page.getCurrent());
+        voPage.setTotal(page.getTotal());
+        return voPage;
+    }
+
+    @Override
+    public Future<Integer> incr(Blog blog) {
+        return new AsyncResult<Integer>(blogMapper.insert(blog));
+    }
+
+    private Integer getStatus(List<Blog> list, BlogStatusEnum e) {
+        Integer code = e.code();
+        int sum = 0;
+        for (Blog blog : list) {
+            if (blog.getStatus().equals(code)) {
+                sum++;
+            }
+        }
+        return sum;
+    }
+
+    private List<Blog> getBlogList(List<Blog> blogList, String username) {
+        List<Blog> list = new ArrayList<>();
+        blogList.forEach(blog -> {
+            if (blog.getUsername().equals(username)) {
+                list.add(blog);
+            }
+        });
+        return list;
+    }
+
+    private String getLastSubmitTime(List<Blog> list) {
+        if (list.size() == 0) {
+            return null;
+        } else {
+            Date date = list.get(0).getUpdateTime();
+            for (Blog blog : list) {
+                if (blog.getUpdateTime().after(date)) {
+                    date = blog.getUpdateTime();
+                }
+            }
+            return DateUtil.format(date, TimeFormat.format);
+        }
     }
 
     private String fileToHtml(MultipartFile file) {

@@ -21,6 +21,8 @@ public class BlogListVO {
 
     private String title;
 
+    private Integer clickCount;
+
     private String username;
 
     private String name;

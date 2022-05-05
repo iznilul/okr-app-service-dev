@@ -37,7 +37,7 @@ public class CommonController {
     @Auth(role = RoleConstants.COMMON, name = "用户登录")
     public Result login(@RequestBody LoginDTO dto) throws Exception {
         UserEntityVO userEntityVO = userEntityService.login(dto);
-        return userEntityVO != null ? Result.success(userEntityVO) : Result.failure();
+        return Result.success(userEntityVO);
     }
 
     @GetMapping("test")
