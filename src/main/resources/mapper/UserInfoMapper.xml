@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.softlab.okr.mapper.UserInfoMapper">
-    <resultMap id="BaseResultMap" type="com.softlab.okr.entity.UserInfo">
+<mapper namespace="com.itlab.blog.mapper.UserInfoMapper">
+    <resultMap id="BaseResultMap" type="com.itlab.blog.entity.UserInfo">
         <id property="userId" column="user_id"/>
         <result property="username" column="username"/>
         <result property="name" column="name"/>
@@ -21,7 +21,7 @@
         user_id,username,`name`,avatar,major,qq,phone,weixin,`profile`,`status`,create_time,update_time
     </sql>
 
-    <select id="selectUserInfoByUsername" resultType="com.softlab.okr.entity.UserInfo">
+    <select id="selectUserInfoByUsername" resultType="com.itlab.blog.entity.UserInfo">
         select
         ui.user_id,
         ui.username,
@@ -39,7 +39,7 @@
         where ui.username=#{username}
     </select>
 
-    <select id="selectUserInfoVOByUsername" resultType="com.softlab.okr.model.vo.UserInfoVO">
+    <select id="selectUserInfoVOByUsername" resultType="com.itlab.blog.model.vo.UserInfoVO">
         select
         ui.user_id,
         ui.username,
@@ -58,7 +58,7 @@
         where ui.username=#{username}
     </select>
 
-    <select id="selectUserInfoVOList" resultType="com.softlab.okr.model.vo.UserInfoVO">
+    <select id="selectUserInfoVOList" resultType="com.itlab.blog.model.vo.UserInfoVO">
         select
         ui.user_id,
         ui.username,

@@ -1,0 +1,27 @@
+package com.itlab.blog.model.vo;
+
+import lombok.Data;
+import lombok.experimental.Accessors;
+
+/**
+ * @author RudeCrab
+ */
+@Data
+@Accessors(chain = true)
+public class UserInfoVO {
+
+    private Integer userId;
+    private String username;
+    private String name;
+    private Integer roleId;
+    private String role;
+    private String expireTime;
+    private String avatar;
+    private String major;
+    private String qq;
+    private String phone;
+    private String weixin;
+    private String profile;
+    private Integer status;
+    private String statusName;
+}

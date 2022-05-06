@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.softlab.okr.mapper.TaskTriggerMapper">
+<mapper namespace="com.itlab.blog.mapper.TaskTriggerMapper">
 
-  <resultMap id="BaseResultMap" type="com.softlab.okr.entity.TaskTrigger">
+  <resultMap id="BaseResultMap" type="com.itlab.blog.entity.TaskTrigger">
     <id property="triggerId" column="trigger_id"/>
     <result property="taskId" column="task_id"/>
     <result property="description" column="description"/>

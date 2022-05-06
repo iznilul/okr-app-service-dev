@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.softlab.okr.mapper.SysRecordMapper">
+<mapper namespace="com.itlab.blog.mapper.SysRecordMapper">
 
-    <resultMap id="BaseResultMap" type="com.softlab.okr.entity.SysRecord">
+    <resultMap id="BaseResultMap" type="com.itlab.blog.entity.SysRecord">
         <id property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="path" column="path"/>
@@ -17,7 +17,7 @@
     `id`,`name`,`path`,`username`,`ip`,`update_time`,`duration`
   </sql>
 
-    <select id="selectSysRecord" resultType="com.softlab.okr.model.vo.SysRecordVO">
+    <select id="selectSysRecord" resultType="com.itlab.blog.model.vo.SysRecordVO">
         select
         id,
         `name`,

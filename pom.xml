@@ -9,11 +9,11 @@
         <version>2.2.0.RELEASE</version>
         <relativePath/>
     </parent>
-    <groupId>com.softlab</groupId>
-    <artifactId>okr</artifactId>
+    <groupId>com.itlab</groupId>
+    <artifactId>blog</artifactId>
     <version>1.3.5-SNAPSHOT</version>
-    <name>sdut-okr-app-service</name>
-    <description>sdut-okr-app-service</description>
+    <name>sdut-blog-app-service</name>
+    <description>sdut-blog-app-service</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -22,7 +22,7 @@
         <maven.compiler.target>1.7</maven.compiler.target>
         <mybatis-plus-boot-starter.version>3.4.0</mybatis-plus-boot-starter.version>
         <docker.image.prefix>springboot</docker.image.prefix>
-        <start-class>com.softlab.okr.App</start-class>
+        <start-class>com.itlab.blog.App</start-class>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>

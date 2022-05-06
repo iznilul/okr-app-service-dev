@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.softlab.okr.mapper.BookUserMapper">
+<mapper namespace="com.itlab.blog.mapper.BookUserMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.softlab.okr.entity.BookUser">
+    <resultMap id="BaseResultMap" type="com.itlab.blog.entity.BookUser">
         <id column="id" property="id"/>
         <result column="book_id" property="bookId"/>
         <result column="user_id" property="userId"/>
@@ -16,7 +16,7 @@
         id, book_id, user_id, status
     </sql>
 
-    <select id="selectBookUserVO" resultType="com.softlab.okr.model.vo.BookUserVO">
+    <select id="selectBookUserVO" resultType="com.itlab.blog.model.vo.BookUserVO">
         select
         bu.id,
         book.book_name,

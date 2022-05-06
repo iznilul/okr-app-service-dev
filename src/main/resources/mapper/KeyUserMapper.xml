@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.softlab.okr.mapper.KeyUserMapper">
+<mapper namespace="com.itlab.blog.mapper.KeyUserMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.softlab.okr.entity.KeyUser">
+    <resultMap id="BaseResultMap" type="com.itlab.blog.entity.KeyUser">
         <id column="id" property="id"/>
         <result column="key_id" property="keyId"/>
         <result column="user_id" property="userId" />
@@ -17,7 +17,7 @@
         `id`,key_id, user_id,`update_time`
     </sql>
 
-    <select id="selectKeyUserVO" resultType="com.softlab.okr.model.vo.KeyUserVO">
+    <select id="selectKeyUserVO" resultType="com.itlab.blog.model.vo.KeyUserVO">
         select
         ku.id,
         ky.key_name,

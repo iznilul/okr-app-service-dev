@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.softlab.okr.mapper.TaskMapper">
+<mapper namespace="com.itlab.blog.mapper.TaskMapper">
 
   <!-- 通用查询映射结果 -->
-  <resultMap id="BaseResultMap" type="com.softlab.okr.entity.Task">
+  <resultMap id="BaseResultMap" type="com.itlab.blog.entity.Task">
     <id column="id" property="id"/>
     <result column="task_id" property="taskId"/>
     <result column="name" property="name"/>
