@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.itlab.blog.constant.EntityNames;
+import com.itlab.blog.constant.TimeFormat;
 import com.itlab.blog.entity.RecruitGroup;
 import com.itlab.blog.entity.SignUp;
 import com.itlab.blog.mapper.SignUpMapper;
@@ -116,6 +117,7 @@ public class SignUpServiceImpl extends ServiceImpl<SignUpMapper, SignUp> impleme
             RecruitGroup recruitGroup = recruitGroupService.getOne(null);
             vo.setStatusName(SignUpEnum.getMessage(vo.getStatus()));
             vo.setOther(recruitGroup.getGroupNumber());
+            vo.setUpdateTime(DateUtil.format(signUp.getUpdateTime(), TimeFormat.format));
             return vo;
         } else {
             return null;

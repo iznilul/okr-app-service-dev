@@ -28,4 +28,5 @@ public class SignUpVO {
     private String statusName;
     private String comment;
     private String other;
+    private String updateTime;
 }
