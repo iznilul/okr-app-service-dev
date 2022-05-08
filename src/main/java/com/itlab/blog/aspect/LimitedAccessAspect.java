@@ -31,7 +31,7 @@ public class LimitedAccessAspect {
 
     public static String BLACKLIST = "BlackList";
 
-    public static Integer FREQUENCY = 20;
+    public static Integer FREQUENCY = 30;
 
     public static Integer SECOND = 60;
 
